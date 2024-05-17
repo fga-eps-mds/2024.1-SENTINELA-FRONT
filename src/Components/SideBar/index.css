@@ -15,13 +15,11 @@
 }
 
 .sentinela { 
-    margin-top: 6px;
-    font-family: 'Noto Sans', sans-serif;
-    font-size: 45px;
-    font-weight: 900; /* Black */
-    color: #AE883C;
+    margin-top: -30px;
+    width: 350px;
+    height: auto;
 }
 
 .menu-lateral {
-    margin-top: 50px;
+    margin-top: 20px;
 }
