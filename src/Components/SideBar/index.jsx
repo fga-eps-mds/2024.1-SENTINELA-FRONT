@@ -1,9 +1,8 @@
 import "./index.css";
 import PropTypes from "prop-types";
-import { SideButtonGroup } from "../../styles/global";
+import { ButtonGroup } from "@mui/material";
 
 export default function SideBar({ buttons }) {
-
   return (
     <div className="side-bar">
       <img
@@ -17,7 +16,20 @@ export default function SideBar({ buttons }) {
         alt="Sentinela Logo"
       />
       <div className="menu-lateral">
-        <SideButtonGroup buttons={buttons}></SideButtonGroup>
+        <ButtonGroup
+          orientation="vertical"
+          aria-label="Vertical button group"
+          variant="text"
+          sx={{
+            width: "380px",
+            "& .MuiButton-root": {
+              color: "#3D160D", // Cor do texto dos botões
+              borderColor: "#3D160D", // Cor da borda dos botões
+            },
+          }}
+        >
+          {buttons}
+        </ButtonGroup>
       </div>
     </div>
   );

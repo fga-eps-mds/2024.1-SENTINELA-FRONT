@@ -1,12 +1,11 @@
 import SideBar from "../Components/SideBar";
 import "./index.css";
-import {
-  LabeledTextField,
-  PrimaryButton,
-  SecondaryButton,
-  UnderlinedTextButton,
-  SideButton,
-} from "../styles/global";
+import LabeledTextField from "../Components/LabeledTextField";
+import PrimaryButton from "../Components/PrimaryButton";
+import SecondaryButton from "../Components/SecondaryButton";
+import UnderlinedTextButton from "../Components/UnderlinedTextButton";
+import SideButton from "../Components/SideButton";
+
 
 export default function Login() {
   const buttons = [
