@@ -1,17 +1,23 @@
-import SideBar from "../Components/SideBar";
+import SideBar from "../../components/SideBar";
 import "./index.css";
-import LabeledTextField from "../Components/LabeledTextField";
-import PrimaryButton from "../Components/PrimaryButton";
-import SecondaryButton from "../Components/SecondaryButton";
-import UnderlinedTextButton from "../Components/UnderlinedTextButton";
-import SideButton from "../Components/SideButton";
-
+import LabeledTextField from "../../components/LabeledTextField";
+import PrimaryButton from "../../components/PrimaryButton";
+import SecondaryButton from "../../components/SecondaryButton";
+import UnderlinedTextButton from "../../components/UnderlinedTextButton";
+import SideButton from "../../components/SideButton";
+import React, { useContext } from "react";
+import AuthContext from "../../contexts/auth";
 
 export default function Login() {
+  const context = useContext(AuthContext);
+  const handleLogin = () => {
+    context.Login();
+  };
+
   const buttons = [
-    <SideButton key="login" text="Login"/>,
-    <SideButton key="filiacao" text="Filiação"/>,
-    <SideButton key="sobre" text="Sobre"/>,
+    <SideButton key="login" text="Login" />,
+    <SideButton key="filiacao" text="Filiação" />,
+    <SideButton key="sobre" text="Sobre" />,
   ];
 
   return (
@@ -39,7 +45,7 @@ export default function Login() {
           </div>
           <SecondaryButton text="Filiar-me ao sindicato" />
 
-          <PrimaryButton text="Entrar" />
+          <PrimaryButton text="Entrar" onClick={handleLogin} />
         </div>
       </div>
     </div>
