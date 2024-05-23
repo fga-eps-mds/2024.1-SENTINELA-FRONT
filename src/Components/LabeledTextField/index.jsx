@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { theme } from "../../styles/global";
+import { theme } from "../../Styles/global";
 import TextField from "@mui/material/TextField";
 
 

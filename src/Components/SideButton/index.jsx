@@ -3,10 +3,10 @@ import { Button } from "@mui/material";
 
 const rgbaValue01 = `rgba(174, 136, 60, 0.1);`;
 
-export default function SideButton ({ key, text }) {
+export default function SideButton ({ itemKey, text }) {
   return (
     <Button
-      key={key}
+      key={itemKey}
       sx={{
         "&amp;:hover": {
           backgroundColor: rgbaValue01,
@@ -17,8 +17,3 @@ export default function SideButton ({ key, text }) {
     </Button>
   );
 }
-
-SideButton.propTypes = {
-  key: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
-};

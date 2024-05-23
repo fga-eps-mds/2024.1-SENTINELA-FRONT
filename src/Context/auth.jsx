@@ -1,30 +1,24 @@
 import React, { createContext } from "react";
 import PropTypes from "prop-types";
-import api from '../services/api';
+import { userLogin } from '../Services/userService';
 
 
 const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
 const email = "fulano@example.com"
-const password = "12345"
+const password = "1234"
 
   const Login = async() => {
-    const response = await api.post("api/users/login", {
-      email, password
-    });
+    const user = await userLogin(email, password)
 
-    console.log(response);
+    console.log(user);
   }
   return (
     <AuthContext.Provider value={{ signed: true, Login }}>
       {children}
     </AuthContext.Provider>
   );
-};
-
-AuthProvider.propTypes = {
-  children: PropTypes.array.isRequired,
 };
 
 export default AuthContext;

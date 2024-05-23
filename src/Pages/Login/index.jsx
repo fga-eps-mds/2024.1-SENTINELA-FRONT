@@ -1,12 +1,12 @@
-import SideBar from "../../components/SideBar";
+import SideBar from "../../Components/SideBar";
 import "./index.css";
-import LabeledTextField from "../../components/LabeledTextField";
-import PrimaryButton from "../../components/PrimaryButton";
-import SecondaryButton from "../../components/SecondaryButton";
-import UnderlinedTextButton from "../../components/UnderlinedTextButton";
-import SideButton from "../../components/SideButton";
+import LabeledTextField from "../../Components/LabeledTextField";
+import PrimaryButton from "../../Components/PrimaryButton";
+import SecondaryButton from "../../Components/SecondaryButton";
+import UnderlinedTextButton from "../../Components/UnderlinedTextButton";
+import SideButton from "../../Components/SideButton";
 import React, { useContext } from "react";
-import AuthContext from "../../contexts/auth";
+import AuthContext from "../../Context/auth";
 
 export default function Login() {
   const context = useContext(AuthContext);
@@ -19,6 +19,7 @@ export default function Login() {
     <SideButton key="filiacao" text="Filiação" />,
     <SideButton key="sobre" text="Sobre" />,
   ];
+
 
   return (
     <div className="screen">

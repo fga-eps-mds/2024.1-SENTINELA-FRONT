@@ -2,10 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { AuthProvider } from "./contexts/auth";
+import { AuthProvider } from "./Context/auth";
 
-import Login from "./pages/Login/index";
-import { theme } from "./styles/global";
+import Login from "./Pages/Login/index";
+import { theme } from "./Styles/global";
 import { ThemeProvider } from "@mui/material";
 
 const router = createBrowserRouter([
