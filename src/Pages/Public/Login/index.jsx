@@ -1,12 +1,12 @@
-import SideBar from "../../Components/SideBar";
+import SideBar from "../../../Components/SideBar";
 import "./index.css";
-import LabeledTextField from "../../Components/LabeledTextField";
-import PrimaryButton from "../../Components/PrimaryButton";
-import SecondaryButton from "../../Components/SecondaryButton";
-import UnderlinedTextButton from "../../Components/UnderlinedTextButton";
-import SideButton from "../../Components/SideButton";
+import LabeledTextField from "../../../Components/LabeledTextField";
+import PrimaryButton from "../../../Components/PrimaryButton";
+import SecondaryButton from "../../../Components/SecondaryButton";
+import UnderlinedTextButton from "../../../Components/UnderlinedTextButton";
+import SideButton from "../../../Components/SideButton";
 import React, { useContext } from "react";
-import AuthContext from "../../Context/auth";
+import AuthContext from "../../../Context/auth";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {

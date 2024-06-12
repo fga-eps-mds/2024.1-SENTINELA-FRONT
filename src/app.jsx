@@ -4,7 +4,7 @@ import "./index.css";
 import { AuthProvider } from "./Context/auth";
 import { theme } from "./Styles/global";
 import { ThemeProvider } from "@mui/material";
-import Routes from "./routes";
+import Routes from "./Routes";
 
 function App() {
   return (
