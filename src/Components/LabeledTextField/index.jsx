@@ -3,14 +3,14 @@ import { theme } from "../../Styles/global";
 import TextField from "@mui/material/TextField";
 
 
-export default function LabeledTextField ({ label, placeholder }) {
+export default function LabeledTextField ({ label, placeholder, type }) {
   return (
     <TextField
       label={label}
       placeholder={placeholder}
-      id="standard-basic"
       variant="standard"
       focused
+      type={type}
       sx={{
         width: "400px",
         fontFamily: "Noto Sans",

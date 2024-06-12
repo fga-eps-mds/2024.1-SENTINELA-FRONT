@@ -7,11 +7,14 @@ import UnderlinedTextButton from "../../Components/UnderlinedTextButton";
 import SideButton from "../../Components/SideButton";
 import React, { useContext } from "react";
 import AuthContext from "../../Context/auth";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const context = useContext(AuthContext);
+  const navigate = useNavigate()
   const handleLogin = () => {
     context.Login();
+    navigate("/home")
   };
 
   const buttons = [
@@ -40,7 +43,11 @@ export default function Login() {
             label="MATRÍCULA"
             placeholder="Digite sua matrícula"
           />
-          <LabeledTextField label="SENHA" placeholder="Digite sua senha" />
+          <LabeledTextField
+            label="SENHA"
+            placeholder="Digite sua senha"
+            type="password"
+            />
           <div className="recupera-senha">
             <UnderlinedTextButton key="recupera-senha" text="Esqueci a senha" />
           </div>
