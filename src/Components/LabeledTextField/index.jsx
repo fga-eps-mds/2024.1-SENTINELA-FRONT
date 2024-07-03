@@ -3,7 +3,7 @@ import { theme } from "../../Styles/global";
 import TextField from "@mui/material/TextField";
 
 
-export default function LabeledTextField ({ label, placeholder, type }) {
+export default function LabeledTextField ({ label, placeholder, type, value, onChange }) {
   return (
     <TextField
       label={label}
@@ -11,6 +11,8 @@ export default function LabeledTextField ({ label, placeholder, type }) {
       variant="standard"
       focused
       type={type}
+      value={value}
+      onChange={onChange}
       sx={{
         width: "400px",
         fontFamily: "Noto Sans",
