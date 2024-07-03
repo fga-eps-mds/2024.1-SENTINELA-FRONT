@@ -19,17 +19,22 @@ export const AuthProvider = ({ children }) => {
 
   const Login = async (email, password) => {
     const response = await userLogin(email, password)
-    console.log(email, password)
-    console.log(response);
     setUser(response.data);
     localStorage.setItem('@App:user', JSON.stringify(response.data));
     localStorage.setItem('@App:token', "TOKEN");
     // api.defaults.headers.Authorization = `Bearer ${response.data.token}`;
   }
 
+  const Logout = async () => {
+    setUser(null);
+
+    localStorage.removeItem('@App:user');
+    localStorage.removeItem('App:token');
+  }
+
   // ### Auth return
   return (
-    <AuthContext.Provider value={{ signed: Boolean(user), user, Login }}>
+    <AuthContext.Provider value={{ signed: Boolean(user), user, Login, Logout }}>
       {children}
     </AuthContext.Provider>
   );
