@@ -5,8 +5,6 @@ import { userLogin } from '../Services/userService';
 const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-  const email = "fulano@example.com"
-  const password = "1234"
   const [user, setUser] = useState(null)
 
   useEffect(() => {
@@ -19,9 +17,9 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  const Login = async () => {
+  const Login = async (email, password) => {
     const response = await userLogin(email, password)
-
+    console.log(email, password)
     console.log(response);
     setUser(response.data);
     localStorage.setItem('@App:user', JSON.stringify(response.data));
