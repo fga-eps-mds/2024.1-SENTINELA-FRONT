@@ -36,11 +36,14 @@ const MemberShip = () => {
   return (
     <section className="container">
       <SideBar buttons={buttons} />
-      <div>
+      <div className='forms-container'>
         <h1>Formulário de Filiação</h1>
+
+        <h3> Dados Pessoais </h3>
         <div className="section-form">
-          <h3> Dados Pessoais </h3>
-          <TextField id="filled-basic" label="Nome Completo" variant="filled" />
+
+          <TextField className='formItem' id="filled-basic" label="Nome Completo" variant="filled"/>
+
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Tipo Sanguíneo</InputLabel>
             <Select
@@ -60,8 +63,12 @@ const MemberShip = () => {
           ))}
             </Select>
           </FormControl>
-          <TextField id="filled-basic" label="Matrícula" variant="filled" />
-          <TextField id="filled-basic" label="Data de Nascimento" variant="filled" />
+
+
+          <TextField className='formItem' id="filled-basic" label="Matrícula" variant="filled" />
+
+          <TextField className='formItem' id="filled-basic" label="Data de Nascimento" variant="filled" />
+
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Sexo</InputLabel>
             <Select
@@ -82,28 +89,32 @@ const MemberShip = () => {
               
             </Select>
           </FormControl>
-          <TextField id="filled-basic" label="Naturalidade" variant="filled" />
-         
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">UF</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={tipoSanguineo}
-              label="UF"
-              onChange={handleChange}
-            >
-              {ufList.map((ufList) => (
-            <MenuItem
-              key={ufList}
-              value={ufList}
-            >
-              {ufList}
-            </MenuItem>
-          ))}
-              
-            </Select>
-          </FormControl>
+
+          <div className='double-box'>
+            <TextField className='formItem' id="filled-basic" label="Naturalidade" variant="filled" />
+          
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">UF</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={tipoSanguineo}
+                label="UF"
+                onChange={handleChange}
+              >
+                {ufList.map((ufList) => (
+              <MenuItem
+                key={ufList}
+                value={ufList}
+              >
+                {ufList}
+              </MenuItem>
+            ))}
+                
+              </Select>
+            </FormControl>
+          </div>
+
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Estado Civil</InputLabel>
             <Select
@@ -124,6 +135,7 @@ const MemberShip = () => {
               
             </Select>
           </FormControl>
+
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Escolidade</InputLabel>
             <Select
@@ -143,34 +155,43 @@ const MemberShip = () => {
           ))}
             </Select>
           </FormControl>
-          <TextField id="filled-basic" label="RG" variant="filled" />
-          <TextField id="filled-basic" label="Órgão Expedidor" variant="filled" />
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">UF</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={tipoSanguineo}
-              label="UF"
-              onChange={handleChange}
-            >
-              {ufList.map((ufList) => (
-            <MenuItem
-              key={ufList}
-              value={ufList}
-            >
-              {ufList}
-            </MenuItem>
-          ))}
-              
-            </Select>
-          </FormControl>
-          <TextField id="filled-basic" label="CPF" variant="filled" />
-          <TextField id="filled-basic" label="Data da Expedição" variant="filled" />
+
+          <TextField className='formItem' id="filled-basic" label="RG" variant="filled" />
           
-          <TextField id="filled-basic" label="Nome do Pai" variant="filled" />
-          <TextField id="filled-basic" label="Nome da Mãe" variant="filled" />
+          <div className='double-box'>
+            <TextField className='formItem' id="filled-basic" label="Órgão Expedidor" variant="filled" />
+
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">UF</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={tipoSanguineo}
+                label="UF"
+                onChange={handleChange}
+              >
+                {ufList.map((ufList) => (
+              <MenuItem
+                key={ufList}
+                value={ufList}
+              >
+                {ufList}
+              </MenuItem>
+            ))}
+              </Select>
+            </FormControl>
+          </div>
+          
+
+          <TextField className='formItem' id="filled-basic" label="CPF" variant="filled" />
+
+          <TextField className='formItem' id="filled-basic" label="Data da Expedição" variant="filled" />
+          
+          <TextField className='formItem' id="filled-basic" label="Nome do Pai" variant="filled" />
+
+          <TextField className='formItem' id="filled-basic" label="Nome da Mãe" variant="filled" />
         </div>
+
         <div className="section-form">
           <h3> Dados de Contato </h3>
           {/* Add your contact fields here */}

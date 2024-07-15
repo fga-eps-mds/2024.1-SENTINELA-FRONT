@@ -1,9 +1,26 @@
 .container {
     display:flex;
-    
 }
- 
-#filled-basic{
 
+.forms-container{
+    margin: 3.5rem;
+    width: 100%;
+    
+    display: inherit;
+    justify-content: center;
+    flex-direction: column;
+}
 
+.section-form{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+
+.formItem{
+    width: 100%;
+}
+
+.double-box{
+    display: flex;
+    align-items: flex-end;
 }
