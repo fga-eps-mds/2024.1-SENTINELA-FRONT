@@ -5,13 +5,11 @@
 .forms-container{
     margin: 3.5rem;
     width: 100%;
-
+    
     display: inherit;
     justify-content: center;
     flex-direction: column;
 }
-
-
 
 .section-form{
     display: grid;
