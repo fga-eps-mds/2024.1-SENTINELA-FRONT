@@ -4,6 +4,10 @@ import "../../../index.css";
 import SideBar from "../../../Components/SideBar";
 import SideButton from "../../../Components/SideButton";
 import { TextField, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
+import dayjs from 'dayjs';
+import 'dayjs/locale/pt-br'; // Importa a localização desejada para o dayjs
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'; // Importa o adaptador Dayjs
 
 
 
@@ -16,6 +20,11 @@ const MemberShip = () => {
   const [tipoSanguineo, setTipoSanguineo] = useState('');
   const [uf, setUf] = useState('');
   const [escolaridade, setEscolaridade] = useState('');
+  const [dataContratacao, setDataContratacao] = useState(null);
+  const [dataNascimento, setDataNascimento] = useState(null);
+  const [dataExpedicao, setDataExpedicao] = useState(null);
+  const [cargo, setCargo] = useState('');
+  const [lotação, setLotação] = useState('');
   
 
   const handleChange = (event) => {
@@ -26,7 +35,8 @@ const MemberShip = () => {
   const ufList = ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'];
   const estadoCivilList = ['Solteiro', 'Casado', 'Divorciado', 'Viúvo', 'União Estável'];
   const escolaridadeList = ['Ensino Fundamental', 'Ensino Médio', 'Ensino Superior', 'Pós-Graduação', 'Mestrado', 'Doutorado'];
-  
+  const cargoList = ['Advogado','Agente', 'Outro'];
+  const lotaçãoList = ['Sede', 'Out', 'Outro'];
   const buttons = [
     <SideButton key="login" text="Login" />,
     <SideButton key="filiacao" text="Filiação" />,
@@ -36,11 +46,14 @@ const MemberShip = () => {
   return (
     <section className="container">
       <SideBar buttons={buttons} />
-      <div>
+      <div className='forms-container'>
         <h1>Formulário de Filiação</h1>
+
+        <h3> Dados Pessoais </h3>
         <div className="section-form">
-          <h3> Dados Pessoais </h3>
-          <TextField id="filled-basic" label="Nome Completo" variant="filled" />
+
+          <TextField className='formItem' id="filled-basic" label="Nome Completo" variant="filled"/>
+
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Tipo Sanguíneo</InputLabel>
             <Select
@@ -60,8 +73,20 @@ const MemberShip = () => {
           ))}
             </Select>
           </FormControl>
-          <TextField id="filled-basic" label="Matrícula" variant="filled" />
-          <TextField id="filled-basic" label="Data de Nascimento" variant="filled" />
+
+
+          <TextField className='formItem' id="filled-basic" label="Matrícula" variant="filled" />
+
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              label="Data de Nascimento"
+              value={dataNascimento}
+              onChange={(newValue) => setDataNascimento(newValue)}
+              format="DD/MM/YYYY" // Define o formato desejado
+              renderInput={(params) => <TextField {...params} variant="filled" />}
+            />
+          </LocalizationProvider>
+
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Sexo</InputLabel>
             <Select
@@ -82,28 +107,32 @@ const MemberShip = () => {
               
             </Select>
           </FormControl>
-          <TextField id="filled-basic" label="Naturalidade" variant="filled" />
-         
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">UF</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={tipoSanguineo}
-              label="UF"
-              onChange={handleChange}
-            >
-              {ufList.map((ufList) => (
-            <MenuItem
-              key={ufList}
-              value={ufList}
-            >
-              {ufList}
-            </MenuItem>
-          ))}
-              
-            </Select>
-          </FormControl>
+
+          <div className='double-box'>
+            <TextField className='formItem' id="filled-basic" label="Naturalidade" variant="filled" />
+          
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">UF</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={tipoSanguineo}
+                label="UF"
+                onChange={handleChange}
+              >
+                {ufList.map((ufList) => (
+              <MenuItem
+                key={ufList}
+                value={ufList}
+              >
+                {ufList}
+              </MenuItem>
+            ))}
+                
+              </Select>
+            </FormControl>
+          </div>
+
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Estado Civil</InputLabel>
             <Select
@@ -124,6 +153,7 @@ const MemberShip = () => {
               
             </Select>
           </FormControl>
+
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Escolidade</InputLabel>
             <Select
@@ -143,45 +173,134 @@ const MemberShip = () => {
           ))}
             </Select>
           </FormControl>
-          <TextField id="filled-basic" label="RG" variant="filled" />
-          <TextField id="filled-basic" label="Órgão Expedidor" variant="filled" />
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">UF</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={tipoSanguineo}
-              label="UF"
-              onChange={handleChange}
-            >
-              {ufList.map((ufList) => (
-            <MenuItem
-              key={ufList}
-              value={ufList}
-            >
-              {ufList}
-            </MenuItem>
-          ))}
-              
-            </Select>
-          </FormControl>
-          <TextField id="filled-basic" label="CPF" variant="filled" />
-          <TextField id="filled-basic" label="Data da Expedição" variant="filled" />
+
+          <TextField className='formItem' id="filled-basic" label="RG" variant="filled" />
           
-          <TextField id="filled-basic" label="Nome do Pai" variant="filled" />
-          <TextField id="filled-basic" label="Nome da Mãe" variant="filled" />
+          <div className='double-box'>
+            <TextField className='formItem' id="filled-basic" label="Órgão Expedidor" variant="filled" />
+
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">UF</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={tipoSanguineo}
+                label="UF"
+                onChange={handleChange}
+              >
+                {ufList.map((ufList) => (
+              <MenuItem
+                key={ufList}
+                value={ufList}
+              >
+                {ufList}
+              </MenuItem>
+            ))}
+              </Select>
+            </FormControl>
+          </div>
+          
+
+          <TextField className='formItem' id="filled-basic" label="CPF" variant="filled" />
+
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              label="Data de Expedição"
+              value={dataExpedicao}
+              onChange={(newValue) => setDataExpedicao(newValue)}
+              format="DD/MM/YYYY" // Define o formato desejado
+              renderInput={(params) => <TextField {...params} variant="filled" />}
+            />
+          </LocalizationProvider>
+          
+          <TextField className='formItem' id="filled-basic" label="Nome do Pai" variant="filled" />
+
+          <TextField className='formItem' id="filled-basic" label="Nome da Mãe" variant="filled" />
         </div>
+
         <div className="section-form">
-          <h3> Dados de Contato </h3>
-          {/* Add your contact fields here */}
-        </div>
-        <div className="section-form">
-          <h3> Endereço </h3>
-          {/* Add your address fields here */}
+            <h3> Dados de Contato </h3>
+            <TextField className='formItem' id="filled-basic" label="E-mail" variant="filled" />
+            <TextField className='formItem' id="filled-basic" label="Celular" variant="filled" />
+            <TextField className='formItem' id="filled-basic" label="Telefone" variant="filled" />
+          </div>
+          <div className="section-form">
+            <h3> Endereço </h3>
+            <TextField className='formItem' id="filled-basic" label="CEP" variant="filled" />
+            <TextField className='formItem' id="filled-basic" label="Cidade" variant="filled" />
+            <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">UF</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={tipoSanguineo}
+                  label="UF"
+                  onChange={handleChange}
+                >
+                  {ufList.map((ufList) => (
+                <MenuItem
+                  key={ufList}
+                  value={ufList}
+                >
+                  {ufList}
+                </MenuItem>
+              ))}
+                </Select>
+              </FormControl>
+              <TextField className='formItem' id="filled-basic" label="Logadouro" variant="filled" />
+              <TextField className='formItem' id="filled-basic" label="Complemento" variant="filled" />
         </div>
         <div className="section-form">
           <h3> Dados de Contratação </h3>
-          {/* Add your hiring details fields here */}
+          <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Cargo</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={cargo}
+                label="Cargo"
+                onChange={handleChange}
+              >
+                {cargoList.map((cargoList) => (
+              <MenuItem
+                key={cargoList}
+                value={cargoList}
+              >
+                {cargoList}
+              </MenuItem>
+            ))}
+              </Select>
+            </FormControl>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              label="Data de Contratação"
+              value={dataContratacao}
+              onChange={(newValue) => setDataContratacao(newValue)}
+              renderInput={(params) => <TextField {...params} variant="filled" />}
+            />
+            </LocalizationProvider>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Lotação</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={lotação}
+                label="Lotação"
+                onChange={handleChange}
+              >
+                {lotaçãoList.map((lotaçãoList) => (
+              <MenuItem
+                key={lotaçãoList}
+                value={lotaçãoList}
+              >
+                {lotaçãoList}
+              </MenuItem>
+              ))}
+                </Select>
+              </FormControl>
+              <TextField className='formItem' id="filled-basic" label="Órgão" variant="filled" />
+              <TextField className='formItem' id="filled-basic" label="Posto de Trabalho " variant="filled" />
+              <TextField className='formItem' id="filled-basic" label="Situação Atual" variant="filled" />
         </div>
       </div>
     </section>
