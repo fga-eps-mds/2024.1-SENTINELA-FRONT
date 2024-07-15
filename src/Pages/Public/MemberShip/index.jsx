@@ -173,27 +173,29 @@ const MemberShip = () => {
             </Select>
           </FormControl>
           <TextField id="filled-basic" label="RG" variant="filled" />
-          <TextField id="filled-basic" label="Órgão Expedidor" variant="filled" />
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">UF</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={tipoSanguineo}
-              label="UF"
-              onChange={handleChange}
-            >
-              {ufList.map((ufList) => (
-            <MenuItem
-              key={ufList}
-              value={ufList}
-            >
-              {ufList}
-            </MenuItem>
-          ))}
-              
-            </Select>
-          </FormControl>
+          <div className='double-box'>
+            <TextField id="filled-basic" label="Órgão Expedidor" variant="filled" />
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">UF</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={tipoSanguineo}
+                label="UF"
+                onChange={handleChange}
+              >
+                {ufList.map((ufList) => (
+              <MenuItem
+                key={ufList}
+                value={ufList}
+              >
+                {ufList}
+              </MenuItem>
+            ))}
+                
+              </Select>
+            </FormControl>
+          </div>
           <TextField id="filled-basic" label="CPF" variant="filled" />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
@@ -211,14 +213,17 @@ const MemberShip = () => {
           <TextField className='formItem' id="filled-basic" label="Nome da Mãe" variant="filled" />
         </div>
 
-        <div className="section-form">
-            <h3> Dados de Contato </h3>
+        <h3> Dados de Contato </h3>
+        <div className="">
+           
             <TextField className='formItem' id="filled-basic" label="E-mail" variant="filled" />
+            <div className='double-box'>
             <TextField className='formItem' id="filled-basic" label="Celular" variant="filled" />
             <TextField className='formItem' id="filled-basic" label="Telefone" variant="filled" />
+            </div>
           </div>
+          <h3> Endereço </h3>
           <div className="section-form">
-            <h3> Endereço </h3>
             <TextField className='formItem' id="filled-basic" label="CEP" variant="filled" />
             <TextField className='formItem' id="filled-basic" label="Cidade" variant="filled" />
             <FormControl fullWidth>
@@ -243,8 +248,8 @@ const MemberShip = () => {
               <TextField className='formItem' id="filled-basic" label="Logadouro" variant="filled" />
               <TextField className='formItem' id="filled-basic" label="Complemento" variant="filled" />
         </div>
+        <h3> Dados de Contratação </h3>
         <div className="section-form">
-          <h3> Dados de Contratação </h3>
           <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">Cargo</InputLabel>
               <Select
