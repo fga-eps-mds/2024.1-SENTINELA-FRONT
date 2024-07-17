@@ -32,6 +32,22 @@ const MemberShip = () => {
   const [nome, setNome] = useState(''); 
   const [dataNasc, setDataNasc] = useState(null);
   const [naturalidade, setNaturalidade] = useState('');
+  const [rg, setRg] = useState('');
+  const [orgao, setOrgao] = useState('');
+  const [cpf, setCpf] = useState('');
+  const [nomeMae, setNomeMae] = useState('');
+  const [nomePai, setNomePai] = useState('');
+  const [cep, setCep] = useState('');
+  const [cidade, setCidade] = useState('');
+  const [logradouro, setLogradouro] = useState('');
+  const [complemento, setComplemento] = useState('');
+  const [telefone, setTelefone] = useState('');
+  const [celular, setCelular] = useState('');
+  const [posto, setPosto] = useState('');
+  const [orgaoExpeditor, setOrgaoExpeditor] = useState('');
+  const [situacaoAtual, setSituacaoAtual] = useState('');
+
+  
 
   const handleChange = (event) => {
     setTipoSanguineo(event.target.value);
@@ -43,6 +59,7 @@ const MemberShip = () => {
   const escolaridadeList = ['Ensino Fundamental', 'Ensino Médio', 'Ensino Superior', 'Pós-Graduação', 'Mestrado', 'Doutorado'];
   const cargoList = ['Advogado', 'Agente', 'Outro'];
   const lotaçãoList = ['Sede', 'Out', 'Outro'];
+  const situacaoAtualList = ['Ativo', 'Inativo', 'Aposentado', 'Pensionista', 'Licenciado', 'Exonerado', 'Falecido'];
 
   const [dependentes, setDependentes] = useState([]);
   const [showDependentForm, setShowDependentForm] = useState(false);
@@ -85,6 +102,9 @@ const MemberShip = () => {
   };
   const handleChangeEscolaridade = (event) => {
     setEscolaridade(event.target.value);
+  };
+  const handleChangeSituacaoAtual = (event) => {
+    setSituacaoAtual(event.target.value);
   };
 
   const buttons = [
@@ -167,10 +187,17 @@ const MemberShip = () => {
             options={escolaridadeList}
           />
 
-          <TextField id="filled-basic" label="RG" variant="filled" />
+          <FieldText 
+            label="RG"
+            value={rg}
+            onChange={(e) => setRg(e.target.value)}
+             />
 
           <div className='double-box'>
-            <TextField id="filled-basic" label="Órgão Expedidor" variant="filled" />
+            <FieldText  
+              label = "Órgão Expeditor"
+              value = {orgaoExpeditor} 
+              onChange={(e) => setOrgaoExpeditor(e.target.value)}/>
             <FieldSelect
               label="UF"
               value={uf_orgao}
@@ -179,35 +206,64 @@ const MemberShip = () => {
             />
           </div>
 
-          <TextField id="filled-basic" label="CPF" variant="filled" />
+          <FieldText
+            label = "CPF" 
+            value = {cpf}
+            onChange={(e) => setCpf(e.target.value)}
+            />
           <DataSelect
             label="Data de Expedição"
             value={dataExpedicao}
             onChange={(newValue) => setDataExpedicao(newValue)}
           />
 
-          <TextField className='formItem' id="filled-basic" label="Nome do Pai" variant="filled" />
+          <FieldText
+            label = "Nome do Pai" 
+            value = {nomePai}
+            onChange={(e) => setNomePai(e.target.value)}/>
 
-          <TextField className='formItem' id="filled-basic" label="Nome da Mãe" variant="filled" />
+          <FieldText
+            label = "Nome da Mãe" 
+            value = {nomeMae}
+            onChange={(e) => setNomeMae(e.target.value)}/>  
+
+          
         </div>
 
         <h3> Dados de Contato </h3>
-        <div className="">
 
-          <TextField className='formItem' id="filled-basic" label="E-mail" variant="filled" />
+          
+          <FieldText
+            label = "E-mail" 
+            value = {email}
+            onChange={(e) => setEmail(e.target.value)}/>
+
+        <div className=" ">
 
           <div className='double-box'>
-            <TextField className='formItem' id="filled-basic" label="Celular" variant="filled" />
+          <FieldText
+            label = "Celular" 
+            value = {celular}
+            onChange={(e) => setCelular(e.target.value)}/>
 
-            <TextField className='formItem' id="filled-basic" label="Telefone" variant="filled" />
+          <FieldText
+            label = "Telefone" 
+            value = {telefone}
+            onChange={(e) => setTelefone(e.target.value)}/>
           </div>
         </div>
 
         <h3> Endereço </h3>
         <div className="section-form">
-          <TextField className='formItem' id="filled-basic" label="CEP" variant="filled" />
+        <FieldText
+            label = "CEP" 
+            value = {cep}
+            onChange={(e) => setCep(e.target.value)}/>
 
-          <TextField className='formItem' id="filled-basic" label="Cidade" variant="filled" />
+        <FieldText
+            label = "Cidade" 
+            value = {cidade}
+            onChange={(e) => setCidade(e.target.value)}/>
 
           <FieldSelect
             label="UF"
@@ -216,74 +272,68 @@ const MemberShip = () => {
             options={ufList}
           />
 
-          <TextField className='formItem' id="filled-basic" label="Logadouro" variant="filled" />
+          <FieldText
+            label = "Logradouro" 
+            value = {logradouro}
+            onChange={(e) => setLogradouro(e.target.value)}/>
 
-          <TextField className='formItem' id="filled-basic" label="Complemento" variant="filled" />
+          <FieldText
+            label = "Complemento" 
+            value = {complemento}
+            onChange={(e) => setComplemento(e.target.value)}/>
         </div>
 
         <h3> Dados de Contratação </h3>
         <div className="section-form">
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Cargo</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={cargo}
-              label="Cargo"
-              onChange={handleChange}
-            >
-              {cargoList.map((cargoList) => (
-                <MenuItem
-                  key={cargoList}
-                  value={cargoList}
-                >
-                  {cargoList}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <FieldSelect
+            label="Cargo"
+            value={cargo}
+            onChange={(e) => setCargo(e.target.value)}
+            options={cargoList}
+          />
 
           <DataSelect
             label="Data de Contratação"
             value={dataContratacao}
             onChange={(newValue) => setDataContratacao(newValue)}
           />
-          <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Lotação</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={lotação}
-              label="Lotação"
-              onChange={handleChange}
-            >
-              {lotaçãoList.map((lotaçãoList) => (
-                <MenuItem
-                  key={lotaçãoList}
-                  value={lotaçãoList}
-                >
-                  {lotaçãoList}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <TextField className='formItem' id="filled-basic" label="Órgão" variant="filled" />
-          <TextField className='formItem' id="filled-basic" label="Posto de Trabalho " variant="filled" />
-          <TextField className='formItem' id="filled-basic" label="Situação Atual" variant="filled" />
+          <FieldSelect
+            label="Lotação"
+            value={lotação}
+            onChange={(e) => setLotação(e.target.value)}
+            options={lotaçãoList}
+          />
+
+          <FieldText
+            label = "Órgão" 
+            value = {orgao}
+            onChange={(e) => setOrgao(e.target.value)}/>
+          <FieldText
+            label = "Posto de Trabalho" 
+            value = {posto}
+            onChange={(e) => setPosto(e.target.value)}/>
+          
+            
+          <FieldSelect
+            label="Situação Atual"
+            value={situacaoAtual}
+            onChange={(e) => setSituacaoAtual(e.target.value)}
+            options={situacaoAtualList}
+          />
 
           <h3> Dependentes </h3>
           <buttons onClick={handleAddDependent}>Adicionar Dependente</buttons>
           {showDependentForm && (
             <div className="section-form">
-              <TextField
+              <FieldText
                 label="Nome Completo"
                 value={currentDependent.nomeCompleto}
                 onChange={(e) => handleDependentChange('nomeCompleto', e.target.value)}
               />
-              <TextField
+              <DataSelect
                 label="Data de Nascimento"
-                value={currentDependent.dataDeNascimento}
-                onChange={(e) => handleDependentChange('dataDeNascimento', e.target.value)}
+                value={dataNasc}
+                onChange={(newValue) => setDataNasc(newValue)}
               />
               <TextField
                 label="Parentesco"
