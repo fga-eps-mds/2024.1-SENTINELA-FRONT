@@ -1,0 +1,27 @@
+.card {
+    background-color: #EAE3D7;
+    width: 500px;
+    height: 690px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: space-around; */
+}
+
+.screen {
+    display: flex;
+    flex-direction: row;
+}
+
+.logo {
+    width: 107px;
+    height: 107px;
+    margin-top: 40px;
+}
+
+.sentinela { 
+    margin-top: -30px;
+    width: 350px;
+    height: auto;
+}
