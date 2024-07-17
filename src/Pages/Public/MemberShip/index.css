@@ -13,11 +13,12 @@
 
 .section-form{
     display: grid;
-    grid-template-columns: 1fr 2fr
+    grid-template-columns: 1fr 2fr;
 }
 
-.formItem{
-    width: 100%;
+#formItem{
+    width: 10px;
+    color: #341F14,
 }
 
 .double-box{

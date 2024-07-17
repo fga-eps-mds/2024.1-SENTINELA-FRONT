@@ -46,12 +46,10 @@ const MemberShip = () => {
   const [posto, setPosto] = useState('');
   const [orgaoExpeditor, setOrgaoExpeditor] = useState('');
   const [situacaoAtual, setSituacaoAtual] = useState('');
+  const [parentesco, setParentesco] = useState('');
 
   
 
-  const handleChange = (event) => {
-    setTipoSanguineo(event.target.value);
-  };
   const tipoSanguineoList = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
   const sexoList = ['Masculino', 'Feminino', 'Outro'];
   const ufList = ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'];
@@ -64,15 +62,23 @@ const MemberShip = () => {
   const [dependentes, setDependentes] = useState([]);
   const [showDependentForm, setShowDependentForm] = useState(false);
   const [currentDependent, setCurrentDependent] = useState({ nomeCompleto: '', dataDeNascimento: '', parentesco: '' });
+  
+  const handleChange = (event) => {
+    setTipoSanguineo(event.target.value);
+  };
+  
   const handleChangeUf = (event) => {
     setUfNaturalidade(event.target.value);
   };
+
   const handleChangeUfOrgao = (event) => {
     setUfOrgao(event.target.value);
   };
+
   const handleChangeUfEndereco = (event) => {
     setUfEndereco(event.target.value);
   };
+
   const handleAddDependent = () => {
     setShowDependentForm(true);
   };
@@ -91,15 +97,19 @@ const MemberShip = () => {
     const newDependentes = dependentes.filter((_, i) => i !== index);
     setDependentes(newDependentes);
   };
+
   const handleChangeTipoSanguineo = (event) => {
     setTipoSanguineo(event.target.value);
   };
+
   const handleChangeSexo = (event) => {
     setSexo(event.target.value);
   };
+
   const handleChangeEstadoCivil = (event) => {
     setEstadoCivil(event.target.value);
   };
+
   const handleChangeEscolaridade = (event) => {
     setEscolaridade(event.target.value);
   };
@@ -125,14 +135,15 @@ const MemberShip = () => {
         <h3> Dados Pessoais </h3>
 
         <div className="section-form">
-
           <FieldText
+            id='formItem'
             label="Nome Completo"
             value={nome}
             onChange={(e) => setNome(e.target.value)}
           />
 
           <FieldSelect
+            className='formItem'
             label="Tipo Sanguíneo"
             value={tipoSanguineo}
             onChange={handleChangeTipoSanguineo}
@@ -150,6 +161,7 @@ const MemberShip = () => {
             value={dataNascimento}
             onChange={(newValue) => setDataNascimento(newValue)}
           />
+
           <FieldSelect
             label="Sexo"
             value={sexo}
@@ -162,8 +174,7 @@ const MemberShip = () => {
             label="Naturalidade"
             value={naturalidade}
             onChange={(e) => setNaturalidade(e.target.value)}
-             />
-
+            />
             
             <FieldSelect
               label="UF"
@@ -198,6 +209,7 @@ const MemberShip = () => {
               label = "Órgão Expeditor"
               value = {orgaoExpeditor} 
               onChange={(e) => setOrgaoExpeditor(e.target.value)}/>
+
             <FieldSelect
               label="UF"
               value={uf_orgao}
@@ -210,7 +222,8 @@ const MemberShip = () => {
             label = "CPF" 
             value = {cpf}
             onChange={(e) => setCpf(e.target.value)}
-            />
+          />
+
           <DataSelect
             label="Data de Expedição"
             value={dataExpedicao}
@@ -226,8 +239,7 @@ const MemberShip = () => {
             label = "Nome da Mãe" 
             value = {nomeMae}
             onChange={(e) => setNomeMae(e.target.value)}/>  
-
-          
+        
         </div>
 
         <h3> Dados de Contato </h3>
@@ -238,7 +250,7 @@ const MemberShip = () => {
             value = {email}
             onChange={(e) => setEmail(e.target.value)}/>
 
-        <div className=" ">
+        <div className="section-form">
 
           <div className='double-box'>
           <FieldText
@@ -322,36 +334,38 @@ const MemberShip = () => {
           />
 
           <h3> Dependentes </h3>
-          <buttons onClick={handleAddDependent}>Adicionar Dependente</buttons>
-          {showDependentForm && (
-            <div className="section-form">
-              <FieldText
-                label="Nome Completo"
-                value={currentDependent.nomeCompleto}
-                onChange={(e) => handleDependentChange('nomeCompleto', e.target.value)}
-              />
-              <DataSelect
-                label="Data de Nascimento"
-                value={dataNasc}
-                onChange={(newValue) => setDataNasc(newValue)}
-              />
-              <TextField
-                label="Parentesco"
-                value={currentDependent.parentesco}
-                onChange={(e) => handleDependentChange('parentesco', e.target.value)}
-              />
-              <buttons onClick={handleSaveDependent}>Salvar Dependente</buttons>
-              {dependentes.map((dependent, index) => (
-                <div key={index}>
-                  <p>Nome: {dependent.nomeCompleto}</p>
-                  <p>Data de Nascimento: {dependent.dataDeNascimento}</p>
-                  <p>Parentesco: {dependent.parentesco}</p>
-                  <p>--------------------</p>
-                  <buttons onClick={() => handleRemoveDependent(index)}>Remover Dependente</buttons>
-                </div>
-              ))}
-            </div>
-          )}
+          <div> 
+            <buttons onClick={handleAddDependent}>Adicionar Dependente</buttons>
+            {showDependentForm && (
+              <div className="section-form">
+                <FieldText
+                  label="Nome Completo"
+                  value={currentDependent.nomeCompleto}
+                  onChange={(e) => handleDependentChange('nomeCompleto', e.target.value)}
+                />
+                <DataSelect
+                  label="Data de Nascimento"
+                  value={dataNasc}
+                  onChange={(newValue) => setDataNasc(newValue)}
+                />
+                <FieldText
+                  label="Parentesco"
+                  value={currentDependent.parentesco}
+                  onChange={(e) => handleDependentChange('parentesco', e.target.value)}
+                />
+                <buttons onClick={handleSaveDependent}>Salvar Dependente</buttons>
+                {dependentes.map((dependent, index) => (
+                  <div key={index}>
+                    <p>Nome: {dependent.nomeCompleto}</p>
+                    <p>Data de Nascimento: {dependent.dataDeNascimento}</p>
+                    <p>Parentesco: {dependent.parentesco}</p>
+                    <p>--------------------</p>
+                    <buttons onClick={() => handleRemoveDependent(index)}>Remover Dependente</buttons>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </section>
