@@ -24,26 +24,26 @@ const MemberShip = () => {
   const [uf_endereco, setUfEndereco] = useState('');
   const [escolaridade, setEscolaridade] = useState('');
   const [dataContratacao, setDataContratacao] = useState(null);
-  const [dataNascimento, setDataNascimento] = useState(null);
+  const [dataDeNascimento, setdataDeNascimento] = useState(null);
   const [dataExpedicao, setDataExpedicao] = useState(null);
   const [cargo, setCargo] = useState('');
   const [lotação, setLotação] = useState('');
   const [matricula, setMatricula] = useState('');
-  const [nome, setNome] = useState(''); 
+  const [nomeCompleto, setnomeCompleto] = useState(''); 
   const [dataNasc, setDataNasc] = useState(null);
   const [naturalidade, setNaturalidade] = useState('');
   const [rg, setRg] = useState('');
   const [orgao, setOrgao] = useState('');
   const [cpf, setCpf] = useState('');
-  const [nomeMae, setNomeMae] = useState('');
-  const [nomePai, setNomePai] = useState('');
+  const [nomeDaMae, setnomeDaMae] = useState('');
+  const [nomeDoPai, setnomeDoPai] = useState('');
   const [cep, setCep] = useState('');
   const [cidade, setCidade] = useState('');
   const [logradouro, setLogradouro] = useState('');
   const [complemento, setComplemento] = useState('');
   const [telefone, setTelefone] = useState('');
   const [celular, setCelular] = useState('');
-  const [posto, setPosto] = useState('');
+  const [postoDeTrabalho, setpostoDeTrabalho] = useState('');
   const [orgaoExpeditor, setOrgaoExpeditor] = useState('');
   const [situacaoAtual, setSituacaoAtual] = useState('');
   const [parentesco, setParentesco] = useState('');
@@ -61,7 +61,7 @@ const MemberShip = () => {
 
   const [dependentes, setDependentes] = useState([]);
   const [showDependentForm, setShowDependentForm] = useState(false);
-  const [currentDependent, setCurrentDependent] = useState({ nomeCompleto: '', dataDeNascimento: '', parentesco: '' , CPF: '', celular: ''});
+  const [currentDependent, setCurrentDependent] = useState({ nomeCompletoDependente: '', dataDeNascimento: '', parentesco: '' , CPF: '', celular: ''});
   
   const handleChange = (event) => {
     setTipoSanguineo(event.target.value);
@@ -89,7 +89,7 @@ const MemberShip = () => {
 
   const handleSaveDependent = () => {
     setDependentes([...dependentes, currentDependent]);
-    setCurrentDependent({ nomeCompleto: '', dataDeNascimento: '', parentesco: '' });
+    setCurrentDependent({ nomeCompletoDependente: '', dataDeNascimento: '', parentesco: '' });
     setShowDependentForm(true);
   };
 
@@ -137,8 +137,8 @@ const MemberShip = () => {
         <div className="section-form">
           <FieldText
             label="Nome Completo"
-            value={nome}
-            onChange={(e) => setNome(e.target.value)}
+            value={nomeCompleto}
+            onChange={(e) => setnomeCompleto(e.target.value)}
           />
 
           <FieldSelect
@@ -156,8 +156,8 @@ const MemberShip = () => {
 
           <DataSelect
             label="Data de Nascimento"
-            value={dataNascimento}
-            onChange={(newValue) => setDataNascimento(newValue)}
+            value={dataDeNascimento}
+            onChange={(newValue) => setdataDeNascimento(newValue)}
           />
 
           <FieldSelect
@@ -230,13 +230,13 @@ const MemberShip = () => {
 
           <FieldText
             label = "Nome do Pai" 
-            value = {nomePai}
-            onChange={(e) => setNomePai(e.target.value)}/>
+            value = {nomeDoPai}
+            onChange={(e) => setnomeDoPai(e.target.value)}/>
 
           <FieldText
             label = "Nome da Mãe" 
-            value = {nomeMae}
-            onChange={(e) => setNomeMae(e.target.value)}/>  
+            value = {nomeDaMae}
+            onChange={(e) => setnomeDaMae(e.target.value)}/>  
         
         </div>
 
@@ -315,9 +315,9 @@ const MemberShip = () => {
             value = {orgao}
             onChange={(e) => setOrgao(e.target.value)}/>
           <FieldText
-            label = "Posto de Trabalho" 
-            value = {posto}
-            onChange={(e) => setPosto(e.target.value)}/>
+            label = "postoDeTrabalho de Trabalho" 
+            value = {postoDeTrabalho}
+            onChange={(e) => setpostoDeTrabalho(e.target.value)}/>
           
             
           <FieldSelect
@@ -336,8 +336,8 @@ const MemberShip = () => {
                 <div className="section-form">
                   <FieldText
                     label="Nome Completo"
-                    value={currentDependent.nomeCompleto}
-                    onChange={(e) => handleDependentChange('nomeCompleto', e.target.value)}
+                    value={currentDependent.nomeCompletoDependente}
+                    onChange={(e) => handleDependentChange('nomeCompletoDependente', e.target.value)}
                   />
 
                   <DataSelect
@@ -367,7 +367,7 @@ const MemberShip = () => {
                 <buttons onClick={handleSaveDependent}>Salvar Dependente</buttons>
                 {dependentes.map((dependent, index) => (
                   <div key={index}>
-                    <p>Nome: {dependent.nomeCompleto}</p>
+                    <p>Nome: {dependent.nomeCompletoDependente}</p>
                     <p>Data de Nascimento: {dependent.dataDeNascimento}</p>
                     <p>Parentesco: {dependent.parentesco}</p>
                     
