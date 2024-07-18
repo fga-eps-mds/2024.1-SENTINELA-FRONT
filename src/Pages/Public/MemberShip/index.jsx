@@ -61,7 +61,7 @@ const MemberShip = () => {
 
   const [dependentes, setDependentes] = useState([]);
   const [showDependentForm, setShowDependentForm] = useState(false);
-  const [currentDependent, setCurrentDependent] = useState({ nomeCompleto: '', dataDeNascimento: '', parentesco: '' });
+  const [currentDependent, setCurrentDependent] = useState({ nomeCompleto: '', dataDeNascimento: '', parentesco: '' , CPF: '', celular: ''});
   
   const handleChange = (event) => {
     setTipoSanguineo(event.target.value);
@@ -328,32 +328,49 @@ const MemberShip = () => {
           />
 
         </div>
-          <h3> Dependentes </h3>
           <div> 
-            <buttons onClick={handleAddDependent}>Adicionar Dependente</buttons>
+            <buttons id="addDependentBttn" onClick={handleAddDependent}><h3>Adicionar Dependente</h3></buttons>
             {showDependentForm && (
-              <div className="section-form">
-                <FieldText
-                  label="Nome Completo"
-                  value={currentDependent.nomeCompleto}
-                  onChange={(e) => handleDependentChange('nomeCompleto', e.target.value)}
-                />
-                <DataSelect
-                  label="Data de Nascimento"
-                  value={dataNasc}
-                  onChange={(newValue) => setDataNasc(newValue)}
-                />
-                <FieldText
-                  label="Parentesco"
-                  value={currentDependent.parentesco}
-                  onChange={(e) => handleDependentChange('parentesco', e.target.value)}
-                />
+              <div>
+
+                <div className="section-form">
+                  <FieldText
+                    label="Nome Completo"
+                    value={currentDependent.nomeCompleto}
+                    onChange={(e) => handleDependentChange('nomeCompleto', e.target.value)}
+                  />
+
+                  <DataSelect
+                    label="Data de Nascimento"
+                    value={dataNasc}
+                    onChange={(newValue) => setDataNasc(newValue)}
+                  />
+
+                  <FieldText
+                    label="Parentesco"
+                    value={currentDependent.parentesco}
+                    onChange={(e) => handleDependentChange('parentesco', e.target.value)}
+                  />
+
+                  <FieldText
+                    label="CPF"
+                    value={currentDependent.parentesco}
+                    onChange={(e) => handleDependentChange('parentesco', e.target.value)}
+                  />
+
+                  <FieldText
+                    label="Celular"
+                    value={currentDependent.parentesco}
+                    onChange={(e) => handleDependentChange('parentesco', e.target.value)}
+                  />        
+                </div>
                 <buttons onClick={handleSaveDependent}>Salvar Dependente</buttons>
                 {dependentes.map((dependent, index) => (
                   <div key={index}>
                     <p>Nome: {dependent.nomeCompleto}</p>
                     <p>Data de Nascimento: {dependent.dataDeNascimento}</p>
                     <p>Parentesco: {dependent.parentesco}</p>
+                    
                     <p>--------------------</p>
                     <buttons onClick={() => handleRemoveDependent(index)}>Remover Dependente</buttons>
                   </div>
