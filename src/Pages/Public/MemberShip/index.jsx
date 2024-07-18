@@ -327,6 +327,7 @@ const MemberShip = () => {
             options={situacaoAtualList}
           />
 
+        </div>
           <h3> Dependentes </h3>
           <div> 
             <buttons onClick={handleAddDependent}>Adicionar Dependente</buttons>
@@ -360,7 +361,6 @@ const MemberShip = () => {
               </div>
             )}
           </div>
-        </div>
       </div>
     </section>
   );

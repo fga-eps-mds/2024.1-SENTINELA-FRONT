@@ -12,7 +12,7 @@ export default function FieldText({ label, value, onChange }) {
             variant="filled"
             onChange={onChange}
             sx={{
-                margin: '1rem',
+                margin: '.7rem',
                 backgroundColor: theme.palette.background.paper,
                 borderRadius: '5px',
                 "& .MuiInput-underline:before": {

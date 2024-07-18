@@ -12,7 +12,7 @@ export default function DataSelect({label, value, onChange}) {
             format="DD/MM/YYYY" // Define o formato desejado
             renderInput={(params) => <TextField {...params} variant="filled" />}
             sx={{
-              margin: '1rem',
+              margin: '.7rem',
             }}
           />
         </LocalizationProvider>

@@ -6,7 +6,7 @@ import 'dayjs/locale/pt-br'; // Importa a localização desejada para o dayjs
 
 function FieldSelect({ label, value, onChange, options }) {
   return (
-    <FormControl fullWidth sx={{ margin: '1rem', backgroundColor: '#f5f5f5', borderRadius: '5px', width: 'inherit'}}>
+    <FormControl fullWidth sx={{ margin: '.7rem', backgroundColor: '#f5f5f5', borderRadius: '5px', width: 'inherit'}}>
       <InputLabel id={`label-${label}`}>{label}</InputLabel>
       <Select
         labelId={`label-${label}`}
