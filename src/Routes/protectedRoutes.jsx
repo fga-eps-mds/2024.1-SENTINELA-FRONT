@@ -4,6 +4,7 @@ import Login from '../Pages/Public/Login';
 import Home from '../Pages/Protected/Home';
 import ProfileUpdate from '../Pages/Protected/ProfileUpdate';
 
+
 const ProtectedRoutes = () => {
   return (
     <BrowserRouter>

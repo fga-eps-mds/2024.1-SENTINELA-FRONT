@@ -14,6 +14,10 @@ const Home = () => {
       navigate("/")
     };
 
+    const profileUpdate = () => {
+      navigate("/profileupdate")
+    };
+
     return user && (
       <div>
         <h1>Home</h1>
@@ -22,6 +26,7 @@ const Home = () => {
         </div>
 
         <button text="Entrar" onClick={handleLogout} > SAIR </button>
+        <button text="Cadastro" onClick={profileUpdate} > ATUALIZAR</button>
       </div>
     );
   };

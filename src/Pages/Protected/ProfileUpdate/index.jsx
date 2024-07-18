@@ -2,15 +2,18 @@ import SideBar from "../../../Components/SideBar";
 import React from "react";
 import SideButton from "../../../Components/SideButton";
 import LabeledTextField from "../../../Components/LabeledTextField";
+import { AuthProvider, useAuth } from "../../../Context/auth";
 
 const ProfileUpdate = () => {
+
+    const { user } = useAuth();
 
     const buttons = [
         <SideButton key="login" text="Pagina Inicial" />,
         <SideButton key="filiacao" text="Cadastro" />
       ];
 
-      return (
+      return user && (
         <div style={{ display: "flex" }}>
           <SideBar buttons={buttons} />
           <div style={{ flex: 1, padding: "20px" }}>

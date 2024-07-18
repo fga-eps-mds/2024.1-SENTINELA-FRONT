@@ -10,7 +10,7 @@ const PublicRoutes = () => {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/profileupdate" element={<ProfileUpdate />} />
+
       </Routes>
     </BrowserRouter>
   );
