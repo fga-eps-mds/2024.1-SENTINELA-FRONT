@@ -2,12 +2,12 @@ import PropTypes from "prop-types";
 import { theme } from "../../Styles/global";
 import { Button } from "@mui/material";
 
-
 const rgbaValue01 = `rgba(174, 136, 60, 0.1);`;
 
-export default function UnderlinedTextButton ({ text }) {
+export default function UnderlinedTextButton({ text, onClick }) {
   return (
     <Button
+      onClick={onClick}
       variant="text"
       sx={{
         textTransform: "none",
@@ -25,7 +25,7 @@ export default function UnderlinedTextButton ({ text }) {
   );
 }
 
-
 UnderlinedTextButton.propTypes = {
   text: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
