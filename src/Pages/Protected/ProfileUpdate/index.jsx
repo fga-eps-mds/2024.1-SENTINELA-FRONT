@@ -1,12 +1,17 @@
 import SideBar from "../../../Components/SideBar";
-import React from "react";
+import "./index.css";
+import React, { useState } from "react";
 import SideButton from "../../../Components/SideButton";
-import LabeledTextField from "../../../Components/LabeledTextField";
-import { AuthProvider, useAuth } from "../../../Context/auth";
+import FieldText from "../../../Components/FieldText";
+import { useAuth } from "../../../Context/auth";
 
 const ProfileUpdate = () => {
 
     const { user } = useAuth();
+
+    const [nome, setNome] = useState('Admin');
+    const [celular, setCelular] = useState('4002-8922')
+    const [login, setLogin] = useState('Ativo')
 
     const buttons = [
         <SideButton key="login" text="Pagina Inicial" />,
@@ -14,13 +19,32 @@ const ProfileUpdate = () => {
       ];
 
       return user && (
-        <div style={{ display: "flex" }}>
+        <section className="container">
           <SideBar buttons={buttons} />
-          <div style={{ flex: 1, padding: "20px" }}>
-          <h1 style={{marginTop: "100px", marginLeft: "30px"}}>Visualização de Usuário</h1>
-          <h3 style={{marginTop: "35px", marginLeft: "65px", fontSize: "20px" }}>Dados Pessoais</h3>
-          </div>
-        </div>
+            <div className='campos-container'>
+              <h1> Visualização de Usuário </h1>
+              <h3> Dados Pessoais </h3>
+              <div className='section-campo'>
+                <FieldText 
+                  label="Nome*"
+                  value={nome}
+                  onChange={(e) => setNome(e.target.value)}
+                />
+              </div>
+              <div className='double-box'>
+                <FieldText 
+                  label="Celular"
+                  value={celular}
+                  onChange={(e) => setCelular(e.target.value)}
+                />
+                <FieldText 
+                  label="Login*"
+                  value={login}
+                  onChange={(e) => setLogin(e.target.value)}
+                />
+              </div>
+            </div>
+        </section>
       );
 };
 
