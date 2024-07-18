@@ -13,15 +13,10 @@
 
 .section-form{
     display: grid;
-    grid-template-columns: 1fr 2fr;
-}
-
-#formItem{
-    width: 10px;
-    color: #341F14,
+    grid-template-columns: 1fr 1fr;
 }
 
 .double-box{
-    display: flex;
-    align-items: flex-end;
+    display: grid;
+    grid-template-columns: 2.3fr .7fr;
 }

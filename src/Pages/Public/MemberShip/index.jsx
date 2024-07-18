@@ -136,14 +136,12 @@ const MemberShip = () => {
 
         <div className="section-form">
           <FieldText
-            id='formItem'
             label="Nome Completo"
             value={nome}
             onChange={(e) => setNome(e.target.value)}
           />
 
           <FieldSelect
-            className='formItem'
             label="Tipo Sanguíneo"
             value={tipoSanguineo}
             onChange={handleChangeTipoSanguineo}
@@ -244,15 +242,12 @@ const MemberShip = () => {
 
         <h3> Dados de Contato </h3>
 
-          
-          <FieldText
+        <FieldText
             label = "E-mail" 
             value = {email}
             onChange={(e) => setEmail(e.target.value)}/>
 
         <div className="section-form">
-
-          <div className='double-box'>
           <FieldText
             label = "Celular" 
             value = {celular}
@@ -262,7 +257,6 @@ const MemberShip = () => {
             label = "Telefone" 
             value = {telefone}
             onChange={(e) => setTelefone(e.target.value)}/>
-          </div>
         </div>
 
         <h3> Endereço </h3>

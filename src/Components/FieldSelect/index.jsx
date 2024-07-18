@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
+import { theme } from "../../Styles/global";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import 'dayjs/locale/pt-br'; // Importa a localização desejada para o dayjs
 
 
 function FieldSelect({ label, value, onChange, options }) {
   return (
-    <FormControl fullWidth sx={{ margin: '1rem', backgroundColor: '#f5f5f5', borderRadius: '5px' }}>
-      <InputLabel id={`label-${label}`} sx={{ color: '#000' }}>{label}</InputLabel>
+    <FormControl fullWidth sx={{ margin: '1rem', backgroundColor: '#f5f5f5', borderRadius: '5px', width: 'inherit'}}>
+      <InputLabel id={`label-${label}`}>{label}</InputLabel>
       <Select
         labelId={`label-${label}`}
         id={`select-${label}`}
@@ -15,16 +16,16 @@ function FieldSelect({ label, value, onChange, options }) {
         label={label}
         sx={{
           '& .MuiSelect-select': {
-
+            borderColor: theme.palette.custom.main
           },
           '& .MuiOutlinedInput-notchedOutline': {
-            borderColor: '#000',
+            borderColor: theme.palette.custom.main,
           },
           '&:hover .MuiOutlinedInput-notchedOutline': {
-            borderColor: '#3f51b5',
+            borderColor: theme.palette.custom.main,
           },
           '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-            borderColor: '#3f51b5',
+            borderColor: theme.palette.custom.main,
           }
         }}
       >
