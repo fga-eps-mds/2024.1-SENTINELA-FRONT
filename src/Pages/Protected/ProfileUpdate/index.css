@@ -3,6 +3,8 @@
 }
 .campos-container{
     margin: 3.5rem;
+    line-height: 2;
+    height: 350px; 
     width: 100%;
     
     display: inherit;
@@ -11,9 +13,11 @@
 }
 .section-campo{
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 2.3fr 0fr;
+
 }
 .double-box{
     display: grid;
-    grid-template-columns: 2.3fr .7fr;
+    grid-template-columns: 2.3fr 2.5fr;
+
 }

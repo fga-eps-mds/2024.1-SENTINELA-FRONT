@@ -29,6 +29,7 @@ const ProfileUpdate = () => {
                   label="Nome*"
                   value={nome}
                   onChange={(e) => setNome(e.target.value)}
+                  disabled={true}
                 />
               </div>
               <div className='double-box'>
@@ -36,11 +37,13 @@ const ProfileUpdate = () => {
                   label="Celular"
                   value={celular}
                   onChange={(e) => setCelular(e.target.value)}
+                  
                 />
                 <FieldText 
                   label="Login*"
                   value={login}
                   onChange={(e) => setLogin(e.target.value)}
+                  disabled={true}
                 />
               </div>
             </div>

@@ -3,14 +3,15 @@ import PropTypes from "prop-types";
 import { theme } from "../../Styles/global";
 import TextField from "@mui/material/TextField";
 
-export default function FieldText({ label, value, onChange }) {
+export default function FieldText({ label, value, onChange, disabled}) {
     return (
         <TextField
             id="filled-basic"
             label={label}
             value={value}
             variant="filled"
-            onChange={onChange}
+            disabled={disabled}
+            
             sx={{
                 margin: '.7rem',
                 backgroundColor: theme.palette.background.paper,
@@ -46,4 +47,5 @@ FieldText.propTypes = {
     label: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
+    disabled: PropTypes.bool,
 };
