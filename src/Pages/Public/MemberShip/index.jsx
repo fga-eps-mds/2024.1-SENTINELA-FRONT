@@ -126,7 +126,9 @@ const MemberShip = () => {
   return (
     <section className="container">
 
-      <SideBar buttons={buttons} />
+      <div className="bar-container">
+        <SideBar buttons={buttons} />
+      </div>
 
       <div className='forms-container'>
 
@@ -315,7 +317,7 @@ const MemberShip = () => {
             value = {orgao}
             onChange={(e) => setOrgao(e.target.value)}/>
           <FieldText
-            label = "postoDeTrabalho de Trabalho" 
+            label = "Posto de Trabalho" 
             value = {postoDeTrabalho}
             onChange={(e) => setpostoDeTrabalho(e.target.value)}/>
           
@@ -354,14 +356,14 @@ const MemberShip = () => {
 
                   <FieldText
                     label="CPF"
-                    value={currentDependent.parentesco}
-                    onChange={(e) => handleDependentChange('parentesco', e.target.value)}
+                    value={currentDependent.cpfDependente}
+                    onChange={(e) => handleDependentChange('cpfDependente', e.target.value)}
                   />
 
                   <FieldText
                     label="Celular"
-                    value={currentDependent.parentesco}
-                    onChange={(e) => handleDependentChange('parentesco', e.target.value)}
+                    value={currentDependent.celularDependente}
+                    onChange={(e) => handleDependentChange('celularDependente', e.target.value)}
                   />        
                 </div>
                 <buttons onClick={handleSaveDependent}>Salvar Dependente</buttons>
