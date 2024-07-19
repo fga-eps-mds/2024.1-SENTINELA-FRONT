@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import "./index.css";
 import "../../../index.css";
 import SideBar from "../../../Components/SideBar";
@@ -11,6 +12,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'; // Importa o ad
 import FieldText from "../../../Components/FieldText"
 import DataSelect from "../../../Components/DataSelect"
 import FieldSelect from "../../../Components/FieldSelect"
+import FieldNumber from '../../../Components/FieldNumber';
+
 import { useFetcher } from 'react-router-dom';
 
 const Caduser = () =>{
@@ -46,10 +49,12 @@ return(
             />
 
             <div className='double-box'>
-                <FieldText 
+                <FieldNumber 
                     label="Celular"
                     value={celular}
                     onChange={(e) => setCelular(e.target.value)}
+                    format='+55 (##) 9#### ####'
+
                 />
 
                 <FieldSelect 
