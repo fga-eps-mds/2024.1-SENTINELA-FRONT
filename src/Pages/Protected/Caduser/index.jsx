@@ -4,33 +4,37 @@ import "./index.css";
 import "../../../index.css";
 import SideBar from "../../../Components/SideBar";
 import SideButton from "../../../Components/SideButton";
-import { TextField, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
-import dayjs from 'dayjs';
-import 'dayjs/locale/pt-br'; // Importa a localização desejada para o dayjs
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'; // Importa o adaptador Dayjs
 import FieldText from "../../../Components/FieldText"
-import DataSelect from "../../../Components/DataSelect"
 import FieldSelect from "../../../Components/FieldSelect"
 import FieldNumber from '../../../Components/FieldNumber';
+import Checklist from '../../../Components/Lista'
 
 import { useFetcher } from 'react-router-dom';
+
 
 const Caduser = () =>{
     const [nomeCompleto, setnomeCompleto] = useState('')
     const [celular,setCelular] = useState('')
     const [login, setLogin] = useState('')
     const [email,setEmail] = useState('')
+    const [acessos, setAcessos] = useState([])
 
+    const setoresAcesso =[
+        'Convênio',
+        'Cadastro',
+        'Financeiro',
+        'Juridico'
+    ]
+   
     const buttons = [
-        <SideButton key="login" text="Login" />,
-        <SideButton key="caduser" text="Cadastros" />,
+        <SideButton key="home" text="Pagina Inicial" />,
+        <SideButton key="cadastros" text="Cadastros" />,
       ];
     const login_options = ['Ativo', 'Inativo'];
     const handleChangeLogin = (event) => {
         setLogin(event.target.value);
-      };
-    
+    };
+    console.log({acessos});
 return( 
     <section className="container">
 
@@ -39,7 +43,7 @@ return(
         </div>
 
         <div className='forms-container'>
-        <h1>Visualização de usuário</h1>
+        <h1>Cadastro de usuário</h1>
 
             <h3> Dados Pessoais</h3>
             <FieldText 
@@ -70,9 +74,14 @@ return(
                 onChange={(e) => setEmail(e.target.value)}
             />
             
+            <Checklist
+                items = {setoresAcesso}
+                value={acessos}
+                onChange={setAcessos}
+            />
            
             </div>
-
+            
     </section>
     );
 };
