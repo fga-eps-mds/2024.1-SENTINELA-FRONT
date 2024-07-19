@@ -12,6 +12,7 @@ import FieldText from "../../../Components/FieldText"
 import DataSelect from "../../../Components/DataSelect"
 import FieldSelect from "../../../Components/FieldSelect"
 import { useFetcher } from 'react-router-dom';
+import PrimaryButton from "../../../Components/PrimaryButton";
 
 
 const MemberShip = () => {
@@ -332,39 +333,41 @@ const MemberShip = () => {
             <buttons id="addDependentBttn" onClick={handleAddDependent}><h3>Adicionar Dependente</h3></buttons>
             {showDependentForm && (
               <div>
+                <div className='dependentToAdd'>
+                  <div className="section-dependent-form">
+                    <FieldText
+                      label="Nome Completo"
+                      value={currentDependent.nomeCompletoDependente}
+                      onChange={(e) => handleDependentChange('nomeCompletoDependente', e.target.value)}
+                    />
 
-                <div className="section-form">
-                  <FieldText
-                    label="Nome Completo"
-                    value={currentDependent.nomeCompletoDependente}
-                    onChange={(e) => handleDependentChange('nomeCompletoDependente', e.target.value)}
-                  />
+                    <DataSelect
+                      label="Data de Nascimento"
+                      value={dataNasc}
+                      onChange={(newValue) => handleDependentChange('dataNasc',newValue.tagert.value)}
+                    />
 
-                  <DataSelect
-                    label="Data de Nascimento"
-                    value={dataNasc}
-                    onChange={(newValue) => handleDependentChange('dataNasc',newValue.tagert.value)}
-                  />
+                    <FieldText
+                      label="Parentesco"
+                      value={currentDependent.parentesco}
+                      onChange={(e) => handleDependentChange('parentesco', e.target.value)}
+                    />
 
-                  <FieldText
-                    label="Parentesco"
-                    value={currentDependent.parentesco}
-                    onChange={(e) => handleDependentChange('parentesco', e.target.value)}
-                  />
+                    <FieldText
+                      label="CPF"
+                      value={currentDependent.cpfDependente}
+                      onChange={(e) => handleDependentChange('cpfDependente', e.target.value)}
+                    />
 
-                  <FieldText
-                    label="CPF"
-                    value={currentDependent.cpfDependente}
-                    onChange={(e) => handleDependentChange('cpfDependente', e.target.value)}
-                  />
-
-                  <FieldText
-                    label="Celular"
-                    value={currentDependent.celularDependente}
-                    onChange={(e) => handleDependentChange('celularDependente', e.target.value)}
-                  />        
+                    <FieldText
+                      label="Celular"
+                      value={currentDependent.celularDependente}
+                      onChange={(e) => handleDependentChange('celularDependente', e.target.value)}
+                    />        
+                  </div>
+                  <PrimaryButton text="Adicionar Dependente" onClick={handleSaveDependent} />
                 </div>
-                <buttons onClick={handleSaveDependent}>Salvar Dependente</buttons>
+
                 {dependentes.map((dependent, index) => (
                   <div className='dependentBox' key={index}>
                   <h3>Dependente {index+1} adicionado</h3>
@@ -394,8 +397,7 @@ const MemberShip = () => {
                       value={dependent.celularDependente}
                     />
                   </div>
-
-                    <buttons onClick={() => handleRemoveDependent(index)}>Remover Dependente</buttons>
+                    <PrimaryButton text="Remover Dependente" onClick={() => handleRemoveDependent(index)} />
                   </div>
                 ))}
               </div>

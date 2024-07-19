@@ -90,6 +90,24 @@
         cursor: pointer
     }
 
+    .dependentToAdd{
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        border-radius: 15px;
+
+        background-color: #341f148c;
+        margin-top: 1rem;
+        padding: 1rem;
+    }
+
+    .section-dependent-form{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        width: 100%;
+    }
+
     .dependentBox{
         background-color: #341f143e;
         border-radius: 5px;
