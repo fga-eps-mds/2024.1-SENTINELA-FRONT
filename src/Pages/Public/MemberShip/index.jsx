@@ -46,7 +46,7 @@ const MemberShip = () => {
   const [postoDeTrabalho, setpostoDeTrabalho] = useState('');
   const [orgaoExpeditor, setOrgaoExpeditor] = useState('');
   const [situacaoAtual, setSituacaoAtual] = useState('');
-  const [parentesco, setParentesco] = useState('');
+  
 
   
 
@@ -63,9 +63,7 @@ const MemberShip = () => {
   const [showDependentForm, setShowDependentForm] = useState(false);
   const [currentDependent, setCurrentDependent] = useState({ nomeCompletoDependente: '', dataDeNascimento: '', parentesco: '' , CPF: '', celular: ''});
   
-  const handleChange = (event) => {
-    setTipoSanguineo(event.target.value);
-  };
+ 
   
   const handleChangeUf = (event) => {
     setUfNaturalidade(event.target.value);
@@ -89,7 +87,7 @@ const MemberShip = () => {
 
   const handleSaveDependent = () => {
     setDependentes([...dependentes, currentDependent]);
-    setCurrentDependent({ nomeCompletoDependente: '', dataDeNascimento: '', parentesco: '' });
+    setCurrentDependent({ nomeCompletoDependente: '', dataNasc: '', parentesco: '' });
     setShowDependentForm(true);
   };
 
@@ -345,7 +343,7 @@ const MemberShip = () => {
                   <DataSelect
                     label="Data de Nascimento"
                     value={dataNasc}
-                    onChange={(newValue) => setDataNasc(newValue)}
+                    onChange={(newValue) => handleDependentChange('dataNasc',newValue.tagert.value)}
                   />
 
                   <FieldText
@@ -370,8 +368,10 @@ const MemberShip = () => {
                 {dependentes.map((dependent, index) => (
                   <div key={index}>
                     <p>Nome: {dependent.nomeCompletoDependente}</p>
-                    <p>Data de Nascimento: {dependent.dataDeNascimento}</p>
+                    <p>Data de Nascimento: {dependent.dataNasc}</p>
                     <p>Parentesco: {dependent.parentesco}</p>
+                    <p>CPF: {dependent.cpfDependente}</p>
+                    <p>Celular: {dependent.celularDependente}</p>
                     
                     <p>--------------------</p>
                     <buttons onClick={() => handleRemoveDependent(index)}>Remover Dependente</buttons>
