@@ -10,6 +10,7 @@ export default function FieldText({ label, value, onChange, disabled}) {
             label={label}
             value={value}
             variant="filled"
+            onChange={onChange}
             disabled={disabled}
             
             sx={{

@@ -1,5 +1,6 @@
 .container{
     display: flex;
+    font-family: 'Noto Sans';
 }
 .campos-container{
     margin: 3.5rem;
@@ -14,10 +15,21 @@
 .section-campo{
     display: grid;
     grid-template-columns: 2.3fr 0fr;
+    color: #EAE3D7;
 
 }
 .double-box{
     display: grid;
     grid-template-columns: 2.3fr 2.5fr;
+    color: #EAE3D7;
+}
+h1{
+    font-weight: 800;
+    margin-bottom: 3rem;
+}
 
+h3{
+    font-weight: 400;
+    margin-left: 1rem;
+    margin-top: 3rem;
 }
