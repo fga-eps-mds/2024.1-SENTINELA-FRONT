@@ -7,7 +7,7 @@ import SideButton from "../../../Components/SideButton";
 import FieldText from "../../../Components/FieldText"
 import FieldSelect from "../../../Components/FieldSelect"
 import FieldNumber from '../../../Components/FieldNumber';
-import Checklist from '../../../Components/Lista'
+import Checklist from '../../../Components/Checklist'
 
 import { useFetcher } from 'react-router-dom';
 
