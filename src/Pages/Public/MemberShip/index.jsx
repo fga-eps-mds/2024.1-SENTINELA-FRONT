@@ -366,14 +366,35 @@ const MemberShip = () => {
                 </div>
                 <buttons onClick={handleSaveDependent}>Salvar Dependente</buttons>
                 {dependentes.map((dependent, index) => (
-                  <div key={index}>
-                    <p>Nome: {dependent.nomeCompletoDependente}</p>
-                    <p>Data de Nascimento: {dependent.dataNasc}</p>
-                    <p>Parentesco: {dependent.parentesco}</p>
-                    <p>CPF: {dependent.cpfDependente}</p>
-                    <p>Celular: {dependent.celularDependente}</p>
+                  <div className='dependentBox' key={index}>
+                  <h3>Dependente {index+1} adicionado</h3>
+                  <div className='dependentContainer'>
+                    <FieldText 
+                      label="Nome Completo"
+                      value={dependent.nomeCompletoDependente}
+                    />
                     
-                    <p>--------------------</p>
+                    <DataSelect 
+                      label="Data de Nascimento"
+                      
+                    />
+
+                    <FieldText 
+                      label="Parentesco"
+                      value={dependent.parentesco}
+                    />
+
+                    <FieldText 
+                      label="CPF"
+                      value={dependent.cpfDependente}
+                    />
+
+                    <FieldText 
+                      label="Celular"
+                      value={dependent.celularDependente}
+                    />
+                  </div>
+
                     <buttons onClick={() => handleRemoveDependent(index)}>Remover Dependente</buttons>
                   </div>
                 ))}

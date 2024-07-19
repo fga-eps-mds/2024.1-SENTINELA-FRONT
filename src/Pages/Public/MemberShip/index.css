@@ -39,6 +39,16 @@
     #addDependentBttn{
         cursor: pointer
     }
+
+    .dependentBox{
+        background-color: #341f143e;
+        border-radius: 5px;
+    }
+
+    .dependentContainer{
+        display: grid;
+        grid-template-columns: 1fr;
+    }
 }
 
 @media screen and (min-width:1081px){
@@ -78,5 +88,15 @@
     
     #addDependentBttn{
         cursor: pointer
+    }
+
+    .dependentBox{
+        background-color: #341f143e;
+        border-radius: 5px;
+    }
+
+    .dependentContainer{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
     }
 }
