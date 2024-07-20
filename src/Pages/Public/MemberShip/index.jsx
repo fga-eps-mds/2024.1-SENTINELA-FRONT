@@ -378,11 +378,12 @@ const MemberShip = () => {
                       onChange={(e) => handleDependentChange('nomeCompletoDependente', e.target.value)}
                     />
 
-                    <DataSelect
-                      label="Data de Nascimento"
-                      value={dataNasc}
-                      onChange={(newValue) => handleDependentChange('dataNasc',newValue.tagert.value)}
-                    />
+                <DataSelect
+                  label="Data de Nascimento"
+                  value={dataNasc}
+                  onChange={(newDate) => handleDependentChange('dataNasc', newDate)}
+                />
+
 
                     <FieldText
                       label="Parentesco"
