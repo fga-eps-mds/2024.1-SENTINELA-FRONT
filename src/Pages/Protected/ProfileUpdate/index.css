@@ -11,6 +11,7 @@
     display: inherit;
     justify-content: center;
     flex-direction: column;
+    
 }
 .section-campo{
     display: grid;
@@ -18,10 +19,29 @@
     color: #EAE3D7;
 
 }
+.section-campo input { 
+    background-color: #EAE3D7; 
+    color: #000000; 
+
+    border: 1px solid #EAE3D7; 
+    border-top-left-radius: 5%; 
+    border-top-right-radius: 5%;
+
+}
+
 .double-box{
     display: grid;
     grid-template-columns: 2.3fr 2.5fr;
     color: #EAE3D7;
+}
+.double-box input {
+    background-color: #EAE3D7; 
+    color: #000000; 
+
+    border: 1px solid #EAE3D7; 
+    border-top-left-radius: 5%; 
+    border-top-right-radius: 5%;
+   
 }
 h1{
     font-weight: 800;
