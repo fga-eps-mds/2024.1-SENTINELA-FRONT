@@ -8,9 +8,10 @@ import FieldSelect from "../../../Components/FieldSelect";
 import FieldNumber from '../../../Components/FieldNumber';
 import Checklist from '../../../Components/Checklist';
 import PrimaryButton from '../../../Components/PrimaryButton';
+import SecondaryButton from '../../../Components/SecondaryButton'
 import { ToggleButton, Radio, RadioGroup, FormControlLabel } from '@mui/material'; 
 
-const Caduser = () => {
+const Viewuser = () => {
     //Dados a serem armazenados
     const [nomeCompleto, setnomeCompleto] = useState(''); //Armazena o nome completo da pessoa cadastrada
     const [celular, setCelular] = useState(''); //Armazena o número de celular da pessoa cadastrada
@@ -50,7 +51,7 @@ const Caduser = () => {
             </div>
 
             <div className='forms-container'>
-                <h1>Cadastro de usuário</h1>
+                <h1>Visualização de usuário</h1>
 
                 <h3>Dados Pessoais</h3>
                 <FieldText
@@ -108,15 +109,26 @@ const Caduser = () => {
                     ))}
                 </RadioGroup>
 
-                <PrimaryButton
-                    text='Cadastrar'
-                    onClick={() => {
-                        // Lógica para lidar com o clique do botão de cadastro
-                    }}
-                />
+                <div className='double-buttons'>
+                    
+                    <SecondaryButton
+                        text='Cancelar'
+                        onClick={() => {
+                            // Lógica para lidar com o clique do botão de cadastro
+                        }}
+                    />
+
+                    <PrimaryButton
+                        text='Salvar'
+                        onClick={() => {
+                            // Lógica para lidar com o clique do botão de cadastro
+                        }}
+                    />
+                </div>
+                
             </div>
         </section>
     );
 };
 
-export default Caduser;
+export default Viewuser;
