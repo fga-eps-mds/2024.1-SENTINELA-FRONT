@@ -3,11 +3,7 @@ import "./index.css";
 import "../../../index.css";
 import SideBar from "../../../Components/SideBar";
 import SideButton from "../../../Components/SideButton";
-import { TextField, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
-import dayjs from 'dayjs';
 import 'dayjs/locale/pt-br'; // Importa a localização desejada para o dayjs
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'; // Importa o adaptador Dayjs
 import FieldText from "../../../Components/FieldText"
 import DataSelect from "../../../Components/DataSelect"
 import FieldSelect from "../../../Components/FieldSelect"
@@ -29,7 +25,7 @@ const MemberShip = () => {
   const [dataDeNascimento, setdataDeNascimento] = useState(null);
   const [dataExpedicao, setDataExpedicao] = useState(null);
   const [cargo, setCargo] = useState('');
-  const [lotação, setLotação] = useState('');
+  const [lotacao, setlotacao] = useState('');
   const [matricula, setMatricula] = useState('');
   const [nomeCompleto, setnomeCompleto] = useState(''); 
   const [dataNasc, setDataNasc] = useState(null);
@@ -46,7 +42,7 @@ const MemberShip = () => {
   const [telefone, setTelefone] = useState('');
   const [celular, setCelular] = useState('');
   const [postoDeTrabalho, setpostoDeTrabalho] = useState('');
-  const [orgaoExpeditor, setOrgaoExpeditor] = useState('');
+  const [orgaoExpedidor, setOrgaoExpedidor] = useState('');
   const [situacaoAtual, setSituacaoAtual] = useState('');
   
 
@@ -58,7 +54,7 @@ const MemberShip = () => {
   const estadoCivilList = ['Solteiro', 'Casado', 'Divorciado', 'Viúvo', 'União Estável'];
   const escolaridadeList = ['Ensino Fundamental', 'Ensino Médio', 'Ensino Superior', 'Pós-Graduação', 'Mestrado', 'Doutorado'];
   const cargoList = ['Advogado', 'Agente', 'Outro'];
-  const lotaçãoList = ['Sede', 'Out', 'Outro'];
+  const lotacaoList = ['Sede', 'Out', 'Outro'];
   const situacaoAtualList = ['Ativo', 'Inativo', 'Aposentado', 'Pensionista', 'Licenciado', 'Exonerado', 'Falecido'];
 
   const [dependentes, setDependentes] = useState([]);
@@ -138,7 +134,7 @@ const MemberShip = () => {
       dataDeNascimento,
       dataExpedicao,
       cargo,
-      lotação,
+      lotacao,
       matricula,
       nomeCompleto,
       naturalidade,
@@ -154,7 +150,7 @@ const MemberShip = () => {
       telefone,
       celular,
       postoDeTrabalho,
-      orgaoExpeditor,
+      orgaoExpedidor,
       situacaoAtual,
       dependentes
     };
@@ -162,6 +158,7 @@ const MemberShip = () => {
   
     
   }
+  
   return (
     <section className="container">
 
@@ -246,8 +243,8 @@ const MemberShip = () => {
           <div className='double-box'>
             <FieldText  
               label = "Órgão Expeditor"
-              value = {orgaoExpeditor} 
-              onChange={(e) => setOrgaoExpeditor(e.target.value)}/>
+              value = {orgaoExpedidor} 
+              onChange={(e) => setOrgaoExpedidor(e.target.value)}/>
 
             <FieldSelect
               label="UF"
@@ -346,9 +343,9 @@ const MemberShip = () => {
           />
           <FieldSelect
             label="Lotação"
-            value={lotação}
-            onChange={(e) => setLotação(e.target.value)}
-            options={lotaçãoList}
+            value={lotacao}
+            onChange={(e) => setlotacao(e.target.value)}
+            options={lotacaoList}
           />
 
           <FieldText
