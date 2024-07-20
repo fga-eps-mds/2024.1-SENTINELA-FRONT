@@ -9,6 +9,7 @@ import FieldNumber from '../../../Components/FieldNumber';
 import Checklist from '../../../Components/Checklist';
 import PrimaryButton from '../../../Components/PrimaryButton';
 import { ToggleButton, Radio, RadioGroup, FormControlLabel } from '@mui/material'; 
+import { createUser } from '../../../Services/userService';
 
 const Caduser = () => {
     //Dados a serem armazenados
@@ -40,6 +41,25 @@ const Caduser = () => {
     const handlePerfilChange = (event) => {
         setPerfilSelecionado(event.target.value);
     };
+
+    const handleSubmit = async () => {
+        const userData = {
+            name: nomeCompleto,
+            email: email,
+            phone: celular,
+            status: login === 'Ativo', // Convertendo status de login para boolean
+            role: perfilSelecionado, // Assumindo que perfilSelecionado é o ID da role
+            accessSectors: acessos, // Incluindo os setores de acesso
+        
+        };
+    try{
+        const response = await createUser(userData);
+        console.log('Usuário criado com sucesso:', response);
+        // Lógica adicional após a criação do usuário
+    } catch (error) {
+        console.error('Erro ao criar usuário', error);
+    }
+    };    
 //Configuração da página
     return (
         <section className="container">
@@ -108,9 +128,7 @@ const Caduser = () => {
 
                 <PrimaryButton
                     text='Cadastrar'
-                    onClick={() => {
-                        // Lógica para lidar com o clique do botão de cadastro
-                    }}
+                    onClick={handleSubmit}
                 />
             </div>
         </section>
