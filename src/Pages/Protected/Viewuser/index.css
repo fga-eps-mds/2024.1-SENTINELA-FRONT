@@ -120,7 +120,11 @@
         background-color: #EAE3D7;
     }
 
+    .double-box{
+        display: grid;
+        grid-template-columns: .5fr .5fr;
 
+    }
 
     h1{
         font-weight: 800;
