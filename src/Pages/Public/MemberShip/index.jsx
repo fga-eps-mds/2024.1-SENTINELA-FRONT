@@ -369,36 +369,39 @@ const MemberShip = () => {
                 </div>
 
                 {dependentes.map((dependent, index) => (
-                  <div className='dependentBox' key={index}>
-                  <h3>Dependente {index+1} adicionado</h3>
-                  <div className='dependentContainer'>
-                    <FieldText 
-                      label="Nome Completo"
-                      value={dependent.nomeCompletoDependente}
-                    />
-                    
-                    <DataSelect 
-                      label="Data de Nascimento"
-                      
-                    />
+                  <div>
+                    <h3 id='dependentTitle'>Dependente {index+1}</h3>
+                    <div className='dependentBox' key={index}>
+                      <div className='section-dependent-form'>
+                        <FieldText 
+                          label="Nome Completo"
+                          value={dependent.nomeCompletoDependente}
+                        />
+                        
+                        <DataSelect 
+                          label="Data de Nascimento"
+                          
+                        />
 
-                    <FieldText 
-                      label="Parentesco"
-                      value={dependent.parentesco}
-                    />
+                        <FieldText 
+                          label="Parentesco"
+                          value={dependent.parentesco}
+                        />
 
-                    <FieldText 
-                      label="CPF"
-                      value={dependent.cpfDependente}
-                    />
+                        <FieldText 
+                          label="CPF"
+                          value={dependent.cpfDependente}
+                        />
 
-                    <FieldText 
-                      label="Celular"
-                      value={dependent.celularDependente}
-                    />
+                        <FieldText 
+                          label="Celular"
+                          value={dependent.celularDependente}
+                        />
+                      </div>
+                        <PrimaryButton text="Remover Dependente" onClick={() => handleRemoveDependent(index)} />
+                    </div>
                   </div>
-                    <PrimaryButton text="Remover Dependente" onClick={() => handleRemoveDependent(index)} />
-                  </div>
+                  
                 ))}
               </div>
             )}

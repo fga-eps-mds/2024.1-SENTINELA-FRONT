@@ -109,8 +109,15 @@
     }
 
     .dependentBox{
-        background-color: #341f143e;
-        border-radius: 5px;
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        border-radius: 15px;
+
+        background-color: #ae883cab;
+        margin-top: 1rem;
+        padding: 1rem;
     }
 
     .dependentContainer{
