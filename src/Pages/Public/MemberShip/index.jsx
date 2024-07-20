@@ -122,6 +122,46 @@ const MemberShip = () => {
     <SideButton key="sobre" text="Sobre" />,
   ];
 
+  const handleSubmit = () => {
+    console.log('handleSubmit called');
+    const formData = {
+      email,
+      sexo,
+      estadoCivil,
+      tipoSanguineo,
+      uf_naturalidade,
+      uf_orgao,
+      uf_endereco,
+      escolaridade,
+      dataContratacao,
+      dataDeNascimento,
+      dataExpedicao,
+      cargo,
+      lotação,
+      matricula,
+      nomeCompleto,
+      dataNasc,
+      naturalidade,
+      rg,
+      orgao,
+      cpf,
+      nomeDaMae,
+      nomeDoPai,
+      cep,
+      cidade,
+      logradouro,
+      complemento,
+      telefone,
+      celular,
+      postoDeTrabalho,
+      orgaoExpeditor,
+      situacaoAtual,
+      dependentes
+    };
+  
+    console.log('Form data:', formData);
+    console.log(JSON.stringify(formData, null, 2));}
+
   return (
     <section className="container">
 
@@ -409,6 +449,8 @@ const MemberShip = () => {
               </div>
             )}
           </div>
+          <PrimaryButton text="ENVIAR SOLICITAÇÃO"
+                          onCLick={handleSubmit}/>
       </div>
     </section>
   );
