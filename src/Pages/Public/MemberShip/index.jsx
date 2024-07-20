@@ -16,6 +16,7 @@ import PrimaryButton from "../../../Components/PrimaryButton";
 
 
 const MemberShip = () => {
+  console.log('MemberShip called');
   const [email, setEmail] = useState('');
   const [sexo, setSexo] = useState('');
   const [estadoCivil, setEstadoCivil] = useState('');
@@ -62,7 +63,7 @@ const MemberShip = () => {
 
   const [dependentes, setDependentes] = useState([]);
   const [showDependentForm, setShowDependentForm] = useState(false);
-  const [currentDependent, setCurrentDependent] = useState({ nomeCompletoDependente: '', dataDeNascimento: '', parentesco: '' , CPF: '', celular: ''});
+  const [currentDependent, setCurrentDependent] = useState({ nomeCompletoDependente: '', dataNasc: '', parentesco: '' , cpfDependente: '', celularDependente: ''});
   
  
   
@@ -88,7 +89,7 @@ const MemberShip = () => {
 
   const handleSaveDependent = () => {
     setDependentes([...dependentes, currentDependent]);
-    setCurrentDependent({ nomeCompletoDependente: '', dataNasc: '', parentesco: '' });
+    setCurrentDependent({ nomeCompletoDependente: '', dataNasc: '', parentesco: '',cpfDependente: '', celularDependente: '' });
     setShowDependentForm(true);
   };
 
@@ -140,7 +141,6 @@ const MemberShip = () => {
       lotação,
       matricula,
       nomeCompleto,
-      dataNasc,
       naturalidade,
       rg,
       orgao,
@@ -160,7 +160,8 @@ const MemberShip = () => {
     };
   
     console.log('Form data:', formData);
-    console.log(JSON.stringify(formData, null, 2));}
+    console.log(JSON.stringify(formData, null, 2));
+    }
 
   return (
     <section className="container">
@@ -449,8 +450,7 @@ const MemberShip = () => {
               </div>
             )}
           </div>
-          <PrimaryButton text="ENVIAR SOLICITAÇÃO"
-                          onCLick={handleSubmit}/>
+          <button onClick={() => handleSubmit()}>ENVIAR SOLICITAÇÃO</button>
       </div>
     </section>
   );
