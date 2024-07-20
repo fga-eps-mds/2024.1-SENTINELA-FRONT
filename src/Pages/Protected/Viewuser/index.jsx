@@ -8,10 +8,10 @@ import FieldSelect from "../../../Components/FieldSelect";
 import FieldNumber from '../../../Components/FieldNumber';
 import Checklist from '../../../Components/Checklist';
 import PrimaryButton from '../../../Components/PrimaryButton';
+import SecondaryButton from '../../../Components/SecondaryButton'
 import { ToggleButton, Radio, RadioGroup, FormControlLabel } from '@mui/material'; 
-import { createUser } from '../../../Services/userService';
 
-const Caduser = () => {
+const Viewuser = () => {
     //Dados a serem armazenados
     const [nomeCompleto, setnomeCompleto] = useState(''); //Armazena o nome completo da pessoa cadastrada
     const [celular, setCelular] = useState(''); //Armazena o número de celular da pessoa cadastrada
@@ -42,25 +42,7 @@ const Caduser = () => {
     const handlePerfilChange = (event) => {
         setPerfilSelecionado(event.target.value);
     };
-
-    const handleSubmit = async () => {
-        const userData = {
-            name: nomeCompleto,
-            email: email,
-            phone: celular,
-            status: login === 'Ativo', // Convertendo status de login para boolean
-            role: perfilSelecionado, // Assumindo que perfilSelecionado é o ID da role
-            accessSectors: acessos, // Incluindo os setores de acesso
-        
-        };
-    try{
-        const response = await createUser(userData);
-        console.log('Usuário criado com sucesso:', response);
-        // Lógica adicional após a criação do usuário
-    } catch (error) {
-        console.error('Erro ao criar usuário', error);
-    }
-    };    
+    
 //Configuração da página
     return (
         <section className="container">
@@ -69,7 +51,7 @@ const Caduser = () => {
             </div>
 
             <div className='forms-container'>
-                <h1>Cadastro de usuário</h1>
+                <h1>Visualização de usuário</h1>
 
                 <h3>Dados Pessoais</h3>
                 <FieldText
@@ -99,7 +81,6 @@ const Caduser = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
-
                 <div className='ToggleButton'>
                     <ToggleButton variant="Setores de Acesso" onClick={toggleChecklistVisibility}>
                     Setores de Acesso
@@ -129,13 +110,26 @@ const Caduser = () => {
                     ))}
                 </RadioGroup>
 
-                <PrimaryButton
-                    text='Cadastrar'
-                    onClick={handleSubmit}
-                />
+                <div className='double-buttons'>
+                    
+                    <SecondaryButton
+                        text='Cancelar'
+                        onClick={() => {
+                            // Lógica para lidar com o clique do botão de cadastro
+                        }}
+                    />
+
+                    <PrimaryButton
+                        text='Salvar'
+                        onClick={() => {
+                            // Lógica para lidar com o clique do botão de cadastro
+                        }}
+                    />
+                </div>
+                
             </div>
         </section>
     );
 };
 
-export default Caduser;
+export default Viewuser;

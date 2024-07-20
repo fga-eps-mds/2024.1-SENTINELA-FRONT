@@ -9,7 +9,7 @@
         display:flex;
     }
     label{
-        color: #332117!important;
+        color: #332117;
     }
     .forms-container{
         margin: 1rem;
@@ -18,10 +18,6 @@
         display: inherit;
         justify-content: center;
         flex-direction: column;
-    }
-
-    .forms-container button{
-        width: 100%;
     }
 
     .teste{
@@ -45,27 +41,26 @@
     }
     .double-buttons{
         display: contents;
-        width: 100%;
         grid-template-columns: 0.5fr .3fr;
     }
     .ToggleButton button{
         display: inherit;
         width: 100%;
-
+        color: #332117;
         background-color: #EAE3D7;
     }
 
     h1{
         font-weight: 800;
         margin-bottom: 3rem;
-        color: #332117!important;
+        color: #332117;
     }
     
     h3{
         font-weight: 400;
         margin-left: 1rem;
         margin-top: 3rem;
-        color: #332117!important;
+        color: #332117;
     }
     
     #addDependentBttn{
@@ -87,10 +82,6 @@
         flex-direction: column;
     }
     
-    .forms-container button{
-        width: 100%;
-    }
-
     .section-form{
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -98,7 +89,7 @@
 
     label{
 
-        color: #332117!important;
+        color: #332117;
     }
 
     .teste{
@@ -121,13 +112,11 @@
     .double-buttons button {
         flex: 1; /* Faz com que os botões ocupem o espaço disponível igualmente */
         height: 40px;
-
     }
     
     .ToggleButton button{
         display: inherit;
         width: 100%;
-        color: #332117;
         background-color: #EAE3D7;
     }
 
@@ -136,14 +125,14 @@
     h1{
         font-weight: 800;
         margin-bottom: 3rem;
-        color: #332117!important;
+        color: #332117;
     }
     
     h3{
         font-weight: 400;
         margin-left: 1rem;
         margin-top: 3rem;
-        color: #332117!important;
+        color: #332117;
     }
     
     #addDependentBttn{
