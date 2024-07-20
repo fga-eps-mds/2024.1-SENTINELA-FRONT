@@ -35,7 +35,9 @@
     }
     
     .double-box{
-        display: inherit;
+        display: contents;
+        grid-template-columns: 0.7fr .7fr;
+
     }
     
     h1{
@@ -56,7 +58,7 @@
     }
 }
 
-@media screen and (min-width:1081px){
+@media screen and (min-width:700px){
     .container {
         display:flex;
     }
