@@ -20,6 +20,10 @@
         flex-direction: column;
     }
 
+    .forms-container button{
+        width: 100%;
+    }
+
     .teste{
         margin: 2rem;
         width: 50%;
@@ -41,6 +45,7 @@
     }
     .double-buttons{
         display: contents;
+        width: 100%;
         grid-template-columns: 0.5fr .3fr;
     }
     .ToggleButton button{
@@ -82,6 +87,10 @@
         flex-direction: column;
     }
     
+    .forms-container button{
+        width: 100%;
+    }
+
     .section-form{
         display: grid;
         grid-template-columns: 1fr 1fr;
