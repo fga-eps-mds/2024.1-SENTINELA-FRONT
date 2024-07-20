@@ -1,16 +1,16 @@
 import PropTypes from "prop-types";
+import theme from '../../Styles/global';
 import { Button } from "@mui/material";
 
-const rgbaValue01 = `rgba(174, 136, 60, 0.1);`;
-
 export default function SideButton ({ itemKey, text, onClick }) {
+
   return (
     <Button
     onClick={onClick}
       key={itemKey}
       sx={{
         "&amp;:hover": {
-          backgroundColor: rgbaValue01,
+          backgroundColor: theme.palette.content,
         },
       }}
     >
@@ -21,8 +21,8 @@ export default function SideButton ({ itemKey, text, onClick }) {
 
 
 SideButton.propTypes = {
-  itemKey: PropTypes.string.isRequired,
+  itemKey: PropTypes.string,
   text: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
 };
 

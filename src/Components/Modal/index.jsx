@@ -4,9 +4,11 @@ import PropTypes from "prop-types";
 import { Alert, AlertTitle } from "@mui/material";
 import SecondaryButton from "../SecondaryButton";
 import { useNavigate } from "react-router-dom";
+import theme from '../../Styles/global';
 
 export default function Modal({ show, children, text, width }) {
   const navigate = useNavigate();
+
   if (!show) {
     return null;
   }
@@ -18,15 +20,15 @@ export default function Modal({ show, children, text, width }) {
     <div className="modal-overlay">
       <div className="modal">
         <Alert
-          severity="success"
+          severity="success" 
           variant="filled"
           sx={{
-            backgroundColor: "#AE883C",
+            backgroundColor: theme.pallete.button,
             "& .MuiAlertTitle-root": {
-              fontFamily: "Noto Sans, sans-serif",
+              fontFamily: theme.typography.fontFamilyPrimary,
             },
             "& .MuiAlert-message": {
-              fontFamily: "Overpass, sans-serif",
+              fontFamily: theme.typography.fontFamilySecondary,
             },
             width:"270px",
           }}

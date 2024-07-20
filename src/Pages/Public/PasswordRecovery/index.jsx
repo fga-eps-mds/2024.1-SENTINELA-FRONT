@@ -28,7 +28,7 @@ export default function PasswordRecovery() {
   };
 
   const buttons = [
-    <SideButton key="login" text="Login" onClick={handleLoginPage} />,
+    <SideButton key="login" text="Login" onClick={() => handleLoginPage()} />,
     <SideButton key="filiacao" text="Filiação" />,
     <SideButton key="sobre" text="Sobre" />,
   ];
@@ -38,13 +38,13 @@ export default function PasswordRecovery() {
       <SideBar buttons={buttons} />
       <Card className={"customcard"}>
         <LabeledTextField
-          label="MATRÍCULA"
-          placeholder="Digite sua matrícula"
+          label="EMAIl"
+          placeholder="Digite seu email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <SecondaryButton text="Voltar" onClick={handleLoginPage} width="400px"/>
-        <PrimaryButton text="Recuperar senha" onClick={openModal} />
+        <SecondaryButton text="Voltar" onClick={() => handleLoginPage()} maxWidth="400px"/>
+        <PrimaryButton text="Recuperar senha" onClick={() => openModal()} maxWidth="400px"/>
       </Card>
 
       <Modal show={showModal} onClose={closeModal} text="ok" width="270px">

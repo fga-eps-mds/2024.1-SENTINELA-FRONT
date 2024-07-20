@@ -21,7 +21,7 @@ const Home = () => {
             Bem vindo {user.nomeCompleto}
         </div>
 
-        <button text="Entrar" onClick={handleLogout} > SAIR </button>
+        <button onClick={() => handleLogout()} > SAIR </button>
       </div>
     );
   };

@@ -1,6 +1,7 @@
 .card {
   background-color: #eae3d7;
-  width: 500px;
+  max-width: 500px;
+  width: 90%;
   height: 690px;
   border-radius: 20px;
   display: flex;
@@ -11,6 +12,7 @@
 
 .area-card {
   flex: 1;
+  height: 100vh;
   display: flex;
   flex-direction: row;
   justify-content: center;

@@ -26,6 +26,7 @@ export default function Login() {
     navigate("/passwordrecovery");
   };
 
+
   const buttons = [
     <SideButton key="login" text="Login" />,
     <SideButton key="filiacao" text="Filiação" />,
@@ -53,12 +54,12 @@ export default function Login() {
           <UnderlinedTextButton
             key="recupera-senha"
             text="Esqueci a senha"
-            onClick={handlePasswordRecovery}
+            onClick={() => handlePasswordRecovery()}
           />
         </div>
-        <SecondaryButton text="Filiar-me ao sindicato" width="400px"/>
+        <SecondaryButton text="Filiar-me ao sindicato" maxWidth="400px" />
 
-        <PrimaryButton text="Entrar" onClick={handleLogin} />
+        <PrimaryButton text="Entrar" onClick={() => handleLogin()} maxWidth="400px" />
       </Card>
     </div>
   );
