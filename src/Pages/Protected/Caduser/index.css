@@ -1,4 +1,6 @@
 @media screen and (max-width: 1080px) {
+
+    
     .bar-container{
         display: none;
     }
@@ -9,7 +11,16 @@
     
     .forms-container{
         margin: 1rem;
-        width: 100%;
+        width: 90%;
+        
+        display: inherit;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .teste{
+        margin: 2rem;
+        width: 50%;
         
         display: inherit;
         justify-content: center;
@@ -48,7 +59,7 @@
     
     .forms-container{
         margin: 3.5rem;
-        width: 100%;
+        width: 90%;
         
         display: inherit;
         justify-content: center;
@@ -59,10 +70,18 @@
         display: grid;
         grid-template-columns: 1fr 1fr;
     }
+    .teste{
+        margin: 1rem;
+        width: 70%;
+        
+        display: inherit;
+        justify-content: safe;
+        flex-direction: column;
+    }
     
     .double-box{
         display: grid;
-        grid-template-columns: 2.3fr .7fr;
+        grid-template-columns: 0.7fr .7fr;
     }
     
     h1{

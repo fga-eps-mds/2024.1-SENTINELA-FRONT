@@ -7,9 +7,10 @@ import SideButton from "../../../Components/SideButton";
 import FieldText from "../../../Components/FieldText"
 import FieldSelect from "../../../Components/FieldSelect"
 import FieldNumber from '../../../Components/FieldNumber';
-import Checklist from '../../../Components/Checklist'
-
+import Checklist from '../../../Components/Checklist';
+import PrimaryButton from '../../../Components/PrimaryButton';
 import { useFetcher } from 'react-router-dom';
+import { Button, Container, FormControl, RadioGroup, ToggleButton } from '@mui/material';
 
 
 const Caduser = () =>{
@@ -19,6 +20,7 @@ const Caduser = () =>{
     const [email,setEmail] = useState('')
     const [acessos, setAcessos] = useState([])
 
+    
     const setoresAcesso =[
         'Convênio',
         'Cadastro',
@@ -26,6 +28,13 @@ const Caduser = () =>{
         'Juridico'
     ]
    
+    const perfil = [
+        'Administrativo',
+        'Diretoria',
+        'Jurídico',
+        'Colaborador'
+    ]
+
     const buttons = [
         <SideButton key="home" text="Pagina Inicial" />,
         <SideButton key="cadastros" text="Cadastros" />,
@@ -34,7 +43,6 @@ const Caduser = () =>{
     const handleChangeLogin = (event) => {
         setLogin(event.target.value);
     };
-    console.log({acessos});
 return( 
     <section className="container">
 
@@ -73,14 +81,26 @@ return(
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
             />
-            
-            <Checklist
-                items = {setoresAcesso}
-                value={acessos}
-                onChange={setAcessos}
-            />
-           
+
+            <ToggleButton variant = "Setores de Acesso">Setores de Acesso</ToggleButton>
+            <div className= 'teste'>
+                <Checklist
+                    items = {setoresAcesso}
+                    value={acessos}
+                    onChange={setAcessos}
+                />
             </div>
+
+            <h3>Perfil</h3>
+
+
+
+
+                {/* <PrimaryButton
+                    text='Cadastrar'
+                    onClick={'_'}
+                /> */}
+        </div>
             
     </section>
     );

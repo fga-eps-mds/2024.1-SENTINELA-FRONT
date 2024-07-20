@@ -14,6 +14,7 @@ export default function LabeledTextField ({ label, placeholder, type, value, onC
       value={value}
       onChange={onChange}
       sx={{
+        background:  "#EAE3D7",
         width: "400px",
         fontFamily: "Noto Sans",
         marginTop: "33px",
