@@ -1,18 +1,30 @@
 import SideBar from "../../../Components/SideBar";
 import "./index.css";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext} from "react";
 import SideButton from "../../../Components/SideButton";
 import FieldText from "../../../Components/FieldText";
 import FieldNumber from "../../../Components/FieldNumber";
 import { useAuth } from "../../../Context/auth";
+import { useNavigate } from "react-router-dom";
+import AuthContext from "../../../Context/auth";
 import { APIUsers } from "../../../Services/BaseService";
 
 const ProfileUpdate = () => {
+  const context = useContext(AuthContext);
+  const navigate = useNavigate(); 
+
 
     const { user } = useAuth();
     const storagedUserString = localStorage.getItem('@App:user'); // Usuario logado
     let storagedUser = {};
     storagedUser = JSON.parse(storagedUserString); // Usuario logado => JSON
+
+    const handleLogout = () => {
+      context.Logout();
+      navigate("/")
+    };
+   
+
 
     const [nome, setNome] = useState(storagedUser.user ? storagedUser.user.name : '');
     const [celular, setCelular] = useState(storagedUser.user ? storagedUser.user.phone : '');
@@ -23,15 +35,17 @@ const ProfileUpdate = () => {
     const buttons = [
       <SideButton key="login" text="Pagina Inicial" />,
       <SideButton key="filiacao" text="Cadastro" />, 
-      <h2>Voce está logado <br />como {nome} </h2>
+      <h2 className="profile-status" >Voce está logado <br />como {nome} </h2>,
+      <button className="btn-logout" text="Entrar" onClick={handleLogout} > SAIR </button>
+      
     ];
 
     return user && (
       <section className="container">    
             <SideBar buttons={buttons} />
             <div className='campos-container'>
-              <h1> Visualização de usuário </h1>
-              <h3> Dados pessoais </h3>        
+              <h3 className="profile-view"> Visualização de usuário </h3>
+              <h4 className="personal-data"> Dados pessoais </h4>        
               <div className='section-campo'>
                 <FieldText 
                   label="Nome*"
