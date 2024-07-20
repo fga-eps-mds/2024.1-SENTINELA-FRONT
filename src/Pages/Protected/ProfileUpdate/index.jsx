@@ -1,25 +1,29 @@
 import SideBar from "../../../Components/SideBar";
 import "./index.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SideButton from "../../../Components/SideButton";
 import FieldText from "../../../Components/FieldText";
 import FieldNumber from "../../../Components/FieldNumber";
 import { useAuth } from "../../../Context/auth";
-import axios from 'axios';
+import { APIUsers } from "../../../Services/BaseService";
 
 const ProfileUpdate = () => {
 
     const { user } = useAuth();
+    const storagedUserString = localStorage.getItem('@App:user'); // Usuario logado
+    let storagedUser = {};
+    storagedUser = JSON.parse(storagedUserString); // Usuario logado => JSON
 
+    const [nome, setNome] = useState(storagedUser.user ? storagedUser.user.name : '');
+    const [celular, setCelular] = useState(storagedUser.user ? storagedUser.user.phone : '');
+    const [login, setLogin] = useState(storagedUser.user ? storagedUser.user.status : '');
+    const [email, setEmail] = useState(storagedUser.user ? storagedUser.user.email : '');
+    
+  
     const buttons = [
       <SideButton key="login" text="Pagina Inicial" />,
       <SideButton key="filiacao" text="Cadastro" />
     ];
-
-    const [nome, setNome] = useState('');
-    const [celular, setCelular] = useState('');
-    const [login, setLogin] = useState('');
-    const [email, setEmail] = useState('');
 
     return user && (
       <section className="container">
@@ -40,7 +44,7 @@ const ProfileUpdate = () => {
                   label="Celular"
                   value={celular}
                   onChange={(e) => setCelular(e.target.value)}
-                  format="(##) 9 ####-####"
+                  format="(##) #####-####"
                   
                 />
                 <FieldText 
