@@ -36,10 +36,20 @@
     
     .double-box{
         display: contents;
-        grid-template-columns: 0.7fr .7fr;
+        grid-template-columns: 0.5fr .5fr;
 
     }
-    
+    .double-buttons{
+        display: contents;
+        grid-template-columns: 0.5fr .3fr;
+    }
+    .ToggleButton button{
+        display: inherit;
+        width: 100%;
+
+        background-color: #EAE3D7;
+    }
+
     h1{
         font-weight: 800;
         margin-bottom: 3rem;
@@ -91,12 +101,29 @@
         flex-direction: column;
     }
     
-
-    .double-box{
-        display: grid;
-        grid-template-columns: 0.7fr .7fr;
+    .double-buttons {
+        display: flex;
+        justify-content: space-between; /* Distribui os botões igualmente no espaço disponível */
+        align-items: end; /* Alinha os botões verticalmente */
+        gap: 20px;
     }
     
+    
+    .double-buttons button {
+        flex: 1; /* Faz com que os botões ocupem o espaço disponível igualmente */
+        height: 40px;
+
+    }
+    
+    .ToggleButton button{
+        display: inherit;
+        width: 100%;
+        color: #332117;
+        background-color: #EAE3D7;
+    }
+
+
+
     h1{
         font-weight: 800;
         margin-bottom: 3rem;

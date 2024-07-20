@@ -81,11 +81,12 @@ const Viewuser = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
-
-                <ToggleButton variant="Setores de Acesso" onClick={toggleChecklistVisibility}>
+                <div className='ToggleButton'>
+                    <ToggleButton variant="Setores de Acesso" onClick={toggleChecklistVisibility}>
                     Setores de Acesso
-                </ToggleButton>
-
+                    </ToggleButton>
+                </div>
+                
                 {checklistVisible && (
                     <div className='teste'>
                         <Checklist
