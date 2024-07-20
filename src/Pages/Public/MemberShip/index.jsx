@@ -11,7 +11,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'; // Importa o ad
 import FieldText from "../../../Components/FieldText"
 import DataSelect from "../../../Components/DataSelect"
 import FieldSelect from "../../../Components/FieldSelect"
-import { useFetcher } from 'react-router-dom';
+import { createMemberShip  } from '../../../Services/MemberShipService';
 import PrimaryButton from "../../../Components/PrimaryButton";
 
 
@@ -123,7 +123,7 @@ const MemberShip = () => {
     <SideButton key="sobre" text="Sobre" />,
   ];
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log('handleSubmit called');
     const formData = {
       email,
@@ -158,11 +158,10 @@ const MemberShip = () => {
       situacaoAtual,
       dependentes
     };
+    createMemberShip(formData);
   
-    console.log('Form data:', formData);
-    console.log(JSON.stringify(formData, null, 2));
-    }
-
+    
+  }
   return (
     <section className="container">
 
@@ -365,7 +364,7 @@ const MemberShip = () => {
           <FieldSelect
             label="Situação Atual"
             value={situacaoAtual}
-            onChange={(e) => setSituacaoAtual(e.target.value)}
+            onChange={handleChangeSituacaoAtual}
             options={situacaoAtualList}
           />
 
