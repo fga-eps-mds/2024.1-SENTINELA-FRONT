@@ -2,6 +2,7 @@ import React from 'react';
 import { createBrowserRouter, RouterProvider, BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from '../Pages/Public/Login';
 import Home from '../Pages/Protected/Home';
+import Supplier from '../Pages/Protected/Supplier';
 
 const ProtectedRoutes = () => {
   return (
@@ -9,6 +10,7 @@ const ProtectedRoutes = () => {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/cadastrofornecedor" element={<Supplier />} />
       </Routes>
     </BrowserRouter>
   );
