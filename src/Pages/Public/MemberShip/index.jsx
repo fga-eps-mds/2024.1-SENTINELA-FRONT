@@ -398,7 +398,10 @@ const MemberShip = () => {
                           value={dependent.celularDependente}
                         />
                       </div>
-                        <PrimaryButton text="Remover Dependente" onClick={() => handleRemoveDependent(index)} />
+                        <PrimaryButton text="Remover Dependente"
+                                       onClick={() => handleRemoveDependent(index)}
+                                       
+                                       />
                     </div>
                   </div>
                   
