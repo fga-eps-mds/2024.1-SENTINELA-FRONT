@@ -22,15 +22,16 @@ const ProfileUpdate = () => {
   
     const buttons = [
       <SideButton key="login" text="Pagina Inicial" />,
-      <SideButton key="filiacao" text="Cadastro" />
+      <SideButton key="filiacao" text="Cadastro" />, 
+      <h2>Voce está logado <br />como {nome} </h2>
     ];
 
     return user && (
-      <section className="container">
-          <SideBar buttons={buttons} />
+      <section className="container">    
+            <SideBar buttons={buttons} />
             <div className='campos-container'>
               <h1> Visualização de usuário </h1>
-              <h3> Dados pessoais </h3>
+              <h3> Dados pessoais </h3>        
               <div className='section-campo'>
                 <FieldText 
                   label="Nome*"
@@ -45,7 +46,6 @@ const ProfileUpdate = () => {
                   value={celular}
                   onChange={(e) => setCelular(e.target.value)}
                   format="(##) #####-####"
-                  
                 />
                 <FieldText 
                   label="Login*"

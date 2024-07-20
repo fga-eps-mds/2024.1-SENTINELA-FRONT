@@ -1,12 +1,15 @@
 .container{
     display: flex;
     font-family: 'Noto Sans';
+
 }
 .campos-container{
     margin: 3.5rem;
     line-height: 2;
     height: 350px; 
     width: 100%;
+    margin-top: 15rem;
+
     
     display: inherit;
     justify-content: center;
@@ -15,8 +18,9 @@
 }
 .section-campo{
     display: grid;
-    grid-template-columns: 2.3fr 0fr;
+    grid-template-columns: 2.3fr 0f;
     color: #EAE3D7;
+    margin-left: 0.8rem;
 
 }
 .section-campo input { 
@@ -33,23 +37,33 @@
     display: grid;
     grid-template-columns: 2.3fr 2.5fr;
     color: #EAE3D7;
+    margin-left: 0.8rem;
 }
 .double-box input {
     background-color: #EAE3D7; 
     color: #000000; 
-
     border: 1px solid #EAE3D7; 
     border-top-left-radius: 5%; 
     border-top-right-radius: 5%;
    
 }
+
 h1{
     font-weight: 800;
     margin-bottom: 3rem;
+    margin-top: -15rem;
+}
+
+h2{ 
+    font-weight: 400;
+    font-size: medium;
+    margin-left: 10rem;
+    margin-top: 12rem;
+
 }
 
 h3{
     font-weight: 400;
-    margin-left: 1rem;
-    margin-top: 3rem;
+    margin-left: 1.5rem;
+    margin-top: -2rem;
 }
