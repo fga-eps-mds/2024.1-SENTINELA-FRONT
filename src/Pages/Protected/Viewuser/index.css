@@ -95,13 +95,17 @@
     }
     
     .double-buttons {
-        display: grid;
-        grid-template-columns: 0.3fr 5fr; /* Distribui igualmente o espaço entre as duas colunas */
+        display: flex;
+        justify-content: space-between; /* Distribui os botões igualmente no espaço disponível */
+        align-items: end; /* Alinha os botões verticalmente */
+        gap: 20px;
     }
     
     .double-buttons button {
-        height: 50px; /* Altura fixa dos botões */
+        flex: 1; /* Faz com que os botões ocupem o espaço disponível igualmente */
+        height: 40px;
     }
+    
     
 
 
