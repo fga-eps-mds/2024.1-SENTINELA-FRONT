@@ -3,6 +3,7 @@ import "./index.css";
 import React, { useState } from "react";
 import SideButton from "../../../Components/SideButton";
 import FieldText from "../../../Components/FieldText";
+import FieldNumber from "../../../Components/FieldNumber";
 import { useAuth } from "../../../Context/auth";
 import axios from 'axios';
 
@@ -35,10 +36,11 @@ const ProfileUpdate = () => {
                 />
               </div>
               <div className='double-box'>
-                <FieldText 
+                <FieldNumber 
                   label="Celular"
                   value={celular}
                   onChange={(e) => setCelular(e.target.value)}
+                  format="(##) 9 ####-####"
                   
                 />
                 <FieldText 
