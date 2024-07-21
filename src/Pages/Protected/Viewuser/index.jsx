@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import "./index.css";
 import "../../../index.css";
 import SideBar from "../../../Components/SideBar";
@@ -81,7 +81,7 @@ const Viewuser = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
-                <div className='ToggleButton'>
+                {/* <div className='ToggleButton'>
                     <ToggleButton variant="Setores de Acesso" onClick={toggleChecklistVisibility}>
                     Setores de Acesso
                     </ToggleButton>
@@ -95,7 +95,7 @@ const Viewuser = () => {
                             onChange={setAcessos}
                         />
                     </div>
-                )}
+                )} */}
 
                 <h3>Perfil</h3>
 

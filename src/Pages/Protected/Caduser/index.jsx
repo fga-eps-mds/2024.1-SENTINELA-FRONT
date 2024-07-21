@@ -12,6 +12,8 @@ import { ToggleButton, Radio, RadioGroup, FormControlLabel } from '@mui/material
 import {createUser, getRoles } from '../../../Services/userService';
 
 const Caduser = () => {
+import { createUser } from '../../../Services/userService';
+export default function Caduser(){
     //Dados a serem armazenados
     const [nomeCompleto, setnomeCompleto] = useState(''); //Armazena o nome completo da pessoa cadastrada
     const [celular, setCelular] = useState(''); //Armazena o número de celular da pessoa cadastrada
@@ -138,6 +140,7 @@ const Caduser = () => {
                         />
                     </div>
                 )} */}
+                )} */}
 
                 <h3>Perfil</h3>
 
@@ -159,6 +162,4 @@ const Caduser = () => {
             </div>
         </section>
     );
-};
-
-export default Caduser;
+}

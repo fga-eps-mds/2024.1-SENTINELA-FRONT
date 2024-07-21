@@ -86,11 +86,27 @@
         justify-content: center;
         flex-direction: column;
     }
-    
+    .double-box{
+        display: contents;
+        grid-template-columns: 0.5fr .5fr;
+
+    }
     .forms-container button{
         width: 100%;
     }
 
+    .double-box{
+        display: grid;
+        grid-template-columns: .5fr .5fr;
+
+    }
+
+    .ToggleButton button::after{
+        display: block;
+        position: absolute;
+        right: 0;
+    
+    }
     .section-form{
         display: grid;
         grid-template-columns: 1fr 1fr;
