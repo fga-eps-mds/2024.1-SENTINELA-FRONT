@@ -5,6 +5,7 @@ import Home from '../Pages/Protected/Home';
 import Caduser from '../Pages/Protected/Caduser';
 import Viewuser from '../Pages/Protected/Viewuser';
 import Cadastros from '../Pages/Protected/Cadastros';
+import ListUser from '../Pages/Protected/Listuser';
 
 const ProtectedRoutes = () => {
   return (
@@ -15,6 +16,7 @@ const ProtectedRoutes = () => {
         <Route path ="/caduser" element={<Caduser/>}/>
         <Route path = "/viewuser" element={<Viewuser/>}/>
         <Route path="/cadastros" element={<Cadastros/>}/>
+        <Route path="/listauser" element={<ListUser/>}/>
       </Routes>
     </BrowserRouter>
   );

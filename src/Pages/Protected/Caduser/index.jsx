@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import "./index.css";
 import "../../../index.css";
 import SideBar from "../../../Components/SideBar";
@@ -10,8 +10,7 @@ import Checklist from '../../../Components/Checklist';
 import PrimaryButton from '../../../Components/PrimaryButton';
 import { ToggleButton, Radio, RadioGroup, FormControlLabel } from '@mui/material'; 
 import { createUser } from '../../../Services/userService';
-
-const Caduser = () => {
+export default function Caduser(){
     //Dados a serem armazenados
     const [nomeCompleto, setnomeCompleto] = useState(''); //Armazena o nome completo da pessoa cadastrada
     const [celular, setCelular] = useState(''); //Armazena o número de celular da pessoa cadastrada
@@ -137,5 +136,3 @@ const Caduser = () => {
         </section>
     );
 };
-
-export default Caduser;
