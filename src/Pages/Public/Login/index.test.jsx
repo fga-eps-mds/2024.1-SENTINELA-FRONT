@@ -15,7 +15,7 @@ describe("Login", () => {
 
     expect(screen.getByText("Login")).toBeInTheDocument();
   });
-  it("should update email and password fields", () => {
+  it("should update email field", () => {
     render(
       <BrowserRouter>
         <Login />
@@ -23,12 +23,22 @@ describe("Login", () => {
     );
 
     const emailField = screen.getByPlaceholderText("Digite seu email");
-    const passwordField = screen.getByPlaceholderText("Digite sua senha");
 
     fireEvent.change(emailField, { target: { value: "test@example.com" } });
-    fireEvent.change(passwordField, { target: { value: "password123" } });
 
     expect(emailField.value).toBe("test@example.com");
+  });
+  it("should update password field", () => {
+    render(
+      <BrowserRouter>
+        <Login />
+      </BrowserRouter>
+    );
+
+    const passwordField = screen.getByPlaceholderText("Digite sua senha");
+
+    fireEvent.change(passwordField, { target: { value: "password123" } });
+
     expect(passwordField.value).toBe("password123");
   });
 });
