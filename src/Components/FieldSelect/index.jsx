@@ -6,7 +6,7 @@ import 'dayjs/locale/pt-br'; // Importa a localização desejada para o dayjs
 
 function FieldSelect({ label, value, onChange, options }) {
   return (
-    <FormControl fullWidth sx={{ margin: '.7rem', borderRadius: '5px', width: 'inherit'}}>
+    <FormControl variant="filled" sx={{ margin: '.7rem', borderRadius: '5px', width: 'inherit'}}>
       <InputLabel id={`label-${label}`}>{label}</InputLabel>
       <Select
         labelId={`label-${label}`}
@@ -15,18 +15,31 @@ function FieldSelect({ label, value, onChange, options }) {
         onChange={onChange}
         label={label}
         sx={{
-          '& .MuiSelect-select': {
-            borderColor: theme.palette.custom.main
-          },
-          '& .MuiOutlinedInput-notchedOutline': {
-            borderColor: theme.palette.custom.main,
-          },
-          '&:hover .MuiOutlinedInput-notchedOutline': {
-            borderColor: theme.palette.custom.main,
-          },
-          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-            borderColor: theme.palette.custom.main,
-          }
+            '& .MuiOutlinedInput-notchedOutline': {
+              borderColor: theme.palette.custom.main,
+            },
+            '&:hover .MuiOutlinedInput-notchedOutline': {
+              borderColor: theme.palette.custom.main,
+            },
+            '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+              borderColor: theme.palette.custom.main,
+            },
+            '& .MuiOutlinedInput-input': {
+              backgroundColor: '#F0F0F0',
+              color: theme.palette.custom.main,
+            },
+            '& .MuiSelect-selectMenu': {
+              backgroundColor: '#fff',
+              border: '1px solid #ced4da',
+            },
+            '& .MuiMenuItem-root': {
+              backgroundColor: '#f5f5f5',
+              color: '#3f51b5',
+            },
+            '& .MuiMenuItem-root:hover': {
+              backgroundColor: '#e0e0e0',
+            },
+            fontFamily: theme.typography.fontFamily
         }}
       >
         {options.map((option) => (
