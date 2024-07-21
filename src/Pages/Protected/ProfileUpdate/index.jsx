@@ -49,13 +49,14 @@ const ProfileUpdate = () => {
     const [celular, setCelular] = useState(storagedUser.user ? storagedUser.user.phone : '');
     const [login, setLogin] = useState(storagedUser.user ? storagedUser.user.status : '');
     const [email, setEmail] = useState(storagedUser.user ? storagedUser.user.email : '');
+    //setores de acesso
     
   
     const buttons = [
       <SideButton key="login" text="Pagina Inicial" />,
       <SideButton key="filiacao" text="Cadastro" />, 
       <h2 className="profile-status" >Voce está logado <br />como {nome} </h2>,
-      <button className="btn-logout" text="Entrar" onClick={handleLogout} > SAIR </button>
+      <button className="btn-logout" text="Entrar" onClick={handleLogout}  > SAIR </button>
       
     ];
 
@@ -95,12 +96,25 @@ const ProfileUpdate = () => {
                   disabled={true}
                 />
               </div>
-              <div className="button-primary">
-                <PrimaryButton text="Salvar" onClick={handleSubmit} />
+              <div className='section-campo'>
+                <FieldText 
+                  label="Setores de acesso*"
+                  value={""}
+                  disabled={true}
+                />
               </div>
-              <div className="button-secondary">
-                <SecondaryButton text="Cancelar" onClick={handleCancel} />
-              </div>
+              <div className='section-doublebtn'>
+                    
+                    <SecondaryButton
+                        text='Cancelar'
+                        onClick={handleCancel}
+                    />
+
+                    <PrimaryButton
+                        text='Salvar'
+                        onClick={handleSubmit}
+                    />
+                </div>
             </div>
         </section>
       );

@@ -30,7 +30,6 @@
     border: 1px solid #EAE3D7; 
     border-top-left-radius: 5%; 
     border-top-right-radius: 5%;
-
 }
 
 .double-box{
@@ -44,8 +43,7 @@
     color: #000000; 
     border: 1px solid #EAE3D7; 
     border-top-left-radius: 5%; 
-    border-top-right-radius: 5%;
-   
+    border-top-right-radius: 5%;   
 }
 
 
@@ -59,18 +57,32 @@
     font-weight: 400;
     margin-left: 1.5rem;
     margin-top: -2rem;
-
 }
 
 .profile-status{ 
-    font-weight: 400;
+    font-size: 18px; 
+    font-weight: 600;
     font-size: medium;
     margin-left: 10rem;
     margin-top: 12rem;
 }
-.button-primary{
-    margin-left: 35.5rem;
+
+.btn-logout{
+    background-color: transparent;
+    font-family: 'Noto Sans';
+    font-size: 14px; 
+    font-weight: 600;    
 }
-.button-secondary{
+
+.section-doublebtn {
+    display: flex;
+    justify-content: space-between; 
+    align-items: end; 
+    gap: 30px;
     margin-left: 1.5rem;
+    margin-right: 0.5rem;
+}
+.section-doublebtn button {
+    flex: 1;
+    height: 44px;
 }
