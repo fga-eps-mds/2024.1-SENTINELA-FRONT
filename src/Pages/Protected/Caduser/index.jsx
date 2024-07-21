@@ -11,8 +11,6 @@ import PrimaryButton from '../../../Components/PrimaryButton';
 import { ToggleButton, Radio, RadioGroup, FormControlLabel } from '@mui/material'; 
 import {createUser, getRoles } from '../../../Services/userService';
 
-const Caduser = () => {
-import { createUser } from '../../../Services/userService';
 export default function Caduser(){
     //Dados a serem armazenados
     const [nomeCompleto, setnomeCompleto] = useState(''); //Armazena o nome completo da pessoa cadastrada
@@ -140,7 +138,7 @@ export default function Caduser(){
                         />
                     </div>
                 )} */}
-                )} */}
+               
 
                 <h3>Perfil</h3>
 
