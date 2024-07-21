@@ -8,6 +8,9 @@ import { useAuth } from "../../../Context/auth";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../../Context/auth";
 import { APIUsers } from "../../../Services/BaseService";
+import PrimaryButton from "../../../Components/PrimaryButton";
+import SecondaryButton from "../../../Components/SecondaryButton";
+
 
 const ProfileUpdate = () => {
   const context = useContext(AuthContext);
@@ -23,9 +26,25 @@ const ProfileUpdate = () => {
       context.Logout();
       navigate("/")
     };
-   
 
+    const handleSubmit = async (e) => {
+      await APIUsers.patch(`users/patch/${storagedUser.user._id}`, 
+        {
+          phone: celular
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${storagedUser.token}`
+          }
+        }
+      );
+      setCelular(celular);
+    };
 
+    const handleCancel = () => {
+      navigate("/home")
+    };
+    
     const [nome, setNome] = useState(storagedUser.user ? storagedUser.user.name : '');
     const [celular, setCelular] = useState(storagedUser.user ? storagedUser.user.phone : '');
     const [login, setLogin] = useState(storagedUser.user ? storagedUser.user.status : '');
@@ -75,6 +94,12 @@ const ProfileUpdate = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={true}
                 />
+              </div>
+              <div className="button-primary">
+                <PrimaryButton text="Salvar" onClick={handleSubmit} />
+              </div>
+              <div className="button-secondary">
+                <SecondaryButton text="Cancelar" onClick={handleCancel} />
               </div>
             </div>
         </section>

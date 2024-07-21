@@ -5,9 +5,10 @@ import { Button } from "@mui/material";
 
 const rgbaValue01 = `rgba(174, 136, 60, 0.1);`;
 
-export default function SecondaryButton ({ text }) {
+export default function SecondaryButton ({ text, onClick }) {
   return (
     <Button
+      onClick={onClick}
       variant="contained"
       sx={{
         fontFamily: "Noto Sans, sans-serif", // Definindo a fonte para Noto Sans Display Medium
@@ -29,4 +30,5 @@ export default function SecondaryButton ({ text }) {
 
 SecondaryButton.propTypes = {
   text: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired
 };

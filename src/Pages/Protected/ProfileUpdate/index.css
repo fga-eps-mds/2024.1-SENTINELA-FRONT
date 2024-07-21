@@ -68,7 +68,9 @@
     margin-left: 10rem;
     margin-top: 12rem;
 }
-
-
-
-
+.button-primary{
+    margin-left: 35.5rem;
+}
+.button-secondary{
+    margin-left: 1.5rem;
+}
