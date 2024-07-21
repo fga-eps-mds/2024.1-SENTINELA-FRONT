@@ -47,4 +47,7 @@ export default function LabeledTextField ({ label, placeholder, type, value, onC
 LabeledTextField.propTypes = {
   label: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
 };

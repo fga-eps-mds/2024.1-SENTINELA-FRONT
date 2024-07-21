@@ -10,7 +10,7 @@ const ProtectedRoutes = () => {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/cadastrofornecedor" element={<Supplier />} />
+        <Route path="/supplier" element={<Supplier />} />
       </Routes>
     </BrowserRouter>
   );
