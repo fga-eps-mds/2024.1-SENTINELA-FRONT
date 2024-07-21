@@ -101,6 +101,12 @@
 
     }
 
+    .ToggleButton button::after{
+        display: block;
+        position: absolute;
+        right: 0;
+    
+    }
     .section-form{
         display: grid;
         grid-template-columns: 1fr 1fr;

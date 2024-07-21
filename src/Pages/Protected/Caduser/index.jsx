@@ -98,7 +98,7 @@ export default function Caduser(){
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
-
+{/* 
                 <div className='ToggleButton'>
                     <ToggleButton variant="Setores de Acesso" onClick={toggleChecklistVisibility}>
                     Setores de Acesso
@@ -113,7 +113,7 @@ export default function Caduser(){
                             onChange={setAcessos}
                         />
                     </div>
-                )}
+                )} */}
 
                 <h3>Perfil</h3>
 
