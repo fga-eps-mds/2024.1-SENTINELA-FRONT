@@ -4,6 +4,8 @@ import Login from '../Pages/Public/Login';
 import Home from '../Pages/Protected/Home';
 import Caduser from '../Pages/Protected/Caduser';
 import Viewuser from '../Pages/Protected/Viewuser';
+import Cadastros from '../Pages/Protected/Cadastros';
+
 const ProtectedRoutes = () => {
   return (
     <BrowserRouter>
@@ -12,6 +14,7 @@ const ProtectedRoutes = () => {
         <Route path="/home" element={<Home />} />
         <Route path ="/caduser" element={<Caduser/>}/>
         <Route path = "/viewuser" element={<Viewuser/>}/>
+        <Route path="/cadastros" element={<Cadastros/>}/>
       </Routes>
     </BrowserRouter>
   );
