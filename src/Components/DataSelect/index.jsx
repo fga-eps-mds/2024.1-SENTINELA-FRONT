@@ -13,6 +13,12 @@ export default function DataSelect({label, value, onChange}) {
             renderInput={(params) => <TextField {...params} variant="filled" />}
             sx={{
               margin: '.7rem',
+              '& .MuiPickersCalendarHeader-root': {
+                backgroundColor: '#ffffff',
+              },
+              '& .MuiPickersCalendarHeader-label': {
+                color: '#3f51b5',
+              },
             }}
           />
         </LocalizationProvider>

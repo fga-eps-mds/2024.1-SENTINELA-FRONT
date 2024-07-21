@@ -25,7 +25,7 @@ function FieldSelect({ label, value, onChange, options }) {
               borderColor: theme.palette.custom.main,
             },
             '& .MuiOutlinedInput-input': {
-              backgroundColor: '#F0F0F0',
+              backgroundColor: '#f5f5f5', //fundo
               color: theme.palette.custom.main,
             },
             '& .MuiSelect-selectMenu': {
