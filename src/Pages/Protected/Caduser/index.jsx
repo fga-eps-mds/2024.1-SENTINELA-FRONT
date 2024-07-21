@@ -135,4 +135,4 @@ export default function Caduser(){
             </div>
         </section>
     );
-};
+}
