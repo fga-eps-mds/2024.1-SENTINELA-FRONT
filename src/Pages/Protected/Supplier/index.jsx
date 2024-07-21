@@ -60,7 +60,53 @@ const Supplier = () => {
         < SideButton key="financeiro" text="Financeiro" />
     ];
 
-    
+    const handleSubmit = async () => {
+        console.log('handleSubmit called');
+        const formData = {
+            nome,
+            tipoPessoa,
+            cpf,
+            statusFornecedor,
+            naturezaTransacao,
+            email,
+            nomeContato,
+            celular,
+            telefone,
+            cep,
+            cidade,
+            uf_endereco,
+            logradouro,
+            complemento,
+            nomeBanco,
+            agencia,
+            numeroBanco,
+            dv,
+            chavePix
+        };
+        createdSupplier(formData);
+    }
+
+    return (
+        <section className="container">
+
+        <div className="bar-container">
+            <SideBar buttons={buttons} />
+        </div>
+
+        <div className="forms-container">
+
+            <h1>Cadastro de fornecedor</h1>
+
+            <h3>Dados pessoais</h3>
+
+            <div className="section-form">
+                Fie
+            </div>
+
+        </div>
+
+        </section>
+    )
 
 }
 
