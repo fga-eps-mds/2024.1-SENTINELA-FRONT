@@ -128,41 +128,7 @@ const MemberShip = () => {
   ];
 
   const handleSubmit = async () => {
-    const erros = {}
-
-    if (!email) erros.email = 1;
-    if (!sexo) erros.sexo = 1;
-    if (!estadoCivil) erros.estadoCivil = 1;
-    if (!tipoSanguineo) erros.tipoSanguineo = 1;
-    if (!uf_naturalidade) erros.uf_naturalidade = 1;
-    if (!uf_orgao) erros.uf_orgao = 1;
-    if (!uf_endereco) erros.uf_endereco = 1;
-    if (!escolaridade) erros.escolaridade = 1;
-    if (!dataContratacao) erros.dataContratacao = 1;
-    if (!dataDeNascimento) erros.dataDeNascimento = 1;
-    if (!dataExpedicao) erros.dataExpedicao = 1;
-    if (!cargo) erros.cargo = 1;
-    if (!lotacao) erros.lotacao = 1;
-    if (!matricula) erros.matricula = 1;
-    if (!nomeCompleto) erros.nomeCompleto = 1;
-    if (!naturalidade) erros.naturalidade = 1;
-    if (!rg) erros.rg = 1;
-    if (!orgao) erros.orgao = 1;
-    if (!cpf) erros.cpf = 1;
-    if (!nomeDaMae) erros.nomeDaMae = 1;
-    if (!nomeDoPai) erros.nomeDoPai = 1;
-    if (!cep) erros.cep = 1;
-    if (!cidade) erros.cidade = 1;
-    if (!logradouro) erros.logradouro = 1;
-    if (!complemento) erros.complemento = 1;
-    if (!telefone) erros.telefone = 1;
-    if (!celular) erros.celular = 1;
-    if (!postoDeTrabalho) erros.postoDeTrabalho = 1;
-    if (!orgaoExpedidor) erros.orgaoExpedidor = 1;
-    if (!situacaoAtual) erros.situacaoAtual = 1;
     
-    console.log(Object.keys(erros).length);
-
     const formData = {
       email,
       sexo,
@@ -196,9 +162,41 @@ const MemberShip = () => {
       situacaoAtual,
       dependentes
     };
-    createMemberShip(formData);
-  
     
+    const erros = {}
+
+    if (!email) erros.email = 1;
+    if (!sexo) erros.sexo = 1;
+    if (!estadoCivil) erros.estadoCivil = 1;
+    if (!tipoSanguineo) erros.tipoSanguineo = 1;
+    if (!uf_naturalidade) erros.uf_naturalidade = 1;
+    if (!uf_orgao) erros.uf_orgao = 1;
+    if (!uf_endereco) erros.uf_endereco = 1;
+    if (!escolaridade) erros.escolaridade = 1;
+    if (!dataContratacao) erros.dataContratacao = 1;
+    if (!dataDeNascimento) erros.dataDeNascimento = 1;
+    if (!dataExpedicao) erros.dataExpedicao = 1;
+    if (!cargo) erros.cargo = 1;
+    if (!lotacao) erros.lotacao = 1;
+    if (!matricula) erros.matricula = 1;
+    if (!nomeCompleto) erros.nomeCompleto = 1;
+    if (!naturalidade) erros.naturalidade = 1;
+    if (!rg) erros.rg = 1;
+    if (!orgao) erros.orgao = 1;
+    if (!cpf) erros.cpf = 1;
+    if (!nomeDaMae) erros.nomeDaMae = 1;
+    if (!nomeDoPai) erros.nomeDoPai = 1;
+    if (!cep) erros.cep = 1;
+    if (!cidade) erros.cidade = 1;
+    if (!logradouro) erros.logradouro = 1;
+    if (!complemento) erros.complemento = 1;
+    if (!telefone) erros.telefone = 1;
+    if (!celular) erros.celular = 1;
+    if (!postoDeTrabalho) erros.postoDeTrabalho = 1;
+    if (!orgaoExpedidor) erros.orgaoExpedidor = 1;
+    if (!situacaoAtual) erros.situacaoAtual = 1;
+    
+    (Object.keys(erros).length > 0 ? alert("Certifique-se de que todos os campos estão preenchidos") : createMemberShip(formData));
   }
 
   return (
