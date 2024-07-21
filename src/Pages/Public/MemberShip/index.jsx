@@ -46,10 +46,8 @@ const MemberShip = () => {
   const [postoDeTrabalho, setpostoDeTrabalho] = useState('');
   const [orgaoExpedidor, setOrgaoExpedidor] = useState('');
   const [situacaoAtual, setSituacaoAtual] = useState('');
-  
-
-  
-
+    
+  //listas dos selects
   const tipoSanguineoList = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
   const sexoList = ['Masculino', 'Feminino', 'Outro'];
   const ufList = ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'];
@@ -63,8 +61,25 @@ const MemberShip = () => {
   const [showDependentForm, setShowDependentForm] = useState(false);
   const [currentDependent, setCurrentDependent] = useState({ nomeCompletoDependente: '', dataNasc: '', parentesco: '' , cpfDependente: '', celularDependente: ''});
   
- 
+  //máscaras
+  const mascaraCPF = (cpf) => {
+    return cpf
+      .replace(/\D/g, '') // Remove caracteres não numéricos
+      .replace(/(\d{3})(\d)/, '$1.$2') // Adiciona ponto após os três primeiros dígitos
+      .replace(/(\d{3})(\d)/, '$1.$2') // Adiciona ponto após os seis primeiros dígitos
+      .replace(/(\d{3})(\d{1,2})$/, '$1-$2'); // Adiciona traço após os nove primeiros dígitos
+  };
   
+  const mascaraTelefone = (telefone) => {
+    return telefone
+      .replace(/\D/g, '') // Remove caracteres não numéricos
+      .replace(/(\d{2})(\d)/, '($1) $2') // Adiciona parênteses ao redor do código de área
+      .replace(/(\d{4})(\d)/, '$1-$2'); // Adiciona traço após os quatro primeiros dígitos do telefone
+  };
+  
+  
+
+  //eventos
   const handleChangeUf = (event) => {
     setUfNaturalidade(event.target.value);
   };
@@ -197,6 +212,7 @@ const MemberShip = () => {
     if (!situacaoAtual) erros.situacaoAtual = 1;
     
     (Object.keys(erros).length > 0 ? alert("Certifique-se de que todos os campos estão preenchidos") : createMemberShip(formData));
+    console.log(JSON.stringify(formData))
   }
 
   return (
@@ -297,7 +313,7 @@ const MemberShip = () => {
           <FieldText
             label = "CPF" 
             value = {cpf}
-            onChange={(e) => setCpf(e.target.value)}
+            onChange={(e) => setCpf(mascaraCPF(e.target.value))}
           />
 
           <DataSelect
@@ -433,7 +449,7 @@ const MemberShip = () => {
                     <FieldText
                       label="CPF"
                       value={currentDependent.cpfDependente}
-                      onChange={(e) => handleDependentChange('cpfDependente', e.target.value)}
+                      onChange={(e) => handleDependentChange('cpfDependente', mascaraCPF(e.target.value))}
                     />
 
                     <FieldText
