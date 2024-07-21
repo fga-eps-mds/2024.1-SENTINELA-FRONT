@@ -87,7 +87,7 @@ const MemberShip = () => {
 
   const handleSaveDependent = () => {
     if ((!currentDependent.nomeCompletoDependente) || (!currentDependent.dataNasc) || (!currentDependent.parentesco) || (!currentDependent.cpfDependente) || (!currentDependent.celularDependente)) {
-      alert("DEU PAU");
+      alert("Certifique-se de que todos os campos estão preenchidos");
     }
 
     else{
@@ -130,36 +130,36 @@ const MemberShip = () => {
   const handleSubmit = async () => {
     const erros = {}
 
-    if (!email) erros.email = 'Campo de e-mail sem preenchimento';
-    if (!sexo) erros.sexo = 'Campo de sexo sem preenchimento';
-    if (!estadoCivil) erros.estadoCivil = 'Campo de estado civil sem preenchimento';
-    if (!tipoSanguineo) erros.tipoSanguineo = 'Campo de tipo sanguíneo sem preenchimento';
-    if (!uf_naturalidade) erros.uf_naturalidade = 'Campo de UF de naturalidade sem preenchimento';
-    if (!uf_orgao) erros.uf_orgao = 'Campo de UF do órgão sem preenchimento';
-    if (!uf_endereco) erros.uf_endereco = 'Campo de UF do endereço sem preenchimento';
-    if (!escolaridade) erros.escolaridade = 'Campo de escolaridade sem preenchimento';
-    if (!dataContratacao) erros.dataContratacao = 'Campo de data de contratação sem preenchimento';
-    if (!dataDeNascimento) erros.dataDeNascimento = 'Campo de data de nascimento sem preenchimento';
-    if (!dataExpedicao) erros.dataExpedicao = 'Campo de data de expedição sem preenchimento';
-    if (!cargo) erros.cargo = 'Campo de cargo sem preenchimento';
-    if (!lotacao) erros.lotacao = 'Campo de lotação sem preenchimento';
-    if (!matricula) erros.matricula = 'Campo de matrícula sem preenchimento';
-    if (!nomeCompleto) erros.nomeCompleto = 'Campo de nome completo sem preenchimento';
-    if (!naturalidade) erros.naturalidade = 'Campo de naturalidade sem preenchimento';
-    if (!rg) erros.rg = 'Campo de RG sem preenchimento';
-    if (!orgao) erros.orgao = 'Campo de órgão sem preenchimento';
-    if (!cpf) erros.cpf = 'Campo de CPF sem preenchimento';
-    if (!nomeDaMae) erros.nomeDaMae = 'Campo de nome da mãe sem preenchimento';
-    if (!nomeDoPai) erros.nomeDoPai = 'Campo de nome do pai sem preenchimento';
-    if (!cep) erros.cep = 'Campo de CEP sem preenchimento';
-    if (!cidade) erros.cidade = 'Campo de cidade sem preenchimento';
-    if (!logradouro) erros.logradouro = 'Campo de logradouro sem preenchimento';
-    if (!complemento) erros.complemento = 'Campo de complemento sem preenchimento';
-    if (!telefone) erros.telefone = 'Campo de telefone sem preenchimento';
-    if (!celular) erros.celular = 'Campo de celular sem preenchimento';
-    if (!postoDeTrabalho) erros.postoDeTrabalho = 'Campo de posto de trabalho sem preenchimento';
-    if (!orgaoExpedidor) erros.orgaoExpedidor = 'Campo de órgão expedidor sem preenchimento';
-    if (!situacaoAtual) erros.situacaoAtual = 'Campo de situação atual sem preenchimento';
+    if (!email) erros.email = 1;
+    if (!sexo) erros.sexo = 1;
+    if (!estadoCivil) erros.estadoCivil = 1;
+    if (!tipoSanguineo) erros.tipoSanguineo = 1;
+    if (!uf_naturalidade) erros.uf_naturalidade = 1;
+    if (!uf_orgao) erros.uf_orgao = 1;
+    if (!uf_endereco) erros.uf_endereco = 1;
+    if (!escolaridade) erros.escolaridade = 1;
+    if (!dataContratacao) erros.dataContratacao = 1;
+    if (!dataDeNascimento) erros.dataDeNascimento = 1;
+    if (!dataExpedicao) erros.dataExpedicao = 1;
+    if (!cargo) erros.cargo = 1;
+    if (!lotacao) erros.lotacao = 1;
+    if (!matricula) erros.matricula = 1;
+    if (!nomeCompleto) erros.nomeCompleto = 1;
+    if (!naturalidade) erros.naturalidade = 1;
+    if (!rg) erros.rg = 1;
+    if (!orgao) erros.orgao = 1;
+    if (!cpf) erros.cpf = 1;
+    if (!nomeDaMae) erros.nomeDaMae = 1;
+    if (!nomeDoPai) erros.nomeDoPai = 1;
+    if (!cep) erros.cep = 1;
+    if (!cidade) erros.cidade = 1;
+    if (!logradouro) erros.logradouro = 1;
+    if (!complemento) erros.complemento = 1;
+    if (!telefone) erros.telefone = 1;
+    if (!celular) erros.celular = 1;
+    if (!postoDeTrabalho) erros.postoDeTrabalho = 1;
+    if (!orgaoExpedidor) erros.orgaoExpedidor = 1;
+    if (!situacaoAtual) erros.situacaoAtual = 1;
     
     console.log(Object.keys(erros).length);
 
