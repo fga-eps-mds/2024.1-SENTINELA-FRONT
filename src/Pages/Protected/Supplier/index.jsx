@@ -51,7 +51,7 @@ export default function Supplier() {
   };
 
   const handleChangeUf_endereco = (event) => {
-    setUf_endereco(event.target.value);
+    setUfEndereco(event.target.value);
   };
 
   const buttons = [
