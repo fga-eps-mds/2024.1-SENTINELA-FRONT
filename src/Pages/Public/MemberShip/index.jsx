@@ -74,8 +74,9 @@ const MemberShip = () => {
     return telefone
       .replace(/\D/g, '') // Remove caracteres não numéricos
       .replace(/(\d{2})(\d)/, '($1) $2') // Adiciona parênteses ao redor do código de área
-      .replace(/(\d{4})(\d)/, '$1-$2'); // Adiciona traço após os quatro primeiros dígitos do telefone
+      .replace(/(\d{5})(\d)/, '$1-$2'); // Adiciona traço após os cinco primeiros dígitos do telefone
   };
+  
   
   
 
@@ -345,12 +346,12 @@ const MemberShip = () => {
           <FieldText
             label = "Celular" 
             value = {celular}
-            onChange={(e) => setCelular(e.target.value)}/>
+            onChange={(e) => setCelular(mascaraTelefone(e.target.value))}/>
 
           <FieldText
             label = "Telefone" 
             value = {telefone}
-            onChange={(e) => setTelefone(e.target.value)}/>
+            onChange={(e) => setTelefone(mascaraTelefone(e.target.value))}/>
         </div>
 
         <h3> Endereço </h3>
@@ -455,7 +456,7 @@ const MemberShip = () => {
                     <FieldText
                       label="Celular"
                       value={currentDependent.celularDependente}
-                      onChange={(e) => handleDependentChange('celularDependente', e.target.value)}
+                      onChange={(e) => handleDependentChange('celularDependente', mascaraTelefone(e.target.value))}
                     />        
                   </div>
                   <PrimaryButton text="Adicionar Dependente" onClick={handleSaveDependent} />
