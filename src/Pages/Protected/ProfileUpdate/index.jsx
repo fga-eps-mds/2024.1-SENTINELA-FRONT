@@ -96,7 +96,7 @@ const ProfileUpdate = () => {
                   disabled={true}
                 />
               </div>
-              <div className='section-campo'>
+              <div className='section-sector'>
                 <FieldText 
                   label="Setores de acesso*"
                   value={""}

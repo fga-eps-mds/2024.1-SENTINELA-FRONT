@@ -1,6 +1,18 @@
 .container{
     display: flex;
     font-family: 'Noto Sans';
+    color: #341F14;
+    
+
+}
+.profile-view{
+    font-size: 34px; 
+    font-weight: bold; 
+
+}
+
+.personal-data{
+    font-size: 24px;
 
 }
 .campos-container{
@@ -8,7 +20,8 @@
     line-height: 2;
     height: 350px; 
     width: 100%;
-    margin-top: 15rem;
+    margin-top: 20rem;
+    
 
     
     display: inherit;
@@ -21,15 +34,17 @@
     grid-template-columns: 2.3fr 0f;
     color: #EAE3D7;
     margin-left: 0.8rem;
+    font-size: 16px;
 
 }
-.section-campo input { 
+.section-campo input:disabled { 
     background-color: #EAE3D7; 
-    color: #000000; 
-
     border: 1px solid #EAE3D7; 
     border-top-left-radius: 5%; 
     border-top-right-radius: 5%;
+    font-family: 'Overpass';
+    font-size: 16px; 
+    font-weight: thin;
 }
 
 .double-box{
@@ -37,18 +52,22 @@
     grid-template-columns: 2.3fr 2.5fr;
     color: #EAE3D7;
     margin-left: 0.8rem;
+    font-size: 16px;
 }
 .double-box input {
     background-color: #EAE3D7; 
     color: #000000; 
     border: 1px solid #EAE3D7; 
     border-top-left-radius: 5%; 
-    border-top-right-radius: 5%;   
+    border-top-right-radius: 5%; 
+    font-family: 'Overpass';
+    font-size: 16px; 
+    font-weight: thin;
 }
 
 
 .profile-view{ 
-    font-weight: 800;
+    font-weight: bold;
     margin-bottom: 3rem;
     margin-top: -15rem;
 }
@@ -85,4 +104,23 @@
 .section-doublebtn button {
     flex: 1;
     height: 44px;
+}
+
+
+.section-sector{
+    display: grid;
+    grid-template-columns: 2.3fr 0f;
+    color: #DCD6CA;
+    margin-left: 0.8rem;
+    font-size: 16px;
+    font-family: 'Overpass';
+
+}
+.section-sector input { 
+    background-color: #DCD6CA; 
+    color: #000000; 
+
+    border: 1px solid #DCD6CA; 
+    border-top-left-radius: 5%; 
+    border-top-right-radius: 5%;
 }
