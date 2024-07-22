@@ -63,6 +63,10 @@ const ProfileUpdate = () => {
     const handleCancel = () => {
       navigate("/home")
     };
+
+    const handleHome = () => {
+      navigate("/home")
+    };
     
     const [nome, setNome] = useState('');
     const [celular, setCelular] = useState('');
@@ -76,8 +80,10 @@ const ProfileUpdate = () => {
     }, [])
   
     const buttons = [
-      <SideButton key="login" text="Pagina Inicial" />,
-      <SideButton key="filiacao" text="Cadastro" />, 
+      <SideButton key="home" text="PÁGINA INICIAL" onClick={handleHome}/>,
+      <SideButton key="filiacao" text="CADASTROS" />, 
+      <SideButton key="financeiro" text="FINANCEIRO" />, 
+      <SideButton key="beneficios" text="BENEFÍCIOS" />, 
       <h2 className="profile-status" >Voce está logado <br />como {nome} </h2>,
       <button className="btn-logout" text="Entrar" onClick={handleLogout}  > SAIR </button>
       
