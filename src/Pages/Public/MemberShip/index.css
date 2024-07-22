@@ -37,7 +37,9 @@
     }
     
     #addDependentBttn{
-        cursor: pointer
+        cursor: pointer;
+        display: flex;
+        align-items: center;
     }
 
     .dependentBox{
@@ -78,6 +80,13 @@
     .dependentContainer{
         display: grid;
         grid-template-columns: 1fr;
+    }
+
+    #envio{
+        margin-top: 1rem;
+        width: 100%; 
+        display: flex; 
+        justify-content: center
     }
 }
 
@@ -153,5 +162,12 @@
     .dependentContainer{
         display: grid;
         grid-template-columns: 1fr 1fr;
+    }
+
+    #envio{
+        margin-top: 1rem;
+        width: 100%; 
+        display: flex; 
+        justify-content: center
     }
 }

@@ -10,6 +10,8 @@ import FieldSelect from "../../../Components/FieldSelect"
 import { createMemberShip  } from '../../../Services/MemberShipService';
 import PrimaryButton from "../../../Components/PrimaryButton";
 import BasicDateField from '../../../Components/DateField';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { Box } from '@mui/material';
 
 const MemberShip = () => {
   console.log('MemberShip called');
@@ -433,7 +435,9 @@ const MemberShip = () => {
 
         </div>
           <div> 
-            <buttons id="addDependentBttn" onClick={handleAddDependent}><h3>Adicionar Dependente</h3></buttons>
+            <buttons id="addDependentBttn" onClick={handleAddDependent}>
+              <h3>Adicionar participantes <AddCircleOutlineIcon /></h3>
+            </buttons>
             {showDependentForm && (
               <div>
                 <div className='dependentToAdd'>
@@ -509,7 +513,10 @@ const MemberShip = () => {
               </div>
             )}
           </div>
-          <button onClick={() => handleSubmit()}>ENVIAR SOLICITAÇÃO</button>
+          <div id='envio'>
+            <PrimaryButton text="ENVIAR SOLICITAÇÃO" onClick={() => handleSubmit()} />
+          </div>
+
       </div>
     </section>
   );
