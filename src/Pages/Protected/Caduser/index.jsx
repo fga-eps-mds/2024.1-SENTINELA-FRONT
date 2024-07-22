@@ -69,17 +69,17 @@ export default function Caduser(){
         }
      };    
 
-     useEffect (()=>{
-        const loadRoles = async () => {
-            const roles = await getRoles()
-            setRoles(roles);
-        }  
-        loadRoles();
+    //  useEffect (()=>{
+    //     const loadRoles = async () => {
+    //         const roles = await getRoles()
+    //         setRoles(roles);
+    //     }  
+    //     loadRoles();
 
 
 
 
-     }, [])
+    //  }, [])
 
 
 
