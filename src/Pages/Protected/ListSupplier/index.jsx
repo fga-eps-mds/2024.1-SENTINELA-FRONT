@@ -1,32 +1,80 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./index";
 import SideBar from "../../../Components/SideBar";
 import PrimaryButton from "../../../Components/PrimaryButton";
 import LabeledTextField from "../../../Components/LabeledTextField";
-import SecondaryButton from "../../../Components/SecondaryButton";
 import SideButton from "../../../Components/SideButton";
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemText';
+import Divider from '@mui/material/Divider';
+//import { getUsers } from "../../../Services/userService";
+import ListItemText from '@mui/material/ListItemText';
 
 export default function ListSupplier() {
+  const buttons = [
+    <SideButton key="home" text="Página inicial" />,
+    <SideButton key="cadastros" text="Cadastros" />,
+    <SideButton key="financeiro" text="Financeiro" />,
+  ];
+  
+  const [suppliers, setSuppliers] = useState([]);
+  const [search, setSearch] = useState("");
+  const navigate = useNavigate();
 
-    const buttons = [
-        <SideButton key="home" text="Página inicial" />,
-        <SideButton key="cadastros" text="Cadastros" />,
-        <SideButton key="financeiro" text="Financeiro" />,
-      ];
+  /*useEffect(() => {
+    const fetchSuppliers = async () => {
+        const data = await getSuppliers
+    }
+  })*/
 
-    const [search, setSearch] = useState('');
-    const navigate = useNavigate();
 
-    const handleRegisterClick = () => {
-        navigate('/supplier');
-    };
 
-    return (
-        <section className="container">
-            <div className="bar-container">
+  const handleRegisterClick = () => {
+    navigate("/supplier");
+  };
 
+  const handleItemClick = (supplier) => {
+    navigate('/viewsupplier', { state: { supplier } });
+  };
+
+  const filteredSuppliers = suppliers.filter(supplier =>
+    supplier.name.toLowerCase().includes(search.toLowerCase())
+  );
+
+  return (
+    <section className="container">
+      <div className="bar-container">
+        <SideBar buttons={buttons} />
+      </div>
+
+      <div className="forms-container">
+        <h1>Lista de fornecedores</h1>
+        <div className="double-box">
+          <LabeledTextField
+            label="Pesquisar fornecedor"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <PrimaryButton
+            text="Cadastrar fornecedor"
+            onClick={() => handleRegisterClick}
+          />
+        </div>
+
+        <List>
+          {filteredSuppliers.map((supplier, index) => (
+            <div key={supplier._id}>
+              <ListItem>
+                <ListItemButton className="list-item" button onClick={() => handleItemClick(supplier)}>
+                    <ListItemText primary={supplier.name} />
+                </ListItemButton>
+              </ListItem>
+              {index < filteredSuppliers.lenght - 1 && <Divider />}
             </div>
-        </section>
-    )
+          ))}
+        </List>
+      </div>
+    </section>
+  );
 }

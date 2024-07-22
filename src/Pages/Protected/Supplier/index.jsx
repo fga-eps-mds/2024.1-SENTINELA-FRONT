@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import "./index.css";
+import "./index";
 import "../../../index.css";
 import SideBar from "../../../Components/SideBar";
 import SideButton from "../../../Components/SideButton";
 import FieldText from "../../../Components/FieldText";
 import FieldSelect from "../../../Components/FieldSelect";
 //import PrimaryButton from "../../../Components/PrimaryButton";
-import "dayjs/locale/pt-br";
+//import "dayjs/locale/pt-br";
 //import { createSupplier } from "../../../";
 
 //const Supplier = () => {
