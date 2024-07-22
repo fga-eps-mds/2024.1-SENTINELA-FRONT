@@ -62,7 +62,7 @@ export default function Supplier() {
 
   const handleSubmit = async () => {
     console.log("handleSubmit called");
-    const formData = {
+    const supplierData = {
       nome,
       tipoPessoa,
       cpf,
@@ -83,7 +83,7 @@ export default function Supplier() {
       dv,
       chavePix,
     };
-    createdSupplier(formData);
+    createdSupplier(supplierData);
   };
 
   return (
@@ -131,16 +131,17 @@ export default function Supplier() {
             options={naturezaTransacaoList}
           />
 
-          <FieldText
-            label="E-mail"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
         </div>
 
         <h3>Dados de Contato</h3>
 
         <div className="section-form">
+          <FieldText
+            label="E-mail"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+
           <FieldText
             label="Nome do contato"
             value={nomeContato}

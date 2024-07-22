@@ -103,16 +103,17 @@ export default function ViewSupplier() {
           options={naturezaTransacaoList}
         />
 
-        <FieldText
-          label="E-mail"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
       </div>
 
       <h3>Dados de Contato</h3>
 
       <div className="section-form">
+        <FieldText
+          label="E-mail"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
         <FieldText
           label="Nome do contato"
           value={nomeContato}
@@ -203,7 +204,7 @@ export default function ViewSupplier() {
 
       <div className='double-buttons'>
         <SecondaryButton
-            text='Cancelar'
+            text='Deletar'
             onClick={() => {
             }}
         />

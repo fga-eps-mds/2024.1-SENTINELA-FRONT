@@ -21,3 +21,9 @@ const ProtectedRoutes = () => {
 };
 
 export default ProtectedRoutes;
+
+/*
+        <Route path="/supplier" element={<Supplier />} />
+        <Route path="/listsupplier" element={<ListSupplier />} />
+        <Route path="/viewsupplier" element={<ViewSupplier />} />
+*/

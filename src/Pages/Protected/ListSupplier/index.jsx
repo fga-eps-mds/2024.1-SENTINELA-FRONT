@@ -4,12 +4,13 @@ import SideBar from "../../../Components/SideBar";
 import PrimaryButton from "../../../Components/PrimaryButton";
 import LabeledTextField from "../../../Components/LabeledTextField";
 import SideButton from "../../../Components/SideButton";
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemText';
-import Divider from '@mui/material/Divider';
-//import { getUsers } from "../../../Services/userService";
-import ListItemText from '@mui/material/ListItemText';
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemText";
+import Divider from "@mui/material/Divider";
+//import { getSupplierForm } from "../../../Services/supplierService";
+import ListItemText from "@mui/material/ListItemText";
+//import { APISuppliers, APIUsers } from "../../../Services/BaseService";
 
 export default function ListSupplier() {
   const buttons = [
@@ -17,28 +18,46 @@ export default function ListSupplier() {
     <SideButton key="cadastros" text="Cadastros" />,
     <SideButton key="financeiro" text="Financeiro" />,
   ];
-  
+
   const [suppliers, setSuppliers] = useState([]);
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
-  /*useEffect(() => {
-    const fetchSuppliers = async () => {
-        const data = await getSuppliers
-    }
-  })*/
+ /* useEffect(() => {
+    const fetchSupplierForm = async () => {
+      try {
+        const storagedSupplierString = localStorage.getItem("@App:supplier");
+        const storagedSupplier = JSON.parse(storagedSupplierString);
 
+        const response = await APISuppliers.get("suppliers", {
+          headers: {
+            Authorization: 'Bearer ${storagedSupplier.token}',
+          },
+        });
 
+        const data = response.data;
+        if (Array.isArray(data)) {
+          setSuppliers(data);
+        } else {
+          console.error("Os dados recebidos não são um array.");
+        }
+      } catch (error) {
+        console.error("Erro ao buscar fornecedores:", error);
+      }
+    };
+
+    fetchSupplierForm();
+  }, []);*/
 
   const handleRegisterClick = () => {
     navigate("/supplier");
   };
 
   const handleItemClick = (supplier) => {
-    navigate('/viewsupplier', { state: { supplier } });
+    navigate("/viewsupplier", { state: { supplier } });
   };
 
-  const filteredSuppliers = suppliers.filter(supplier =>
+  const filteredSuppliers = suppliers.filter((supplier) =>
     supplier.name.toLowerCase().includes(search.toLowerCase())
   );
 
@@ -66,8 +85,12 @@ export default function ListSupplier() {
           {filteredSuppliers.map((supplier, index) => (
             <div key={supplier._id}>
               <ListItem>
-                <ListItemButton className="list-item" button onClick={() => handleItemClick(supplier)}>
-                    <ListItemText primary={supplier.name} />
+                <ListItemButton
+                  className="list-item"
+                  button
+                  onClick={() => handleItemClick(supplier)}
+                >
+                  <ListItemText primary={supplier.name} />
                 </ListItemButton>
               </ListItem>
               {index < filteredSuppliers.lenght - 1 && <Divider />}
