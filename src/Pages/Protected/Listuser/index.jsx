@@ -10,6 +10,9 @@ import ListItemButton from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import { getUsers } from "../../../Services/userService";
 import ListItemText from '@mui/material/ListItemText';
+import AuthContext from "../../../Context/auth";
+import { APIUsers } from "../../../Services/BaseService";
+
 
 
 export default function ListUser() {
@@ -17,13 +20,26 @@ export default function ListUser() {
     const [search, setSearch] = useState('');
     const navigate = useNavigate();
     
-    useEffect(() => {
+   useEffect(() => {
         const fetchUsers = async () => {
-            const data = await getUsers();
-            if (Array.isArray(data)) {
-                setUsers(data);
-            } else {
-                console.error('Os dados recebidos não são um array.');
+            try {
+                const storagedUserString = localStorage.getItem('@App:user');
+                const storagedUser = JSON.parse(storagedUserString);
+
+                const response = await APIUsers.get('users', {
+                    headers: {
+                        'Authorization': `Bearer ${storagedUser.token}`
+                    }
+                });
+
+                const data = response.data;
+                if (Array.isArray(data)) {
+                    setUsers(data);
+                } else {
+                    console.error('Os dados recebidos não são um array.');
+                }
+            } catch (error) {
+                console.error('Erro ao buscar usuários:', error);
             }
         };
 
