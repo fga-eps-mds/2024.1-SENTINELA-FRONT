@@ -123,4 +123,65 @@
     border: 1px solid #DCD6CA; 
     border-top-left-radius: 5%; 
     border-top-right-radius: 5%;
+
+
+    
 }
+
+.side-menu {
+    background-color: #eae3d7;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 380px;
+    height: 100vh;
+    padding: 85px;
+  }
+  
+  .logo {
+    width: 107px;
+    height: 107px;
+  }
+  
+  .sentinela {
+    margin-top: -30px;
+    width: 350px;
+    height: auto;
+  }
+  
+  .menu-lateral {
+    margin-top: 20px;
+  }
+  
+  .hidden-menu {
+    display: none;
+  }
+  
+  @media (max-width: 768px) {
+    .hidden-menu {
+      display: block;
+      padding-left: 10px;
+      z-index: 100;
+      cursor: pointer;
+  
+      svg {
+        font-size: 40px;
+        color: #3d160d;
+      }
+    }
+  
+    .side-menu {
+      width: 100%;
+      position:fixed;
+      z-index: 99;
+      left: -100%;
+      transition: left 0.3s;
+    }
+  
+    .side-bar.open {
+      left: 0;
+    }
+  }
+
+  

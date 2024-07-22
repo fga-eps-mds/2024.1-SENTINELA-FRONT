@@ -62,7 +62,7 @@ const ProfileUpdate = () => {
 
     return user && (
       <section className="container">    
-            <SideBar buttons={buttons} />
+            <SideBar className='side-menu' buttons={buttons} />
             <div className='campos-container'>
               <h3 className="profile-view"> Visualização de usuário </h3>
               <h4 className="personal-data"> Dados pessoais </h4>        
@@ -105,16 +105,16 @@ const ProfileUpdate = () => {
               </div>
               <div className='section-doublebtn'>
                     
-                    <SecondaryButton
-                        text='Cancelar'
-                        onClick={handleCancel}
-                    />
+                <SecondaryButton
+                  text='Cancelar'
+                  onClick={handleCancel}
+                />
 
-                    <PrimaryButton
-                        text='Salvar'
-                        onClick={handleSubmit}
-                    />
-                </div>
+                <PrimaryButton
+                  text='Salvar'
+                  onClick={handleSubmit}
+                />
+              </div>
             </div>
         </section>
       );
