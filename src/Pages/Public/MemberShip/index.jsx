@@ -63,21 +63,32 @@ const MemberShip = () => {
   
   //máscaras
   const mascaraCPF = (cpf) => {
-    return cpf
-      .replace(/\D/g, '') // Remove caracteres não numéricos
+    let formattedCPF = cpf.replace(/\D/g, ''); // Remove caracteres não numéricos
+    if (formattedCPF.length > 11) formattedCPF = formattedCPF.slice(0, 11); // Limita a 11 dígitos numéricos
+    
+    return formattedCPF
       .replace(/(\d{3})(\d)/, '$1.$2') // Adiciona ponto após os três primeiros dígitos
       .replace(/(\d{3})(\d)/, '$1.$2') // Adiciona ponto após os seis primeiros dígitos
       .replace(/(\d{3})(\d{1,2})$/, '$1-$2'); // Adiciona traço após os nove primeiros dígitos
   };
   
   const mascaraTelefone = (telefone) => {
-    return telefone
-      .replace(/\D/g, '') // Remove caracteres não numéricos
-      .replace(/(\d{2})(\d)/, '($1) $2') // Adiciona parênteses ao redor do código de área
-      .replace(/(\d{5})(\d)/, '$1-$2'); // Adiciona traço após os cinco primeiros dígitos do telefone
+    let formattedTelefone = telefone.replace(/\D/g, ''); // Remove caracteres não numéricos
+    if (formattedTelefone.length > 11) {
+      formattedTelefone = formattedTelefone.slice(0, 11); // Limita a 11 dígitos numéricos
+    }
+    return formattedTelefone
+      .replace(/^(\d{2})(\d)/g, '($1) $2') // Adiciona parênteses em volta dos dois primeiros dígitos
+      .replace(/(\d{4,5})(\d{4})$/, '$1-$2'); // Adiciona traço entre o quarto ou quinto e o último grupo de dígitos
   };
   
-  
+  const mascaraCEP = (cep) => {
+    let formattedCEP = cep.replace(/\D/g, ''); // Remove caracteres não numéricos
+    if (formattedCEP.length > 8) {
+      formattedCEP = formattedCEP.slice(0, 8); // Limita a 8 dígitos numéricos
+    }
+    return formattedCEP.replace(/(\d{5})(\d)/, '$1-$2'); // Adiciona traço após os cinco primeiros dígitos
+  };
   
 
   //eventos
@@ -359,7 +370,7 @@ const MemberShip = () => {
         <FieldText
             label = "CEP" 
             value = {cep}
-            onChange={(e) => setCep(e.target.value)}/>
+            onChange={(e) => setCep(mascaraCEP(e.target.value))}/>
 
         <FieldText
             label = "Cidade" 
