@@ -19,13 +19,22 @@ export async function userLogin (email, password) {
 }
 
 export const getUsers = async () => {
-    try {
-      const response = await APIUsers.get('/users');
-      return response.data;
-    } catch (error) {
-      console.error('Erro ao buscar usuários:', error);
+  try {
+    const token = localStorage.getItem('@App:token');
+    if (!token) {
+      throw new Error('No token found');
     }
-  };
+    console.log('Token being used:', token); // Log para depuração
+    const response = await APIUsers.get('/users', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao buscar usuários:', error);
+  }
+};
   
   export const getUserById = async (id) => {
     try {
