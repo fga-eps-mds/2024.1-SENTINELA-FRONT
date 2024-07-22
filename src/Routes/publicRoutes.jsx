@@ -3,7 +3,10 @@ import { createBrowserRouter, RouterProvider, BrowserRouter, Route, Routes } fro
 import Login from '../Pages/Public/Login';
 import Home from '../Pages/Protected/Home';
 import MemberShip from '../Pages/Public/MemberShip';
-
+import Caduser from '../Pages/Protected/Caduser';
+import Viewuser from '../Pages/Protected/Viewuser';
+import ListUser from '../Pages/Protected/Listuser';
+import Cadastros from '../Pages/Protected/Cadastros';
 const PublicRoutes = () => {
   return (
     <BrowserRouter>
@@ -11,6 +14,10 @@ const PublicRoutes = () => {
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="/filiacao" element={<MemberShip />} />
+        <Route path ="/caduser" element={<Caduser/>}/>
+        <Route path = "/viewuser" element={<Viewuser/>}/>
+        <Route path="/listauser" element={<ListUser/>}/>
+        <Route path="/cadastros" element={<Cadastros/>}/>
       </Routes>
     </BrowserRouter>
   );
