@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SideBar from "../../../Components/SideBar";
 import PrimaryButton from "../../../Components/PrimaryButton";
@@ -6,45 +6,30 @@ import LabeledTextField from "../../../Components/LabeledTextField";
 import SideButton from "../../../Components/SideButton";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemText';
-import Divider from '@mui/material/Divider';
-import { getUsers } from "../../../Services/userService";
 import ListItemText from '@mui/material/ListItemText';
-
+import Divider from '@mui/material/Divider';
 
 export default function ListUser() {
-    const [users, setUsers] = useState([]);
-    const [search, setSearch] = useState('');
-    const navigate = useNavigate();
+    const personas = ["Douglas Silva", "Ana Alves", "Arthur", "Luana", "Gabriel", "João Barros", "Luisa"];
     
-    useEffect(() => {
-        const fetchUsers = async () => {
-            const data = await getUsers();
-            if (Array.isArray(data)) {
-                setUsers(data);
-            } else {
-                console.error('Os dados recebidos não são um array.');
-            }
-        };
-
-        fetchUsers();
-    }, []);
-
     const buttons = [
         <SideButton key="home" text="Pagina Inicial" />,
         <SideButton key="cadastros" text="Cadastros" />,
     ];
 
+    const [search, setSearch] = useState('');
+    const navigate = useNavigate();
+
     const handleRegisterClick = () => {
         navigate('/caduser');
     };
 
-    const handleItemClick = (user) => {
-        navigate('/viewuser', { state: { user } });
+    const handleItemClick = (persona) => {
+        navigate('/viewuser', { state: { persona } });
     };
 
-    const filteredUsers = users.filter(user =>
-        user.name.toLowerCase().includes(search.toLowerCase())
+    const filteredPersonas = personas.filter(persona =>
+        persona.toLowerCase().includes(search.toLowerCase())
     );
 
     return (
@@ -61,14 +46,12 @@ export default function ListUser() {
                 </div>
 
                 <List>
-                    {filteredUsers.map((user, index) => (
-                        <div key={user._id}>
-                            <ListItem>
-                                <ListItemButton className="list-item" button onClick={() => handleItemClick(user)}>
-                                    <ListItemText primary={user.name} />
-                                </ListItemButton>
+                    {filteredPersonas.map((persona, index) => (
+                        <div key={index}>
+                            <ListItem className="list-item" button onClick={() => handleItemClick(persona)}>
+                                <ListItemText primary={persona} />
                             </ListItem>
-                            {index < filteredUsers.length - 1 && <Divider />}
+                            {index < filteredPersonas.length - 1 && <Divider />}
                         </div>
                     ))}
                 </List>
