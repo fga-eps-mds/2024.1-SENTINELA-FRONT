@@ -10,8 +10,6 @@ import FieldSelect from "../../../Components/FieldSelect"
 import { createMemberShip  } from '../../../Services/MemberShipService';
 import PrimaryButton from "../../../Components/PrimaryButton";
 import BasicDateField from '../../../Components/DateField';
-import dayjs from 'dayjs';
-
 
 const MemberShip = () => {
   console.log('MemberShip called');
