@@ -1,4 +1,4 @@
-/*.side-bar {
+.side-bar {
   background-color: #eae3d7;
   display: flex;
   flex-direction: column;
@@ -52,30 +52,4 @@
   .side-bar.open {
     left: 0;
   }
-}*/
-
-.side-bar {
-  background-color: #eae3d7;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  width: 380px;
-  height: 100vh;
-  padding: 85px;
-}
-
-.logo {
-  width: 107px;
-  height: 107px;
-}
-
-.sentinela {
-  margin-top: -30px;
-  width: 350px;
-  height: auto;
-}
-
-.menu-lateral {
-  margin-top: 20px;
 }

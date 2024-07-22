@@ -11,5 +11,6 @@ export const theme = createTheme({
   },
   typography: {
     fontFamily: '"Noto Sans", "Overpass", sans-serif',
+    fontFamilySecondary: '"Overpass", sans-serif',
   },
 });
