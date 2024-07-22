@@ -6,21 +6,19 @@ import LabeledTextField from "../../../Components/LabeledTextField";
 import SideButton from "../../../Components/SideButton";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemText';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import { getUsers } from "../../../Services/userService";
-import ListItemText from '@mui/material/ListItemText';
 import AuthContext from "../../../Context/auth";
 import { APIUsers } from "../../../Services/BaseService";
-
-
 
 export default function ListUser() {
     const [users, setUsers] = useState([]);
     const [search, setSearch] = useState('');
     const navigate = useNavigate();
-    
-   useEffect(() => {
+
+    useEffect(() => {
         const fetchUsers = async () => {
             try {
                 const storagedUserString = localStorage.getItem('@App:user');
@@ -33,6 +31,7 @@ export default function ListUser() {
                 });
 
                 const data = response.data;
+                console.log('Dados recebidos:', data);
                 if (Array.isArray(data)) {
                     setUsers(data);
                 } else {
@@ -56,7 +55,8 @@ export default function ListUser() {
     };
 
     const handleItemClick = (user) => {
-        navigate('/viewuser', { state: { user } });
+        console.log('ID do usuário sendo passado para a navegação:', user._id);
+        navigate('/viewuser', { state: { userId: user._id } });
     };
 
     const filteredUsers = users.filter(user =>
@@ -80,7 +80,7 @@ export default function ListUser() {
                     {filteredUsers.map((user, index) => (
                         <div key={user._id}>
                             <ListItem>
-                                <ListItemButton className="list-item" button onClick={() => handleItemClick(user)}>
+                                <ListItemButton className="list-item" onClick={() => handleItemClick(user)}>
                                     <ListItemText primary={user.name} />
                                 </ListItemButton>
                             </ListItem>

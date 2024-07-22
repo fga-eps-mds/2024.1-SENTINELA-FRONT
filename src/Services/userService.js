@@ -36,7 +36,7 @@ export const getUsers = async () => {
   }
 };
   
-  export const getUserById = async (id) => {
+  export const getUserById = async (Id) => {
     try {
       const response = await APIUsers.get(`/users/${id}`);
       return response.data;
@@ -79,20 +79,26 @@ export const getUsers = async () => {
     }
   };
   
-  export const updateUser = async (id, userData) => {
+  export const patchUserById = async (id, updatedUser, token) => {
     try {
-      const response = await APIUsers.patch(`/users/patch/${id}`, userData);
-      return response.data;
+        await APIUsers.patch(`/users/${id}`, updatedUser, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
     } catch (error) {
-      console.error(`Erro ao atualizar usuário com ID ${id}:`, error);
+        console.error("Erro ao atualizar usuário por ID:", error);
     }
-  };
+};
   
-  export const deleteUser = async (id) => {
-    try {
-      const response = await APIUsers.delete(`/users/delete/${id}`);
-      return response.data;
-    } catch (error) {
-      console.error(`Erro ao deletar usuário com ID ${id}:`, error);
-    }
-  };
+export const deleteUserById = async (id, token) => {
+  try {
+      await APIUsers.delete(`/users/${id}`, {
+          headers: {
+              Authorization: `Bearer ${token}`
+          }
+      });
+  } catch (error) {
+      console.error("Erro ao deletar usuário por ID:", error);
+  }
+};
