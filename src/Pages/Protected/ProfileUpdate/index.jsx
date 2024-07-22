@@ -12,17 +12,36 @@ import PrimaryButton from "../../../Components/PrimaryButton";
 import SecondaryButton from "../../../Components/SecondaryButton";
 
 
+
 const ProfileUpdate = () => {
   const context = useContext(AuthContext);
   const navigate = useNavigate(); 
+  
+  
+  const { user } = useAuth();
+  const storagedUserString = localStorage.getItem('@App:user'); // Usuario logado
+  let storagedUser = {};
+  storagedUser = JSON.parse(storagedUserString); // Usuario logado => JSON
+  
+  const getUser = async () => { // Busca usuario no banco
+    try {
+      const response = await APIUsers.get(`users/${storagedUser.user._id}`,
+        {
+          headers: {
+            'Authorization': `Bearer ${storagedUser.token}`
+          }
+        }
+      );
+      setNome(response.data.name);
+      setCelular(response.data.phone);
+      setLogin(response.data.status);
+      setEmail(response.data.email);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-
-    const { user } = useAuth();
-    const storagedUserString = localStorage.getItem('@App:user'); // Usuario logado
-    let storagedUser = {};
-    storagedUser = JSON.parse(storagedUserString); // Usuario logado => JSON
-
-    const handleLogout = () => {
+  const handleLogout = () => {
       context.Logout();
       navigate("/")
     };
@@ -45,12 +64,16 @@ const ProfileUpdate = () => {
       navigate("/home")
     };
     
-    const [nome, setNome] = useState(storagedUser.user ? storagedUser.user.name : '');
-    const [celular, setCelular] = useState(storagedUser.user ? storagedUser.user.phone : '');
-    const [login, setLogin] = useState(storagedUser.user ? storagedUser.user.status : '');
-    const [email, setEmail] = useState(storagedUser.user ? storagedUser.user.email : '');
+    const [nome, setNome] = useState('');
+    const [celular, setCelular] = useState('');
+    const [login, setLogin] = useState('');
+    const [email, setEmail] = useState('');
     //setores de acesso
+
     
+    useEffect(() => {
+      getUser();
+    }, [])
   
     const buttons = [
       <SideButton key="login" text="Pagina Inicial" />,
