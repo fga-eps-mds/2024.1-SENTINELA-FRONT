@@ -82,15 +82,31 @@
     font-size: 18px; 
     font-weight: 600;
     font-size: medium;
-    margin-left: 10rem;
+    margin-left: 8rem;
     margin-top: 12rem;
+}
+
+.profile-icon{
+  margin-top: -10rem;
+  margin-left:-9rem;
+  font-size: 37px; 
 }
 
 .btn-logout{
     background-color: transparent;
+    height: 100px;
+    width: 50px;;
     font-family: 'Noto Sans';
     font-size: 14px; 
-    font-weight: 600;    
+    font-weight: 600;  
+
+}
+.logout-test{
+  font-size: 100px;
+}
+
+.logout-icon{
+  font-size: 100px;
 }
 
 .section-doublebtn {

@@ -10,6 +10,8 @@ import AuthContext from "../../../Context/auth";
 import { APIUsers } from "../../../Services/BaseService";
 import PrimaryButton from "../../../Components/PrimaryButton";
 import SecondaryButton from "../../../Components/SecondaryButton";
+import { AiOutlineUser } from "react-icons/ai";
+//import { RiLogoutCircleRLine } from "react-icons/ri";
 
 
 
@@ -84,9 +86,9 @@ const ProfileUpdate = () => {
       <SideButton key="filiacao" text="CADASTROS" />, 
       <SideButton key="financeiro" text="FINANCEIRO" />, 
       <SideButton key="beneficios" text="BENEFÍCIOS" />, 
-      <h2 className="profile-status" >Voce está logado <br />como {nome} </h2>,
-      <button className="btn-logout" text="Entrar" onClick={handleLogout}  > SAIR </button>
-      
+      <h2 className="profile-status" >Voce está logado <br />como {nome} <AiOutlineUser className="profile-icon" /> </h2>,
+      <button className="btn-logout" onClick={handleLogout}> LOGOUT </button>,
+      //<h5 className="logout-test" >oi, tudo bem <RiLogoutCircleRLine className="logout-icon" /> </h5>  
     ];
 
     return user && (
