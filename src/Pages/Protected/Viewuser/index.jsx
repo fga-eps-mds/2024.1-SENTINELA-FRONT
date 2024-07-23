@@ -105,6 +105,8 @@ const Viewuser = () => {
     const buttons = [
         <SideButton key="home" text="Pagina Inicial" />,
         <SideButton key="cadastros" text="Cadastros" />,
+        <SideButton key="financeiro" text="Financeiro" />,
+        <SideButton key="benefícios" text="Benefícios" />,
     ];
 
     const login_options = ['Ativo', 'Inativo'];

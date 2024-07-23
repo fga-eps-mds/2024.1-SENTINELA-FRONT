@@ -13,7 +13,8 @@ export default function FieldText({ label, value, onChange }) {
             onChange={onChange}
             sx={{
                 margin: '.7rem',
-                backgroundColor: theme.palette.background.paper,
+                background:  "#EAE3D7",
+                backgroundColor: "#EAE3D7",
                 borderRadius: '5px',
                 "& .MuiInput-underline:before": {
                     borderBottomColor: theme.palette.custom.main, // Cor da borda inferior antes do foco
