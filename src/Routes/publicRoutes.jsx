@@ -7,10 +7,12 @@ import Caduser from '../Pages/Protected/Caduser';
 import Viewuser from '../Pages/Protected/Viewuser';
 import ListUser from '../Pages/Protected/Listuser';
 import Cadastros from '../Pages/Protected/Cadastros';
+import TesteComponentes from '../Pages/Public/TesteComponentes';
 const PublicRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
+      <Route path="teste" element={<TesteComponentes />} />
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="/filiacao" element={<MemberShip />} />
