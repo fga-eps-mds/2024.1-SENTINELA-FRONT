@@ -56,8 +56,15 @@ const ProfileUpdate = () => {
     navigate("/");
   };
 
+  const removeMask = (celular) => celular.replace(/\D/g, ''); // Remove a mascara do FielNumber
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const trimmedCelular = removeMask(celular);
+    const isValidNumber = /^\d+$/.test(trimmedCelular) && trimmedCelular.length >= 10; // Número válido = [0,9] e maior que 10 digitos
+    if (!isValidNumber) {
+      return;
+    }
     try {
       await APIUsers.patch(`users/patch/${storagedUser.user._id}`, {
         phone: celular
