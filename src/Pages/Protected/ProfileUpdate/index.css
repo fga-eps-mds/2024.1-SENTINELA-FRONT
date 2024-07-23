@@ -121,7 +121,75 @@
     flex: 1;
     height: 44px;
 }
+.custom-dialog .MuiDialog-paper {
+  width: 338px; /*Ajuste a largura */
+  height: 220px; /* Altura */
+  border-radius: 20px;
+  background-color: #EAE3D7;
+  
 
+}
+
+.custom-dialog .MuiDialogTitle-root {
+  width: 269px;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  padding:6px;
+
+  font-size: 16px; /* Ajuste o tamanho do texto do título */
+  color: white; 
+  background-color:  #AE883C;
+  
+
+  margin-top: 46px;
+  margin-left: 35px;
+  border-width: 3px;
+  border-color: #AE883C;
+  border-style: solid; /* Estilo da borda */
+  
+  border-radius: 4px;
+
+}
+
+.custom-dialog-button {
+  width: 269px;
+  height: 44px;
+
+  font-family: 'Nato Sans';
+  font-size: 16px !important;
+  
+
+  background-color: #EAE3D7 !important; /* Cor de fundo desejada */
+  color: #AE883C !important; /* Cor do texto */
+  padding:6px !important; /* Espaçamento interno */
+  margin-right: 25px !important; /* Margem inicial, atencao */
+  margin-top: -120px !important; /* para corrigir a distancia de baixo para o meio, requer correção*/
+  border-width: 3px !important; /* Largura da borda ta certo!!!*/ 
+  border-color: #AE883C !important; /* Cor da borda */
+  border-style: solid !important; /* Estilo da borda */
+  border-radius: 4px !important; /* Bordas arredondadas do botao  */
+  cursor: pointer !important; /* Cursor de ponteiro */
+  display: flex;
+  justify-content: center;
+}
+
+
+.custom-dialog-button:hover {
+  background-color: rgba(0, 0, 0, 0.1) !important; /* Cor de fundo ao passar o mouse */
+}
+
+
+
+
+/*meio da caixa
+*/
+.alert-dialog-description {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  font-family: 'Noto Sans'
+}
 
 .section-sector{
     display: grid;
@@ -138,10 +206,7 @@
 
     border: 1px solid #DCD6CA; 
     border-top-left-radius: 5%; 
-    border-top-right-radius: 5%;
-
-
-    
+    border-top-right-radius: 5%;  
 }
 
 .side-menu {
