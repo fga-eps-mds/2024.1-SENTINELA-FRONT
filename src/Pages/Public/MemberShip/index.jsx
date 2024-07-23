@@ -15,6 +15,14 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Snackbar } from '@mui/material';
 import Alert from '@mui/material/Alert';
 
+//para o dialog
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 const MemberShip = () => {
   console.log('MemberShip called');
   const [email, setEmail] = useState('');
@@ -49,6 +57,7 @@ const MemberShip = () => {
   const [orgaoExpedidor, setOrgaoExpedidor] = useState('');
   const [situacaoAtual, setSituacaoAtual] = useState('');
   const [openError, setOpenError] = useState(false);
+  const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
     
   //listas dos selects
   const tipoSanguineoList = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
@@ -147,8 +156,17 @@ const MemberShip = () => {
   const handleChangeEscolaridade = (event) => {
     setEscolaridade(event.target.value);
   };
+
   const handleChangeSituacaoAtual = (event) => {
     setSituacaoAtual(event.target.value);
+  };
+
+  const handleCloseError = () => {
+    setOpenError(false);
+  };
+
+  const handleCloseSuccessDialog = () => {
+    setOpenSuccessDialog(false);
   };
 
   const buttons = [
@@ -157,7 +175,7 @@ const MemberShip = () => {
     <SideButton key="sobre" text="Sobre" />,
   ];
 
-  const handleSubmit = async () => {
+  const handleSubmit =  () => {
     
     const formData = {
       email,
@@ -229,9 +247,48 @@ const MemberShip = () => {
     if (Object.keys(erros).length > 0) {
       setOpenError(true);
     } else {
-      console.log(JSON.stringify(formData))
-      //createMemberShip(formData)
+      setOpenSuccessDialog(true);
     }}
+
+    const submitForm = async () => {
+      const formData = {
+        email,
+        sexo,
+        estadoCivil,
+        tipoSanguineo,
+        uf_naturalidade,
+        uf_orgao,
+        uf_endereco,
+        escolaridade,
+        dataContratacao,
+        dataDeNascimento,
+        dataExpedicao,
+        cargo,
+        lotacao,
+        matricula,
+        nomeCompleto,
+        naturalidade,
+        rg,
+        orgao,
+        cpf,
+        nomeDaMae,
+        nomeDoPai,
+        cep,
+        cidade,
+        logradouro,
+        complemento,
+        telefone,
+        celular,
+        postoDeTrabalho,
+        orgaoExpedidor,
+        situacaoAtual,
+        dependentes
+      };
+
+      createMemberShip(formData);
+      console.log(JSON.stringify(formData));
+      alert('deu certo!')
+    }
 
   return (
     <section className="container">
@@ -532,6 +589,37 @@ const MemberShip = () => {
             Certifique-se de que todos os campos estão preenchidos
           </Alert>
         </Snackbar>
+        
+        <Dialog
+          open={openSuccessDialog}
+          onClose={handleCloseSuccessDialog}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Ao confirmar essa solicitação, você estará concordando com a declaração a seguir:"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Declaro que, ao filiar-me nesta data ao SINDPOL-DF, concordo e ratifico com todas as minhas obrigações previstas no Estatuto Social,
+              regime interno e deliberação das assembleias gerais do Sindicato dos Policiais Penais do Distrito Federal.
+              Ao tempo que comprometo-me em contribuir mensalmente com o valor de 1,5% vencimento básico, conforme Art. 105 do Estatuto APROVADO pela assembleia geral,
+              o qual AUTORIZO que consignado em folha de pagamento junto ao órgão competente em favor do SINDPOL-DF, bem como outras contribuições de caráter 
+              extraordinário - desde que aprovadas em assembleia específica - Reconheço ainda que tais contribuições têm o condão de manter a entidade de 
+              representação sindical forte e independente no intuito de garantir melhores condições de trabalho para toda a categoria. Fico ciente que,
+              ao desejar afastar-me do quadro social do sindicato, devo manifestar-me por escrito, em formulário específico, com antecedência de 60 (sessenta) dias. 
+              Pela presente, solicito minha admissão no quadro de filiados do 
+              SINDICATO DOS POLICIAIS PENAIS DO DISTRITO FEDERAL.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseSuccessDialog}>CANCELAR</Button>
+            <Button onClick={() => {setOpenSuccessDialog(false); submitForm()}} autoFocus>
+              FILIAR-ME AO SINDICATO
+            </Button>
+          </DialogActions>
+        </Dialog>
+
       </div>
     </section>
   );
