@@ -7,12 +7,11 @@ import dayjs from 'dayjs';
 export default function BasicDateField(label, value) {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DemoContainer components={['DateField']}>
-        <DateField 
+      <DateField 
             label={label}
-            value={dayjs(value).format('YYYY-MM-DD')}
+            value={dayjs(value)}
+            renderInput={(params) => <TextField {...params}/>}
         />
-      </DemoContainer>
     </LocalizationProvider>
   );
 }

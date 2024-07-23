@@ -10,7 +10,8 @@ export default function DataSelect({label, value, onChange}) {
             value={value}
             onChange={onChange}
             format="DD/MM/YYYY" // Define o formato desejado
-            renderInput={(params) => <TextField {...params} variant="filled" />}
+            renderInput={(params) => <TextField {...params} variant="filled"/>}
+            
             sx={{
               margin: '.7rem',
               '& .MuiPickersCalendarHeader-root': {

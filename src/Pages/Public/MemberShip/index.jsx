@@ -3,6 +3,7 @@ import "./index.css";
 import "../../../index.css";
 import SideBar from "../../../Components/SideBar";
 import SideButton from "../../../Components/SideButton";
+import dayjs from 'dayjs';
 import 'dayjs/locale/pt-br'; // Importa a localização desejada para o dayjs
 import FieldText from "../../../Components/FieldText"
 import DataSelect from "../../../Components/DataSelect"
@@ -11,7 +12,8 @@ import { createMemberShip  } from '../../../Services/MemberShipService';
 import PrimaryButton from "../../../Components/PrimaryButton";
 import BasicDateField from '../../../Components/DateField';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { Box } from '@mui/material';
+import { Snackbar } from '@mui/material';
+import Alert from '@mui/material/Alert';
 
 const MemberShip = () => {
   console.log('MemberShip called');
@@ -46,6 +48,7 @@ const MemberShip = () => {
   const [postoDeTrabalho, setpostoDeTrabalho] = useState('');
   const [orgaoExpedidor, setOrgaoExpedidor] = useState('');
   const [situacaoAtual, setSituacaoAtual] = useState('');
+  const [openError, setOpenError] = useState(false);
     
   //listas dos selects
   const tipoSanguineoList = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
@@ -114,7 +117,7 @@ const MemberShip = () => {
 
   const handleSaveDependent = () => {
     if ((!currentDependent.nomeCompletoDependente) || (!currentDependent.dataNasc) || (!currentDependent.parentesco) || (!currentDependent.cpfDependente) || (!currentDependent.celularDependente)) {
-      alert("Certifique-se de que todos os campos estão preenchidos");
+      setOpenError(true);
     }
 
     else{
@@ -223,9 +226,12 @@ const MemberShip = () => {
     if (!orgaoExpedidor) erros.orgaoExpedidor = 1;
     if (!situacaoAtual) erros.situacaoAtual = 1;
     
-    (Object.keys(erros).length > 0 ? alert("Certifique-se de que todos os campos estão preenchidos") : createMemberShip(formData));
-    console.log(JSON.stringify(formData))
-  }
+    if (Object.keys(erros).length > 0) {
+      setOpenError(true);
+    } else {
+      console.log(JSON.stringify(formData))
+      //createMemberShip(formData)
+    }}
 
   return (
     <section className="container">
@@ -516,7 +522,16 @@ const MemberShip = () => {
           <div id='envio'>
             <PrimaryButton text="ENVIAR SOLICITAÇÃO" onClick={() => handleSubmit()} />
           </div>
-
+          
+          <Snackbar
+          open={openError}
+          autoHideDuration={6000}
+          onClose={() => setOpenError(false)}
+        >
+          <Alert onClose={() => setOpenError(false)} severity="error">
+            Certifique-se de que todos os campos estão preenchidos
+          </Alert>
+        </Snackbar>
       </div>
     </section>
   );
