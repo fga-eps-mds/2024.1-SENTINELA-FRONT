@@ -2,32 +2,26 @@
     display: flex;
     font-family: 'Noto Sans';
     color: #341F14;
-    
-
 }
+
 .profile-view{
     font-size: 34px; 
     font-weight: bold; 
-
 }
 
 .personal-data{
     font-size: 24px;
-
 }
+
 .campos-container{
     margin: 3.5rem;
     line-height: 2;
     height: 350px; 
     width: 100%;
-    margin-top: 20rem;
-    
-
-    
+    margin-top: 20rem; 
     display: inherit;
     justify-content: center;
-    flex-direction: column;
-    
+    flex-direction: column;   
 }
 .section-campo{
     display: grid;
@@ -35,7 +29,6 @@
     color: #EAE3D7;
     margin-left: 0.8rem;
     font-size: 16px;
-
 }
 .section-campo input:disabled { 
     background-color: #EAE3D7; 
@@ -65,7 +58,6 @@
     font-weight: thin;
 }
 
-
 .profile-view{ 
     font-weight: bold;
     margin-bottom: 3rem;
@@ -92,21 +84,29 @@
   font-size: 37px; 
 }
 
-.btn-logout{
-    background-color: transparent;
-    height: 100px;
-    width: 50px;;
-    font-family: 'Noto Sans';
-    font-size: 14px; 
-    font-weight: 600;  
-
-}
-.logout-test{
-  font-size: 100px;
+.logout-container {
+  display: flex;
+  align-items: center; 
+  margin-top: 0.5rem;
+  margin-left: 9rem;
 }
 
-.logout-icon{
-  font-size: 100px;
+.btn-logout {
+  background-color: transparent;
+  height: 40px;
+  font-family: 'Noto Sans';
+  font-size: 14px;
+  font-weight: 600;
+  padding: 6px;
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+  border: none; 
+}
+
+.logout-icon {
+  font-size: 21px;
+  margin-left: 10px; 
 }
 
 .section-doublebtn {
@@ -121,13 +121,12 @@
     flex: 1;
     height: 44px;
 }
+
 .custom-dialog .MuiDialog-paper {
-  width: 338px; /*Ajuste a largura */
-  height: 220px; /* Altura */
+  width: 338px; 
+  height: 220px; 
   border-radius: 20px;
   background-color: #EAE3D7;
-  
-
 }
 
 .custom-dialog .MuiDialogTitle-root {
@@ -136,59 +135,38 @@
   display: flex;
   justify-content: center;
   padding:6px;
-
-  font-size: 16px; /* Ajuste o tamanho do texto do título */
+  font-size: 16px; 
   color: white; 
   background-color:  #AE883C;
-  
-
   margin-top: 46px;
   margin-left: 35px;
   border-width: 3px;
   border-color: #AE883C;
-  border-style: solid; /* Estilo da borda */
-  
+  border-style: solid; 
   border-radius: 4px;
-
 }
 
 .custom-dialog-button {
   width: 269px;
   height: 44px;
-
   font-family: 'Nato Sans';
   font-size: 16px !important;
-  
-
-  background-color: #EAE3D7 !important; /* Cor de fundo desejada */
-  color: #AE883C !important; /* Cor do texto */
-  padding:6px !important; /* Espaçamento interno */
-  margin-right: 25px !important; /* Margem inicial, atencao */
-  margin-top: -120px !important; /* para corrigir a distancia de baixo para o meio, requer correção*/
-  border-width: 3px !important; /* Largura da borda ta certo!!!*/ 
-  border-color: #AE883C !important; /* Cor da borda */
-  border-style: solid !important; /* Estilo da borda */
-  border-radius: 4px !important; /* Bordas arredondadas do botao  */
-  cursor: pointer !important; /* Cursor de ponteiro */
+  background-color: #EAE3D7 !important; 
+  color: #AE883C !important;
+  padding:6px !important; 
+  margin-right: 25px !important; 
+  margin-top: -120px !important; 
+  border-width: 3px !important; 
+  border-color: #AE883C !important; 
+  border-style: solid !important; 
+  border-radius: 4px !important;
+  cursor: pointer !important; 
   display: flex;
   justify-content: center;
 }
 
-
 .custom-dialog-button:hover {
-  background-color: rgba(0, 0, 0, 0.1) !important; /* Cor de fundo ao passar o mouse */
-}
-
-
-
-
-/*meio da caixa
-*/
-.alert-dialog-description {
-  text-align: center;
-  font-size: 1.5rem;
-  font-weight: bold;
-  font-family: 'Noto Sans'
+  background-color: rgba(0, 0, 0, 0.1) !important; 
 }
 
 .section-sector{
@@ -198,12 +176,10 @@
     margin-left: 0.8rem;
     font-size: 16px;
     font-family: 'Overpass';
-
 }
 .section-sector input { 
     background-color: #DCD6CA; 
     color: #000000; 
-
     border: 1px solid #DCD6CA; 
     border-top-left-radius: 5%; 
     border-top-right-radius: 5%;  

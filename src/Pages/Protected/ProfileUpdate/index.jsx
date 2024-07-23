@@ -10,6 +10,7 @@ import { useAuth } from "../../../Context/auth";
 import AuthContext from "../../../Context/auth";
 import { APIUsers } from "../../../Services/BaseService";
 import { AiOutlineUser } from "react-icons/ai";
+import { RiLogoutCircleRLine } from "react-icons/ri";
 
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -89,7 +90,7 @@ const ProfileUpdate = () => {
     <SideButton key="financeiro" text="FINANCEIRO" />,
     <SideButton key="beneficios" text="BENEFÍCIOS" />,
     <h2 className="profile-status">Você está logado <br />como {nome} <AiOutlineUser className="profile-icon" /></h2>,
-    <button className="btn-logout" onClick={handleLogout}> LOGOUT </button>
+    <button className="btn-logout" onClick={handleLogout}> LOGOUT <RiLogoutCircleRLine className="logout-icon" /> </button>
   ];
 
   return user && (
