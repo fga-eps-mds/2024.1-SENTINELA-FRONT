@@ -434,7 +434,7 @@ const MemberShip = () => {
             label = "CEP" 
             value = {cep}
             onChange={(e) => setCep(mascaraCEP(e.target.value))}/>
-
+      <div className='double-box'>
         <FieldText
             label = "Cidade" 
             value = {cidade}
@@ -446,6 +446,7 @@ const MemberShip = () => {
             onChange={handleChangeUfEndereco}
             options={ufList}
           />
+        </div>
 
           <FieldText
             label = "Logradouro" 
@@ -547,8 +548,12 @@ const MemberShip = () => {
                           label="Nome Completo"
                           value={dependent.nomeCompletoDependente}
                         />
+                        <FieldText
+                          label="Data de Nascimento"  
+                          value={dayjs(dependent.dataNasc).format('DD/MM/YYYY')}
+                        />
+
                         
-                        <p>'data de aniversário': {dayjs(dependent.dataNasc).format('YYYY-MM-DD')}</p>
 
                         <FieldText 
                           label="Parentesco"
