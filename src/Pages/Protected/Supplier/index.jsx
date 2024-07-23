@@ -1,16 +1,30 @@
 import React, { useState } from "react";
 import "./index";
 import "../../../index.css";
+import { useNavigate } from 'react-router-dom';
 import SideBar from "../../../Components/SideBar";
 import SideButton from "../../../Components/SideButton";
 import FieldText from "../../../Components/FieldText";
 import FieldSelect from "../../../Components/FieldSelect";
-//import PrimaryButton from "../../../Components/PrimaryButton";
+import PrimaryButton from "../../../Components/PrimaryButton";
 import "dayjs/locale/pt-br";
 //import { createSupplier } from "../../../";
 
 //const Supplier = () => {
 export default function Supplier() {
+
+  const navigate = useNavigate();
+  const handleListSupplierPage = () => {
+    navigate("/listsupplier");
+  }
+
+  const openModal = () => {
+    setShowModal(true);
+  }
+
+  const closeModal = () => {
+    setShowModal(false);
+  }
 
   console.log("Supplier called");
   const [nome, setNome] = useState("");
@@ -32,6 +46,7 @@ export default function Supplier() {
   const [numeroBanco, setNumeroBanco] = useState("");
   const [dv, setDv] = useState("");
   const [chavePix, setChavePix] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   const tipoPessoaList = ["Jurídica", "Física"];
   const statusFornecedorList = ["Ativo", "Inativo"];
@@ -52,6 +67,10 @@ export default function Supplier() {
 
   const handleChangeUf_endereco = (event) => {
     setUfEndereco(event.target.value);
+  };
+
+  const handleRegisterClick = () => {
+    navigate("/supplier");
   };
 
   const buttons = [
@@ -232,7 +251,10 @@ export default function Supplier() {
 
         </div>
         
-        <button onClick={() => handleSubmit()}>CADASTRAR</button>
+        <PrimaryButton text="CADASTRAR" onClick={() => handleSubmit()}>CADASTRAR</PrimaryButton>
+
+        <Modal show={showModal} onClose={closeModal} text="OK" width="270px">
+        </Modal>
 
       </div>
     </section>
