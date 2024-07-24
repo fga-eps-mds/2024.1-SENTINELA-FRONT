@@ -6,15 +6,12 @@ import SecondaryButton from "../SecondaryButton";
 import { useNavigate } from "react-router-dom";
 import theme from '../../Styles/global';
 
-export default function Modal({ show, children, text, width }) {
+export default function Modal({ show, children, text, width, alertTitle, alert, onClick }) {
   const navigate = useNavigate();
 
   if (!show) {
     return null;
   }
-  const handleLoginPage = () => {
-    navigate("/");
-  };
 
   return (
     <div className="modal-overlay">
@@ -23,7 +20,7 @@ export default function Modal({ show, children, text, width }) {
           severity="success" 
           variant="filled"
           sx={{
-            backgroundColor: theme.pallete.button,
+            backgroundColor: theme.palette.custom.button,
             "& .MuiAlertTitle-root": {
               fontFamily: theme.typography.fontFamilyPrimary,
             },
@@ -33,10 +30,10 @@ export default function Modal({ show, children, text, width }) {
             width:"270px",
           }}
         >
-          <AlertTitle>Solicitação enviada</AlertTitle>
-          Você deve receber um e-mail em breve com mais informações.
+          <AlertTitle>{alertTitle}</AlertTitle>
+          {alert}
         </Alert>
-        <SecondaryButton text={text} onClick={handleLoginPage} width={width} />
+        <SecondaryButton text={text} onClick={onClick} width={width} />
         {children}
       </div>
     </div>
@@ -48,4 +45,7 @@ Modal.propTypes = {
   width: PropTypes.string.isRequired,
   show: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
+  alertTitle: PropTypes.string.isRequired,
+  alert: PropTypes.string,
+  onClick : PropTypes.func
 };

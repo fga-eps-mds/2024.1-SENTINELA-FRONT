@@ -7,15 +7,14 @@ import SideButton from "../../../Components/SideButton";
 import FieldText from "../../../Components/FieldText";
 import FieldSelect from "../../../Components/FieldSelect";
 import FieldNumber from '../../../Components/FieldNumber';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogTitle from '@mui/material/DialogTitle';
 import Checklist from '../../../Components/Checklist';
 import PrimaryButton from '../../../Components/PrimaryButton';
 import { ToggleButton, Radio, RadioGroup, FormControlLabel, Button } from '@mui/material'; 
 import {createUser, getRoles } from '../../../Services/userService';
 import { RiLogoutCircleRLine } from 'react-icons/ri';
 import { AiOutlineUser } from 'react-icons/ai';
+import Modal from '../../../Components/Modal';
+
 
 export default function Register_User(){
     //Dados a serem armazenados
@@ -28,10 +27,9 @@ export default function Register_User(){
     // const [checklistVisible, setChecklistVisible] = useState(false);
     const [perfilSelecionado, setPerfilSelecionado] = useState('');
     const [roles, setRoles] = useState ([])
-    const [openDialog, setOpenDialog] = useState(false);
-
-
-
+    const [showModal,setShowModal] = useState(false);
+    
+      
     const handleHomeClick = () => {
         navigate("/home");
     };
@@ -87,11 +85,10 @@ export default function Register_User(){
 
     const removeMask = (celular) => celular.replace(/\D/g, '');
     const handleCloseDialog = () => {
-        setOpenDialog(false);
+        setShowModal(false);
         navigate("/home");
       };
     const handleSubmit = async (e) => {
-        e.preventDefault();
         const trimmedCelular = removeMask(celular);
         const isValidNumber = /^\d+$/.test(trimmedCelular) && trimmedCelular.length >= 10; // Número válido = [0,9] e maior que 10 digitos
         const isValidEmailAddress = isValidEmail(email); 
@@ -112,7 +109,7 @@ export default function Register_User(){
         try{
             const response = await createUser(userData);
             console.log('Usuário criado com sucesso:', response);
-            setOpenDialog(true);
+            setShowModal(true);
             // Lógica adicional após a criação do usuário
         } catch (error) {
             console.error('Erro ao criar usuário', error);
@@ -202,9 +199,9 @@ export default function Register_User(){
 
                 <PrimaryButton
                     text='Cadastrar'
-                    onClick={handleSubmit}
+                    onClick={()=>handleSubmit()}
                 />
-                <Dialog 
+                {/* <Dialog 
                     open={openDialog}
                     onClose={handleCloseDialog}
                     aria-labelledby="alert-dialog-title"
@@ -217,7 +214,14 @@ export default function Register_User(){
                 OK
                 </Button>
                 </DialogActions>
-                </Dialog>
+                </Dialog> */}
+                < Modal
+                width = "338px" 
+                text ="OK"
+                alertTitle="Cadastro de usuário concluído"
+                show = {showModal}
+                onClick = {() => handleCloseDialog()}
+                ></Modal>
                 
             </div>
         </section>

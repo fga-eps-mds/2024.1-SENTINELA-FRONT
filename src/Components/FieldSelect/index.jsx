@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { theme } from "../../Styles/global";
+import theme from "../../Styles/global";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import 'dayjs/locale/pt-br'; // Importa a localização desejada para o dayjs
 
