@@ -80,7 +80,7 @@ export default function Register_User(){
     };
 
     const handleNomeCompletoChange = (e) => {
-        const value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+        const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, '');
         setNomeCompleto(value);
     };
 

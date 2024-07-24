@@ -24,6 +24,12 @@ const ViewUser = () => {
     const [perfilSelecionado, setPerfilSelecionado] = useState('');
     const [roles, setRoles] = useState ([])
 
+    const handleNomeCompletoChange = (e) => {
+        const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, '');
+        setNomeCompleto(value);
+    };
+
+
     useEffect(() => {
         const loadRoles = async () => {
             try {
@@ -140,7 +146,7 @@ const ViewUser = () => {
                 <FieldText
                     label="Nome Completo"
                     value={nomeCompleto}
-                    onChange={(e) => setNomeCompleto(e.target.value)}
+                    onChange={(e) => handleNomeCompletoChange(e.target.value)}
                 />
     
                 <div className='double-box'>
