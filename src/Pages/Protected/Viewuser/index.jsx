@@ -1,77 +1,82 @@
-import { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import "./index.css";
-import "../../../index.css";
 import SideBar from "../../../Components/SideBar";
 import SideButton from "../../../Components/SideButton";
 import FieldText from "../../../Components/FieldText";
 import FieldSelect from "../../../Components/FieldSelect";
 import FieldNumber from '../../../Components/FieldNumber';
-import Checklist from '../../../Components/Checklist';
 import PrimaryButton from '../../../Components/PrimaryButton';
 import SecondaryButton from '../../../Components/SecondaryButton';
-import { ToggleButton, Radio, RadioGroup, FormControlLabel } from '@mui/material'; 
+import { RadioGroup, FormControlLabel, Radio } from '@mui/material'; 
 import { getUserById, deleteUserById, patchUserById } from '../../../Services/userService';
 import AuthContext from "../../../Context/auth";
+import "./index.css";
 
-const Viewuser = () => {
+
+const ViewUser = () => {
     const { state } = useLocation();
     const navigate = useNavigate();
     const userId = state?.userId;
+    console.log(userId);
 
     const [nomeCompleto, setNomeCompleto] = useState('');
     const [celular, setCelular] = useState('');
     const [login, setLogin] = useState('');
     const [email, setEmail] = useState('');
     const [perfilSelecionado, setPerfilSelecionado] = useState('');
-    const [roles, setRoles] = useState([]);
 
     useEffect(() => {
         const fetchUser = async () => {
             if (userId) {
-                console.log('Fetching user with ID:', userId);
+                console.log(`Tentando buscar usuário com ID: ${userId}`);
                 try {
                     const tokenString = localStorage.getItem('@App:user');
                     if (!tokenString) {
-                        console.error('Token not found in localStorage');
+                        console.error('Token não encontrado no localStorage');
                         return;
                     }
                     const token = JSON.parse(tokenString).token;
-                    console.log('Using token:', token);
-                    const response = await getUserById(userId, token);
-                    console.log('Response from getUserById:', response);
-    
-                    if (response && response.data) {
-                        const user = response.data;
-                        console.log('User data:', user); // Log adicional para verificar os dados do usuário
-                        setNomeCompleto(user.name);
-                        setCelular(user.phone);
+                    const user = await getUserById(userId, token);
+
+                    if (user) {
+                        console.log('Usuário encontrado:', user);
+                        setNomeCompleto(user.name || '');
+                        setCelular(user.phone || '');
                         setLogin(user.status ? 'Ativo' : 'Inativo');
-                        setEmail(user.email);
-                        setPerfilSelecionado(user.role);
-                        console.log('Updated States:', {
-                            nomeCompleto: user.name,
-                            celular: user.phone,
-                            login: user.status ? 'Ativo' : 'Inativo',
-                            email: user.email,
-                            perfilSelecionado: user.role,
-                        });
+                        setEmail(user.email || '');
+                        setPerfilSelecionado(user.role || '');
+                    } else {
+                        console.log('Nenhum usuário encontrado com o ID fornecido');
                     }
                 } catch (error) {
                     console.error('Erro ao buscar usuário:', error);
                 }
             } else {
-                console.log('No userId found in state');
+                console.log('Nenhum userId encontrado no estado');
             }
         };
     
         fetchUser();
     }, [userId]);
-    
+
+
+    useEffect (()=>{
+        const loadRoles = async () => {
+            const roles = await getRoles()
+            setRoles(roles);
+        }  
+        loadRoles();
+
+
+
+
+     }, [])
+
+
     const handleCancel = async () => {
         if (userId) {
             try {
-                const tokenString = localStorage.getItem('@App:user');
+                const tokenString = localStorage.getItem('@App:token');
                 const token = JSON.parse(tokenString).token;
                 await deleteUserById(userId, token);
                 navigate('/listuser');
@@ -90,32 +95,33 @@ const Viewuser = () => {
                 status: login === 'Ativo',
                 role: perfilSelecionado,
             };
+            
+            const tokenString = localStorage.getItem('@App:user');
+            if (!tokenString) {
+                console.error('Token não encontrado no localStorage');
+                return;
+            }
+            const token = JSON.parse(tokenString).token;
+    
             try {
-                const tokenString = localStorage.getItem('@App:user');
-                const token = JSON.parse(tokenString).token;
                 await patchUserById(userId, updatedUser, token);
                 navigate('/listuser');
             } catch (error) {
-                console.error('Erro ao atualizar usuário:', error);
+                console.error(`Erro ao atualizar usuário com ID ${userId}:`, error);
             }
         }
     };
 
-    // Variáveis de controle e display da página
+
+
     const buttons = [
         <SideButton key="home" text="Pagina Inicial" />,
         <SideButton key="cadastros" text="Cadastros" />,
     ];
 
-    const login_options = ['Ativo', 'Inativo'];
+    const loginOptions = ['Ativo', 'Inativo'];
     const handleChangeLogin = (event) => {
         setLogin(event.target.value);
-    };
-
-    const setoresAcesso = ['Convênio', 'Cadastro', 'Financeiro', 'Juridico'];
-    const [checklistVisible, setChecklistVisible] = useState(false);
-    const toggleChecklistVisibility = () => {
-        setChecklistVisible(!checklistVisible);
     };
 
     const perfis = ['Administrativo', 'Diretoria', 'Jurídico', 'Colaborador'];
@@ -123,7 +129,6 @@ const Viewuser = () => {
         setPerfilSelecionado(event.target.value);
     };
 
-    // Configuração da página
     return (
         <section className="container">
             <div className="bar-container">
@@ -139,7 +144,6 @@ const Viewuser = () => {
                     value={nomeCompleto}
                     onChange={(e) => setNomeCompleto(e.target.value)}
                 />
-                {console.log('nomeCompleto:', nomeCompleto)}
     
                 <div className='double-box'>
                     <FieldNumber
@@ -148,15 +152,13 @@ const Viewuser = () => {
                         onChange={(e) => setCelular(e.target.value)}
                         format='+55 (##) 9#### ####'
                     />
-                    {console.log('celular:', celular)}
     
                     <FieldSelect
                         label="Login"
                         value={login}
                         onChange={handleChangeLogin}
-                        options={login_options}
+                        options={loginOptions}
                     />
-                    {console.log('login:', login)}
                 </div>
     
                 <FieldText
@@ -164,7 +166,6 @@ const Viewuser = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
-                {console.log('email:', email)}
     
                 <h3>Perfil</h3>
     
@@ -178,7 +179,6 @@ const Viewuser = () => {
                         />
                     ))}
                 </RadioGroup>
-                {console.log('perfilSelecionado:', perfilSelecionado)}
     
                 <div className='double-buttons'>
                     <SecondaryButton
@@ -193,6 +193,6 @@ const Viewuser = () => {
             </div>
         </section>
     );
-
 };
-export default Viewuser; 
+
+export default ViewUser;

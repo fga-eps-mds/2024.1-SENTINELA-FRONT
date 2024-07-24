@@ -36,14 +36,18 @@ export const getUsers = async () => {
   }
 };
   
-  export const getUserById = async (Id) => {
-    try {
-      const response = await APIUsers.get(`/users/${id}`);
-      return response.data;
-    } catch (error) {
-      console.error(`Erro ao buscar usuário com ID ${id}:`, error);
-    }
-  };
+export const getUserById = async (id, token) => {
+  try {
+    const response = await APIUsers.get(`/users/${id}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error(`Erro ao buscar usuário com ID ${id}:`, error);
+  }
+};
   
   export const createUser = async (userData) => {
     try {
@@ -79,26 +83,31 @@ export const getUsers = async () => {
     }
   };
   
-  export const patchUserById = async (id, updatedUser, token) => {
+  export const patchUserById = async (id, updatedUser) => {
     try {
-        await APIUsers.patch(`/users/${id}`, updatedUser, {
+        const token = localStorage.getItem('@App:user'); // Obtenha o token do armazenamento local
+
+        const response = await APIUsers.patch(`/users/patch/${id}`, updatedUser, {
             headers: {
-                Authorization: `Bearer ${token}`
-            }
+                'Authorization': `Bearer ${token}`, // Inclua o token no cabeçalho
+            },
         });
+        
+        return response.data;
     } catch (error) {
-        console.error("Erro ao atualizar usuário por ID:", error);
+        console.error(`Erro ao atualizar usuário com ID ${id}:`, error);
+        throw error;
     }
 };
   
 export const deleteUserById = async (id, token) => {
   try {
-      await APIUsers.delete(`/users/${id}`, {
-          headers: {
-              Authorization: `Bearer ${token}`
-          }
-      });
+    await APIUsers.delete(`/users/${id}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
   } catch (error) {
-      console.error("Erro ao deletar usuário por ID:", error);
+    console.error(`Erro ao deletar usuário com ID ${id}:`, error);
   }
 };
