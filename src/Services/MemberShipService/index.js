@@ -10,13 +10,14 @@ export async function createMemberShip (formData) {
           formData
         });
     
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
+        
     
-        const data = await response.json();
-        console.log('Form successfully submitted:', data);
+        
+
+        
       } catch (error) {
-        console.error('There was a problem with the fetch operation:', error);
+        console.log(error.response.data.erro);
+        
+        return error.response.data.erro;
       }
 }

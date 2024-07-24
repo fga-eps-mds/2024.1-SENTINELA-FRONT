@@ -58,6 +58,7 @@ const MemberShip = () => {
   const [situacaoAtual, setSituacaoAtual] = useState('');
   const [openError, setOpenError] = useState(false);
   const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
+  const [errorFields, setErrorFields] = useState('');
     
   //listas dos selects
   const tipoSanguineoList = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
@@ -73,6 +74,8 @@ const MemberShip = () => {
   const [showDependentForm, setShowDependentForm] = useState(false);
   const [currentDependent, setCurrentDependent] = useState({ nomeCompletoDependente: '', dataNasc: '', parentesco: '' , cpfDependente: '', celularDependente: ''});
   
+  
+
   //máscaras
   const mascaraCPF = (cpf) => {
     let formattedCPF = cpf.replace(/\D/g, ''); // Remove caracteres não numéricos
@@ -250,6 +253,7 @@ const MemberShip = () => {
       setOpenSuccessDialog(true);
     }}
 
+
     const submitForm = async () => {
       const formData = {
         email,
@@ -285,7 +289,8 @@ const MemberShip = () => {
         dependentes
       };
 
-      createMemberShip(formData);
+      const message = await createMemberShip(formData);
+      setErrorFields(message);
       console.log(JSON.stringify(formData));
       alert('deu certo!')
     }
@@ -594,6 +599,16 @@ const MemberShip = () => {
             Certifique-se de que todos os campos estão preenchidos
           </Alert>
         </Snackbar>
+        <Snackbar
+          open={errorFields != ''}
+          autoHideDuration={6000}
+          onClose={() => setErrorFields('')}
+        >
+          <Alert onClose={() => setErrorFields('')} severity="error">
+            {errorFields}
+          </Alert>
+        </Snackbar>
+        
         
         <Dialog
           open={openSuccessDialog}
