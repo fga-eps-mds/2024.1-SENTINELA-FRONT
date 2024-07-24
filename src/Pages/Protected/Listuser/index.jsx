@@ -9,8 +9,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
-import { getUsers } from "../../../Services/userService";
-import AuthContext from "../../../Context/auth";
 import { APIUsers } from "../../../Services/BaseService";
 
 export default function ListUser() {
@@ -53,12 +51,12 @@ export default function ListUser() {
     ];
 
     const handleRegisterClick = () => {
-        navigate('/caduser');
+        navigate('/cadastrarUsuario');
     };
 
     const handleItemClick = (user) => {
         console.log('ID do usuário sendo passado para a navegação:', user._id);
-        navigate('/viewuser', { state: { userId: user._id } });
+        navigate('/usuario', { state: { userId: user._id } });
     };
 
     const filteredUsers = users.filter(user =>

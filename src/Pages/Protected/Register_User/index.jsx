@@ -11,7 +11,7 @@ import PrimaryButton from '../../../Components/PrimaryButton';
 import { ToggleButton, Radio, RadioGroup, FormControlLabel } from '@mui/material'; 
 import {createUser, getRoles } from '../../../Services/userService';
 
-export default function Caduser(){
+export default function Register_User(){
     //Dados a serem armazenados
     const [nomeCompleto, setnomeCompleto] = useState(''); //Armazena o nome completo da pessoa cadastrada
     const [celular, setCelular] = useState(''); //Armazena o número de celular da pessoa cadastrada

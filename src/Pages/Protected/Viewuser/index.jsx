@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { useState, useEffect} from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import SideBar from "../../../Components/SideBar";
 import SideButton from "../../../Components/SideButton";
@@ -9,7 +9,6 @@ import PrimaryButton from '../../../Components/PrimaryButton';
 import SecondaryButton from '../../../Components/SecondaryButton';
 import { RadioGroup, FormControlLabel, Radio } from '@mui/material'; 
 import { getUserById, deleteUserById, patchUserById, getRoles } from '../../../Services/userService';
-import AuthContext from "../../../Context/auth";
 import "./index.css";
 
 const ViewUser = () => {
@@ -78,7 +77,7 @@ const ViewUser = () => {
         if (userId) {
             try {
                 await deleteUserById (userId);
-                navigate('/listauser');
+                navigate('/listadeusuarios');
             } catch (error) {
                 console.error('Erro ao deletar usuário:', error);
             }
@@ -107,7 +106,7 @@ const ViewUser = () => {
     
             try {
                 await patchUserById(userId, updatedUser, token);
-                navigate('/listauser');
+                navigate('/listadeusuarios');
             } catch (error) {
                 console.error(`Erro ao atualizar usuário com ID ${userId}:`, error);
             }

@@ -2,16 +2,16 @@ import { useNavigate } from "react-router-dom";
 import SideBar from "../../../Components/SideBar";
 import SideButton from "../../../Components/SideButton";
 import SecondaryButton from "../../../Components/SecondaryButton";
-import FieldText from "../../../Components/FieldText";
-export default function Cadastros() {
+
+export default function Registrations() {
     const navigate = useNavigate();
 
     const handleListaClick = () => {
-        navigate("/listauser");
+        navigate("/listadeusuarios");
     };
 
     const handleCadastroClick = () => {
-        navigate("/caduser");
+        navigate("/cadastrarUsuario");
     };
 
     const buttons = [
