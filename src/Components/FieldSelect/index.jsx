@@ -15,6 +15,9 @@ function FieldSelect({ label, value, onChange, options }) {
         onChange={onChange}
         label={label}
         sx={{
+
+          background : "#e0d4cc",
+          backgroundColor : "#e0d4cc",
           '& .MuiSelect-select': {
             borderColor: theme.palette.custom.main
           },
