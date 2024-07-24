@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./index.css";
 import "../../../index.css";
 //import "dayjs/locale/pt-br";
@@ -59,6 +59,50 @@ export default function ViewSupplier() {
   const handleChangeUf_endereco = (event) => {
     setUfEndereco(event.target.value);
   };
+
+  /*useEffect(() => {
+    getSupplierForm();
+  }, []);
+  
+  const isValidEmail = (email) => {
+    const allowedDomains = [
+      'com', 'net', 'org', 'com.br', 'org.br'
+    ]; 
+    const domainPattern = allowedDomains.join('|'); 
+    const emailValido = new RegExp(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.${domainPattern}$`, 'i');
+    return emailValido.test(email);
+  };
+  
+  const getSupplierForm = async () => { // Busca usuario no banco
+    try {
+      const response = await APISuppliers.get(`users/${storagedUser.user._id}`, {
+        headers: { 'Authorization': `Bearer ${storagedUser.token}` }
+      });
+      setNome(response.data.nome);
+      setTipoPessoa(response.data.tipoPessoa);
+      setCpfCnpj(response.data.cpfCnpj);
+      setStatusFornecedor(response.data.statusFornecedor);
+      setNaturezaTransacao(response.data.naturezaTransacao);
+      setEmail(response.data.email);
+      setNomeContato(response.data.nomeContato);
+      setCelular(response.data.celular);
+      setTelefone(response.data.telefone);
+      setCep(response.data.cep);
+      setCidade(response.data.celular);
+      setUfEndereco(response.data.uf_endereco);
+      setLogradouro(response.data.logradouro);
+      setComplemento(response.data.complemento);
+      setNomeBanco(response.data.nomeBanco);
+      setAgencia(response.data.agencia);
+      setNumeroBanco(response.data.numeroBanco);
+      setDv(response.data.dv);
+      setChavePix(response.data.chavePix);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  */
+
 
   return (
     <section className="container">
