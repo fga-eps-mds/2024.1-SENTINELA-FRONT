@@ -10,6 +10,7 @@ import SecondaryButton from '../../../Components/SecondaryButton';
 import { RadioGroup, FormControlLabel, Radio } from '@mui/material'; 
 import { getUserById, deleteUserById, patchUserById, getRoles } from '../../../Services/userService';
 import "./index.css";
+import Modal from '../../../Components/Modal';
 
 const ViewUser = () => {
     const { state } = useLocation();
@@ -23,7 +24,8 @@ const ViewUser = () => {
     const [email, setEmail] = useState('');
     const [perfilSelecionado, setPerfilSelecionado] = useState('');
     const [roles, setRoles] = useState ([])
-
+    const [showSaveModal,setShowSaveModal] = useState(false);
+    const [showDeleteModal,setShowDeleteModal] = useState(false);
     const handleNomeCompletoChange = (e) => {
         const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, '');
         setNomeCompleto(value);
@@ -132,7 +134,17 @@ const ViewUser = () => {
     const handlePerfilChange = (event) => {
         setPerfilSelecionado(event.target.value);
     };
+    const handleSaveCloseDialog = () => {
+        setShowSaveModal(false);
+        navigate("/home");
+    };
+    const handleDeleteCloseDialog = () => {
+        setShowDeleteModal(false);
+    };
 
+    const modalDeleteButton = [<SecondaryButton key={'modalButtons'} text = 'EXCLUIR USUÁRIO' onClick={() => handleDelete()} width="338px"/>,
+        <SecondaryButton key={'modalButtons'} text = 'CANCELAR E MANTER O CADASTRO' onClick={() => handleDeleteCloseDialog()} width="338px"/>
+    ];
     return (
         <section className="container">
             <div className="bar-container">
@@ -194,6 +206,24 @@ const ViewUser = () => {
                         onClick={handleSave}
                     />
                 </div>
+
+                <Modal className = 'Save'
+
+                    alertTitle="Alterações Salvas"
+                    show={showSaveModal}
+                    buttons = {<SecondaryButton key={'modalButtons'} 
+                                text = 'OK' 
+                                onClick={() => handleSaveCloseDialog()} 
+                                width="338px"/>
+                            }
+                />
+
+                <Modal className = 'Delete'
+
+                    alertTitle="Deseja deletar o usuário do sistema?"
+                    show={showDeleteModal}
+                    buttons = {modalDeleteButton}
+                />
             </div>
         </section>
     );
