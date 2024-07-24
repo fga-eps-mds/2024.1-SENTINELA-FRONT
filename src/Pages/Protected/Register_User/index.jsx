@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import "./index.css";
 import "../../../index.css";
 import SideBar from "../../../Components/SideBar";
@@ -6,28 +7,27 @@ import SideButton from "../../../Components/SideButton";
 import FieldText from "../../../Components/FieldText";
 import FieldSelect from "../../../Components/FieldSelect";
 import FieldNumber from '../../../Components/FieldNumber';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogTitle from '@mui/material/DialogTitle';
 import Checklist from '../../../Components/Checklist';
 import PrimaryButton from '../../../Components/PrimaryButton';
-import { ToggleButton, Radio, RadioGroup, FormControlLabel } from '@mui/material'; 
+import { ToggleButton, Radio, RadioGroup, FormControlLabel, Button } from '@mui/material'; 
 import {createUser, getRoles } from '../../../Services/userService';
 
 export default function Register_User(){
     //Dados a serem armazenados
-    const [nomeCompleto, setnomeCompleto] = useState(''); //Armazena o nome completo da pessoa cadastrada
-    const [celular, setCelular] = useState(''); //Armazena o número de celular da pessoa cadastrada
-    const [login, setLogin] = useState(''); //Armazena o estado de Login da pessoa cadastrada
-    const [email, setEmail] = useState(''); //Armazena o email da pessoa cadastrada
-    const [acessos, setAcessos] = useState([]); //Armazena os setores de acesso da pessoa cadastrada
-    const [perfilSelecionado, setPerfilSelecionado] = useState(''); //armazena perfil selecionado
+    const navigate = useNavigate(); 
+    const [nomeCompleto, setnomeCompleto] = useState(''); 
+    const [celular, setCelular] = useState(''); 
+    const [login, setLogin] = useState(''); 
+    const [email, setEmail] = useState('');
+    // const [acessos, setAcessos] = useState([]); 
+    // const [checklistVisible, setChecklistVisible] = useState(false);
+    const [perfilSelecionado, setPerfilSelecionado] = useState('');
     const [roles, setRoles] = useState ([])
-    const [checklistVisible, setChecklistVisible] = useState(false);
-    // const setoresAcesso = [
-    //     { module: 'users', access: ['create', 'read', 'update', 'delete'] },
-    //     { module: 'finance', access: ['create', 'read', 'update', 'delete'] },
-    //     { module: 'benefits', access: ['create', 'read', 'update', 'delete'] },
-    //     { module: 'juridic', access: ['create', 'read', 'update', 'delete'] }
-    // ]
-    
+    const [openDialog, setOpenDialog] = useState(false);
+
     //Variáveis de controle e display da página
     const buttons = [
         <SideButton key="home" text="Pagina Inicial" />,
@@ -42,9 +42,9 @@ export default function Register_User(){
     };
 
 
-    const toggleChecklistVisibility = () => {
-        setChecklistVisible(!checklistVisible);
-    };
+    // const toggleChecklistVisibility = () => {
+    //     setChecklistVisible(!checklistVisible);
+    // };
 
    
     const handlePerfilChange = (event) => {
@@ -52,7 +52,30 @@ export default function Register_User(){
         
     };
 
-    const handleSubmit = async () => {
+    const isValidEmail = (email) => {
+        const allowedDomains = [
+          'com', 'net', 'org', 'com.br', 'org.br'
+        ]; /* ainda necessário melhoria */ 
+        const domainPattern = allowedDomains.join('|'); 
+        const emailRegex = new RegExp(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.${domainPattern}$`, 'i');
+        return emailRegex.test(email);
+      };
+
+    const removeMask = (celular) => celular.replace(/\D/g, '');
+    const handleCloseDialog = () => {
+        setOpenDialog(false);
+        navigate("/home");
+      };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const trimmedCelular = removeMask(celular);
+        const isValidNumber = /^\d+$/.test(trimmedCelular) && trimmedCelular.length >= 10; // Número válido = [0,9] e maior que 10 digitos
+        const isValidEmailAddress = isValidEmail(email); 
+
+        if (!isValidNumber || !isValidEmailAddress) {
+            return;
+        }
+
         const userData = {
             name: nomeCompleto,
             email: email,
@@ -65,6 +88,7 @@ export default function Register_User(){
         try{
             const response = await createUser(userData);
             console.log('Usuário criado com sucesso:', response);
+            setOpenDialog(true);
             // Lógica adicional após a criação do usuário
         } catch (error) {
             console.error('Erro ao criar usuário', error);
@@ -77,9 +101,6 @@ export default function Register_User(){
             setRoles(roles);
         }  
         loadRoles();
-
-
-
 
      }, [])
 
@@ -108,7 +129,7 @@ export default function Register_User(){
                         label="Celular"
                         value={celular}
                         onChange={(e) => setCelular(e.target.value)}
-                        format='+55 (##) 9#### ####'
+                        format='(##) ##### ####'
                     />
 
                     <FieldSelect
@@ -132,7 +153,7 @@ export default function Register_User(){
                 </div> */}
                 
                 {/* {checklistVisible && (
-                    <div className='teste'>
+                    <div className='teste'>// const [checklistVisible, setChecklistVisible] = useState(false);
                         <Checklist
                             items={setoresAcesso}
                             value={acessos}
@@ -159,6 +180,21 @@ export default function Register_User(){
                     text='Cadastrar'
                     onClick={handleSubmit}
                 />
+                <Dialog 
+                    open={openDialog}
+                    onClose={handleCloseDialog}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                    className="custom-dialog"
+                >
+                <DialogTitle className="alert-dialog-title">{"Cadastro de Usuário Concluido"}</DialogTitle>
+                <DialogActions>
+                <Button onClick={handleCloseDialog} className="custom-dialog-button">
+                OK
+                </Button>
+                </DialogActions>
+                </Dialog>
+                
             </div>
         </section>
     );
