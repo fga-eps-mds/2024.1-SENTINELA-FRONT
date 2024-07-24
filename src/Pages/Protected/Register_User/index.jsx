@@ -14,6 +14,8 @@ import Checklist from '../../../Components/Checklist';
 import PrimaryButton from '../../../Components/PrimaryButton';
 import { ToggleButton, Radio, RadioGroup, FormControlLabel, Button } from '@mui/material'; 
 import {createUser, getRoles } from '../../../Services/userService';
+import { RiLogoutCircleRLine } from 'react-icons/ri';
+import { AiOutlineUser } from 'react-icons/ai';
 
 export default function Register_User(){
     //Dados a serem armazenados
@@ -34,6 +36,8 @@ export default function Register_User(){
         <SideButton key="cadastros" text="Cadastros" onClick={navigate("/cadastros")}/>,
         <SideButton key="financeiro" text="Financeiro" onClick={navigate("/financeiro")}/>,
         <SideButton key="benefícios" text="Benefícios" onClick={navigate("/beneficios")}/>,
+        <h2 className="profile-status">Você está logado <br />como {nome} <AiOutlineUser className="profile-icon" /></h2>,
+        <button className="btn-logout" onClick={handleLogout}> LOGOUT <RiLogoutCircleRLine className="logout-icon" /> </button>
     ];
 
     const login_options = ['Ativo', 'Inativo'];
