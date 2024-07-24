@@ -1,4 +1,4 @@
-import { useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import SideBar from "../../../Components/SideBar";
 import SideButton from "../../../Components/SideButton";
@@ -23,14 +23,15 @@ const ViewUser = () => {
     const [login, setLogin] = useState('');
     const [email, setEmail] = useState('');
     const [perfilSelecionado, setPerfilSelecionado] = useState('');
-    const [roles, setRoles] = useState ([])
-    const [showSaveModal,setShowSaveModal] = useState(false);
-    const [showDeleteModal,setShowDeleteModal] = useState(false);
+    const [roles, setRoles] = useState([]);
+    const [showSaveModal, setShowSaveModal] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [showDeletedModal, setShowDeletedModal] = useState(false);
+
     const handleNomeCompletoChange = (e) => {
         const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, '');
         setNomeCompleto(value);
     };
-
 
     useEffect(() => {
         const loadRoles = async () => {
@@ -41,12 +42,10 @@ const ViewUser = () => {
             } catch (error) {
                 console.error('Erro ao carregar roles:', error); 
             }
-        }
+        };
         loadRoles();
     }, []);
-    
 
-     
     useEffect(() => {
         const fetchUser = async () => {
             if (userId) {
@@ -82,10 +81,12 @@ const ViewUser = () => {
     }, [userId]);
 
     const handleDelete = async () => {
+        setShowDeleteModal(false);
         if (userId) {
             try {
-                await deleteUserById (userId);
-                navigate('/listadeusuarios');
+                await deleteUserById(userId);
+                setShowDeletedModal(true);
+                
             } catch (error) {
                 console.error('Erro ao deletar usuário:', error);
             }
@@ -93,6 +94,7 @@ const ViewUser = () => {
     };
 
     const handleSave = async () => {
+        setShowSaveModal(false);
         if (userId) {
             const updatedUser = {
                 name: nomeCompleto,
@@ -114,53 +116,95 @@ const ViewUser = () => {
     
             try {
                 await patchUserById(userId, updatedUser, token);
-                navigate('/listadeusuarios');
+                handleSaveCloseDialog ();
             } catch (error) {
                 console.error(`Erro ao atualizar usuário com ID ${userId}:`, error);
             }
         }
     };
 
+    const handleListaClick = () => {
+        navigate("/listadeusuarios");
+    };
+
+    const handleCadastroClick = () => {
+        navigate("/cadastrarUsuario");
+    };
+
+    const handleHomeClick = () => {
+        navigate("/home");
+    };
+
+    const handleRegistrationClick = () => {
+        navigate("/cadastros");
+    };
+
+
+    //Variáveis de controle e display da página
     const buttons = [
-        <SideButton key="home" text="Pagina Inicial" />,
-        <SideButton key="cadastros" text="Cadastros" />,
+        <SideButton key="home" text="Pagina Inicial" onClick={handleHomeClick}/>,
+        <SideButton key="cadastros" text="Cadastros" onClick={handleRegistrationClick}/>,
+        <SideButton key="financeiro" text="Financeiro"/>,
+        <SideButton key="benefícios" text="Benefícios"/>,
+        // <h2 className="profile-status">Você está logado <br />como {nome} <AiOutlineUser className="profile-icon" /></h2>,
+        // <button className="btn-logout" onClick={handleLogout}> LOGOUT <RiLogoutCircleRLine className="logout-icon" /> </button>
     ];
 
     const loginOptions = ['Ativo', 'Inativo'];
     const handleChangeLogin = (event) => {
         setLogin(event.target.value);
     };
-    
+
     const handlePerfilChange = (event) => {
         setPerfilSelecionado(event.target.value);
     };
+
+    const handleSaveModal = () => {
+        setShowSaveModal(true);
+    };
+
+    const handleDeleteModal = () => {
+        setShowDeleteModal(true);
+    };
+
     const handleSaveCloseDialog = () => {
         setShowSaveModal(false);
-        navigate("/home");
+        navigate("/listadeusuarios");
     };
+
     const handleDeleteCloseDialog = () => {
         setShowDeleteModal(false);
     };
 
-    const modalDeleteButton = [<SecondaryButton key={'modalButtons'} text = 'EXCLUIR USUÁRIO' onClick={() => handleDelete()} width="338px"/>,
-        <SecondaryButton key={'modalButtons'} text = 'CANCELAR E MANTER O CADASTRO' onClick={() => handleDeleteCloseDialog()} width="338px"/>
+    const handleDeletedCloseDialog = () => {
+        setShowDeletedModal(false);
+        navigate('/listadeusuarios');
+        
+    };
+
+
+    const modalSaveButton = [<SecondaryButton key={'saveButtons'} text='OK' onClick={() => handleSave()} width="338px" />];
+    const modalDeleteButton = [
+        <SecondaryButton key={'deleteButtons'} text='EXCLUIR USUÁRIO' onClick={() => handleDelete()} width="338px" />,
+        <SecondaryButton key={'modalButtons'} text='CANCELAR E MANTER O CADASTRO' onClick={() => handleDeleteCloseDialog()} width="338px" />
     ];
+
     return (
         <section className="container">
             <div className="bar-container">
                 <SideBar buttons={buttons} />
             </div>
-    
+
             <div className='forms-container'>
                 <h1>Visualização de usuário</h1>
-    
+
                 <h3>Dados Pessoais</h3>
                 <FieldText
                     label="Nome Completo"
                     value={nomeCompleto}
-                    onChange={(e) => handleNomeCompletoChange(e.target.value)}
+                    onChange={handleNomeCompletoChange}
                 />
-    
+
                 <div className='double-box'>
                     <FieldNumber
                         label="Celular"
@@ -168,7 +212,7 @@ const ViewUser = () => {
                         onChange={(e) => setCelular(e.target.value)}
                         format=' (##) ##### ####'
                     />
-    
+
                     <FieldSelect
                         label="Login"
                         value={login}
@@ -176,15 +220,15 @@ const ViewUser = () => {
                         options={loginOptions}
                     />
                 </div>
-    
+
                 <FieldText
                     label="Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
-    
+
                 <h3>Perfil</h3>
-    
+
                 <RadioGroup value={perfilSelecionado} onChange={handlePerfilChange}>
                     {roles.map((perfil) => (
                         <FormControlLabel
@@ -195,34 +239,33 @@ const ViewUser = () => {
                         />
                     ))}
                 </RadioGroup>
-    
+
                 <div className='double-buttons'>
                     <SecondaryButton
                         text='Deletar'
-                        onClick={handleDelete}
+                        onClick={handleDeleteModal}
                     />
                     <PrimaryButton
                         text='Salvar'
-                        onClick={handleSave}
+                        onClick={handleSaveModal}
                     />
                 </div>
 
-                <Modal className = 'Save'
-
+                <Modal
                     alertTitle="Alterações Salvas"
                     show={showSaveModal}
-                    buttons = {<SecondaryButton key={'modalButtons'} 
-                                text = 'OK' 
-                                onClick={() => handleSaveCloseDialog()} 
-                                width="338px"/>
-                            }
+                    buttons={modalSaveButton}
                 />
 
-                <Modal className = 'Delete'
-
+                <Modal
                     alertTitle="Deseja deletar o usuário do sistema?"
                     show={showDeleteModal}
-                    buttons = {modalDeleteButton}
+                    buttons={modalDeleteButton}
+                />
+                <Modal
+                    alertTitle="Usuario Deletado"
+                    show={showDeletedModal}
+                    buttons={<SecondaryButton key={'okButtons'} text='OK' onClick={() => handleDeletedCloseDialog()} width="338px" />}
                 />
             </div>
         </section>
