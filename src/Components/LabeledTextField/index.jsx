@@ -2,8 +2,13 @@ import PropTypes from "prop-types";
 import { theme } from "../../Styles/global";
 import TextField from "@mui/material/TextField";
 
-
-export default function LabeledTextField ({ label, placeholder, type, value, onChange }) {
+export default function LabeledTextField({
+  label,
+  placeholder,
+  type,
+  value,
+  onChange,
+}) {
   return (
     <TextField
       label={label}
@@ -47,4 +52,7 @@ export default function LabeledTextField ({ label, placeholder, type, value, onC
 LabeledTextField.propTypes = {
   label: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
+  type: PropTypes.string,
+  value: PropTypes.string,
+  onChange: PropTypes.func,
 };

@@ -7,11 +7,14 @@ export default defineConfig({
   plugins: [react()],
   test: {
     globals: true,
-    coverage: { 
+    coverage: {
       provider: "v8",
-      reporter: "lcov" },
+      reporter: "lcov",
+    },
     environment: "jsdom",
-    reporters: reporter ? [[reporter, {outputFile: "coverage/coverage.xml"}]] : [],
+    reporters: reporter
+      ? [[reporter, { outputFile: "coverage/coverage.xml" }]]
+      : [],
     outputFile: "coverage/coverage.xml",
     testTimeout: 7500,
   },
