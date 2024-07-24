@@ -15,11 +15,10 @@ import { RiLogoutCircleRLine } from 'react-icons/ri';
 import { AiOutlineUser } from 'react-icons/ai';
 import Modal from '../../../Components/Modal';
 
-
 export default function Register_User(){
     //Dados a serem armazenados
     const navigate = useNavigate(); 
-    const [nomeCompleto, setnomeCompleto] = useState(''); 
+    const [nomeCompleto, setNomeCompleto] = useState(''); 
     const [celular, setCelular] = useState(''); 
     const [login, setLogin] = useState(''); 
     const [email, setEmail] = useState('');
@@ -29,7 +28,6 @@ export default function Register_User(){
     const [roles, setRoles] = useState ([])
     const [showModal,setShowModal] = useState(false);
     
-      
     const handleHomeClick = () => {
         navigate("/home");
     };
@@ -37,7 +35,6 @@ export default function Register_User(){
     const handleRegistrationClick = () => {
         navigate("/cadastros");
     };
-
 
     //Variáveis de controle e display da página
     const buttons = [
@@ -49,11 +46,6 @@ export default function Register_User(){
         // <button className="btn-logout" onClick={handleLogout}> LOGOUT <RiLogoutCircleRLine className="logout-icon" /> </button>
     ];
 
-
-    // const handleListaClick = () => {
-    //     navigate("/listadeusuarios");
-    // };
-
     // const handleListaClick = () => {
     //     navigate("/listadeusuarios");
     // };
@@ -63,15 +55,12 @@ export default function Register_User(){
         setLogin(event.target.value);
     };
 
-
     // const toggleChecklistVisibility = () => {
     //     setChecklistVisible(!checklistVisible);
     // };
 
-   
     const handlePerfilChange = (event) => {
         setPerfilSelecionado(event.target.value);
-        
     };
 
     const isValidEmail = (email) => {
@@ -81,13 +70,20 @@ export default function Register_User(){
         const domainPattern = allowedDomains.join('|'); 
         const emailRegex = new RegExp(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.${domainPattern}$`, 'i');
         return emailRegex.test(email);
-      };
+    };
 
     const removeMask = (celular) => celular.replace(/\D/g, '');
+    
     const handleCloseDialog = () => {
         setShowModal(false);
         navigate("/home");
-      };
+    };
+
+    const handleNomeCompletoChange = (e) => {
+        const value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+        setNomeCompleto(value);
+    };
+
     const handleSubmit = async (e) => {
         const trimmedCelular = removeMask(celular);
         const isValidNumber = /^\d+$/.test(trimmedCelular) && trimmedCelular.length >= 10; // Número válido = [0,9] e maior que 10 digitos
@@ -103,10 +99,9 @@ export default function Register_User(){
             phone: celular,
             status: login === 'Ativo', // Convertendo status de login para boolean
             role: perfilSelecionado, // Assumindo que perfilSelecionado é o ID da role
-           
-        
         };
-        try{
+
+        try {
             const response = await createUser(userData);
             console.log('Usuário criado com sucesso:', response);
             setShowModal(true);
@@ -114,21 +109,17 @@ export default function Register_User(){
         } catch (error) {
             console.error('Erro ao criar usuário', error);
         }
-     };    
+    };    
 
-     useEffect (()=>{
+    useEffect(()=>{
         const loadRoles = async () => {
-            const roles = await getRoles()
+            const roles = await getRoles();
             setRoles(roles);
-        }  
+        };
         loadRoles();
+    }, []);
 
-     }, [])
-
-
-
-
-//Configuração da página
+    //Configuração da página
     return (
         <section className="container">
             <div className="bar-container">
@@ -142,7 +133,7 @@ export default function Register_User(){
                 <FieldText
                     label="Nome Completo"
                     value={nomeCompleto}
-                    onChange={(e) => setnomeCompleto(e.target.value)}
+                    onChange={handleNomeCompletoChange}
                 />
 
                 <div className='double-box'>
@@ -182,8 +173,7 @@ export default function Register_User(){
                         />
                     </div>
                 )} */}
-               
-
+                
                 <h3>Perfil</h3>
 
                 <RadioGroup value={perfilSelecionado} onChange={handlePerfilChange}>
@@ -215,13 +205,13 @@ export default function Register_User(){
                 </Button>
                 </DialogActions>
                 </Dialog> */}
-                < Modal
-                width = "338px" 
-                text ="OK"
-                alertTitle="Cadastro de usuário concluído"
-                show = {showModal}
-                onClick = {() => handleCloseDialog()}
-                ></Modal>
+                <Modal
+                    width="338px"
+                    text="OK"
+                    alertTitle="Cadastro de usuário concluído"
+                    show={showModal}
+                    onClick={() => handleCloseDialog()}
+                />
                 
             </div>
         </section>
