@@ -14,6 +14,7 @@ import {createUser, getRoles } from '../../../Services/userService';
 import { RiLogoutCircleRLine } from 'react-icons/ri';
 import { AiOutlineUser } from 'react-icons/ai';
 import Modal from '../../../Components/Modal';
+import SecondaryButton from '../../../Components/SecondaryButton';
 
 export default function Register_User(){
     //Dados a serem armazenados
@@ -119,6 +120,8 @@ export default function Register_User(){
         loadRoles();
     }, []);
 
+
+    const modalButton = [<SecondaryButton key={'modalButtons'} text = 'OK' onClick={() => handleCloseDialog()} width="338px"/>];
     //Configuração da página
     return (
         <section className="container">
@@ -207,10 +210,9 @@ export default function Register_User(){
                 </Dialog> */}
                 <Modal
                     width="338px"
-                    text="OK"
                     alertTitle="Cadastro de usuário concluído"
                     show={showModal}
-                    onClick={() => handleCloseDialog()}
+                    buttons = {modalButton}
                 />
                 
             </div>

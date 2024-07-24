@@ -2,11 +2,10 @@ import React from "react";
 import "./index.css";
 import PropTypes from "prop-types";
 import { Alert, AlertTitle } from "@mui/material";
-import SecondaryButton from "../SecondaryButton";
 import { useNavigate } from "react-router-dom";
 import theme from '../../Styles/global';
 
-export default function Modal({ show, children, text, width, alertTitle, alert, onClick }) {
+export default function Modal({ show, children, alertTitle, buttons }) {
   const navigate = useNavigate();
 
   if (!show) {
@@ -27,25 +26,24 @@ export default function Modal({ show, children, text, width, alertTitle, alert, 
             "& .MuiAlert-message": {
               fontFamily: theme.typography.fontFamilySecondary,
             },
-            width:"270px",
+            width: "100%", // Ajusta para 100% da largura do modal
           }}
         >
           <AlertTitle>{alertTitle}</AlertTitle>
-          {alert}
+          {children}
         </Alert>
-        <SecondaryButton text={text} onClick={onClick} width={width} />
-        {children}
+
+        <div className="modal-buttons">
+          {buttons}
+        </div>
       </div>
     </div>
   );
 }
 
 Modal.propTypes = {
-  text: PropTypes.string.isRequired,
-  width: PropTypes.string.isRequired,
   show: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
   alertTitle: PropTypes.string.isRequired,
-  alert: PropTypes.string,
-  onClick : PropTypes.func
+  buttons: PropTypes.array,
 };
