@@ -1,157 +1,74 @@
 @media screen and (max-width: 1080px) {
-  .bar-container{
-      display: none;
-  }
-  
   .container {
-      display:flex;
-  }
-  
-  .forms-container{
-      margin: 1rem;
-      width: 100%;
-      
-      display: inherit;
-      justify-content: center;
-      flex-direction: column;
-  }
-  
-  .section-form{
-      display: grid;
-      grid-template-columns: 1fr;
-  }
-  
-  .double-box{
-      display: inherit;
-  }
-  
-  h1{
-      font-weight: 800;
-      margin-bottom: 3rem;
-  }
-  
-  h3{
-      font-weight: 400;
-      margin-left: 1rem;
-      margin-top: 3rem;
-  }
-  
-  #addDependentBttn{
-      cursor: pointer
+    display: flex;
+    flex-direction: row;
   }
 
-  .dependentBox{
-      background-color: #341f143e;
-      border-radius: 5px;
+  .forms-container {
+    margin: 1rem;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
   }
 
-  .dependentToAdd{
-      display:flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-      border-radius: 15px;
-
-      background-color: #d1d1d1;
-      margin-top: 1rem;
-      padding: 1rem;
+  .section-form {
+    display: flex;
+    grid-template-columns: 1fr;
   }
 
-  .section-dependent-form{
-      display: grid;
-      grid-template-columns: 1fr;
-      width: 100%;
+  .double-box {
+    display: inherit;
   }
 
-  .dependentBox{
-      display:flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-      border-radius: 15px;
-
-      background-color: #ae883c98;
-      margin-top: 1rem;
-      padding: 1rem;
+  h1 {
+    font-weight: 800;
+    margin-bottom: 3rem;
   }
 
-  .dependentContainer{
-      display: grid;
-      grid-template-columns: 1fr;
+  h3 {
+    font-weight: 400;
+    margin-left: 1rem;
+    margin-top: 3rem;
   }
 }
 
-@media screen and (min-width:1081px){
+@media screen and (min-width: 1081px) {
   .container {
-      display:flex;
-  }
-  
-  .forms-container{
-      margin: 3.5rem;
-      width: 100%;
-      
-      display: inherit;
-      justify-content: center;
-      flex-direction: column;
-  }
-  
-  .section-form{
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-  }
-  
-  .double-box{
-      display: grid;
-      grid-template-columns: 2.3fr .7fr;
-  }
-  
-  h1{
-      font-weight: 800;
-      margin-bottom: 3rem;
-  }
-  
-  h3{
-      font-weight: 400;
-      margin-left: 1rem;
-      margin-top: 3rem;
-  }
-  
-  #addDependentBttn{
-      cursor: pointer
+    display: flex;
+    flex-direction: row;
   }
 
-  .dependentToAdd{
-      display:flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-      border-radius: 15px;
+  .forms-container {
+    .forms-container{
+        margin: 1rem;
+        width: 90%;
 
-      background-color: #d1d1d1;
-      margin-top: 1rem;
-      padding: 1rem;
+        display: inherit;
+        justify-content: center;
+        flex-direction: column;
+    }
   }
 
-  .section-dependent-form{
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      width: 100%;
+  .section-form {
+    display: flex;
+    grid-template-columns: 1fr 1fr;
   }
 
-  .dependentBox{
-      display:flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-      border-radius: 15px;
-
-      background-color: #ae883c98;
-      margin-top: 1rem;
-      padding: 1rem;
+  .double-box {
+    display: flex;
+    grid-template-columns: 2.3fr 0.7fr;
   }
 
-  .dependentContainer{
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+  h1 {
+    font-weight: 800;
+    margin-bottom: 3rem;
+  }
+
+  h3 {
+    font-weight: 400;
+    margin-left: 1rem;
+    margin-top: 3rem;
   }
 }

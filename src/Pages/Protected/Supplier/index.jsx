@@ -1,31 +1,21 @@
 import React, { useState } from "react";
-import "./index";
+import "./index.css";
 //import "../../../index.css";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import SideBar from "../../../Components/SideBar";
 import SideButton from "../../../Components/SideButton";
 import FieldText from "../../../Components/FieldText";
 import FieldSelect from "../../../Components/FieldSelect";
 import PrimaryButton from "../../../Components/PrimaryButton";
-import Modal from "../../../Components/Modal";
 import "dayjs/locale/pt-br";
 //import { createSupplier } from "../../../";
 
 //const Supplier = () => {
 export default function Supplier() {
-
-/*  const navigate = useNavigate();
+  /*  const navigate = useNavigate();
   const handleListSupplierPage = () => {
     navigate("/listsupplier");
   }*/
-
-  const openModal = () => {
-    setShowModal(true);
-  }
-
-  const closeModal = () => {
-    setShowModal(false);
-  }
 
   console.log("Supplier called");
   const [nome, setNome] = useState("");
@@ -47,7 +37,6 @@ export default function Supplier() {
   const [numeroBanco, setNumeroBanco] = useState("");
   const [dv, setDv] = useState("");
   const [chavePix, setChavePix] = useState("");
-  const [showModal, setShowModal] = useState(false);
 
   const tipoPessoaList = ["Jurídica", "Física"];
   const statusFornecedorList = ["Ativo", "Inativo"];
@@ -107,10 +96,8 @@ export default function Supplier() {
   };
 
   return (
-    <section className="container">
-      <div className="bar-container">
+    <div className="container">
         <SideBar buttons={buttons} />
-      </div>
 
       <div className="forms-container">
         <h1>Cadastro de fornecedor</h1>
@@ -150,7 +137,6 @@ export default function Supplier() {
             onChange={handleChangeNaturezaTransacao}
             options={naturezaTransacaoList}
           />
-
         </div>
 
         <h3>Dados de Contato</h3>
@@ -219,14 +205,13 @@ export default function Supplier() {
         <h3>Dados Bancários</h3>
 
         <div className="section-form">
-
           <FieldText
             label="Banco"
             value={nomeBanco}
             onChange={(e) => setNomeBanco(e.target.value)}
           />
 
-          <FieldText 
+          <FieldText
             label="Agência"
             value={agencia}
             onChange={(e) => setAgencia(e.target.value)}
@@ -237,28 +222,24 @@ export default function Supplier() {
             value={numeroBanco}
             onChange={(e) => setNumeroBanco(e.target.value)}
           />
-          
+
           <FieldText
             label="DV"
             value={dv}
             onChange={(e) => setDv(e.target.value)}
           />
-          
+
           <FieldText
             label="Chave Pix"
             value={chavePix}
             onChange={(e) => setChavePix(e.target.value)}
           />
-
         </div>
-        
-        <PrimaryButton text="CADASTRAR" onClick={() => openModal()} />
 
-        <Modal show={showModal} onClose={closeModal} text="OK" width="270px">
-        </Modal>
+        <PrimaryButton text="CADASTRAR"/>
 
       </div>
-    </section>
+    </div>
   );
 }
 
