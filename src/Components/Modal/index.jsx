@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { Alert, AlertTitle } from "@mui/material";
 import SecondaryButton from "../SecondaryButton";
 import { useNavigate } from "react-router-dom";
-import theme from '../../Styles/global';
+import { theme } from '../../Styles/global.js';
 
 export default function Modal({ show, children, text, width }) {
   const navigate = useNavigate();

@@ -1,22 +1,23 @@
 import React, { useState } from "react";
 import "./index";
-import "../../../index.css";
+//import "../../../index.css";
 import { useNavigate } from 'react-router-dom';
 import SideBar from "../../../Components/SideBar";
 import SideButton from "../../../Components/SideButton";
 import FieldText from "../../../Components/FieldText";
 import FieldSelect from "../../../Components/FieldSelect";
 import PrimaryButton from "../../../Components/PrimaryButton";
+import Modal from "../../../Components/Modal";
 import "dayjs/locale/pt-br";
 //import { createSupplier } from "../../../";
 
 //const Supplier = () => {
 export default function Supplier() {
 
-  const navigate = useNavigate();
+/*  const navigate = useNavigate();
   const handleListSupplierPage = () => {
     navigate("/listsupplier");
-  }
+  }*/
 
   const openModal = () => {
     setShowModal(true);
@@ -251,7 +252,7 @@ export default function Supplier() {
 
         </div>
         
-        <PrimaryButton text="CADASTRAR" onClick={() => handleSubmit()}>CADASTRAR</PrimaryButton>
+        <PrimaryButton text="CADASTRAR" onClick={() => openModal()} />
 
         <Modal show={showModal} onClose={closeModal} text="OK" width="270px">
         </Modal>

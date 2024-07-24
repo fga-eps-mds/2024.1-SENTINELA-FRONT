@@ -1,4 +1,4 @@
-import { APISuppliers, APIUsers } from "./BaseService";
+import { APIUsers } from "./BaseService";
 
 export async function userLogin(email, password) {
   try {
