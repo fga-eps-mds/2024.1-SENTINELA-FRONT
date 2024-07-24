@@ -34,6 +34,15 @@ const ProfileUpdate = () => {
     getUser();
   }, []);
 
+  const isValidEmail = (email) => {
+    const allowedDomains = [
+      'com', 'net', 'org', 'com.br', 'org.br'
+    ]; /* ainda necessário melhoria */ 
+    const domainPattern = allowedDomains.join('|'); 
+    const emailRegex = new RegExp(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.${domainPattern}$`, 'i');
+    return emailRegex.test(email);
+  };
+
   const getUser = async () => { // Busca usuario no banco
     try {
       const response = await APIUsers.get(`users/${storagedUser.user._id}`, {
@@ -59,17 +68,21 @@ const ProfileUpdate = () => {
     e.preventDefault();
     const trimmedCelular = removeMask(celular);
     const isValidNumber = /^\d+$/.test(trimmedCelular) && trimmedCelular.length >= 10; // Número válido = [0,9] e maior que 10 digitos
-    if (!isValidNumber) {
+    const isValidEmailAddress = isValidEmail(email); 
+
+    if (!isValidNumber || !isValidEmailAddress) {
       return;
     }
     try {
       await APIUsers.patch(`users/patch/${storagedUser.user._id}`, {
-        phone: celular
+        phone: celular, 
+        email: email
       }, {
         headers: { 'Authorization': `Bearer ${storagedUser.token}` }
       });
       setCelular(celular);
-      setOpenDialog(true); // Abre o Dialog após a conclusão do cadastro
+      setEmail(email);
+      setOpenDialog(true); 
     } catch (error) {
       console.log(error);
     }
