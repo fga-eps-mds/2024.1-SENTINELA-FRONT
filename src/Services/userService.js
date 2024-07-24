@@ -85,11 +85,12 @@ export const getUserById = async (id, token) => {
   
   export const patchUserById = async (id, updatedUser) => {
     try {
-        const token = localStorage.getItem('@App:user'); // Obtenha o token do armazenamento local
-
-        const response = await APIUsers.patch(`/users/patch/${id}`, updatedUser, {
+      const storagedUserString = localStorage.getItem('@App:user');
+      const user = JSON.parse(storagedUserString); 
+      console.log(user.token)
+        const response = await APIUsers.patch(`/users/patch/${id}`, {updatedUser}, {
             headers: {
-                'Authorization': `Bearer ${token}`, // Inclua o token no cabeçalho
+                'Authorization': `Bearer ${user.token}`, 
             },
         });
         
@@ -100,11 +101,15 @@ export const getUserById = async (id, token) => {
     }
 };
   
-export const deleteUserById = async (id, token) => {
+export const deleteUserById = async (id) => {
   try {
-    await APIUsers.delete(`/users/${id}`, {
+    const storagedUserString = localStorage.getItem('@App:user');
+    const user = JSON.parse(storagedUserString); 
+    console.log(user?.token)
+
+    await APIUsers.delete(`/users/delete/${id}`, {
       headers: {
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${user.token}`
       }
     });
   } catch (error) {

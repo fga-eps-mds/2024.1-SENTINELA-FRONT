@@ -8,10 +8,9 @@ import FieldNumber from '../../../Components/FieldNumber';
 import PrimaryButton from '../../../Components/PrimaryButton';
 import SecondaryButton from '../../../Components/SecondaryButton';
 import { RadioGroup, FormControlLabel, Radio } from '@mui/material'; 
-import { getUserById, deleteUserById, patchUserById } from '../../../Services/userService';
+import { getUserById, deleteUserById, patchUserById, getRoles } from '../../../Services/userService';
 import AuthContext from "../../../Context/auth";
 import "./index.css";
-
 
 const ViewUser = () => {
     const { state } = useLocation();
@@ -24,7 +23,23 @@ const ViewUser = () => {
     const [login, setLogin] = useState('');
     const [email, setEmail] = useState('');
     const [perfilSelecionado, setPerfilSelecionado] = useState('');
+    const [roles, setRoles] = useState ([])
 
+    useEffect(() => {
+        const loadRoles = async () => {
+            try {
+                const roles = await getRoles();
+                console.log('Roles carregados:', roles); 
+                setRoles(roles);
+            } catch (error) {
+                console.error('Erro ao carregar roles:', error); 
+            }
+        }
+        loadRoles();
+    }, []);
+    
+
+     
     useEffect(() => {
         const fetchUser = async () => {
             if (userId) {
@@ -59,27 +74,11 @@ const ViewUser = () => {
         fetchUser();
     }, [userId]);
 
-
-    useEffect (()=>{
-        const loadRoles = async () => {
-            const roles = await getRoles()
-            setRoles(roles);
-        }  
-        loadRoles();
-
-
-
-
-     }, [])
-
-
-    const handleCancel = async () => {
+    const handleDelete = async () => {
         if (userId) {
             try {
-                const tokenString = localStorage.getItem('@App:token');
-                const token = JSON.parse(tokenString).token;
-                await deleteUserById(userId, token);
-                navigate('/listuser');
+                await deleteUserById (userId);
+                navigate('/listauser');
             } catch (error) {
                 console.error('Erro ao deletar usuário:', error);
             }
@@ -95,7 +94,10 @@ const ViewUser = () => {
                 status: login === 'Ativo',
                 role: perfilSelecionado,
             };
-            
+
+            // Log the updated user data
+            console.log('Updated user data:', updatedUser);
+
             const tokenString = localStorage.getItem('@App:user');
             if (!tokenString) {
                 console.error('Token não encontrado no localStorage');
@@ -105,28 +107,23 @@ const ViewUser = () => {
     
             try {
                 await patchUserById(userId, updatedUser, token);
-                navigate('/listuser');
+                navigate('/listauser');
             } catch (error) {
                 console.error(`Erro ao atualizar usuário com ID ${userId}:`, error);
             }
         }
     };
 
-
-
     const buttons = [
         <SideButton key="home" text="Pagina Inicial" />,
         <SideButton key="cadastros" text="Cadastros" />,
-        <SideButton key="financeiro" text="Financeiro" />,
-        <SideButton key="benefícios" text="Benefícios" />,
     ];
 
     const loginOptions = ['Ativo', 'Inativo'];
     const handleChangeLogin = (event) => {
         setLogin(event.target.value);
     };
-
-    const perfis = ['Administrativo', 'Diretoria', 'Jurídico', 'Colaborador'];
+    
     const handlePerfilChange = (event) => {
         setPerfilSelecionado(event.target.value);
     };
@@ -172,12 +169,12 @@ const ViewUser = () => {
                 <h3>Perfil</h3>
     
                 <RadioGroup value={perfilSelecionado} onChange={handlePerfilChange}>
-                    {perfis.map((perfil) => (
+                    {roles.map((perfil) => (
                         <FormControlLabel
-                            key={perfil}
-                            value={perfil}
+                            key={perfil?.name}
+                            value={perfil?._id}
                             control={<Radio />}
-                            label={perfil}
+                            label={perfil?.name}
                         />
                     ))}
                 </RadioGroup>
@@ -185,7 +182,7 @@ const ViewUser = () => {
                 <div className='double-buttons'>
                     <SecondaryButton
                         text='Deletar'
-                        onClick={handleCancel}
+                        onClick={handleDelete}
                     />
                     <PrimaryButton
                         text='Salvar'
