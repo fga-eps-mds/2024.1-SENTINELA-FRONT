@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import "./index.css";
 import "../../../index.css";
 import SideBar from "../../../Components/SideBar";
@@ -30,10 +30,10 @@ export default function Register_User(){
 
     //Variáveis de controle e display da página
     const buttons = [
-        <SideButton key="home" text="Pagina Inicial" />,
-        <SideButton key="cadastros" text="Cadastros" />,
-        <SideButton key="financeiro" text="Financeiro" />,
-        <SideButton key="benefícios" text="Benefícios" />,
+        <SideButton key="home" text="Pagina Inicial" onClick={navigate("/home")}/>,
+        <SideButton key="cadastros" text="Cadastros" onClick={navigate("/cadastros")}/>,
+        <SideButton key="financeiro" text="Financeiro" onClick={navigate("/financeiro")}/>,
+        <SideButton key="benefícios" text="Benefícios" onClick={navigate("/beneficios")}/>,
     ];
 
     const login_options = ['Ativo', 'Inativo'];
