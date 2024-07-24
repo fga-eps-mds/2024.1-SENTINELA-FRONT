@@ -11,11 +11,8 @@ import AuthContext from "../../../Context/auth";
 import { APIUsers } from "../../../Services/BaseService";
 import { AiOutlineUser } from "react-icons/ai";
 import { RiLogoutCircleRLine } from "react-icons/ri";
-
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 import "./index.css";
@@ -107,21 +104,48 @@ const ProfileUpdate = () => {
         <h3 className="profile-view">Visualização de usuário</h3>
         <h4 className="personal-data">Dados pessoais</h4>
         <div className="section-campo">
-          <FieldText label="Nome*" value={nome} onChange={(e) => setNome(e.target.value)} disabled />
+          <FieldText 
+            label="Nome*" 
+            value={nome} 
+            onChange={(e) => setNome(e.target.value)} 
+            disabled={true} 
+          />
         </div>
         <div className="double-box">
-          <FieldNumber label="Celular" value={celular} onChange={(e) => setCelular(e.target.value)} format="(##) #####-####" />
-          <FieldText label="Login*" value={login} onChange={(e) => setLogin(e.target.value)} disabled />
+          <FieldNumber 
+            label="Celular" 
+            value={celular} 
+            onChange={(e) => setCelular(e.target.value)} 
+            format="(##) #####-####" 
+          />
+          <FieldText label="Login*" 
+            value={login} 
+            onChange={(e) => setLogin(e.target.value)} 
+            disabled 
+          />
         </div>
         <div className="section-campo">
-          <FieldText label="E-mail*" value={email} onChange={(e) => setEmail(e.target.value)} disabled />
+          <FieldText 
+            label="E-mail" 
+            value={email} 
+            onChange={(e) => setEmail(e.target.value)} 
+          />
         </div>
         <div className="section-sector">
-          <FieldText label="Setores de acesso*" value={""} disabled />
+          <FieldText label="Setores de acesso*" 
+          value={""} 
+          disabled={true} 
+        />
         </div>
         <div className="section-doublebtn">
-          <SecondaryButton text="Cancelar" onClick={handleCancel} />
-          <PrimaryButton text="Salvar" onClick={handleSubmit} />
+          <SecondaryButton 
+            text="Cancelar" 
+            onClick={handleCancel} 
+          />
+          <PrimaryButton 
+            text="Salvar" 
+            onClick={handleSubmit} 
+          />
         </div>
       </div>
       <Dialog
@@ -132,9 +156,6 @@ const ProfileUpdate = () => {
         className="custom-dialog"
       >
         <DialogTitle className="alert-dialog-title">{"Alterações Salvas"}</DialogTitle>
-        <DialogContent>
-          
-        </DialogContent>
         <DialogActions>
         <Button onClick={handleCloseDialog} className="custom-dialog-button">
             OK
