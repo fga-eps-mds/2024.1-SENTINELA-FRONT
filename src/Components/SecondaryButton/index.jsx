@@ -30,4 +30,5 @@ export default function SecondaryButton ({ text, onClick }) {
 
 SecondaryButton.propTypes = {
   text: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired
 };

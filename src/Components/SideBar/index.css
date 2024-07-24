@@ -1,5 +1,5 @@
 .side-bar {
-    background-color: #EAE3D7;
+    background-color: #eae3d7;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -7,19 +7,49 @@
     width: 380px;
     height: 100vh;
     padding: 85px;
-}
-
-.logo {
+  }
+  
+  .logo {
     width: 107px;
     height: 107px;
-}
-
-.sentinela { 
+  }
+  
+  .sentinela {
     margin-top: -30px;
     width: 350px;
     height: auto;
-}
-
-.menu-lateral {
+  }
+  
+  .menu-lateral {
     margin-top: 20px;
-}
+  }
+  
+  .hidden-menu {
+    display: none;
+  }
+  
+  @media (max-width: 768px) {
+    .hidden-menu {
+      display: block;
+      padding-left: 10px;
+      z-index: 100;
+      cursor: pointer;
+  
+      svg {
+        font-size: 40px;
+        color: #3d160d;
+      }
+    }
+  
+    .side-bar {
+      width: 100%;
+      position: absolute;
+      z-index: 99;
+      left: -100%;
+      transition: left 0.3s;
+    }
+  
+    .side-bar.open {
+      left: 0;
+    }
+  }

@@ -1,32 +1,30 @@
-
 import PropTypes from "prop-types";
 import FieldText from "../FieldText";
 import { PatternFormat } from 'react-number-format';
 
-export default function FieldNumber({ label, value, onChange, format}) {
+
+export default function FieldNumber({ label, value, onChange, disabled, format }) {
     return (
         <PatternFormat
             format={format}
             mask='_'
             allowEmptyFormatting
             patternChar='#'
-            
             type='tel'
-
             customInput={FieldText}
-
-            id="filled-basic"
             label={label}
             value={value}
-            variant="filled"
             onChange={onChange}
-
+            disabled={disabled}
+            variant="filled"
+            id="filled-basic"
         />
     );
 }
-
-FieldText.propTypes = {
+FieldNumber.propTypes = {
     label: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
+    disabled: PropTypes.bool,
+    format: PropTypes.string.isRequired,
 };

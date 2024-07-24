@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import { theme } from "../../Styles/global";
 import TextField from "@mui/material/TextField";
 
-export default function FieldText({ label, value, onChange }) {
+export default function FieldText({ label, value, onChange, disabled}) {
+    
     return (
         <TextField
             id="filled-basic"
@@ -11,10 +12,11 @@ export default function FieldText({ label, value, onChange }) {
             value={value}
             variant="filled"
             onChange={onChange}
+            disabled={disabled}
+            
             sx={{
                 margin: '.7rem',
-                background:  "#EAE3D7",
-                backgroundColor: "#EAE3D7",
+                backgroundColor: theme.palette.background.paper,
                 borderRadius: '5px',
                 "& .MuiInput-underline:before": {
                     borderBottomColor: theme.palette.custom.main, // Cor da borda inferior antes do foco
@@ -47,4 +49,5 @@ FieldText.propTypes = {
     label: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
+    disabled: PropTypes.bool,
 };
