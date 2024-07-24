@@ -6,7 +6,6 @@ import Register_User from '../Pages/Protected/Register_User';
 import Viewuser from '../Pages/Protected/Viewuser';
 import ListUser from '../Pages/Protected/Listuser';
 import Registrations from '../Pages/Protected/Registrations';
-import ProfileUpdate from '../Pages/Protected/ProfileUpdate';
 
 
 const ProtectedRoutes = () => {
@@ -19,8 +18,7 @@ const ProtectedRoutes = () => {
         <Route path = "/usuario" element={<Viewuser/>}/>
         <Route path="/listadeusuarios" element={<ListUser/>}/>
         <Route path= "/cadastros" element = {<Registrations/>} />
-        <Route path="/profileupdate" element={<ProfileUpdate />} />
-      </Routes>
+              </Routes>
     </BrowserRouter>
   );
 };

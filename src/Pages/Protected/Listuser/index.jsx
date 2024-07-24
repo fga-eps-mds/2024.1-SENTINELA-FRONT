@@ -43,11 +43,23 @@ export default function ListUser() {
         fetchUsers();
     }, []);
 
+    const handleHomeClick = () => {
+        navigate("/home");
+    };
+
+    const handleRegistrationClick = () => {
+        navigate("/cadastros");
+    };
+
+
+    //Variáveis de controle e display da página
     const buttons = [
-        <SideButton key="home" text="Pagina Inicial" />,
-        <SideButton key="cadastros" text="Cadastros" />,
-        <SideButton key="financeiro" text="Financeiro" />,
-        <SideButton key="benefícios" text="Benefícios" />,
+        <SideButton key="home" text="Pagina Inicial" onClick={handleHomeClick}/>,
+        <SideButton key="cadastros" text="Cadastros" onClick={handleRegistrationClick}/>,
+        <SideButton key="financeiro" text="Financeiro"/>,
+        <SideButton key="benefícios" text="Benefícios"/>,
+        // <h2 className="profile-status">Você está logado <br />como {nome} <AiOutlineUser className="profile-icon" /></h2>,
+        // <button className="btn-logout" onClick={handleLogout}> LOGOUT <RiLogoutCircleRLine className="logout-icon" /> </button>
     ];
 
     const handleRegisterClick = () => {

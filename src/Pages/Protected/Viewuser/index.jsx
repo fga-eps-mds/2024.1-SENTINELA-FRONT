@@ -148,7 +148,7 @@ const ViewUser = () => {
                         label="Celular"
                         value={celular}
                         onChange={(e) => setCelular(e.target.value)}
-                        format='+55 (##) 9#### ####'
+                        format=' (##) ##### ####'
                     />
     
                     <FieldSelect
