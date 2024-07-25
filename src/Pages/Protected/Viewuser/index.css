@@ -138,6 +138,15 @@
         margin-top: 3rem;
         color: #332117;
     }
+
+    .isEmailValid{
+        font-weight: 400;
+        margin-left: 1rem;
+        margin-top: 10px;
+        color: red!important;
+
+        
+    }
     
     #addDependentBttn{
         cursor: pointer

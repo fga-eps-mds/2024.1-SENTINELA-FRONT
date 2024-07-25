@@ -9,29 +9,28 @@ import FieldSelect from "../../../Components/FieldSelect";
 import FieldNumber from '../../../Components/FieldNumber';
 import Checklist from '../../../Components/Checklist';
 import PrimaryButton from '../../../Components/PrimaryButton';
-import { ToggleButton, Radio, RadioGroup, FormControlLabel, Button } from '@mui/material'; 
-import {createUser, getRoles } from '../../../Services/userService';
+import { ToggleButton, Radio, RadioGroup, FormControlLabel, Button } from '@mui/material';
+import { createUser, getRoles } from '../../../Services/userService';
 import Modal from '../../../Components/Modal';
 import SecondaryButton from '../../../Components/SecondaryButton';
-import"../Registrations/index.css";
+import "../Registrations/index.css";
 import { useAuth } from "../../../Context/auth";
 import { AiOutlineUser } from "react-icons/ai";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 
-
-export default function Register_User(){
-    //Dados a serem armazenados
-    const navigate = useNavigate(); 
-    const [nomeCompleto, setNomeCompleto] = useState(''); 
-    const [celular, setCelular] = useState(''); 
-    const [login, setLogin] = useState(''); 
+export default function Register_User() {
+    const navigate = useNavigate();
+    const [nomeCompleto, setNomeCompleto] = useState('');
+    const [celular, setCelular] = useState('');
+    const [login, setLogin] = useState('');
     const [email, setEmail] = useState('');
-    // const [acessos, setAcessos] = useState([]); 
-    // const [checklistVisible, setChecklistVisible] = useState(false);
     const [perfilSelecionado, setPerfilSelecionado] = useState('');
-    const [roles, setRoles] = useState ([])
-    const [showModal,setShowModal] = useState(false);
-    
+    const [roles, setRoles] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+    const [isEmailValid, setIsEmailValid] = useState(true);
+
+    const login_options = ['Ativo', 'Inativo'];
+
     const handleHomeClick = () => {
         navigate("/home");
     };
@@ -54,52 +53,12 @@ export default function Register_User(){
         return 'Usuário';
     };
 
-    const userName = getUserName();
-
-    const buttons = [
-        <SideButton key="home" text="Pagina Inicial" onClick={handleHomeClick} />,
-        <SideButton key="cadastros" text="Cadastros" onClick={handleRegistrationClick} />,
-        <SideButton key="financeiro" text="Financeiro" />,
-        <SideButton key="benefícios" text="Benefícios" />,
-        <h2 key="profile-status" className="profile-status">
-            Você está logado <br />como {userName} <AiOutlineUser className="profile-icon" />
-        </h2>,
-        <button key="logout" className="btn-logout" onClick={handleLogout}>
-            LOGOUT <RiLogoutCircleRLine className="logout-icon" />
-        </button>
-    ];
-
-    // const handleListaClick = () => {
-    //     navigate("/listadeusuarios");
-    // };
-
-    const login_options = ['Ativo', 'Inativo'];
     const handleChangeLogin = (event) => {
         setLogin(event.target.value);
     };
 
-    // const toggleChecklistVisibility = () => {
-    //     setChecklistVisible(!checklistVisible);
-    // };
-
     const handlePerfilChange = (event) => {
         setPerfilSelecionado(event.target.value);
-    };
-
-    const isValidEmail = (email) => {
-        const allowedDomains = [
-          'com', 'net', 'org', 'com.br', 'org.br'
-        ]; /* ainda necessário melhoria */ 
-        const domainPattern = allowedDomains.join('|'); 
-        const emailRegex = new RegExp(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.${domainPattern}$`, 'i');
-        return emailRegex.test(email);
-    };
-
-    const removeMask = (celular) => celular.replace(/\D/g, '');
-    
-    const handleCloseDialog = () => {
-        setShowModal(false);
-        navigate("/home");
     };
 
     const handleNomeCompletoChange = (e) => {
@@ -107,10 +66,15 @@ export default function Register_User(){
         setNomeCompleto(value);
     };
 
+    const handleCloseDialog = () => {
+        setShowModal(false);
+        navigate("/home");
+    };
+
     const handleSubmit = async (e) => {
         const trimmedCelular = removeMask(celular);
-        const isValidNumber = /^\d+$/.test(trimmedCelular) && trimmedCelular.length >= 10; // Número válido = [0,9] e maior que 10 digitos
-        const isValidEmailAddress = isValidEmail(email); 
+        const isValidNumber = /^\d+$/.test(trimmedCelular) && trimmedCelular.length >= 10;
+        const isValidEmailAddress = isValidEmail(email);
 
         if (!isValidNumber || !isValidEmailAddress) {
             return;
@@ -120,21 +84,40 @@ export default function Register_User(){
             name: nomeCompleto,
             email: email,
             phone: celular,
-            status: login === 'Ativo', // Convertendo status de login para boolean
-            role: perfilSelecionado, // Assumindo que perfilSelecionado é o ID da role
+            status: login === 'Ativo',
+            role: perfilSelecionado,
         };
 
         try {
             const response = await createUser(userData);
             console.log('Usuário criado com sucesso:', response);
             setShowModal(true);
-            // Lógica adicional após a criação do usuário
         } catch (error) {
             console.error('Erro ao criar usuário', error);
         }
-    };    
+    };
 
-    useEffect(()=>{
+    const buttons = [
+        <SideButton key="home" text="Pagina Inicial" onClick={handleHomeClick} />,
+        <SideButton key="cadastros" text="Cadastros" onClick={handleRegistrationClick} />,
+        <SideButton key="financeiro" text="Financeiro" />,
+        <SideButton key="benefícios" text="Benefícios" />,
+        <h2 key="profile-status" className="profile-status">
+            Você está logado <br />como {getUserName()} <AiOutlineUser className="profile-icon" />
+        </h2>,
+        <button key="logout" className="btn-logout" onClick={handleLogout}>
+            LOGOUT <RiLogoutCircleRLine className="logout-icon" />
+        </button>
+    ];
+
+    const isValidEmail = (email) => {
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
+        return emailRegex.test(email);
+    };
+
+    const removeMask = (celular) => celular.replace(/\D/g, '');
+
+    useEffect(() => {
         const loadRoles = async () => {
             const roles = await getRoles();
             setRoles(roles);
@@ -142,23 +125,23 @@ export default function Register_User(){
         loadRoles();
     }, []);
 
+    useEffect(() => {
+        setIsEmailValid(!email || isValidEmail(email));
+    }, [email]);
 
-    const modalButton = [<SecondaryButton key={'modalButtons'} text = 'OK' onClick={() => handleCloseDialog()} width="338px"/>];
-    //Configuração da página
+    const modalButton = [<SecondaryButton key={'modalButtons'} text='OK' onClick={handleCloseDialog} width="338px" />];
+
     return (
         <section className="container">
-             <SideBar className="side-menu" buttons={buttons} />
-
+            <SideBar className="side-menu" buttons={buttons} />
             <div className='forms-container'>
                 <h1>Cadastro de usuário</h1>
-
                 <h3>Dados Pessoais</h3>
                 <FieldText
                     label="Nome Completo"
                     value={nomeCompleto}
                     onChange={handleNomeCompletoChange}
                 />
-
                 <div className='double-box'>
                     <FieldNumber
                         label="Celular"
@@ -166,7 +149,6 @@ export default function Register_User(){
                         onChange={(e) => setCelular(e.target.value)}
                         format='(##) ##### ####'
                     />
-
                     <FieldSelect
                         label="Login"
                         value={login}
@@ -174,31 +156,13 @@ export default function Register_User(){
                         options={login_options}
                     />
                 </div>
-
                 <FieldText
                     label="Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
-
-                {/* <div className='ToggleButton'>
-                    <ToggleButton variant="Setores de Acesso" onClick={toggleChecklistVisibility}>
-                    Setores de Acesso
-                    </ToggleButton>
-                </div> */}
-                
-                {/* {checklistVisible && (
-                    <div className='teste'>// const [checklistVisible, setChecklistVisible] = useState(false);
-                        <Checklist
-                            items={setoresAcesso}
-                            value={acessos}
-                            onChange={setAcessos}
-                        />
-                    </div>
-                )} */}
-                
+                {!isEmailValid && <label className='isEmailValid'>*Insira um email válido</label>}
                 <h3>Perfil</h3>
-
                 <RadioGroup value={perfilSelecionado} onChange={handlePerfilChange}>
                     {roles.map((perfil) => (
                         <FormControlLabel
@@ -209,32 +173,16 @@ export default function Register_User(){
                         />
                     ))}
                 </RadioGroup>
-
                 <PrimaryButton
                     text='Cadastrar'
-                    onClick={()=>handleSubmit()}
+                    onClick={handleSubmit}
                 />
-                {/* <Dialog 
-                    open={openDialog}
-                    onClose={handleCloseDialog}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description"
-                    className="custom-dialog"
-                >
-                <DialogTitle className="alert-dialog-title">{"Cadastro de Usuário Concluido"}</DialogTitle>
-                <DialogActions>
-                <Button onClick={handleCloseDialog} className="custom-dialog-button">
-                OK
-                </Button>
-                </DialogActions>
-                </Dialog> */}
                 <Modal
                     width="338px"
                     alertTitle="Cadastro de usuário concluído"
                     show={showModal}
-                    buttons = {modalButton}
+                    buttons={modalButton}
                 />
-                
             </div>
         </section>
     );

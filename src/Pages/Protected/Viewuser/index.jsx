@@ -11,7 +11,7 @@ import { RadioGroup, FormControlLabel, Radio } from '@mui/material';
 import { getUserById, deleteUserById, patchUserById, getRoles } from '../../../Services/userService';
 import "./index.css";
 import Modal from '../../../Components/Modal';
-import"../Registrations/index.css";
+import "../Registrations/index.css";
 import { useAuth } from "../../../Context/auth";
 import { AiOutlineUser } from "react-icons/ai";
 import { RiLogoutCircleRLine } from "react-icons/ri";
@@ -20,7 +20,6 @@ const ViewUser = () => {
     const { state } = useLocation();
     const navigate = useNavigate();
     const userId = state?.userId;
-    console.log(userId);
 
     const [nomeCompleto, setNomeCompleto] = useState('');
     const [celular, setCelular] = useState('');
@@ -31,6 +30,7 @@ const ViewUser = () => {
     const [showSaveModal, setShowSaveModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showDeletedModal, setShowDeletedModal] = useState(false);
+    const [isEmailValid, setIsEmailValid] = useState(true); // Estado para validar o email
 
     const handleNomeCompletoChange = (e) => {
         const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, '');
@@ -40,8 +40,7 @@ const ViewUser = () => {
     useEffect(() => {
         const loadRoles = async () => {
             try {
-                const roles = await getRoles();
-                console.log('Roles carregados:', roles); 
+                const roles = await getRoles(); 
                 setRoles(roles);
             } catch (error) {
                 console.error('Erro ao carregar roles:', error); 
@@ -53,7 +52,6 @@ const ViewUser = () => {
     useEffect(() => {
         const fetchUser = async () => {
             if (userId) {
-                console.log(`Tentando buscar usuário com ID: ${userId}`);
                 try {
                     const tokenString = localStorage.getItem('@App:user');
                     if (!tokenString) {
@@ -64,25 +62,29 @@ const ViewUser = () => {
                     const user = await getUserById(userId, token);
 
                     if (user) {
-                        console.log('Usuário encontrado:', user);
                         setNomeCompleto(user.name || '');
                         setCelular(user.phone || '');
                         setLogin(user.status ? 'Ativo' : 'Inativo');
                         setEmail(user.email || '');
                         setPerfilSelecionado(user.role || '');
-                    } else {
-                        console.log('Nenhum usuário encontrado com o ID fornecido');
                     }
                 } catch (error) {
                     console.error('Erro ao buscar usuário:', error);
                 }
-            } else {
-                console.log('Nenhum userId encontrado no estado');
             }
         };
     
         fetchUser();
     }, [userId]);
+
+    useEffect(() => {
+        setIsEmailValid(isValidEmail(email));
+    }, [email]);
+
+    const isValidEmail = (email) => {
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
+        return emailRegex.test(email);
+    };
 
     const handleDelete = async () => {
         setShowDeleteModal(false);
@@ -99,7 +101,7 @@ const ViewUser = () => {
 
     const handleSave = async () => {
         setShowSaveModal(false);
-        if (userId) {
+        if (userId && isEmailValid) { // Verifica se o email é válido antes de salvar
             const updatedUser = {
                 name: nomeCompleto,
                 email: email,
@@ -107,9 +109,6 @@ const ViewUser = () => {
                 status: login === 'Ativo',
                 role: perfilSelecionado,
             };
-
-            // Log the updated user data
-            console.log('Updated user data:', updatedUser);
 
             const tokenString = localStorage.getItem('@App:user');
             if (!tokenString) {
@@ -120,7 +119,7 @@ const ViewUser = () => {
     
             try {
                 await patchUserById(userId, updatedUser, token);
-                handleSaveCloseDialog ();
+                handleSaveCloseDialog();
             } catch (error) {
                 console.error(`Erro ao atualizar usuário com ID ${userId}:`, error);
             }
@@ -201,9 +200,7 @@ const ViewUser = () => {
     const handleDeletedCloseDialog = () => {
         setShowDeletedModal(false);
         navigate('/listadeusuarios');
-        
     };
-
 
     const modalSaveButton = [<SecondaryButton key={'saveButtons'} text='OK' onClick={() => handleSave()} width="338px" />];
     const modalDeleteButton = [
@@ -246,6 +243,7 @@ const ViewUser = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
+                {!isEmailValid && <label className='isEmailValid'>*Insira um email válido</label>}
 
                 <h3>Perfil</h3>
 

@@ -91,6 +91,8 @@
         border: none; 
         color: #341F14;
       }
+
+    
     .profile-status{ 
         font-size: 18px; 
         font-weight: 600;
@@ -181,7 +183,14 @@
         margin-top: 3rem;
         color: #332117!important;
     }
-    
+    .isEmailValid{
+        font-weight: 400;
+        margin-left: 1rem;
+        margin-top: 10px;
+        color: red!important;
+
+        
+    }
     #addDependentBttn{
         cursor: pointer
     }
