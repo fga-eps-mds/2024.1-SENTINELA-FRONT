@@ -32,6 +32,7 @@
     font-weight: 800;
     margin-bottom: 3rem;
     color: #332117 !important;
+    margin-left: 15%;
   }
 
   h3 {
@@ -58,6 +59,7 @@
 
   .container {
     display: flex;
+    align-items: flex-start; 
   }
 
   .forms-container {
@@ -68,18 +70,30 @@
     flex-direction: column;
   }
 
-  .double-box {
-    display: contents;
-    grid-template-columns: 0.5fr 0.5fr;
+  .section-form {
+    display: flex;
+    grid-template-columns: 1fr;
   }
 
-  .forms-container button {
-    width: 50%;
+  .search-box {
+    display: grid;
+    grid-template-columns: 2.3fr 0.7fr;
+  }
+
+  .search-box button {
+    width: 70%;
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
 
   .double-box {
     display: grid;
-    grid-template-columns: 0.5fr 0.5fr;
+    grid-template-columns: 2.3fr 0.7fr;
+  }
+
+  .double-box button {
+    margin-top: 0px;
+    margin-bottom: 40px;
   }
 
   h1 {
@@ -94,10 +108,6 @@
     margin-left: 1rem;
     margin-top: 3rem;
     color: #332117 !important;
-  }
-
-  #addDependentBttn {
-    cursor: pointer;
   }
 
   .list-item {

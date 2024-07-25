@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import "./index.css";
 import SideBar from "../../../Components/SideBar";
 import PrimaryButton from "../../../Components/PrimaryButton";
 import LabeledTextField from "../../../Components/LabeledTextField";
@@ -10,6 +11,8 @@ import ListItemButton from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 //import { getSupplierForm } from "../../../Services/supplierService";
 import ListItemText from "@mui/material/ListItemText";
+import SecondaryButton from "../../../Components/SecondaryButton";
+import FieldText from "../../../Components/FieldText";
 //import { APISuppliers, APIUsers } from "../../../Services/BaseService";
 
 export default function ListSupplier() {
@@ -23,7 +26,7 @@ export default function ListSupplier() {
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
- /* useEffect(() => {
+  /* useEffect(() => {
     const fetchSupplierForm = async () => {
       try {
         const storagedSupplierString = localStorage.getItem("@App:supplier");
@@ -63,20 +66,27 @@ export default function ListSupplier() {
 
   return (
     <section className="container">
-      <div className="bar-container">
-        <SideBar buttons={buttons} />
-      </div>
+        <SideBar className="side-menu" buttons={buttons} />
 
       <div className="forms-container">
-        <h1>Lista de fornecedores</h1>
+
         <div className="double-box">
-          <LabeledTextField
+        <h1>Lista de fornecedores</h1>
+        <PrimaryButton
+          text="Cadastrar fornecedor"
+          onClick={() => handleRegisterClick}
+        />
+        </div>
+        
+        <div className="search-box">
+          
+          <FieldText
             label="Pesquisar fornecedor"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          <PrimaryButton
-            text="Cadastrar fornecedor"
+          <SecondaryButton
+            text="Pesquisar"
             onClick={() => handleRegisterClick}
           />
         </div>
@@ -93,6 +103,7 @@ export default function ListSupplier() {
                   <ListItemText primary={supplier.name} />
                 </ListItemButton>
               </ListItem>
+
               {index < filteredSuppliers.lenght - 1 && <Divider />}
             </div>
           ))}
