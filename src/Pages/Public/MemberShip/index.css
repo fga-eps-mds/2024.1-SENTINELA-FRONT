@@ -18,7 +18,7 @@
     
     .section-form{
         display: grid;
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr;   
     }
     
     .double-box{
@@ -54,7 +54,6 @@
         width: 100%;
         border-radius: 15px;
 
-        background-color: #d1d1d1;
         margin-top: 1rem;
         padding: 1rem;
     }
@@ -80,6 +79,7 @@
     .dependentContainer{
         display: grid;
         grid-template-columns: 1fr;
+        color: black;
     }
 
     #envio{
@@ -103,6 +103,7 @@
         justify-content: center;
         flex-direction: column;
     }
+
     
     .section-form{
         display: grid;
@@ -135,8 +136,6 @@
         align-items: center;
         width: 100%;
         border-radius: 15px;
-
-        background-color: #d1d1d1;
         margin-top: 1rem;
         padding: 1rem;
     }
@@ -170,4 +169,5 @@
         display: flex; 
         justify-content: center
     }
+
 }

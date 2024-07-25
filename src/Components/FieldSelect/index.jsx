@@ -15,6 +15,7 @@ function FieldSelect({ label, value, onChange, options }) {
         onChange={onChange}
         label={label}
         sx={{
+            backgroundColor: '#EAE3D7',
             '& .MuiOutlinedInput-notchedOutline': {
               borderColor: theme.palette.custom.main,
             },

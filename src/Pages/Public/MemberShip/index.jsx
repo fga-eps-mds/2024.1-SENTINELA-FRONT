@@ -62,13 +62,13 @@ const MemberShip = () => {
     
   //listas dos selects
   const tipoSanguineoList = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
-  const sexoList = ['Masculino', 'Feminino', 'Outro'];
+  const sexoList = ['Masculino', 'Feminino'];
   const ufList = ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'];
-  const estadoCivilList = ['Solteiro', 'Casado', 'Divorciado', 'Viúvo', 'União Estável'];
+  const estadoCivilList = ['Solteiro', 'Casado', 'Separado', 'Viúvo'];
   const escolaridadeList = ['Ensino Fundamental', 'Ensino Médio', 'Ensino Superior', 'Pós-Graduação', 'Mestrado', 'Doutorado'];
   const cargoList = ['Advogado', 'Agente', 'Outro'];
   const lotacaoList = ['Sede', 'Out', 'Outro'];
-  const situacaoAtualList = ['Ativo', 'Inativo', 'Aposentado', 'Pensionista', 'Licenciado', 'Exonerado', 'Falecido'];
+  const situacaoAtualList = ['Ativo', 'Inativo'];
 
   const [dependentes, setDependentes] = useState([]);
   const [showDependentForm, setShowDependentForm] = useState(false);
@@ -81,11 +81,20 @@ const MemberShip = () => {
     let formattedCPF = cpf.replace(/\D/g, ''); // Remove caracteres não numéricos
     if (formattedCPF.length > 11) formattedCPF = formattedCPF.slice(0, 11); // Limita a 11 dígitos numéricos
     
+    
     return formattedCPF
       .replace(/(\d{3})(\d)/, '$1.$2') // Adiciona ponto após os três primeiros dígitos
       .replace(/(\d{3})(\d)/, '$1.$2') // Adiciona ponto após os seis primeiros dígitos
       .replace(/(\d{3})(\d{1,2})$/, '$1-$2'); // Adiciona traço após os nove primeiros dígitos
   };
+
+  const mascaraRg = (rg) => {
+    let formattedRG = rg.replace(/\D/g, ''); // Remove caracteres não numéricos
+    if (formattedRG.length > 9) formattedRG = formattedRG.slice(0, 9); // Limita a 9 dígitos numéricos
+    return formattedRG
+   
+  };
+
   
   const mascaraTelefone = (telefone) => {
     let formattedTelefone = telefone.replace(/\D/g, ''); // Remove caracteres não numéricos
@@ -373,7 +382,7 @@ const MemberShip = () => {
           <FieldText 
             label="RG"
             value={rg}
-            onChange={(e) => setRg(e.target.value)}
+            onChange={(e) => setRg(mascaraRg(e.target.value))}
              />
 
           <div className='double-box'>
@@ -508,7 +517,7 @@ const MemberShip = () => {
               <h3>Adicionar participantes <AddCircleOutlineIcon /></h3>
             </buttons>
             {showDependentForm && (
-              <div>
+              <div >
                 <div className='dependentToAdd'>
                   <div className="section-dependent-form">
                     <FieldText
@@ -545,7 +554,7 @@ const MemberShip = () => {
                 </div>
 
                 {dependentes.map((dependent, index) => (
-                  <div>
+                  <div >
                     <h3 id='dependentTitle'>Dependente {index+1}</h3>
                     <div className='dependentBox' key={index}>
                       <div className='section-dependent-form'>
