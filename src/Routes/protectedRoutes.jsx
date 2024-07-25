@@ -3,6 +3,8 @@ import { createBrowserRouter, RouterProvider, BrowserRouter, Route, Routes } fro
 import Login from '../Pages/Public/Login';
 import Home from '../Pages/Protected/Home';
 import BankAccount from '../Pages/Protected/BankAccount';
+import Finance from '../Pages/Protected/Finance';
+import ListBankAccount from '../Pages/Protected/ListBankAccount';
 
 const ProtectedRoutes = () => {
   return (
@@ -10,7 +12,11 @@ const ProtectedRoutes = () => {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/bankAccount" element={<BankAccount />} /> 
+        <Route path="/finance" element={<Finance />} />
+        <Route path="/finance/bankAccount" element={<BankAccount />} />
+        <Route path="/finance/listBankAccount" element={<ListBankAccount />} /> 
+
+        
       </Routes>
     </BrowserRouter>
   );
