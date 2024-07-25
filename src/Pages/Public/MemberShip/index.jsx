@@ -58,7 +58,7 @@ const MemberShip = () => {
   const [situacaoAtual, setSituacaoAtual] = useState('');
   const [openError, setOpenError] = useState(false);
   const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
-  const [errorFields, setErrorFields] = useState('');
+  const [errorFields, setErrorFields] = useState(false);
     
   //listas dos selects
   const tipoSanguineoList = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
@@ -600,11 +600,11 @@ const MemberShip = () => {
           </Alert>
         </Snackbar>
         <Snackbar
-          open={errorFields != ''}
+          open={errorFields }
           autoHideDuration={6000}
-          onClose={() => setErrorFields('')}
+          onClose={() => setErrorFields(false)}
         >
-          <Alert onClose={() => setErrorFields('')} severity="error">
+          <Alert onClose={() => setErrorFields(false)} severity="error">
             {errorFields}
           </Alert>
         </Snackbar>
