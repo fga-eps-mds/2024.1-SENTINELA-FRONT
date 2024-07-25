@@ -28,11 +28,16 @@ const ProfileUpdate = () => {
   const [celular, setCelular] = useState('');
   const [login, setLogin] = useState('');
   const [email, setEmail] = useState('');
+  const [isEmailValid, setIsEmailValid] = useState(true);
   const [openDialog, setOpenDialog] = useState(false);
 
   useEffect(() => {
     getUser();
   }, []);
+
+  useEffect(() => {
+    setIsEmailValid(isValidEmail(email));
+  }, [email]);
 
   const isValidEmail = (email) => {
     const allowedDomains = [
@@ -138,12 +143,13 @@ const ProfileUpdate = () => {
           />
         </div>
         <div className="section-campo">
-          <FieldText 
-            label="E-mail" 
-            value={email} 
-            onChange={(e) => setEmail(e.target.value)} 
-          />
-        </div>
+        <FieldText 
+          label="E-mail" 
+          value={email} 
+          onChange={(e) => setEmail(e.target.value)} 
+        />
+        {!isEmailValid && <label className='isEmailValid'>*Insira um email válido</label>}
+</div>
         <div className="section-doublebtn">
           <SecondaryButton 
             text="Cancelar" 
