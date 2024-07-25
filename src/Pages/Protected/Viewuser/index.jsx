@@ -11,6 +11,10 @@ import { RadioGroup, FormControlLabel, Radio } from '@mui/material';
 import { getUserById, deleteUserById, patchUserById, getRoles } from '../../../Services/userService';
 import "./index.css";
 import Modal from '../../../Components/Modal';
+import"../Registrations/index.css";
+import { useAuth } from "../../../Context/auth";
+import { AiOutlineUser } from "react-icons/ai";
+import { RiLogoutCircleRLine } from "react-icons/ri";
 
 const ViewUser = () => {
     const { state } = useLocation();
@@ -139,15 +143,33 @@ const ViewUser = () => {
         navigate("/cadastros");
     };
 
+    const handleLogout = () => {
+        context.Logout();
+        navigate("/");
+    };
 
-    //Variáveis de controle e display da página
+    const getUserName = () => {
+        const tokenString = localStorage.getItem('@App:user');
+        if (tokenString) {
+            const user = JSON.parse(tokenString);
+            return user?.user?.name || 'Usuário';
+        }
+        return 'Usuário';
+    };
+
+    const userName = getUserName();
+
     const buttons = [
-        <SideButton key="home" text="Pagina Inicial" onClick={handleHomeClick}/>,
-        <SideButton key="cadastros" text="Cadastros" onClick={handleRegistrationClick}/>,
-        <SideButton key="financeiro" text="Financeiro"/>,
-        <SideButton key="benefícios" text="Benefícios"/>,
-        // <h2 className="profile-status">Você está logado <br />como {nome} <AiOutlineUser className="profile-icon" /></h2>,
-        // <button className="btn-logout" onClick={handleLogout}> LOGOUT <RiLogoutCircleRLine className="logout-icon" /> </button>
+        <SideButton key="home" text="Pagina Inicial" onClick={handleHomeClick} />,
+        <SideButton key="cadastros" text="Cadastros" onClick={handleRegistrationClick} />,
+        <SideButton key="financeiro" text="Financeiro" />,
+        <SideButton key="benefícios" text="Benefícios" />,
+        <h2 key="profile-status" className="profile-status">
+            Você está logado <br />como {userName} <AiOutlineUser className="profile-icon" />
+        </h2>,
+        <button key="logout" className="btn-logout" onClick={handleLogout}>
+            LOGOUT <RiLogoutCircleRLine className="logout-icon" />
+        </button>
     ];
 
     const loginOptions = ['Ativo', 'Inativo'];
@@ -191,9 +213,7 @@ const ViewUser = () => {
 
     return (
         <section className="container">
-            <div className="bar-container">
-                <SideBar buttons={buttons} />
-            </div>
+             <SideBar className="side-menu" buttons={buttons} />
 
             <div className='forms-container'>
                 <h1>Visualização de usuário</h1>

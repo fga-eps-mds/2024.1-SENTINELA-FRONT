@@ -1,3 +1,17 @@
+.profile-status{ 
+    font-size: 18px; 
+    font-weight: 600;
+    font-size: medium;
+    margin-left: 8rem;
+    margin-top: 12rem;
+    color: #341F14 ;
+}
+
+.profile-icon{
+  margin-top: -10rem;
+  margin-left:-9rem;
+  font-size: 37px; 
+}
 
 .logout-container {
     display: flex;
@@ -5,6 +19,8 @@
     margin-top: 0.5rem;
     margin-left: 9rem;
   }
+
+  
 
 .btn-logout {
     background-color: transparent;
@@ -24,4 +40,3 @@
     font-size: 21px;
     margin-left: 10px; 
   }
-

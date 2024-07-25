@@ -11,10 +11,13 @@ import Checklist from '../../../Components/Checklist';
 import PrimaryButton from '../../../Components/PrimaryButton';
 import { ToggleButton, Radio, RadioGroup, FormControlLabel, Button } from '@mui/material'; 
 import {createUser, getRoles } from '../../../Services/userService';
-import { RiLogoutCircleRLine } from 'react-icons/ri';
-import { AiOutlineUser } from 'react-icons/ai';
 import Modal from '../../../Components/Modal';
 import SecondaryButton from '../../../Components/SecondaryButton';
+import"../Registrations/index.css";
+import { useAuth } from "../../../Context/auth";
+import { AiOutlineUser } from "react-icons/ai";
+import { RiLogoutCircleRLine } from "react-icons/ri";
+
 
 export default function Register_User(){
     //Dados a serem armazenados
@@ -37,14 +40,33 @@ export default function Register_User(){
         navigate("/cadastros");
     };
 
-    //Variáveis de controle e display da página
+    const handleLogout = () => {
+        context.Logout();
+        navigate("/");
+    };
+
+    const getUserName = () => {
+        const tokenString = localStorage.getItem('@App:user');
+        if (tokenString) {
+            const user = JSON.parse(tokenString);
+            return user?.user?.name || 'Usuário';
+        }
+        return 'Usuário';
+    };
+
+    const userName = getUserName();
+
     const buttons = [
-        <SideButton key="home" text="Pagina Inicial" onClick={handleHomeClick}/>,
-        <SideButton key="cadastros" text="Cadastros" onClick={handleRegistrationClick}/>,
-        <SideButton key="financeiro" text="Financeiro"/>,
-        <SideButton key="benefícios" text="Benefícios"/>,
-        // <h2 className="profile-status">Você está logado <br />como {nome} <AiOutlineUser className="profile-icon" /></h2>,
-        // <button className="btn-logout" onClick={handleLogout}> LOGOUT <RiLogoutCircleRLine className="logout-icon" /> </button>
+        <SideButton key="home" text="Pagina Inicial" onClick={handleHomeClick} />,
+        <SideButton key="cadastros" text="Cadastros" onClick={handleRegistrationClick} />,
+        <SideButton key="financeiro" text="Financeiro" />,
+        <SideButton key="benefícios" text="Benefícios" />,
+        <h2 key="profile-status" className="profile-status">
+            Você está logado <br />como {userName} <AiOutlineUser className="profile-icon" />
+        </h2>,
+        <button key="logout" className="btn-logout" onClick={handleLogout}>
+            LOGOUT <RiLogoutCircleRLine className="logout-icon" />
+        </button>
     ];
 
     // const handleListaClick = () => {
@@ -125,9 +147,7 @@ export default function Register_User(){
     //Configuração da página
     return (
         <section className="container">
-            <div className="bar-container">
-                <SideBar buttons={buttons} />
-            </div>
+             <SideBar className="side-menu" buttons={buttons} />
 
             <div className='forms-container'>
                 <h1>Cadastro de usuário</h1>

@@ -43,7 +43,6 @@ export default function Registrations() {
 
     const userName = getUserName();
 
-    // Variáveis de controle e display da página
     const buttons = [
         <SideButton key="home" text="Pagina Inicial" onClick={handleHomeClick} />,
         <SideButton key="cadastros" text="Cadastros" onClick={handleRegistrationClick} />,
@@ -59,9 +58,8 @@ export default function Registrations() {
 
     return (
         <section className="container">
-            <div className="bar-container">
-                <SideBar buttons={buttons} />
-            </div>
+            <SideBar className="side-menu" buttons={buttons} />
+            
             
             <div className="area-card">
                 <div className="card">
