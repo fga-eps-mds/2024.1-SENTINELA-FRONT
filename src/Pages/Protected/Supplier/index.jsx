@@ -116,9 +116,7 @@ export default function Supplier() {
   return (
     <div className="container">
 
-      <div className="bar-container">
-        <SideBar buttons={buttons} />
-      </div>
+        <SideBar className="side-menu" buttons={buttons} />
 
       <div className="forms-container">
         

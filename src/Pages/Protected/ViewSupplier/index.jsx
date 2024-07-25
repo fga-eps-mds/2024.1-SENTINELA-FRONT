@@ -60,18 +60,10 @@ export default function ViewSupplier() {
     setUfEndereco(event.target.value);
   };
 
-  /*useEffect(() => {
+  /*
+  useEffect(() => {
     getSupplierForm();
   }, []);
-  
-  const isValidEmail = (email) => {
-    const allowedDomains = [
-      'com', 'net', 'org', 'com.br', 'org.br'
-    ]; 
-    const domainPattern = allowedDomains.join('|'); 
-    const emailValido = new RegExp(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.${domainPattern}$`, 'i');
-    return emailValido.test(email);
-  };
   
   const getSupplierForm = async () => { // Busca usuario no banco
     try {
@@ -103,51 +95,49 @@ export default function ViewSupplier() {
   };
   */
 
-
   return (
     <section className="container">
-      <div className="bar-container">
-        <SideBar buttons={buttons} />
-      </div>
+      <SideBar className="side-menu" buttons={buttons} />
 
       <div className="forms-container">
         <h1>Visualização de fornecedor</h1>
 
-        <h3>Dados pessoais</h3>
-        <FieldText
-          label="Nome/Razão social"
-          value={nome}
-          onChange={(e) => setNome(e.target.value)}
-        />
+          <h3>Dados pessoais</h3>
+          <FieldText
+            label="Nome/Razão social"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
+          />
 
-        <FieldSelect
-          label="Classificação de pessoa"
-          value={tipoPessoa}
-          onChange={handleChangeTipoPessoa}
-          options={tipoPessoaList}
-        />
+        <div className="section-form">
 
-        <FieldText
-          label="CPF/CNPJ"
-          value={cpf}
-          onChange={(e) => setCpf(e.target.value)}
-        />
+          <FieldSelect
+            label="Classificação de pessoa"
+            value={tipoPessoa}
+            onChange={handleChangeTipoPessoa}
+            options={tipoPessoaList}
+          />
 
-        <FieldSelect
-          label="Status"
-          value={statusFornecedor}
-          onChange={handleChangeStatusFornecedor}
-          options={statusFornecedorList}
-        />
+          <FieldText
+            label="CPF/CNPJ"
+            value={cpf}
+            onChange={(e) => setCpf(e.target.value)}
+          />
 
-        <FieldSelect
-          label="Natureza da Transação"
-          value={naturezaTransacao}
-          onChange={handleChangeNaturezaTransacao}
-          options={naturezaTransacaoList}
-        />
+          <FieldSelect
+            label="Status"
+            value={statusFornecedor}
+            onChange={handleChangeStatusFornecedor}
+            options={statusFornecedorList}
+          />
 
-      </div>
+          <FieldSelect
+            label="Natureza da Transação"
+            value={naturezaTransacao}
+            onChange={handleChangeNaturezaTransacao}
+            options={naturezaTransacaoList}
+          />
+        </div>
 
       <h3>Dados de Contato</h3>
 
@@ -186,6 +176,7 @@ export default function ViewSupplier() {
           onChange={(e) => setCep(e.target.value)}
         />
 
+        <div className="double-box">
         <FieldText
           label="Cidade"
           value={cidade}
@@ -198,6 +189,7 @@ export default function ViewSupplier() {
           onChange={handleChangeUf_endereco}
           options={uf_enderecoList}
         />
+        </div>
 
         <FieldText
           label="Logradouro"
@@ -239,27 +231,21 @@ export default function ViewSupplier() {
           onChange={(e) => setDv(e.target.value)}
         />
 
+      </div>
         <FieldText
           label="Chave Pix"
           value={chavePix}
           onChange={(e) => setChavePix(e.target.value)}
         />
+
+      <div className="double-buttons">
+        <SecondaryButton text="Deletar" onClick={() => {}} />
+
+        <PrimaryButton text="Salvar" onClick={() => {}} />
       </div>
-
-      <div className='double-buttons'>
-        <SecondaryButton
-            text='Deletar'
-            onClick={() => {
-            }}
-        />
-
-        <PrimaryButton
-            text='Salvar'
-            onClick={() => {
-            }}
-        />
-        </div>
+      
+      </div>
 
     </section>
   );
-};
+}
