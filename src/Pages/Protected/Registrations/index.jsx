@@ -2,9 +2,14 @@ import { useNavigate } from "react-router-dom";
 import SideBar from "../../../Components/SideBar";
 import SideButton from "../../../Components/SideButton";
 import SecondaryButton from "../../../Components/SecondaryButton";
+import { useAuth } from "../../../Context/auth";
+import { AiOutlineUser } from "react-icons/ai";
+import { RiLogoutCircleRLine } from "react-icons/ri";
+import "./index.css";
 
 export default function Registrations() {
     const navigate = useNavigate();
+    const context = useAuth();
 
     const handleListaClick = () => {
         navigate("/listadeusuarios");
@@ -22,15 +27,34 @@ export default function Registrations() {
         navigate("/cadastros");
     };
 
+    const handleLogout = () => {
+        context.Logout();
+        navigate("/");
+    };
 
-    //Variáveis de controle e display da página
+    const getUserName = () => {
+        const tokenString = localStorage.getItem('@App:user');
+        if (tokenString) {
+            const user = JSON.parse(tokenString);
+            return user?.user?.name || 'Usuário';
+        }
+        return 'Usuário';
+    };
+
+    const userName = getUserName();
+
+    // Variáveis de controle e display da página
     const buttons = [
-        <SideButton key="home" text="Pagina Inicial" onClick={handleHomeClick}/>,
-        <SideButton key="cadastros" text="Cadastros" onClick={handleRegistrationClick}/>,
-        <SideButton key="financeiro" text="Financeiro"/>,
-        <SideButton key="benefícios" text="Benefícios"/>,
-        // <h2 className="profile-status">Você está logado <br />como {nome} <AiOutlineUser className="profile-icon" /></h2>,
-        // <button className="btn-logout" onClick={handleLogout}> LOGOUT <RiLogoutCircleRLine className="logout-icon" /> </button>
+        <SideButton key="home" text="Pagina Inicial" onClick={handleHomeClick} />,
+        <SideButton key="cadastros" text="Cadastros" onClick={handleRegistrationClick} />,
+        <SideButton key="financeiro" text="Financeiro" />,
+        <SideButton key="benefícios" text="Benefícios" />,
+        <h2 key="profile-status" className="profile-status">
+            Você está logado <br />como {userName} <AiOutlineUser className="profile-icon" />
+        </h2>,
+        <button key="logout" className="btn-logout" onClick={handleLogout}>
+            LOGOUT <RiLogoutCircleRLine className="logout-icon" />
+        </button>
     ];
 
     return (
