@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./index.css";
-//import "../../../index.css";
 import { useNavigate } from "react-router-dom";
 import SideBar from "../../../Components/SideBar";
 import SideButton from "../../../Components/SideButton";
@@ -8,10 +7,13 @@ import FieldText from "../../../Components/FieldText";
 import FieldSelect from "../../../Components/FieldSelect";
 import PrimaryButton from "../../../Components/PrimaryButton";
 import "dayjs/locale/pt-br";
+import { APIBank } from "../../../Services/BaseService";
 //import { createSupplier } from "../../../";
 
 //const Supplier = () => {
 export default function Supplier() {
+
+  const storagedUser = localStorage.getItem("@App:user");
   /*  const navigate = useNavigate();
   const handleListSupplierPage = () => {
     navigate("/listsupplier");
@@ -69,6 +71,10 @@ export default function Supplier() {
     <SideButton key="financeiro" text="Financeiro" />,
   ];
 
+  const MaskedInput = () => {
+    return <input />;
+  };
+
   const handleSubmit = async () => {
     console.log("handleSubmit called");
     const supplierData = {
@@ -92,24 +98,41 @@ export default function Supplier() {
       dv,
       chavePix,
     };
-    createdSupplier(supplierData);
+    console.log(supplierData);
+
+    try {
+      console.log(storagedUser); 
+      const response = await APIBank.post(`/SupplierForm/create`, {
+        headers: { 'Authorization': `Bearer ${storagedUser.token}`, supplierData }
+      });
+      console.log(response);
+
+    } catch (error) {
+      console.log(error);
+    }
+
   };
 
   return (
     <div className="container">
+
+      <div className="bar-container">
         <SideBar buttons={buttons} />
+      </div>
 
       <div className="forms-container">
+        
         <h1>Cadastro de fornecedor</h1>
 
         <h3>Dados pessoais</h3>
 
-        <div className="section-form">
           <FieldText
             label="Nome/Razão Social"
             value={nome}
             onChange={(e) => setNome(e.target.value)}
           />
+
+        <div className="section-form">
 
           <FieldSelect
             label="Classificação de pessoa"
@@ -175,7 +198,8 @@ export default function Supplier() {
             value={cep}
             onChange={(e) => setCep(e.target.value)}
           />
-
+          
+          <div className="double-box">
           <FieldText
             label="Cidade"
             value={cidade}
@@ -188,6 +212,7 @@ export default function Supplier() {
             onChange={handleChangeUf_endereco}
             options={uf_enderecoList}
           />
+          </div>
 
           <FieldText
             label="Logradouro"
@@ -229,14 +254,17 @@ export default function Supplier() {
             onChange={(e) => setDv(e.target.value)}
           />
 
+        </div>
+
           <FieldText
             label="Chave Pix"
             value={chavePix}
             onChange={(e) => setChavePix(e.target.value)}
           />
-        </div>
 
-        <PrimaryButton text="CADASTRAR"/>
+          <div id='envio'>
+            <PrimaryButton text="CADASTRAR" onClick={handleSubmit}/>
+          </div>
 
       </div>
     </div>
