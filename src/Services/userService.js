@@ -10,8 +10,10 @@ export async function userLogin (email, password) {
             password
         });
 
+        console.log(response)
         return response
     } catch (error) {
+        console.log(error)
         return null
     }
 }
@@ -22,6 +24,7 @@ export const getUsers = async () => {
     if (!token) {
       throw new Error('No token found');
     }
+    console.log('Token being used:', token); // Log para depuração
     const response = await APIUsers.get('/users', {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -84,6 +87,7 @@ export const getUserById = async (id, token) => {
     try {
       const storagedUserString = localStorage.getItem('@App:user');
       const user = JSON.parse(storagedUserString); 
+      console.log(user.token)
         const response = await APIUsers.patch(`/users/patch/${id}`, {updatedUser}, {
             headers: {
                 'Authorization': `Bearer ${user.token}`, 
@@ -101,6 +105,7 @@ export const deleteUserById = async (id) => {
   try {
     const storagedUserString = localStorage.getItem('@App:user');
     const user = JSON.parse(storagedUserString); 
+    console.log(user?.token)
 
     await APIUsers.delete(`/users/delete/${id}`, {
       headers: {

@@ -90,6 +90,7 @@ export default function Register_User() {
 
         try {
             const response = await createUser(userData);
+            console.log('Usuário criado com sucesso:', response);
             setShowModal(true);
         } catch (error) {
             console.error('Erro ao criar usuário', error);

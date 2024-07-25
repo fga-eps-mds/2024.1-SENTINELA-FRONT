@@ -1,138 +1,51 @@
-import { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import SideBar from "../../../Components/SideBar";
+import PrimaryButton from "../../../Components/PrimaryButton";
+import LabeledTextField from "../../../Components/LabeledTextField";
 import SideButton from "../../../Components/SideButton";
-import FieldText from "../../../Components/FieldText";
-import FieldSelect from "../../../Components/FieldSelect";
-import FieldNumber from '../../../Components/FieldNumber';
-import PrimaryButton from '../../../Components/PrimaryButton';
-import SecondaryButton from '../../../Components/SecondaryButton';
-import { RadioGroup, FormControlLabel, Radio } from '@mui/material'; 
-import { getUserById, deleteUserById, patchUserById, getRoles } from '../../../Services/userService';
-import "./index.css";
-import Modal from '../../../Components/Modal';
-import "../Registrations/index.css";
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import Divider from '@mui/material/Divider';
+import { APIUsers } from "../../../Services/BaseService";
+import"../Registrations/index.css";
 import { useAuth } from "../../../Context/auth";
 import { AiOutlineUser } from "react-icons/ai";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 
-const ViewUser = () => {
-    const { state } = useLocation();
+export default function ListUser() {
+    const [users, setUsers] = useState([]);
+    const [search, setSearch] = useState('');
     const navigate = useNavigate();
-    const userId = state?.userId;
-
-    const [nomeCompleto, setNomeCompleto] = useState('');
-    const [celular, setCelular] = useState('');
-    const [login, setLogin] = useState('');
-    const [email, setEmail] = useState('');
-    const [perfilSelecionado, setPerfilSelecionado] = useState('');
-    const [roles, setRoles] = useState([]);
-    const [showSaveModal, setShowSaveModal] = useState(false);
-    const [showDeleteModal, setShowDeleteModal] = useState(false);
-    const [showDeletedModal, setShowDeletedModal] = useState(false);
-    const [isEmailValid, setIsEmailValid] = useState(true); // Estado para validar o email
-
-    const handleNomeCompletoChange = (e) => {
-        const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, '');
-        setNomeCompleto(value);
-    };
 
     useEffect(() => {
-        const loadRoles = async () => {
+        const fetchUsers = async () => {
             try {
-                const roles = await getRoles(); 
-                setRoles(roles);
-            } catch (error) {
-                console.error('Erro ao carregar roles:', error); 
-            }
-        };
-        loadRoles();
-    }, []);
+                const storagedUserString = localStorage.getItem('@App:user');
+                const storagedUser = JSON.parse(storagedUserString);
 
-    useEffect(() => {
-        const fetchUser = async () => {
-            if (userId) {
-                try {
-                    const tokenString = localStorage.getItem('@App:user');
-                    if (!tokenString) {
-                        console.error('Token não encontrado no localStorage');
-                        return;
+                const response = await APIUsers.get('users', {
+                    headers: {
+                        'Authorization': `Bearer ${storagedUser.token}`
                     }
-                    const token = JSON.parse(tokenString).token;
-                    const user = await getUserById(userId, token);
+                });
 
-                    if (user) {
-                        setNomeCompleto(user.name || '');
-                        setCelular(user.phone || '');
-                        setLogin(user.status ? 'Ativo' : 'Inativo');
-                        setEmail(user.email || '');
-                        setPerfilSelecionado(user.role || '');
-                    }
-                } catch (error) {
-                    console.error('Erro ao buscar usuário:', error);
+                const data = response.data;
+                console.log('Dados recebidos:', data);
+                if (Array.isArray(data)) {
+                    setUsers(data);
+                } else {
+                    console.error('Os dados recebidos não são um array.');
                 }
+            } catch (error) {
+                console.error('Erro ao buscar usuários:', error);
             }
         };
-    
-        fetchUser();
-    }, [userId]);
 
-    useEffect(() => {
-        setIsEmailValid(isValidEmail(email));
-    }, [email]);
-
-    const isValidEmail = (email) => {
-        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
-        return emailRegex.test(email);
-    };
-
-    const handleDelete = async () => {
-        setShowDeleteModal(false);
-        if (userId) {
-            try {
-                await deleteUserById(userId);
-                setShowDeletedModal(true);
-                
-            } catch (error) {
-                console.error('Erro ao deletar usuário:', error);
-            }
-        }
-    };
-
-    const handleSave = async () => {
-        setShowSaveModal(false);
-        if (userId && isEmailValid) { // Verifica se o email é válido antes de salvar
-            const updatedUser = {
-                name: nomeCompleto,
-                email: email,
-                phone: celular,
-                status: login === 'Ativo',
-                role: perfilSelecionado,
-            };
-
-            const tokenString = localStorage.getItem('@App:user');
-            if (!tokenString) {
-                console.error('Token não encontrado no localStorage');
-                return;
-            }
-            const token = JSON.parse(tokenString).token;
-    
-            try {
-                await patchUserById(userId, updatedUser, token);
-                handleSaveCloseDialog();
-            } catch (error) {
-                console.error(`Erro ao atualizar usuário com ID ${userId}:`, error);
-            }
-        }
-    };
-
-    const handleListaClick = () => {
-        navigate("/listadeusuarios");
-    };
-
-    const handleCadastroClick = () => {
-        navigate("/cadastrarUsuario");
-    };
+        fetchUsers();
+    }, []);
 
     const handleHomeClick = () => {
         navigate("/home");
@@ -171,123 +84,43 @@ const ViewUser = () => {
         </button>
     ];
 
-    const loginOptions = ['Ativo', 'Inativo'];
-    const handleChangeLogin = (event) => {
-        setLogin(event.target.value);
+    const handleRegisterClick = () => {
+        navigate('/cadastrarUsuario');
     };
 
-    const handlePerfilChange = (event) => {
-        setPerfilSelecionado(event.target.value);
+    const handleItemClick = (user) => {
+        console.log('ID do usuário sendo passado para a navegação:', user._id);
+        navigate('/usuario', { state: { userId: user._id } });
     };
 
-    const handleSaveModal = () => {
-        setShowSaveModal(true);
-    };
-
-    const handleDeleteModal = () => {
-        setShowDeleteModal(true);
-    };
-
-    const handleSaveCloseDialog = () => {
-        setShowSaveModal(false);
-        navigate("/listadeusuarios");
-    };
-
-    const handleDeleteCloseDialog = () => {
-        setShowDeleteModal(false);
-    };
-
-    const handleDeletedCloseDialog = () => {
-        setShowDeletedModal(false);
-        navigate('/listadeusuarios');
-    };
-
-    const modalSaveButton = [<SecondaryButton key={'saveButtons'} text='OK' onClick={() => handleSave()} width="338px" />];
-    const modalDeleteButton = [
-        <SecondaryButton key={'deleteButtons'} text='EXCLUIR USUÁRIO' onClick={() => handleDelete()} width="338px" />,
-        <SecondaryButton key={'modalButtons'} text='CANCELAR E MANTER O CADASTRO' onClick={() => handleDeleteCloseDialog()} width="338px" />
-    ];
+    const filteredUsers = users.filter(user =>
+        user.name.toLowerCase().includes(search.toLowerCase())
+    );
 
     return (
         <section className="container">
              <SideBar className="side-menu" buttons={buttons} />
 
             <div className='forms-container'>
-                <h1>Visualização de usuário</h1>
-
-                <h3>Dados Pessoais</h3>
-                <FieldText
-                    label="Nome Completo"
-                    value={nomeCompleto}
-                    onChange={handleNomeCompletoChange}
-                />
-
-                <div className='double-box'>
-                    <FieldNumber
-                        label="Celular"
-                        value={celular}
-                        onChange={(e) => setCelular(e.target.value)}
-                        format=' (##) ##### ####'
-                    />
-
-                    <FieldSelect
-                        label="Login"
-                        value={login}
-                        onChange={handleChangeLogin}
-                        options={loginOptions}
-                    />
+                <h1>Lista de Usuários</h1>
+                <div className="double-box">
+                    <LabeledTextField label="Pesquisar Usuário" value={search} onChange={(e) => setSearch(e.target.value)} />
+                    <PrimaryButton text="Cadastrar Usuário" onClick={handleRegisterClick} />
                 </div>
 
-                <FieldText
-                    label="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-                {!isEmailValid && <label className='isEmailValid'>*Insira um email válido</label>}
-
-                <h3>Perfil</h3>
-
-                <RadioGroup value={perfilSelecionado} onChange={handlePerfilChange}>
-                    {roles.map((perfil) => (
-                        <FormControlLabel
-                            key={perfil?.name}
-                            value={perfil?._id}
-                            control={<Radio />}
-                            label={perfil?.name}
-                        />
+                <List>
+                    {filteredUsers.map((user, index) => (
+                        <div key={user._id}>
+                            <ListItem>
+                                <ListItemButton className="list-item" onClick={() => handleItemClick(user)}>
+                                    <ListItemText primary={user.name} />
+                                </ListItemButton>
+                            </ListItem>
+                            {index < filteredUsers.length - 1 && <Divider />}
+                        </div>
                     ))}
-                </RadioGroup>
-
-                <div className='double-buttons'>
-                    <SecondaryButton
-                        text='Deletar'
-                        onClick={handleDeleteModal}
-                    />
-                    <PrimaryButton
-                        text='Salvar'
-                        onClick={handleSaveModal}
-                    />
-                </div>
-
-                <Modal
-                    alertTitle="Alterações Salvas"
-                    show={showSaveModal}
-                    buttons={modalSaveButton}
-                />
-
-                <Modal
-                    alertTitle="Deseja deletar o usuário do sistema?"
-                    show={showDeleteModal}
-                    buttons={modalDeleteButton}
-                />
-                <Modal
-                    alertTitle="Usuario Deletado"
-                    show={showDeletedModal}
-                    buttons={<SecondaryButton key={'okButtons'} text='OK' onClick={() => handleDeletedCloseDialog()} width="338px" />}
-                />
+                </List>
             </div>
         </section>
     );
-};
-
-export default ViewUser;
+}
