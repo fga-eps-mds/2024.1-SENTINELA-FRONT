@@ -6,6 +6,8 @@ import SideBar from "../../../Components/SideBar";
 import SideButton from "../../../Components/SideButton";
 import PrimaryButton from "../../../Components/PrimaryButton";
 import SecondaryButton from "../../../Components/SecondaryButton";
+import FieldSelect from "../../../Components/FieldSelect";
+import FieldText from "../../../Components/FieldText";
 import "./index.css";
 
 const BankAccount = () => {
@@ -15,6 +17,22 @@ const BankAccount = () => {
     const context = useContext(AuthContext);
     const { user } = useAuth();
     const navigate = useNavigate();
+    const [nomeCompleto, setNomeCompleto] = useState("");
+    const [pix, setPix] = useState("");
+    const [banco, setBanco] = useState("");
+    const [tipoDeConta, setTipoDeConta] = useState("");
+    const [numeroDaConta, setNumeroDaConta] = useState("");
+    const [dv, setDv] = useState("");
+    const [status, setStatus] = useState("");
+    const [agencia, setAgencia] = useState("");
+    const listTipoDeConta = ['Conta Corrente', 'Poupança', 'Investimento', 'Caixa'];
+
+    const handleChangeTipoDeConta = (e) => {    
+        setTipoDeConta(e.target.value);
+    };
+
+
+
     const handleHome = () => {
         navigate("/home");
       };
@@ -41,7 +59,14 @@ const BankAccount = () => {
         
             <div className="redirect">
                 <div className="redirect buttons">
-                
+                    <FieldText label="Nome"  value= {nomeCompleto} onChange={(e) => setNomeCompleto(e.target.value)}/>
+                    <FieldText label="Pix" value= {pix} onChange={(e) => setPix(e.target.value)}/>
+                    <FieldText label="Banco" value= {banco} onChange={(e) => setBanco(e.target.value)}/>
+                    <FieldSelect label="Tipo de conta" value= {tipoDeConta} onChange={handleChangeTipoDeConta} options = {listTipoDeConta}/> 
+                    <FieldText label="Número da conta" value= {numeroDaConta} onChange={(e) => setNumeroDaConta(e.target.value)}/>
+                    <FieldText label="Dv" value= {dv} onChange={(e) => setDv(e.target.value)}/>
+                    <FieldSelect label="Status" value= {status} onChange={(e) => setStatus(e.target.value)} options = {['Ativo', 'Inativo']}/>
+                    <FieldText label="Agência" value= {agencia} onChange={(e) => setAgencia(e.target.value)}/>                   
                 </div>
                 
 
