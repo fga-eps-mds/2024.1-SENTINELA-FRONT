@@ -20,7 +20,7 @@ const ViewUser = () => {
     const { state } = useLocation();
     const navigate = useNavigate();
     const userId = state?.userId;
-    console.log(userId);
+   
 
     const [nomeCompleto, setNomeCompleto] = useState('');
     const [celular, setCelular] = useState('');
@@ -40,8 +40,7 @@ const ViewUser = () => {
     useEffect(() => {
         const loadRoles = async () => {
             try {
-                const roles = await getRoles();
-                console.log('Roles carregados:', roles); 
+                const roles = await getRoles(); 
                 setRoles(roles);
             } catch (error) {
                 console.error('Erro ao carregar roles:', error); 
@@ -53,7 +52,6 @@ const ViewUser = () => {
     useEffect(() => {
         const fetchUser = async () => {
             if (userId) {
-                console.log(`Tentando buscar usuário com ID: ${userId}`);
                 try {
                     const tokenString = localStorage.getItem('@App:user');
                     if (!tokenString) {
@@ -64,21 +62,17 @@ const ViewUser = () => {
                     const user = await getUserById(userId, token);
 
                     if (user) {
-                        console.log('Usuário encontrado:', user);
                         setNomeCompleto(user.name || '');
                         setCelular(user.phone || '');
                         setLogin(user.status ? 'Ativo' : 'Inativo');
                         setEmail(user.email || '');
                         setPerfilSelecionado(user.role || '');
                     } else {
-                        console.log('Nenhum usuário encontrado com o ID fornecido');
                     }
                 } catch (error) {
                     console.error('Erro ao buscar usuário:', error);
                 }
-            } else {
-                console.log('Nenhum userId encontrado no estado');
-            }
+            } 
         };
     
         fetchUser();
@@ -108,8 +102,6 @@ const ViewUser = () => {
                 role: perfilSelecionado,
             };
 
-            // Log the updated user data
-            console.log('Updated user data:', updatedUser);
 
             const tokenString = localStorage.getItem('@App:user');
             if (!tokenString) {

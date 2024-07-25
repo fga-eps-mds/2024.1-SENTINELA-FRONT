@@ -32,8 +32,7 @@ export default function ListUser() {
                     }
                 });
 
-                const data = response.data;
-                console.log('Dados recebidos:', data);
+                const data = response.data;             
                 if (Array.isArray(data)) {
                     setUsers(data);
                 } else {
@@ -89,7 +88,6 @@ export default function ListUser() {
     };
 
     const handleItemClick = (user) => {
-        console.log('ID do usuário sendo passado para a navegação:', user._id);
         navigate('/usuario', { state: { userId: user._id } });
     };
 
