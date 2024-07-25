@@ -144,12 +144,6 @@ const ProfileUpdate = () => {
             onChange={(e) => setEmail(e.target.value)} 
           />
         </div>
-        <div className="section-sector">
-          <FieldText label="Setores de acesso*" 
-          value={""} 
-          disabled={true} 
-        />
-        </div>
         <div className="section-doublebtn">
           <SecondaryButton 
             text="Cancelar" 
