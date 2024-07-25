@@ -129,12 +129,19 @@
   }
 
   .isEmailValid{
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 400;
-    margin-left: 1rem;
     margin-top: -0.8rem; 
+    margin-left: 1rem;
     color: red!important; 
-}
+  }
+  .isValidNumber{
+    font-size: 12px;
+    font-weight: 400;
+    margin-top: -0.8rem;
+    margin-left: 1rem; 
+    color: red!important;  
+  }
 
   .custom-dialog .MuiDialog-paper {
     width: 338px; 
@@ -349,6 +356,12 @@
     margin-top: -0.5rem;
     color: red!important; 
 }
+
+  .isValidNumber{
+    font-size: 14px;
+    margin-top: 1.5rem;
+    color: red!important;  
+  }
 
   .custom-dialog .MuiDialog-paper {
     width: 338px; 

@@ -29,6 +29,7 @@ const ProfileUpdate = () => {
   const [login, setLogin] = useState('');
   const [email, setEmail] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isValidNumber, setIsValidNumber] = useState(true);
   const [openDialog, setOpenDialog] = useState(false);
 
   useEffect(() => {
@@ -39,6 +40,10 @@ const ProfileUpdate = () => {
     setIsEmailValid(isValidEmail(email));
   }, [email]);
 
+  useEffect(() => {
+    setIsValidNumber(validatePhoneNumber(removeMask(celular)));
+  }, [celular]);
+
   const isValidEmail = (email) => {
     const allowedDomains = [
       'com', 'net', 'org', 'com.br', 'org.br'
@@ -47,6 +52,10 @@ const ProfileUpdate = () => {
     const emailRegex = new RegExp(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.${domainPattern}$`, 'i');
     return emailRegex.test(email);
   };
+
+  const validatePhoneNumber = (phoneNumber) => /^\d+$/.test(phoneNumber) && phoneNumber.length >= 10;
+
+  const removeMask = (celular) => celular.replace(/\D/g, ''); // Remove a mascara do FielNumber
 
   const getUser = async () => { // Busca usuario no banco
     try {
@@ -67,17 +76,13 @@ const ProfileUpdate = () => {
     navigate("/");
   };
 
-  const removeMask = (celular) => celular.replace(/\D/g, ''); // Remove a mascara do FielNumber
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const trimmedCelular = removeMask(celular);
-    const isValidNumber = /^\d+$/.test(trimmedCelular) && trimmedCelular.length >= 10; // Número válido = [0,9] e maior que 10 digitos
-    const isValidEmailAddress = isValidEmail(email); 
 
-    if (!isValidNumber || !isValidEmailAddress) {
+    if (!isValidNumber || !isEmailValid) {
       return;
     }
+
     try {
       await APIUsers.patch(`users/patch/${storagedUser.user._id}`, {
         phone: celular, 
@@ -136,6 +141,7 @@ const ProfileUpdate = () => {
             onChange={(e) => setCelular(e.target.value)} 
             format="(##) #####-####" 
           />
+          {!isValidNumber && <label className='isValidNumber'>*Insira um celular válido</label>}
           <FieldText label="Login*" 
             value={login} 
             onChange={(e) => setLogin(e.target.value)} 
@@ -143,13 +149,13 @@ const ProfileUpdate = () => {
           />
         </div>
         <div className="section-campo">
-        <FieldText 
-          label="E-mail" 
-          value={email} 
-          onChange={(e) => setEmail(e.target.value)} 
-        />
-        {!isEmailValid && <label className='isEmailValid'>*Insira um email válido</label>}
-</div>
+          <FieldText 
+            label="E-mail" 
+            value={email} 
+            onChange={(e) => setEmail(e.target.value)} 
+          />
+          {!isEmailValid && <label className='isEmailValid'>*Insira um email válido</label>}
+        </div>
         <div className="section-doublebtn">
           <SecondaryButton 
             text="Cancelar" 
