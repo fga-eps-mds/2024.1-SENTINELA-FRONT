@@ -8,11 +8,12 @@ import FieldSelect from "../../../Components/FieldSelect";
 import PrimaryButton from "../../../Components/PrimaryButton";
 import "dayjs/locale/pt-br";
 import { APIBank } from "../../../Services/BaseService";
+import { AiOutlineUser } from "react-icons/ai";
+import { RiLogoutCircleRLine } from "react-icons/ri";
 //import { createSupplier } from "../../../";
 
 //const Supplier = () => {
 export default function Supplier() {
-
   const storagedUser = localStorage.getItem("@App:user");
   /*  const navigate = useNavigate();
   const handleListSupplierPage = () => {
@@ -65,10 +66,31 @@ export default function Supplier() {
     navigate("/supplier");
   };
 
+  const getUserName = () => {
+    const tokenString = localStorage.getItem("@App:user");
+    if (tokenString) {
+      const user = JSON.parse(tokenString);
+      return user?.user?.name || "Usuário";
+    }
+    return "Usuário";
+  };
+
+  const handleLogout = () => {
+    context.Logout();
+    navigate("/");
+  };
+
   const buttons = [
     <SideButton key="home" text="Página inicial" />,
     <SideButton key="cadastros" text="Cadastros" />,
     <SideButton key="financeiro" text="Financeiro" />,
+    <h2 key="profile-status" className="profile-status">
+      Você está logado <br />
+      como {getUserName()} <AiOutlineUser className="profile-icon" />
+    </h2>,
+    <button key="logout" className="btn-logout" onClick={handleLogout}>
+      LOGOUT <RiLogoutCircleRLine className="logout-icon" />
+    </button>,
   ];
 
   const MaskedInput = () => {
@@ -101,37 +123,35 @@ export default function Supplier() {
     console.log(supplierData);
 
     try {
-      console.log(storagedUser); 
+      console.log(storagedUser);
       const response = await APIBank.post(`/SupplierForm/create`, {
-        headers: { 'Authorization': `Bearer ${storagedUser.token}`, supplierData }
+        headers: {
+          Authorization: `Bearer ${storagedUser.token}`,
+          supplierData,
+        },
       });
       console.log(response);
-
     } catch (error) {
       console.log(error);
     }
-
   };
 
   return (
     <div className="container">
-
-        <SideBar className="side-menu" buttons={buttons} />
+      <SideBar className="side-menu" buttons={buttons} />
 
       <div className="forms-container">
-        
         <h1>Cadastro de fornecedor</h1>
 
         <h3>Dados pessoais</h3>
 
-          <FieldText
-            label="Nome/Razão Social"
-            value={nome}
-            onChange={(e) => setNome(e.target.value)}
-          />
+        <FieldText
+          label="Nome/Razão Social"
+          value={nome}
+          onChange={(e) => setNome(e.target.value)}
+        />
 
         <div className="section-form">
-
           <FieldSelect
             label="Classificação de pessoa"
             value={tipoPessoa}
@@ -196,20 +216,20 @@ export default function Supplier() {
             value={cep}
             onChange={(e) => setCep(e.target.value)}
           />
-          
-          <div className="double-box">
-          <FieldText
-            label="Cidade"
-            value={cidade}
-            onChange={(e) => setCidade(e.target.value)}
-          />
 
-          <FieldSelect
-            label="UF"
-            value={uf_endereco}
-            onChange={handleChangeUf_endereco}
-            options={uf_enderecoList}
-          />
+          <div className="double-box">
+            <FieldText
+              label="Cidade"
+              value={cidade}
+              onChange={(e) => setCidade(e.target.value)}
+            />
+
+            <FieldSelect
+              label="UF"
+              value={uf_endereco}
+              onChange={handleChangeUf_endereco}
+              options={uf_enderecoList}
+            />
           </div>
 
           <FieldText
@@ -251,19 +271,17 @@ export default function Supplier() {
             value={dv}
             onChange={(e) => setDv(e.target.value)}
           />
-
         </div>
 
-          <FieldText
-            label="Chave Pix"
-            value={chavePix}
-            onChange={(e) => setChavePix(e.target.value)}
-          />
+        <FieldText
+          label="Chave Pix"
+          value={chavePix}
+          onChange={(e) => setChavePix(e.target.value)}
+        />
 
-          <div id='envio'>
-            <PrimaryButton text="CADASTRAR" onClick={handleSubmit}/>
-          </div>
-
+        <div id="envio">
+          <PrimaryButton text="CADASTRAR" onClick={handleSubmit} />
+        </div>
       </div>
     </div>
   );
