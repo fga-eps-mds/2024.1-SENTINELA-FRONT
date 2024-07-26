@@ -14,6 +14,8 @@ import BasicDateField from '../../../Components/DateField';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Snackbar } from '@mui/material';
 import Alert from '@mui/material/Alert';
+import SecodaryButton from '../../../Components/SecondaryButton';
+import Modal from '../../../Components/Modal';
 
 //para o dialog
 import Button from '@mui/material/Button';
@@ -22,6 +24,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import SecondaryButton from '../../../Components/SecondaryButton';
+import MuiDialog from '../../../Components/Modal';
 
 const MemberShip = () => {
   console.log('MemberShip called');
@@ -183,6 +187,21 @@ const MemberShip = () => {
   const handleCloseSuccessDialog = () => {
     setOpenSuccessDialog(false);
   };
+  const isValidEmail = (email) => {
+    // Lista de domínios permitidos
+    const allowedDomains = ['com', 'net', 'org', 'com.br', 'org.br', 'edu', 'gov'];
+  
+    // Expressão regular melhorada para emails com suporte a subdomínios
+    const domainPattern = allowedDomains.map(domain => {
+      // Escape os caracteres especiais e permite subdomínios
+      const escapedDomain = domain.replace(/\./g, '\\.');
+      return `(?:[a-zA-Z0-9.-]+\\.)?${escapedDomain}`;
+    }).join('|');
+  
+    const emailRegex = new RegExp(`^[a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9.-]+\\.)?(${domainPattern})$`, 'i');
+  
+    return emailRegex.test(email);
+  };
 
   const buttons = [
     <SideButton key="login" text="Login" />,
@@ -259,6 +278,8 @@ const MemberShip = () => {
     if (!postoDeTrabalho) erros.postoDeTrabalho = 1;
     if (!orgaoExpedidor) erros.orgaoExpedidor = 1;
     if (!situacaoAtual) erros.situacaoAtual = 1;
+    if (!religiao) erros.religiao = 1;
+    if(isValidEmail(email) === false) erros.email = 1;
     if(cpf.length < 14) erros.cpf = 1;
     if(rg.length < 9) erros.rg = 1;
     if(cep.length < 9) erros.cep = 1;
@@ -637,8 +658,15 @@ const MemberShip = () => {
           </Alert>
         </Snackbar>
         
+        <MuiDialog 
+                openSuccessDialog={openSuccessDialog} 
+                setOpenSuccessDialog={setOpenSuccessDialog} 
+                submitForm={submitForm} 
+                handleCloseSuccessDialog={handleCloseSuccessDialog}
+                text="Declaro que, ao filiar-me nesta data ao SINDPOL-DF, concordo e ratifico com todas as minhas obrigações previstas no Estatuto Social, regime interno e deliberação das assembleias gerais do Sindicato dos Policiais Penais do Distrito Federal. Ao tempo que comprometo-me em contribuir mensalmente com o valor de 1,5% vencimento básico, conforme Art. 105 do Estatuto APROVADO pela assembleia geral, o qual AUTORIZO que consignado em folha de pagamento junto ao órgão competente em favor do SINDPOL-DF, bem como outras contribuições de caráter extraordinário - desde que aprovadas em assembleia específica - Reconheço ainda que tais contribuições têm o condão de manter a entidade de representação sindical forte e independente no intuito de garantir melhores condições de trabalho para toda a categoria. Fico ciente que, ao desejar afastar-me do quadro social do sindicato, devo manifestar-me por escrito, em formulário específico, com antecedência de 60 (sessenta) dias. Pela presente, solicito minha admissão no quadro de filiados do SINDICATO DOS POLICIAIS PENAIS DO DISTRITO FEDERAL."
+            />
         
-        <Dialog
+        {/* <Dialog
           open={openSuccessDialog}
           onClose={handleCloseSuccessDialog}
           aria-labelledby="alert-dialog-title"
@@ -646,9 +674,9 @@ const MemberShip = () => {
         >
           <DialogTitle id="alert-dialog-title">
             {"Ao confirmar essa solicitação, você estará concordando com a declaração a seguir:"}
-          </DialogTitle>
+          </DialogTitle >
           <DialogContent>
-            <DialogContentText id="alert-dialog-description">
+            <DialogContentText id="alert-dialog-description" className="custom-dialog-content-text">
               Declaro que, ao filiar-me nesta data ao SINDPOL-DF, concordo e ratifico com todas as minhas obrigações previstas no Estatuto Social,
               regime interno e deliberação das assembleias gerais do Sindicato dos Policiais Penais do Distrito Federal.
               Ao tempo que comprometo-me em contribuir mensalmente com o valor de 1,5% vencimento básico, conforme Art. 105 do Estatuto APROVADO pela assembleia geral,
@@ -661,12 +689,20 @@ const MemberShip = () => {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleCloseSuccessDialog}>CANCELAR</Button>
-            <Button onClick={() => {setOpenSuccessDialog(false); submitForm()}} autoFocus>
-              FILIAR-ME AO SINDICATO
-            </Button>
+            <div className='botoes-dialogo'>
+            <SecondaryButton 
+            text = "CANCELAR"
+            onClick={handleCloseSuccessDialog}>
+              
+            </SecondaryButton>
+            <PrimaryButton 
+            text= 'FILIAR-ME AO SINDICATO'
+            onClick={() => {setOpenSuccessDialog(false); submitForm()}} autoFocus>
+              
+            </PrimaryButton>
+            </div>
           </DialogActions>
-        </Dialog>
+        </Dialog> */}
 
       </div>
     </section>
