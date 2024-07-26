@@ -7,16 +7,15 @@ import FieldSelect from "../../../Components/FieldSelect";
 import FieldNumber from '../../../Components/FieldNumber';
 import PrimaryButton from '../../../Components/PrimaryButton';
 import SecondaryButton from '../../../Components/SecondaryButton';
-import { RadioGroup, FormControlLabel, Radio } from '@mui/material'; 
+import { RadioGroup, FormControlLabel, Radio } from '@mui/material';
 import { getUserById, deleteUserById, patchUserById, getRoles } from '../../../Services/userService';
 import "./index.css";
 import Modal from '../../../Components/Modal';
-import "../Registrations/index.css";
-import { useAuth } from "../../../Context/auth";
 import { AiOutlineUser } from "react-icons/ai";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 
-const ViewUser = () => {
+
+export default function updateUser() {
     const { state } = useLocation();
     const navigate = useNavigate();
     const userId = state?.userId;
@@ -40,10 +39,10 @@ const ViewUser = () => {
     useEffect(() => {
         const loadRoles = async () => {
             try {
-                const roles = await getRoles(); 
+                const roles = await getRoles();
                 setRoles(roles);
             } catch (error) {
-                console.error('Erro ao carregar roles:', error); 
+                console.error('Erro ao carregar roles:', error);
             }
         };
         loadRoles();
@@ -73,7 +72,7 @@ const ViewUser = () => {
                 }
             }
         };
-    
+
         fetchUser();
     }, [userId]);
 
@@ -92,7 +91,7 @@ const ViewUser = () => {
             try {
                 await deleteUserById(userId);
                 setShowDeletedModal(true);
-                
+
             } catch (error) {
                 console.error('Erro ao deletar usuário:', error);
             }
@@ -116,7 +115,7 @@ const ViewUser = () => {
                 return;
             }
             const token = JSON.parse(tokenString).token;
-    
+
             try {
                 await patchUserById(userId, updatedUser, token);
                 handleSaveCloseDialog();
@@ -126,13 +125,6 @@ const ViewUser = () => {
         }
     };
 
-    const handleListaClick = () => {
-        navigate("/listadeusuarios");
-    };
-
-    const handleCadastroClick = () => {
-        navigate("/cadastrarUsuario");
-    };
 
     const handleHomeClick = () => {
         navigate("/home");
@@ -190,7 +182,7 @@ const ViewUser = () => {
 
     const handleSaveCloseDialog = () => {
         setShowSaveModal(false);
-        navigate("/listadeusuarios");
+        navigate("/cadastros/usuarios");
     };
 
     const handleDeleteCloseDialog = () => {
@@ -199,7 +191,7 @@ const ViewUser = () => {
 
     const handleDeletedCloseDialog = () => {
         setShowDeletedModal(false);
-        navigate('/listadeusuarios');
+        navigate('/cadastros/usuarios');
     };
 
     const modalSaveButton = [<SecondaryButton key={'saveButtons'} text='OK' onClick={() => handleSave()} width="338px" />];
@@ -210,7 +202,7 @@ const ViewUser = () => {
 
     return (
         <section className="container">
-             <SideBar className="side-menu" buttons={buttons} />
+            <SideBar className="side-menu" buttons={buttons} />
 
             <div className='forms-container'>
                 <h1>Visualização de usuário</h1>
@@ -288,6 +280,5 @@ const ViewUser = () => {
             </div>
         </section>
     );
-};
+}
 
-export default ViewUser;

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import SideBar from "../../../Components/SideBar";
 import PrimaryButton from "../../../Components/PrimaryButton";
-import LabeledTextField from "../../../Components/LabeledTextField";
+import FieldText from "../../../Components/FieldText";
 import SideButton from "../../../Components/SideButton";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -10,8 +10,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import { APIUsers } from "../../../Services/BaseService";
-import"../Registrations/index.css";
-import { useAuth } from "../../../Context/auth";
+import "../Registrations/index.css";
 import { AiOutlineUser } from "react-icons/ai";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 
@@ -85,14 +84,14 @@ export default function ListUser() {
     ];
 
     const handleRegisterClick = () => {
-        navigate('/cadastrarUsuario');
+        navigate('/cadastros/novoCadastro');
     };
 
     const handleItemClick = (user) => {
         console.log('ID do usuário sendo passado para a navegação:', user._id);
-        navigate(`/usuario/${user.name}`, { state: { userId: user._id } });
+        navigate(`/cadastros/usuarios/${user.name}`, { state: { userId: user._id } });
     };
-    
+
 
     const filteredUsers = users.filter(user =>
         user.name.toLowerCase().includes(search.toLowerCase())
@@ -100,12 +99,12 @@ export default function ListUser() {
 
     return (
         <section className="container">
-             <SideBar className="side-menu" buttons={buttons} />
+            <SideBar className="side-menu" buttons={buttons} />
 
             <div className='forms-container'>
                 <h1>Lista de Usuários</h1>
                 <div className="double-box">
-                    <LabeledTextField label="Pesquisar Usuário" value={search} onChange={(e) => setSearch(e.target.value)} />
+                    <FieldText label="Pesquisar Usuário" value={search} onChange={(e) => setSearch(e.target.value)} />
                     <PrimaryButton text="Cadastrar Usuário" onClick={handleRegisterClick} />
                 </div>
 

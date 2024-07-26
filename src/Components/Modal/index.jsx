@@ -45,5 +45,5 @@ Modal.propTypes = {
   show: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
   alertTitle: PropTypes.string.isRequired,
-  buttons: PropTypes.array,
+  buttons: PropTypes.array
 };

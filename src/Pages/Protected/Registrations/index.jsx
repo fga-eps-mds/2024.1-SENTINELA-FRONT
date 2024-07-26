@@ -12,11 +12,11 @@ export default function Registrations() {
     const context = useAuth();
 
     const handleListaClick = () => {
-        navigate("/listadeusuarios");
+        navigate("/cadastros/usuarios");
     };
 
     const handleCadastroClick = () => {
-        navigate("/cadastrarUsuario");
+        navigate("/cadastros/novoCadastro");
     };
 
     const handleHomeClick = () => {

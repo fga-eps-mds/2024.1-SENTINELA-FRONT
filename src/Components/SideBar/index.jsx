@@ -11,17 +11,17 @@ export default function SideBar({ buttons }) {
   return (
     <>
       <div className="hidden-menu">
-        <AiOutlineMenu onClick={() => handleSideBar()}/>
+        <AiOutlineMenu onClick={handleSideBar} />
       </div>
       <div className={`side-bar ${isSideBarOpen ? 'open' : ''}`}>
         <img
           className="logo"
-          src="src/assets/sindpol-logo.png"
+          src="/src/assets/sindpol-logo.png"
           alt="Sindpol Logo"
         />
         <img
           className="sentinela"
-          src="src/assets/sentinela-logo.png"
+          src="/src/assets/sentinela-logo.png"
           alt="Sentinela Logo"
         />
         <div className="menu-lateral">
