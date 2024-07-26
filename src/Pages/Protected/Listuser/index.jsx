@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import './index.css';
+import "../Registrations/index.css";
 import SideBar from "../../../Components/SideBar";
 import PrimaryButton from "../../../Components/PrimaryButton";
 import FieldText from "../../../Components/FieldText";
@@ -11,7 +12,6 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import { APIUsers } from "../../../Services/BaseService";
-import "../Registrations/index.css";
 import { AiOutlineUser } from "react-icons/ai";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 
@@ -102,11 +102,11 @@ export default function ListUser() {
             <SideBar className="side-menu" buttons={buttons} />
 
             <div className='forms-container'>
-                <h1>Lista de Usuários</h1>
-                <div className="double-box">
-                    <FieldText label="Pesquisar Usuário" value={search} onChange={(e) => setSearch(e.target.value)} />
+                <div className="double-box-list">
+                    <h1>Lista de Usuários</h1>
                     <PrimaryButton text="Cadastrar Usuário" onClick={handleRegisterClick} />
                 </div>
+                <FieldText label="Pesquisar Usuário" value={search} onChange={(e) => setSearch(e.target.value)} />
 
                 <List>
                     {filteredUsers.map((user, index) => (

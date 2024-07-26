@@ -204,7 +204,7 @@ export default function updateUser() {
         <section className="container">
             <SideBar className="side-menu" buttons={buttons} />
 
-            <div className='forms-container'>
+            <div className='forms-container-user'>
                 <h1>Visualização de usuário</h1>
 
                 <h3>Dados Pessoais</h3>
@@ -214,7 +214,7 @@ export default function updateUser() {
                     onChange={handleNomeCompletoChange}
                 />
 
-                <div className='double-box'>
+                <div className='double-box-user'>
                     <FieldNumber
                         label="Celular"
                         value={celular}
@@ -250,7 +250,7 @@ export default function updateUser() {
                     ))}
                 </RadioGroup>
 
-                <div className='double-buttons'>
+                <div className='double-buttons-user'>
                     <SecondaryButton
                         text='Deletar'
                         onClick={handleDeleteModal}

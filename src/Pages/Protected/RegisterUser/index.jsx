@@ -133,7 +133,7 @@ export default function Register_User() {
     return (
         <section className="container">
             <SideBar className="side-menu" buttons={buttons} />
-            <div className='forms-container'>
+            <div className='forms-container-user'>
                 <h1>Cadastro de usuário</h1>
                 <h3>Dados Pessoais</h3>
                 <FieldText
@@ -141,7 +141,7 @@ export default function Register_User() {
                     value={nomeCompleto}
                     onChange={handleNomeCompletoChange}
                 />
-                <div className='double-box'>
+                <div className='double-box-user'>
                     <FieldNumber
                         label="Celular"
                         value={celular}

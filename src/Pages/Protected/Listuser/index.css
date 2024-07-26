@@ -1,6 +1,6 @@
 @media screen and (min-width:500px) {
     .container{
-        display: flexbox;
+        display: flex;
     }
     .profile-status {
         font-size: 18px;
@@ -35,17 +35,16 @@
         font-size: 21px;
         margin-left: 10px;
     }
-    .double-box {
+    .double-box-list {
         display: flex;
+        justify-content: space-between;
         width: 100%;
     }
-    .double-box input{
-        width: 30vmax;
-    }
-    .double-box button {
-        width: 300px;
+
+    .double-box-list button {
+        width: 400px;
         margin-bottom: 10px;
-        bottom: 2px;
+        bottom: 50px;
     }
 }
 
