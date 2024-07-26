@@ -1,4 +1,8 @@
-import { APIUsers } from "./BaseService";
+import { json } from "react-router-dom";
+import { APIBank, APIUsers } from "./BaseService";
+
+const storagedUser = localStorage.getItem("@App:user");
+const user = JSON.parse(storagedUser);
 
 export async function userLogin(email, password) {
   try {
@@ -14,32 +18,18 @@ export async function userLogin(email, password) {
     return null;
   }
 }
-/*
+
 export const createSupplierForm = async (supplierData) => {
   try {
-    const response = await APISuppliers.post("/supplier", {
-      nome: supplierData.nome,
-      tipoPessoa: supplierData.tipoPessoa,
-      cpf: supplierData.cpf,
-      statusFornecedor: supplierData.statusFornecedor,
-      naturezaTransacao: supplierData.naturezaTransacao,
-      email: supplierData.email,
-      nomeContato: supplierData.nomeContato,
-      celular: supplierData.celular,
-      telefone: supplierData.telefone,
-      cep: supplierData.cep,
-      cidade: supplierData.cidadei,
-      uf_endereco: supplierData.uf_endereco,
-      logradouro: supplierData.logradouro,
-      complemento: supplierData.complemento,
-      nomeBanco: supplierData.nomeBanco,
-      agencia: supplierData.agencia,
-      numeroBanco: supplierData.numeroBanco,
-      dv: supplierData.dv,
-      chavePix: supplierData.chavePix
+    await APIBank.post(`/SupplierForm/create`, {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+      supplierData: supplierData
     });
   } catch (error) {
-    console.error("Erro ao criar fornecedor:", error);
+    alert("error ao cadastrar fornecedor");
+    console.log(error)
   }
 };
 
@@ -50,7 +40,7 @@ export const getSupplierForm = async () => {
       throw new Error("No token found");
     }
     console.log("Token being used:", token); // Log para depuração
-    const response = await APISuppliers.get("/supplier", {
+    const response = await APIBank.get("/supplier", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -63,7 +53,7 @@ export const getSupplierForm = async () => {
 
 export const getSupplierFormById = async (id) => {
   try {
-    const response = await APISuppliers.get(`/listsupplier/${id}`);
+    const response = await APIBank.get(`/SupplierForm/${id}`);
     return response.data;
   } catch (error) {
     console.error(`Erro ao buscar fornecedor com ID ${id}:`, error);
@@ -72,7 +62,7 @@ export const getSupplierFormById = async (id) => {
 
 export const updateSupplierFormById = async (id, supplierData) => {
   try {
-    const response = await APISuppliers.patch(`/supplier/patch/${id}`, supplierData);
+    const response = await APIBank.patch(`/supplier/patch/${id}`, supplierData);
     return response.data;
   } catch (error) {
     console.error(`Erro ao atualizar fornecedor com ID ${id}:`, error);
@@ -81,10 +71,9 @@ export const updateSupplierFormById = async (id, supplierData) => {
 
 export const deleteSupplierFormById = async (id) => {
   try {
-    const response = await APISuppliers.delete(`/supplier/delete/${id}`);
+    const response = await APIBank.delete(`/supplier/delete/${id}`);
     return response.data;
   } catch (error) {
     console.error(`Erro ao deletar fornecedor com ID ${id}:`, error);
   }
 };
-*/
