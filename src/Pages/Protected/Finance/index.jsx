@@ -56,8 +56,8 @@ export default function Finance() {
 
                   <SecondaryButton text="Cadastrar de Fornecedor" onClick='#' />
                   <SecondaryButton text="Listar forncedores" onClick='#' />
-                  <SecondaryButton text="cadastrar conta bancaria" onClick={() => navigate("/bankAccount")}  />
-                  <SecondaryButton text="Listar contas bancarias" onClick={() => navigate("/listaccount")} />
+                  <SecondaryButton text="cadastrar conta bancaria" onClick={() => navigate("bankAccount/")}  />
+                  <SecondaryButton text="Listar contas bancarias" onClick={() => navigate("listBankAccount/")} />
                 </div>
                 
 

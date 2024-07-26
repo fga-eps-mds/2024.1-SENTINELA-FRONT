@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 
 const rgbaValue01 = `rgba(174, 136, 60, 0.1);`;
 
-export default function SideButton ({ itemKey, text }) {
+export default function SideButton ({ itemKey, text, onClick}) {
   return (
     <Button
       key={itemKey}
@@ -12,6 +12,7 @@ export default function SideButton ({ itemKey, text }) {
           backgroundColor: rgbaValue01,
         },
       }}
+      onClick={onClick}
     >
       {text}
     </Button>

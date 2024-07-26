@@ -5,7 +5,7 @@ import { Button } from "@mui/material";
 
 const rgbaValue01 = `rgba(174, 136, 60, 0.1);`;
 
-export default function SecondaryButton ({ text }) {
+export default function SecondaryButton ({ text, onClick }) {
   return (
     <Button
       variant="contained"
@@ -21,6 +21,7 @@ export default function SecondaryButton ({ text }) {
           backgroundColor: rgbaValue01,
         },
       }}
+      onClick={onClick}
     >
       {text}
     </Button>

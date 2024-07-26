@@ -89,7 +89,7 @@ const BankAccount = () => {
     const buttons = [
         <SideButton key="home" text="PÁGINA INICIAL" onClick={handleHome} />,
         <SideButton key="filiacao" text="CADASTROS" />,
-        <SideButton key="financeiro" text="FINANCEIRO" />,
+        <SideButton key="financeiro" text="FINANCEIRO" onClick={() => navigate("/finance/")}/>,
         <SideButton key="beneficios" text="BENEFÍCIOS" />,
         <h2 className="profile-status">Você está logado <br />como {user?.name}</h2>,
         <button className="btn-logout" onClick={handleLogout}> LOGOUT </button>
