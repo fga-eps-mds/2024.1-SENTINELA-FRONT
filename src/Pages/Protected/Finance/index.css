@@ -11,8 +11,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 1rem;
-   
+    margin: 1rem;;
 }
 
 .logo {
@@ -35,4 +34,5 @@
   align-items: center;
   background-color: #EAE3D7;
   border-radius: 10px;
+  box-shadow: 0px 3px 4px rgb(189, 186, 186);
 }
