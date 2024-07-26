@@ -50,23 +50,31 @@ const BankAccount = () => {
         <button className="btn-logout" onClick={handleLogout}> LOGOUT </button>
       ];
     return user && (
-        <section className="container">
+        <section className="bank-container">
             <div>
             <SideBar className="side-menu" buttons={buttons} />
             </div>
 
 
         
-            <div className="redirect">
-                <div className="redirect buttons">
+            <div className="section">
+                <h1>Cadastro de Conta Bancária</h1>
+                <div className="form">
                     <FieldText label="Nome"  value= {nomeCompleto} onChange={(e) => setNomeCompleto(e.target.value)}/>
-                    <FieldText label="Pix" value= {pix} onChange={(e) => setPix(e.target.value)}/>
-                    <FieldText label="Banco" value= {banco} onChange={(e) => setBanco(e.target.value)}/>
                     <FieldSelect label="Tipo de conta" value= {tipoDeConta} onChange={handleChangeTipoDeConta} options = {listTipoDeConta}/> 
+                    <FieldText label="Banco" value= {banco} onChange={(e) => setBanco(e.target.value)}/>
+                    <FieldText label="Agência" value= {agencia} onChange={(e) => setAgencia(e.target.value)}/>                   
                     <FieldText label="Número da conta" value= {numeroDaConta} onChange={(e) => setNumeroDaConta(e.target.value)}/>
                     <FieldText label="Dv" value= {dv} onChange={(e) => setDv(e.target.value)}/>
+                    <FieldText label="Pix" value= {pix} onChange={(e) => setPix(e.target.value)}/>
                     <FieldSelect label="Status" value= {status} onChange={(e) => setStatus(e.target.value)} options = {['Ativo', 'Inativo']}/>
-                    <FieldText label="Agência" value= {agencia} onChange={(e) => setAgencia(e.target.value)}/>                   
+                </div>
+
+                <div className="Botao-submit">
+                    <PrimaryButton 
+                        text="Remover Dependente"
+                        onClick="#"
+                    />
                 </div>
                 
 
