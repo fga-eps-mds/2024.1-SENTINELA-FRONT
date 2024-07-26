@@ -1,39 +1,14 @@
-@media screen and (min-width:500px) {
+@media screen and (min-width:700px) {
+    .forms-container-list {
+        margin: 5rem;
+        width: 100%;
+        display: inherit;
+        justify-content: center;
+        flex-direction: column;
+      }
+
     .container{
         display: flex;
-    }
-    .profile-status {
-        font-size: 18px;
-        font-weight: 600;
-        font-size: medium;
-        margin-left: 8rem;
-        margin-top: 12rem;
-        color: #341F14;
-    }
-
-    .profile-icon {
-        margin-top: -10rem;
-        margin-left: -9rem;
-        font-size: 37px;
-    }
-
-    .btn-logout {
-        background-color: transparent;
-        height: 40px;
-        font-family: 'Noto Sans';
-        font-size: 14px;
-        font-weight: 600;
-        padding: 6px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: none;
-        color: #341F14;
-    }
-
-    .logout-icon {
-        font-size: 21px;
-        margin-left: 10px;
     }
     .double-box-list {
         display: flex;
@@ -48,23 +23,22 @@
     }
 }
 
-@media (max-width: 480px) {
-
-    .container {
+@media (max-width: 1080px) {
+    .container{
         display: inherit;
-
+        align-items: center;
     }
-    .double-box {
-        display: flex;
-        flex-direction: column;
+    .forms-container-list{
+        display: grid;
+        align-items: center;
+        justify-content: center;
     }
-    .double-box {
-        display: flex;
-        flex
+    .double-box-list{
+        display: grid;
+        align-items: center;
+        justify-content: center;
     }
-    .double-box button {
-        width: auto;
-        margin-bottom: 10px;
-
+    h1{
+        text-align: center;
     }
 }

@@ -98,10 +98,10 @@ export default function ListUser() {
     );
 
     return (
-        <section className="container">
+        <section className="container-list">
             <SideBar className="side-menu" buttons={buttons} />
 
-            <div className='forms-container'>
+            <div className='forms-container-list'>
                 <div className="double-box-list">
                     <h1>Lista de Usuários</h1>
                     <PrimaryButton text="Cadastrar Usuário" onClick={handleRegisterClick} />
