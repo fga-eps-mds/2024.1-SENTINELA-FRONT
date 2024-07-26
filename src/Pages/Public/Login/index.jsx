@@ -16,8 +16,17 @@ export default function Login() {
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [error, setError] = useState(""); // Adiciona um estado para mensagens de erro
 
   const handleLogin = () => {
+    if (!email || !senha) { // Verifica se os campos estão preenchidos
+      setError("Por favor, preencha todos os campos.");
+      return;
+    }
+    
+    // Limpa mensagens de erro
+    setError("");
+
     context.Login(email, senha);
     navigate("/home");
   };
@@ -25,7 +34,6 @@ export default function Login() {
   const handlePasswordRecovery = () => {
     navigate("/passwordrecovery");
   };
-
 
   const buttons = [
     <SideButton key="login" text="Login" />,
@@ -40,6 +48,7 @@ export default function Login() {
         <LabeledTextField
           label="EMAIL"
           placeholder="Digite seu email"
+          type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -50,6 +59,7 @@ export default function Login() {
           value={senha}
           onChange={(e) => setSenha(e.target.value)}
         />
+        {error && <div className="error-message">{error}</div>} {/* Exibe a mensagem de erro */}
         <div className="recupera-senha">
           <UnderlinedTextButton
             key="recupera-senha"
@@ -58,7 +68,6 @@ export default function Login() {
           />
         </div>
         <SecondaryButton text="Filiar-me ao sindicato" maxWidth="400px" />
-
         <PrimaryButton text="Entrar" onClick={() => handleLogin()} maxWidth="400px" />
       </Card>
     </div>
