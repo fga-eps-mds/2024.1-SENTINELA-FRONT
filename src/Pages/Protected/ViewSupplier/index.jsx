@@ -44,6 +44,34 @@ export default function ViewSupplier() {
   const naturezaTransacaoList = ["Receita", "Despesa"];
   const uf_enderecoList = ["AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"];
 
+  const mascaraCelular = (celular) => {
+    let formattedCelular = celular.replace(/\D/g, ""); // Remove caracteres não numéricos
+    if (formattedCelular.length > 11) {
+      formattedCelular = formattedCelular.slice(0, 11); // Limita a 11 dígitos numéricos
+    }
+    return formattedCelular
+      .replace(/^(\d{2})(\d)/g, "($1) $2") // Adiciona parênteses em volta dos dois primeiros dígitos
+      .replace(/(\d{5})(\d{4})$/, "$1-$2"); // Adiciona traço entre o quarto ou quinto e o último grupo de dígitos
+  };
+
+  const mascaraTelefone = (telefone) => {
+    let formattedTelefone = telefone.replace(/\D/g, ""); // Remove caracteres não numéricos
+    if (formattedTelefone.length > 10) {
+      formattedTelefone = formattedTelefone.slice(0, 10); // Limita a 11 dígitos numéricos
+    }
+    return formattedTelefone
+      .replace(/^(\d{2})(\d)/g, "($1) $2") // Adiciona parênteses em volta dos dois primeiros dígitos
+      .replace(/(\d{4})(\d{4})$/, "$1-$2"); // Adiciona traço entre o quarto ou quinto e o último grupo de dígitos
+  };
+
+  const mascaraCEP = (cep) => {
+    let formattedCEP = cep.replace(/\D/g, ''); // Remove caracteres não numéricos
+    if (formattedCEP.length > 8) {
+      formattedCEP = formattedCEP.slice(0, 8); // Limita a 8 dígitos numéricos
+    }
+    return formattedCEP.replace(/(\d{5})(\d)/, '$1-$2'); // Adiciona traço após os cinco primeiros dígitos
+  };
+
   const handleChangeTipoPessoa = (event) => {
     setTipoPessoa(event.target.value);
   };
@@ -157,13 +185,13 @@ export default function ViewSupplier() {
         <FieldText
           label="Celular"
           value={celular}
-          onChange={(e) => setCelular(e.target.value)}
+          onChange={(e) => setCelular(mascaraCelular(e.target.value))}
         />
 
         <FieldText
           label="Telefone"
           value={telefone}
-          onChange={(e) => setTelefone(e.target.value)}
+          onChange={(e) => setTelefone(mascaraTelefone(e.target.value))}
         />
       </div>
 
@@ -173,7 +201,7 @@ export default function ViewSupplier() {
         <FieldText
           label="CEP"
           value={cep}
-          onChange={(e) => setCep(e.target.value)}
+          onChange={(e) => setCep(mascaraCEP(e.target.value))}
         />
 
         <div className="double-box">

@@ -44,7 +44,85 @@ export default function Supplier() {
   const tipoPessoaList = ["Jurídica", "Física"];
   const statusFornecedorList = ["Ativo", "Inativo"];
   const naturezaTransacaoList = ["Receita", "Despesa"];
-  const uf_enderecoList = ["AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"];
+  const uf_enderecoList = [
+    "AC",
+    "AL",
+    "AP",
+    "AM",
+    "BA",
+    "CE",
+    "DF",
+    "ES",
+    "GO",
+    "MA",
+    "MT",
+    "MS",
+    "MG",
+    "PA",
+    "PB",
+    "PR",
+    "PE",
+    "PI",
+    "RJ",
+    "RN",
+    "RS",
+    "RO",
+    "RR",
+    "SC",
+    "SP",
+    "SE",
+    "TO",
+  ];
+
+  const mascaraCPFouCNPJ = (valor) => {
+    let formattedValue = valor.replace(/\D/g, ""); // Remove caracteres não numéricos
+
+    if (formattedValue.length > 14)
+      formattedValue = formattedValue.slice(0, 14); // Limita a 14 dígitos numéricos
+
+    if (formattedValue.length <= 11) {
+      // Máscara de CPF
+      return formattedValue
+        .replace(/(\d{3})(\d)/, "$1.$2") // Adiciona ponto após os três primeiros dígitos
+        .replace(/(\d{3})(\d)/, "$1.$2") // Adiciona ponto após os seis primeiros dígitos
+        .replace(/(\d{3})(\d{1,2})$/, "$1-$2"); // Adiciona traço após os nove primeiros dígitos
+    } else {
+      // Máscara de CNPJ
+      return formattedValue
+        .replace(/(\d{2})(\d)/, "$1.$2") // Adiciona ponto após os dois primeiros dígitos
+        .replace(/(\d{3})(\d)/, "$1.$2") // Adiciona ponto após os cinco primeiros dígitos
+        .replace(/(\d{3})(\d)/, "$1/$2") // Adiciona barra após os oito primeiros dígitos
+        .replace(/(\d{4})(\d{1,2})$/, "$1-$2"); // Adiciona traço após os doze primeiros dígitos
+    }
+  };
+
+  const mascaraCelular = (celular) => {
+    let formattedCelular = celular.replace(/\D/g, ""); // Remove caracteres não numéricos
+    if (formattedCelular.length > 11) {
+      formattedCelular = formattedCelular.slice(0, 11); // Limita a 11 dígitos numéricos
+    }
+    return formattedCelular
+      .replace(/^(\d{2})(\d)/g, "($1) $2") // Adiciona parênteses em volta dos dois primeiros dígitos
+      .replace(/(\d{5})(\d{4})$/, "$1-$2"); // Adiciona traço entre o quarto ou quinto e o último grupo de dígitos
+  };
+
+  const mascaraTelefone = (telefone) => {
+    let formattedTelefone = telefone.replace(/\D/g, ""); // Remove caracteres não numéricos
+    if (formattedTelefone.length > 10) {
+      formattedTelefone = formattedTelefone.slice(0, 10); // Limita a 11 dígitos numéricos
+    }
+    return formattedTelefone
+      .replace(/^(\d{2})(\d)/g, "($1) $2") // Adiciona parênteses em volta dos dois primeiros dígitos
+      .replace(/(\d{4})(\d{4})$/, "$1-$2"); // Adiciona traço entre o quarto ou quinto e o último grupo de dígitos
+  };
+
+  const mascaraCEP = (cep) => {
+    let formattedCEP = cep.replace(/\D/g, ''); // Remove caracteres não numéricos
+    if (formattedCEP.length > 8) {
+      formattedCEP = formattedCEP.slice(0, 8); // Limita a 8 dígitos numéricos
+    }
+    return formattedCEP.replace(/(\d{5})(\d)/, '$1-$2'); // Adiciona traço após os cinco primeiros dígitos
+  };
 
   const handleChangeTipoPessoa = (event) => {
     setTipoPessoa(event.target.value);
@@ -92,10 +170,6 @@ export default function Supplier() {
       LOGOUT <RiLogoutCircleRLine className="logout-icon" />
     </button>,
   ];
-
-  const MaskedInput = () => {
-    return <input />;
-  };
 
   const handleSubmit = async () => {
     console.log("handleSubmit called");
@@ -162,7 +236,7 @@ export default function Supplier() {
           <FieldText
             label="CPF/CNPJ"
             value={cpf}
-            onChange={(e) => setCpf(e.target.value)}
+            onChange={(e) => setCpf(mascaraCPFouCNPJ(e.target.value))}
           />
 
           <FieldSelect
@@ -198,13 +272,13 @@ export default function Supplier() {
           <FieldText
             label="Celular"
             value={celular}
-            onChange={(e) => setCelular(e.target.value)}
+            onChange={(e) => setCelular(mascaraCelular(e.target.value))}
           />
 
           <FieldText
             label="Telefone"
             value={telefone}
-            onChange={(e) => setTelefone(e.target.value)}
+            onChange={(e) => setTelefone(mascaraTelefone(e.target.value))}
           />
         </div>
 
@@ -214,7 +288,7 @@ export default function Supplier() {
           <FieldText
             label="CEP"
             value={cep}
-            onChange={(e) => setCep(e.target.value)}
+            onChange={(e) => setCep(mascaraCEP(e.target.value))}
           />
 
           <div className="double-box">
@@ -286,5 +360,4 @@ export default function Supplier() {
     </div>
   );
 }
-
 //export default Supplier;

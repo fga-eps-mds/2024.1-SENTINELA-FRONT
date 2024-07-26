@@ -9,11 +9,10 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
-//import { getSupplierForm } from "../../../Services/supplierService";
 import ListItemText from "@mui/material/ListItemText";
 import SecondaryButton from "../../../Components/SecondaryButton";
 import FieldText from "../../../Components/FieldText";
-//import { APISuppliers, APIUsers } from "../../../Services/BaseService";
+import { APIBank } from "../../../Services/BaseService";
 
 export default function ListSupplier() {
   const buttons = [
@@ -26,15 +25,14 @@ export default function ListSupplier() {
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
-  /* useEffect(() => {
+  const storagedUser = localStorage.getItem("@App:user");
+
+  useEffect(() => {
     const fetchSupplierForm = async () => {
       try {
-        const storagedSupplierString = localStorage.getItem("@App:supplier");
-        const storagedSupplier = JSON.parse(storagedSupplierString);
-
-        const response = await APISuppliers.get("suppliers", {
+          const response = await APIBank.get(`/SupplierForm`, {
           headers: {
-            Authorization: 'Bearer ${storagedSupplier.token}',
+            Authorization: `Bearer ${storagedUser.token}`
           },
         });
 
@@ -50,7 +48,7 @@ export default function ListSupplier() {
     };
 
     fetchSupplierForm();
-  }, []);*/
+  }, []);
 
   const handleRegisterClick = () => {
     navigate("/supplier");
@@ -61,7 +59,7 @@ export default function ListSupplier() {
   };
 
   const filteredSuppliers = suppliers.filter((supplier) =>
-    supplier.name.toLowerCase().includes(search.toLowerCase())
+    supplier.nome.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
@@ -87,7 +85,7 @@ export default function ListSupplier() {
           />
           <SecondaryButton
             text="Pesquisar"
-            onClick={() => handleRegisterClick}
+            onClick={() => filteredSuppliers(search)}
           />
         </div>
 
@@ -95,18 +93,22 @@ export default function ListSupplier() {
           {filteredSuppliers.map((supplier, index) => (
             <div key={supplier._id}>
               <ListItem>
-                <ListItemButton
-                  className="list-item"
-                  button
-                  onClick={() => handleItemClick(supplier)}
-                >
-                  <ListItemText primary={supplier.name} />
+              <ListItemButton
+                className="list-item"
+                style={{
+                  transition: 'background-color 0.3s ease',
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.1)'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                onClick={() => handleItemClick(supplier)}
+              >
+                  <ListItemText primary={supplier.nome} />
                 </ListItemButton>
               </ListItem>
 
-              {index < filteredSuppliers.lenght - 1 && <Divider />}
+              {index < filteredSuppliers.length - 1 && <Divider />}
             </div>
-          ))}
+          ))}                
         </List>
       </div>
     </section>
