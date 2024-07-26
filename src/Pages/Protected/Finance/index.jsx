@@ -38,15 +38,26 @@ export default function Finance() {
             <div>
             <SideBar className="side-menu" buttons={buttons} />
             </div>
-
-
-        
+       
             <div className="redirect">
+
                 <div className="redirect buttons">
-                <SecondaryButton text="Cadastrar de Fornecedor" onClick='#' />
-                <SecondaryButton text="Listar forncedores" onClick='#' />
-                <SecondaryButton text="cadastrar conta bancaria" onClick={() => navigate("/bankAccount")}  />
-                <SecondaryButton text="Listar contas bancarias" onClick={() => navigate("/listaccount")} />
+                  <img
+                    className="logo"
+                    src="src/assets/sindpol-logo.png"
+                    alt="Sindpol Logo"
+                  />
+
+                  <img
+                    className="sentinela"
+                    src="src/assets/sentinela-logo.png"
+                    alt="Sentinela Logo"
+                  />
+
+                  <SecondaryButton text="Cadastrar de Fornecedor" onClick='#' />
+                  <SecondaryButton text="Listar forncedores" onClick='#' />
+                  <SecondaryButton text="cadastrar conta bancaria" onClick={() => navigate("/bankAccount")}  />
+                  <SecondaryButton text="Listar contas bancarias" onClick={() => navigate("/listaccount")} />
                 </div>
                 
 

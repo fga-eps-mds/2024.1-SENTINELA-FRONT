@@ -15,7 +15,7 @@ export default function SecondaryButton ({ text }) {
         backgroundColor: "transparent", // Fundo transparente
         border: `2px solid ${theme.palette.custom.button}`, // Cor do stroke em torno do botão
         width: "400px", // Largura do botão
-        marginTop: "50px",
+        marginTop: "inherit",
         "&amp;:hover": {
           transform: "scale(1.03)",
           backgroundColor: rgbaValue01,

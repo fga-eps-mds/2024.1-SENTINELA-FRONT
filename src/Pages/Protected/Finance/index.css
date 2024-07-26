@@ -3,22 +3,36 @@
   flex-direction: flex-end;
   align-items: center;
   justify-content: center;
-  height: 100vh;
 }
+
 .redirect {
     width: 100%;
+    height: 35rem;
     display: flex;
     justify-content: center;
+    align-items: center;
+    margin: 1rem;
    
 }
 
+.logo {
+  width: 107px;
+  height: 107px;
+}
+
+
+.sentinela { 
+  margin-top: -30px;
+  width: 350px;
+  height: auto;
+}
+
 .buttons {
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;   
-    align-items: center;
-    background-color: #EAE3D7;
-    border-radius: 10px;
-    
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;   
+  align-items: center;
+  background-color: #EAE3D7;
+  border-radius: 10px;
 }
