@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./index.css";
-import SideBar from "../../../Components/SideBar";
 import PrimaryButton from "../../../Components/PrimaryButton";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -52,7 +51,7 @@ export default function ListSupplier() {
   }, []);
 
   const handleSubmit = () => {
-    navigate("/supplier");
+    navigate("/fornecedores/criar");
   };
 
   const handleItemClick = (supplier) => {
@@ -67,7 +66,6 @@ export default function ListSupplier() {
 
   return (
     <section className="container">
-      <SideBar className="side-menu" />
 
       <div className="forms-container">
         <div className="double-box">

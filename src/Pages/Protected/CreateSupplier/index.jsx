@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./index.css";
 import { useNavigate } from "react-router-dom";
-import SideBar from "../../../Components/SideBar";
 import FieldText from "../../../Components/FieldText";
 import FieldSelect from "../../../Components/FieldSelect";
 import PrimaryButton from "../../../Components/PrimaryButton";
@@ -183,8 +182,6 @@ export default function CreateSupplier() {
 
   return (
     <div className="container">
-      <SideBar className="side-menu" />
-
       <div className="forms-container">
         <h1>Cadastro de fornecedor</h1>
 

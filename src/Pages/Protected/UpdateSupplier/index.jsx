@@ -5,8 +5,13 @@ import FieldText from "../../../Components/FieldText";
 import FieldSelect from "../../../Components/FieldSelect";
 import PrimaryButton from "../../../Components/PrimaryButton";
 import SecondaryButton from "../../../Components/SecondaryButton";
-import { getSupplierFormById } from "../../../Services/supplierService";
-import { useLocation } from "react-router-dom";
+import {
+  getSupplierFormById,
+  updateSupplierFormById,
+  deleteSupplierFormById
+} from "../../../Services/supplierService";
+import { useLocation, useNavigate } from "react-router-dom";
+import Modal from "../../../Components/Modal";
 
 export default function UpdateSupplier() {
   const [nome, setNome] = useState("");
@@ -28,6 +33,9 @@ export default function UpdateSupplier() {
   const [numeroBanco, setNumeroBanco] = useState("");
   const [dv, setDv] = useState("");
   const [chavePix, setChavePix] = useState("");
+  const [showModal, setShowModal] = useState(false);
+
+  const navigate = useNavigate()
 
   const { state } = useLocation();
   const supplierId = state?.supplierId;
@@ -110,7 +118,7 @@ export default function UpdateSupplier() {
   };
 
   useEffect(() => {
-    const loadSuppliers = async () => {
+    const loadSupplier = async () => {
       const supplier = await getSupplierFormById(supplierId);
       setNome(supplier.nome);
       setTipoPessoa(supplier.tipoPessoa);
@@ -132,9 +140,58 @@ export default function UpdateSupplier() {
       setDv(supplier.dv);
       setChavePix(supplier.chavePix);
     };
-    loadSuppliers();
+    loadSupplier();
   }, []);
 
+  const handleUpdateSupplierButton = async () => {
+    const supplierData = {
+      nome,
+      tipoPessoa,
+      cpfCnpj,
+      statusFornecedor,
+      naturezaTransacao,
+      email,
+      nomeContato,
+      celular,
+      telefone,
+      cep,
+      cidade,
+      uf_endereco,
+      logradouro,
+      complemento,
+      nomeBanco,
+      agencia,
+      numeroBanco,
+      dv,
+      chavePix,
+    };
+    const supplier = await updateSupplierFormById(supplierId, supplierData);
+    setShowModal(true);
+    alert("fornecedor editado com sucesso!");
+    navigate("/fornecedores");
+  };
+
+  const handleDeleteSupplierButton = async () => {
+    const supplier = await deleteSupplierFormById(supplierId);
+    setShowModal(true);
+    alert("fornecedor deletado com sucesso com sucesso!");
+    navigate("/fornecedores");
+  };
+
+  const handleCloseDialog = () => {
+    setShowModal(false);
+    navigate("/fornecedores");
+  };
+
+  const modalButton = [
+    <SecondaryButton
+      key={"modalButtons"}
+      text="OK"
+      onClick={handleCloseDialog}
+      width="338px"
+    />,
+  ];
+  
   return (
     <section className="container">
       <div className="forms-container">
@@ -275,9 +332,17 @@ export default function UpdateSupplier() {
         />
 
         <div className="double-buttons">
-          <SecondaryButton text="Deletar" onClick={() => {}} />
+          <SecondaryButton text="Deletar" onClick={() => {handleDeleteSupplierButton()}} />
+          <Modal
+          width="338px"
+          alertTitle="Deseja deletar o fornecedor do sistema?"
+          show={showModal}
+          buttons={modalButton}
+        >
+          <div></div>
+        </Modal>
 
-          <PrimaryButton text="Salvar" onClick={() => {}} />
+          <PrimaryButton text="Salvar" onClick={() => {handleUpdateSupplierButton()}} />
         </div>
       </div>
     </section>

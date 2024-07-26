@@ -25,11 +25,10 @@ export const createSupplierForm = async (supplierData) => {
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
-      supplierData: supplierData
+      supplierData: supplierData,
     });
   } catch (error) {
     alert("error ao cadastrar fornecedor");
-    console.log(error)
   }
 };
 
@@ -62,7 +61,12 @@ export const getSupplierFormById = async (id) => {
 
 export const updateSupplierFormById = async (id, supplierData) => {
   try {
-    const response = await APIBank.patch(`/supplier/patch/${id}`, supplierData);
+    const response = await APIBank.patch(`/SupplierForm/update/${id}`, {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+      supplierData: supplierData,
+    });
     return response.data;
   } catch (error) {
     console.error(`Erro ao atualizar fornecedor com ID ${id}:`, error);
@@ -71,8 +75,7 @@ export const updateSupplierFormById = async (id, supplierData) => {
 
 export const deleteSupplierFormById = async (id) => {
   try {
-    const response = await APIBank.delete(`/supplier/delete/${id}`);
-    return response.data;
+    const response = await APIBank.delete(`/SupplierForm/delete/${id}`);
   } catch (error) {
     console.error(`Erro ao deletar fornecedor com ID ${id}:`, error);
   }

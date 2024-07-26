@@ -1,4 +1,3 @@
-import SideBar from "../../../Components/SideBar";
 import "./index.css";
 import LabeledTextField from "../../../Components/LabeledTextField";
 import PrimaryButton from "../../../Components/PrimaryButton";
@@ -22,16 +21,9 @@ export default function Login() {
     navigate("/home")
   };
 
-  const buttons = [
-    <SideButton key="login" text="Login" />,
-    <SideButton key="filiacao" text="Filiação" />,
-    <SideButton key="sobre" text="Sobre" />,
-  ];
-
 
   return (
     <div className="screen">
-      <SideBar buttons={buttons} />
       <div className="area-card">
         <div className="card">
           <img

@@ -3,10 +3,17 @@ import PropTypes from "prop-types";
 import { AiOutlineMenu } from "react-icons/ai";
 import { ButtonGroup } from "@mui/material";
 import { useState } from "react";
+import SideButton from "../SideButton";
 
-export default function SideBar({ buttons }) {
+export default function SideBar() {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const handleSideBar = () => setIsSideBarOpen(!isSideBarOpen);
+
+  const buttons = [
+    <SideButton key="login" text="Login" />,
+    <SideButton key="filiacao" text="Filiação" />,
+    <SideButton key="sobre" text="Sobre" />,
+  ];
 
   return (
     <>
