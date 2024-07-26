@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { theme } from "../../Styles/global";
+import  theme  from "../../Styles/global";
 import { Button } from "@mui/material";
 
 const rgbaValue01 = `rgba(174, 136, 60, 0.1);`;

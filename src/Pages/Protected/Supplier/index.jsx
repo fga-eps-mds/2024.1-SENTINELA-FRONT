@@ -6,6 +6,8 @@ import SideButton from "../../../Components/SideButton";
 import FieldText from "../../../Components/FieldText";
 import FieldSelect from "../../../Components/FieldSelect";
 import PrimaryButton from "../../../Components/PrimaryButton";
+import SecondaryButton from "../../../Components/SecondaryButton";
+import Modal from "../../../Components/Modal";
 import "dayjs/locale/pt-br";
 import { APIBank } from "../../../Services/BaseService";
 import { AiOutlineUser } from "react-icons/ai";
@@ -23,7 +25,7 @@ export default function Supplier() {
   console.log("Supplier called");
   const [nome, setNome] = useState("");
   const [tipoPessoa, setTipoPessoa] = useState("");
-  const [cpf, setCpf] = useState("");
+  const [cpfCnpj, setCpf] = useState("");
   const [statusFornecedor, setStatusFornecedor] = useState("");
   const [naturezaTransacao, setNaturezaTransacao] = useState("");
   const [email, setEmail] = useState("");
@@ -40,6 +42,7 @@ export default function Supplier() {
   const [numeroBanco, setNumeroBanco] = useState("");
   const [dv, setDv] = useState("");
   const [chavePix, setChavePix] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   const tipoPessoaList = ["Jurídica", "Física"];
   const statusFornecedorList = ["Ativo", "Inativo"];
@@ -96,6 +99,7 @@ export default function Supplier() {
     }
   };
 
+  /*
   const mascaraCelular = (celular) => {
     let formattedCelular = celular.replace(/\D/g, ""); // Remove caracteres não numéricos
     if (formattedCelular.length > 11) {
@@ -117,12 +121,13 @@ export default function Supplier() {
   };
 
   const mascaraCEP = (cep) => {
-    let formattedCEP = cep.replace(/\D/g, ''); // Remove caracteres não numéricos
+    let formattedCEP = cep.replace(/\D/g, ""); // Remove caracteres não numéricos
     if (formattedCEP.length > 8) {
       formattedCEP = formattedCEP.slice(0, 8); // Limita a 8 dígitos numéricos
     }
-    return formattedCEP.replace(/(\d{5})(\d)/, '$1-$2'); // Adiciona traço após os cinco primeiros dígitos
+    return formattedCEP.replace(/(\d{5})(\d)/, "$1-$2"); // Adiciona traço após os cinco primeiros dígitos
   };
+  */
 
   const handleChangeTipoPessoa = (event) => {
     setTipoPessoa(event.target.value);
@@ -176,7 +181,7 @@ export default function Supplier() {
     const supplierData = {
       nome,
       tipoPessoa,
-      cpf,
+      cpfCnpj,
       statusFornecedor,
       naturezaTransacao,
       email,
@@ -204,11 +209,26 @@ export default function Supplier() {
           supplierData,
         },
       });
+      setShowModal(true);
       console.log(response);
     } catch (error) {
       console.log(error);
     }
   };
+
+  const handleCloseDialog = () => {
+    setShowModal(false);
+    navigate("/listsupplier");
+  };
+
+  const modalButton = [
+    <SecondaryButton
+      key={"modalButtons"}
+      text="OK"
+      onClick={handleCloseDialog}
+      width="338px"
+    />,
+  ];
 
   return (
     <div className="container">
@@ -235,7 +255,7 @@ export default function Supplier() {
 
           <FieldText
             label="CPF/CNPJ"
-            value={cpf}
+            value={cpfCnpj}
             onChange={(e) => setCpf(mascaraCPFouCNPJ(e.target.value))}
           />
 
@@ -272,13 +292,13 @@ export default function Supplier() {
           <FieldText
             label="Celular"
             value={celular}
-            onChange={(e) => setCelular(mascaraCelular(e.target.value))}
+            onChange={(e) => setCelular(e.target.value)}
           />
 
           <FieldText
             label="Telefone"
             value={telefone}
-            onChange={(e) => setTelefone(mascaraTelefone(e.target.value))}
+            onChange={(e) => setTelefone(e.target.value)}
           />
         </div>
 
@@ -288,7 +308,7 @@ export default function Supplier() {
           <FieldText
             label="CEP"
             value={cep}
-            onChange={(e) => setCep(mascaraCEP(e.target.value))}
+            onChange={(e) => setCep(e.target.value)}
           />
 
           <div className="double-box">
@@ -356,6 +376,13 @@ export default function Supplier() {
         <div id="envio">
           <PrimaryButton text="CADASTRAR" onClick={handleSubmit} />
         </div>
+
+        <Modal
+          width="338px"
+          alertTitle="Cadastro de usuário concluído"
+          show={showModal}
+          buttons={modalButton}
+        />
       </div>
     </div>
   );

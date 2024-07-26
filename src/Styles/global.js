@@ -1,6 +1,6 @@
 import { createTheme } from "@mui/material/styles";
 
-export const theme = createTheme({
+ const theme = createTheme({
   palette: {
     custom: {
       button: "#AE883C", // Cor para o texto e stroke do botão
@@ -11,6 +11,7 @@ export const theme = createTheme({
   },
   typography: {
     fontFamily: '"Noto Sans", "Overpass", sans-serif',
-    fontFamilySecondary: '"Overpass", sans-serif',
   },
 });
+
+export default theme; 
