@@ -22,6 +22,21 @@
         margin-bottom: 10px;
         bottom: 50px;
     }
+    .btn-logout {
+        background-color: transparent;
+        height: 40px;
+        font-family: 'Noto Sans';
+        font-size: 14px;
+        font-weight: 600;
+        padding: 6px;
+        display: flex;
+        align-items: center; 
+        justify-content: center; 
+        border: none; 
+        color: #341F14;
+        cursor: pointer
+      }
+
 }
 
 @media (max-width: 1080px) {
