@@ -8,6 +8,8 @@ import PrimaryButton from "../../../Components/PrimaryButton";
 import FieldSelect from "../../../Components/FieldSelect";
 import FieldText from "../../../Components/FieldText";
 import "./index.css";
+import { Snackbar } from '@mui/material';
+import Alert from '@mui/material/Alert';
 import { createBankAccount } from "../../../Services/bankAccountService";
 
 const BankAccount = () => {
@@ -19,6 +21,7 @@ const BankAccount = () => {
     const [dv, setDv] = useState("");
     const [status, setStatus] = useState("");
     const [agency, setAgency] = useState("");
+    const [openError, setOpenError] = useState(false);
     
     const context = useContext(AuthContext);
     const { user } = useAuth();
@@ -31,6 +34,27 @@ const BankAccount = () => {
         setAccountType(e.target.value);
     };
 
+    const handleCheck = () => {
+        if(!name || !accountType || !bank || !status) {
+            setOpenError(true)
+        } 
+        
+        else {
+            const formData = {
+                name,
+                pix,
+                bank,
+                accountType,
+                accountNumber,
+                dv,
+                status,
+                agency
+            };
+
+            handleSubmit(formData)
+        }
+    }
+
     const handleSubmit = async () => {
         const formData = {
             name,
@@ -42,6 +66,7 @@ const BankAccount = () => {
             status,
             agency
         };
+
         console.log('Dados enviados:', formData);
     
         try {
@@ -78,19 +103,30 @@ const BankAccount = () => {
             <div className="section">
                 <h1>Cadastro de Conta Bancária</h1>
                 <div className="form">
-                    <FieldText label="Nome" value={name} onChange={(e) => setName(e.target.value)} />
-                    <FieldSelect label="Tipo de conta" value={accountType} onChange={handleChangeAccountType} options={listAccountType} />
-                    <FieldText label="Banco" value={bank} onChange={(e) => setBank(e.target.value)} />
+                    <FieldText label="Nome *" value={name} onChange={(e) => setName(e.target.value)} />
+                    <FieldSelect label="Tipo de conta*" value={accountType} onChange={handleChangeAccountType} options={listAccountType} />
+                    <FieldText label="Banco *" value={bank} onChange={(e) => setBank(e.target.value)} />
                     <FieldText label="Agência" value={agency} onChange={(e) => setAgency(e.target.value)} />
                     <FieldText label="Número da conta" value={accountNumber} onChange={(e) => setAccountNumber(e.target.value)} />
                     <FieldText label="DV" value={dv} onChange={(e) => setDv(e.target.value)} />
                     <FieldText label="Pix" value={pix} onChange={(e) => setPix(e.target.value)} />
-                    <FieldSelect label="Status" value={status} onChange={(e) => setStatus(e.target.value)} options={listStatus} />
+                    <FieldSelect label="Status *" value={status} onChange={(e) => setStatus(e.target.value)} options={listStatus} />
                 </div>
                 <div className="Botao-submit">
-                    <PrimaryButton text="Cadastrar Conta" onClick={handleSubmit} />
+                    <PrimaryButton text="Cadastrar Conta" onClick={handleCheck} />
                 </div>
             </div>
+
+            <Snackbar
+                open={openError}
+                autoHideDuration={6000}
+                onClose={() => setOpenError(false)}
+            >
+                <Alert onClose={() => setOpenError(false)} severity="error">
+                    Certifique-se de que todos os campos obrigatórios estão preenchidos
+                </Alert>
+            </Snackbar>
+            
         </section>
     ) : null;
 };
