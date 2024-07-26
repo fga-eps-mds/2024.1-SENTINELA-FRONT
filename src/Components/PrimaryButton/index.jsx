@@ -14,7 +14,7 @@ export default function PrimaryButton ({ text, onClick }) {
         color: theme.palette.custom.content, // Cor do texto do botão
         backgroundColor: theme.palette.custom.button, // Fundo transparente
         width: "400px", // Largura do botão
-        marginTop: "15px",
+        marginTop: "inherit",
         "&amp;:hover": {
           transform: "scale(1.03)",
           backgroundColor: rgbaValue09,

@@ -1,0 +1,18 @@
+.listContainer {
+    display: flex;
+}
+
+.list {
+    display: block;
+    width: 100%;
+    
+    margin: 3rem;
+}
+
+.header{
+    width: 100%;
+    
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+}

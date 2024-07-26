@@ -36,7 +36,7 @@ export default function Finance() {
     return user && (
         <section className="container">
             <div>
-            <SideBar className="side-menu" buttons={buttons} />
+              <SideBar className="side-menu" buttons={buttons} />
             </div>
        
             <div className="redirect">
