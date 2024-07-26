@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import './index.css';
 import SideBar from "../../../Components/SideBar";
 import PrimaryButton from "../../../Components/PrimaryButton";
 import FieldText from "../../../Components/FieldText";
@@ -88,7 +89,6 @@ export default function ListUser() {
     };
 
     const handleItemClick = (user) => {
-        console.log('ID do usuário sendo passado para a navegação:', user._id);
         navigate(`/cadastros/usuarios/${user.name}`, { state: { userId: user._id } });
     };
 

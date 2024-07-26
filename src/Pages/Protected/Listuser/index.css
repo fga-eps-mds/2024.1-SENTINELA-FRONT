@@ -1,0 +1,71 @@
+@media screen and (min-width:500px) {
+    .container{
+        display: flexbox;
+    }
+    .profile-status {
+        font-size: 18px;
+        font-weight: 600;
+        font-size: medium;
+        margin-left: 8rem;
+        margin-top: 12rem;
+        color: #341F14;
+    }
+
+    .profile-icon {
+        margin-top: -10rem;
+        margin-left: -9rem;
+        font-size: 37px;
+    }
+
+    .btn-logout {
+        background-color: transparent;
+        height: 40px;
+        font-family: 'Noto Sans';
+        font-size: 14px;
+        font-weight: 600;
+        padding: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        color: #341F14;
+    }
+
+    .logout-icon {
+        font-size: 21px;
+        margin-left: 10px;
+    }
+    .double-box {
+        display: flex;
+        width: 100%;
+    }
+    .double-box input{
+        width: 30vmax;
+    }
+    .double-box button {
+        width: 300px;
+        margin-bottom: 10px;
+        bottom: 2px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .container {
+        display: inherit;
+
+    }
+    .double-box {
+        display: flex;
+        flex-direction: column;
+    }
+    .double-box {
+        display: flex;
+        flex
+    }
+    .double-box button {
+        width: auto;
+        margin-bottom: 10px;
+
+    }
+}

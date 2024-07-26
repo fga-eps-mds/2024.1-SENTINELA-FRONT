@@ -89,7 +89,7 @@ export default function updateUser() {
         setShowDeleteModal(false);
         if (userId) {
             try {
-                await deleteUserById(userId);
+                const response = await deleteUserById(userId);
                 setShowDeletedModal(true);
 
             } catch (error) {

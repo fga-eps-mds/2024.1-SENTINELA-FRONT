@@ -1,154 +1,145 @@
 @media screen and (max-width: 1080px) {
 
-    
-    .bar-container{
+
+    .bar-container {
         display: none;
     }
-    
+
     .container {
-        display:flex;
+        display: flex;
+        min-width: auto;
+
     }
-    label{
+
+    label {
         color: #332117;
     }
-    .forms-container{
-        margin: 1rem;
-        width: 90%;
-        
+
+    .forms-container {
+        width: 100%;
+
         display: inherit;
         justify-content: center;
         flex-direction: column;
     }
 
-    .teste{
-        margin: 2rem;
-        width: 50%;
-        
-        display: inherit;
-        justify-content: center;
-        flex-direction: column;
-    }
-    
-    .section-form{
+
+    .section-form {
         display: grid;
         grid-template-columns: 1fr;
     }
-    
-    .double-box{
+
+    .double-box {
         display: contents;
         grid-template-columns: 0.5fr .5fr;
 
     }
-    .double-buttons{
+
+    .double-buttons {
         display: contents;
         grid-template-columns: 0.5fr .3fr;
     }
-    .ToggleButton button{
+
+    .ToggleButton button {
         display: inherit;
         width: 100%;
         color: #332117;
         background-color: #EAE3D7;
     }
 
-    h1{
+    h1 {
         font-weight: 800;
         margin-bottom: 3rem;
         color: #332117;
     }
-    
-    h3{
+
+    h3 {
         font-weight: 400;
         margin-left: 1rem;
         margin-top: 3rem;
         color: #332117;
     }
-    
-    #addDependentBttn{
+
+    #addDependentBttn {
         cursor: pointer
     }
 }
 
-@media screen and (min-width:700px){
-    .container {
-        display:flex;
+@media screen and (min-width:700px) {
+    .bar-container {
+        display: none;
     }
-    
-    .forms-container{
-        margin: 3.5rem;
+
+    .container {
+        display: flex;
+    }
+
+    .forms-container {
+        margin: 5rem;
         width: 90%;
-        
+
         display: inherit;
         justify-content: center;
         flex-direction: column;
     }
-    
-    .section-form{
+
+    .section-form {
         display: grid;
         grid-template-columns: 1fr 1fr;
     }
 
-    label{
+    label {
 
         color: #332117;
     }
 
-    .teste{
-        margin: 1rem;
-        width: 70%;
-        
-        display: inherit;
-        justify-content: safe;
-        flex-direction: column;
-    }
-    
+
     .double-buttons {
         display: flex;
-        justify-content: space-between; /* Distribui os botões igualmente no espaço disponível */
-        align-items: end; /* Alinha os botões verticalmente */
+        justify-content: space-between;
+        /* Distribui os botões igualmente no espaço disponível */
+        align-items: end;
+        /* Alinha os botões verticalmente */
         gap: 20px;
     }
-    
-    
-    .double-buttons button {
-        flex: 1; /* Faz com que os botões ocupem o espaço disponível igualmente */
+
+
+    .double-buttons {
+        flex: 1;
+        /* Faz com que os botões ocupem o espaço disponível igualmente */
         height: 40px;
     }
-    
-    .ToggleButton button{
-        display: inherit;
-        width: 100%;
-        background-color: #EAE3D7;
-    }
 
-    .double-box{
+    .double-box {
         display: grid;
-        grid-template-columns: .5fr .5fr;
-
+        width: 99%;
     }
 
-    h1{
+
+
+    h1 {
         font-weight: 800;
         margin-bottom: 3rem;
         color: #332117;
     }
-    
-    h3{
+
+    h3 {
         font-weight: 400;
         margin-left: 1rem;
         margin-top: 3rem;
         color: #332117;
     }
 
-    .isEmailValid{
+    .isEmailValid {
         font-weight: 400;
         margin-left: 1rem;
         margin-top: 10px;
-        color: red!important;
+        color: red !important;
 
-        
+
     }
-    
-    #addDependentBttn{
+
+    #addDependentBttn {
         cursor: pointer
     }
 }
