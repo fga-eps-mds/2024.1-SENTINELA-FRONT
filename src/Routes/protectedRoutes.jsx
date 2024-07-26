@@ -15,7 +15,7 @@ const ProtectedRoutes = () => {
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path ="/cadastrarUsuario" element={<Register_User/>}/>
-        <Route path = "/usuario" element={<Viewuser/>}/>
+        <Route path = "/usuario/:id" element={<Viewuser/>}/>
         <Route path="/listadeusuarios" element={<ListUser/>}/>
         <Route path= "/cadastros" element = {<Registrations/>} />
               </Routes>

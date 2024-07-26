@@ -90,8 +90,9 @@ export default function ListUser() {
 
     const handleItemClick = (user) => {
         console.log('ID do usuário sendo passado para a navegação:', user._id);
-        navigate('/usuario', { state: { userId: user._id } });
+        navigate(`/usuario/${user.name}`, { state: { userId: user._id } });
     };
+    
 
     const filteredUsers = users.filter(user =>
         user.name.toLowerCase().includes(search.toLowerCase())
