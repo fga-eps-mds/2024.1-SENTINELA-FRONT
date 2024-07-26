@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import "./index.css";
 import { useNavigate } from "react-router-dom";
 import SideBar from "../../../Components/SideBar";
@@ -25,7 +25,7 @@ export default function Supplier() {
   console.log("Supplier called");
   const [nome, setNome] = useState("");
   const [tipoPessoa, setTipoPessoa] = useState("");
-  const [cpfCnpj, setCpf] = useState("");
+  const [cpfCnpj, setCpfCnpj] = useState("");
   const [statusFornecedor, setStatusFornecedor] = useState("");
   const [naturezaTransacao, setNaturezaTransacao] = useState("");
   const [email, setEmail] = useState("");
@@ -43,6 +43,7 @@ export default function Supplier() {
   const [dv, setDv] = useState("");
   const [chavePix, setChavePix] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [isEmailValid, setIsEmailValid] = useState(true);
 
   const tipoPessoaList = ["Jurídica", "Física"];
   const statusFornecedorList = ["Ativo", "Inativo"];
@@ -77,11 +78,12 @@ export default function Supplier() {
     "TO",
   ];
 
-  const mascaraCPFouCNPJ = (valor) => {
-    let formattedValue = valor.replace(/\D/g, ""); // Remove caracteres não numéricos
+  const mascaraCPFouCNPJ = (cpfCnpj) => {
+    let formattedValue = cpfCnpj.replace(/\D/g, ""); // Remove caracteres não numéricos
 
-    if (formattedValue.length > 14)
+    if (formattedValue.length > 14) {
       formattedValue = formattedValue.slice(0, 14); // Limita a 14 dígitos numéricos
+    }
 
     if (formattedValue.length <= 11) {
       // Máscara de CPF
@@ -99,7 +101,15 @@ export default function Supplier() {
     }
   };
 
-  /*
+  useEffect(() => {
+        setIsEmailValid(isValidEmail(email));
+    }, [email]);
+
+    const isValidEmail = (email) => {
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
+        return emailRegex.test(email);
+    };
+
   const mascaraCelular = (celular) => {
     let formattedCelular = celular.replace(/\D/g, ""); // Remove caracteres não numéricos
     if (formattedCelular.length > 11) {
@@ -127,7 +137,6 @@ export default function Supplier() {
     }
     return formattedCEP.replace(/(\d{5})(\d)/, "$1-$2"); // Adiciona traço após os cinco primeiros dígitos
   };
-  */
 
   const handleChangeTipoPessoa = (event) => {
     setTipoPessoa(event.target.value);
@@ -143,10 +152,6 @@ export default function Supplier() {
 
   const handleChangeUf_endereco = (event) => {
     setUfEndereco(event.target.value);
-  };
-
-  const handleRegisterClick = () => {
-    navigate("/supplier");
   };
 
   const getUserName = () => {
@@ -256,7 +261,7 @@ export default function Supplier() {
           <FieldText
             label="CPF/CNPJ"
             value={cpfCnpj}
-            onChange={(e) => setCpf(mascaraCPFouCNPJ(e.target.value))}
+            onChange={(e) => setCpfCnpj(mascaraCPFouCNPJ(e.target.value))}
           />
 
           <FieldSelect
@@ -292,13 +297,13 @@ export default function Supplier() {
           <FieldText
             label="Celular"
             value={celular}
-            onChange={(e) => setCelular(e.target.value)}
+            onChange={(e) => setCelular(mascaraCelular(e.target.value))}
           />
 
           <FieldText
             label="Telefone"
             value={telefone}
-            onChange={(e) => setTelefone(e.target.value)}
+            onChange={(e) => setTelefone(mascaraTelefone(e.target.value))}
           />
         </div>
 
@@ -308,7 +313,7 @@ export default function Supplier() {
           <FieldText
             label="CEP"
             value={cep}
-            onChange={(e) => setCep(e.target.value)}
+            onChange={(e) => setCep(mascaraCEP(e.target.value))}
           />
 
           <div className="double-box">
@@ -387,4 +392,3 @@ export default function Supplier() {
     </div>
   );
 }
-//export default Supplier;

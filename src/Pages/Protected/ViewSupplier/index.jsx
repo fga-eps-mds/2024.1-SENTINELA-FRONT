@@ -10,6 +10,7 @@ import FieldSelect from "../../../Components/FieldSelect";
 //import Checklist from "../../../Components/Checklist";
 import PrimaryButton from "../../../Components/PrimaryButton";
 import SecondaryButton from "../../../Components/SecondaryButton";
+import { APIBank } from "../../../Services/BaseService";
 //import { /*ToggleButton,*/ Radio, RadioGroup, FormControlLabel } from "@mui/material";
 
 export default function ViewSupplier() {
@@ -88,14 +89,13 @@ export default function ViewSupplier() {
     setUfEndereco(event.target.value);
   };
 
-  /*
   useEffect(() => {
-    getSupplierForm();
+    getSupplierFormById();
   }, []);
   
-  const getSupplierForm = async () => { // Busca usuario no banco
+  const getSupplierFormById = async () => { // Busca usuario no banco
     try {
-      const response = await APISuppliers.get(`users/${storagedUser.user._id}`, {
+      const response = await APIBank.get(`/SupplierForm/:id/${storagedUser.supplier._id}`, {
         headers: { 'Authorization': `Bearer ${storagedUser.token}` }
       });
       setNome(response.data.nome);
@@ -121,7 +121,6 @@ export default function ViewSupplier() {
       console.log(error);
     }
   };
-  */
 
   return (
     <section className="container">
