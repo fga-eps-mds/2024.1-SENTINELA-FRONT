@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./index.css";
 import "../../../index.css";
 import SideBar from "../../../Components/SideBar";
@@ -7,14 +7,12 @@ import SideButton from "../../../Components/SideButton";
 import FieldText from "../../../Components/FieldText";
 import FieldSelect from "../../../Components/FieldSelect";
 import FieldNumber from '../../../Components/FieldNumber';
-import Checklist from '../../../Components/Checklist';
 import PrimaryButton from '../../../Components/PrimaryButton';
-import { ToggleButton, Radio, RadioGroup, FormControlLabel, Button } from '@mui/material';
+import { Radio, RadioGroup, FormControlLabel} from '@mui/material';
 import { createUser, getRoles } from '../../../Services/userService';
 import Modal from '../../../Components/Modal';
 import SecondaryButton from '../../../Components/SecondaryButton';
 import "../Registrations/index.css";
-import { useAuth } from "../../../Context/auth";
 import { AiOutlineUser } from "react-icons/ai";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 
@@ -162,7 +160,7 @@ export default function Register_User() {
                 />
                 {!isEmailValid && <label className='isEmailValid'>*Insira um email válido</label>}
                 <h3>Perfil</h3>
-                <RadioGroup value={perfilSelecionado} onChange={handlePerfilChange}>
+                <RadioGroup className='perfil-radiogroup' value={perfilSelecionado} onChange={handlePerfilChange}>
                     {roles.map((perfil) => (
                         <FormControlLabel
                             key={perfil?.name}

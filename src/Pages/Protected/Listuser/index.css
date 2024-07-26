@@ -40,7 +40,7 @@
 }
 
 @media (max-width: 1080px) {
-    .container{
+    .container-user{
         display: inherit;
         align-items: center;
     }

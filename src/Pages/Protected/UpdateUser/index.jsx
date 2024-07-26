@@ -239,7 +239,7 @@ export default function updateUser() {
 
                 <h3>Perfil</h3>
 
-                <RadioGroup value={perfilSelecionado} onChange={handlePerfilChange}>
+                <RadioGroup className='perfil-radiogroup' value={perfilSelecionado} onChange={handlePerfilChange}>
                     {roles.map((perfil) => (
                         <FormControlLabel
                             key={perfil?.name}

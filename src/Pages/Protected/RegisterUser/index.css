@@ -1,16 +1,21 @@
 @media screen and (max-width: 1080px) {
 
-    
+    .container{
+        display: flex;
+    }
     
     label{
         color: #332117!important;
     }
     .forms-container-user {
         display: grid;
+        margin: 1vw;
         justify-content: center;
         flex-direction: column;
     }
-    
+    .perfil-radiogroup{
+        margin: 10vw;
+    }
     .double-box-user{
         display: contents;
         grid-template-columns: 0.5fr .5fr;
@@ -40,23 +45,17 @@
     }
 }
 
-@media screen and (min-width:700px){    
-    .btn-logout {
-        background-color: transparent;
-        height: 40px;
-        font-family: 'Noto Sans';
-        font-size: 14px;
-        font-weight: 600;
-        padding: 6px;
-        display: flex;
-        align-items: center; 
-        justify-content: center; 
-        border: none; 
-        color: #341F14;
-        cursor: pointer
-      }
+@media screen and (max-width: 500px) {
+    .container{
+        display: grid;
+    }
+}
 
-    
+
+@media screen and (min-width:700px){    
+    container-user{
+        display: flex;
+    }    
     .profile-status{ 
         font-size: 18px; 
         font-weight: 600;
@@ -75,6 +74,9 @@
         display: contents;
         grid-template-columns: 0.5fr .5fr;
 
+    }
+    .perfil-radiogroup{
+        margin: 2vw;
     }
     .forms-container-user button{
         width: 100%;
