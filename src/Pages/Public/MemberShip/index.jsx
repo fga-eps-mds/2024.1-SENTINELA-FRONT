@@ -59,6 +59,7 @@ const MemberShip = () => {
   const [openError, setOpenError] = useState(false);
   const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
   const [errorFields, setErrorFields] = useState(false);
+  const [religiao, setReligiao] = useState('');
     
   //listas dos selects
   const tipoSanguineoList = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
@@ -120,6 +121,8 @@ const MemberShip = () => {
     setUfNaturalidade(event.target.value);
   };
 
+  
+
   const handleChangeUfOrgao = (event) => {
     setUfOrgao(event.target.value);
   };
@@ -137,7 +140,7 @@ const MemberShip = () => {
   };
 
   const handleSaveDependent = () => {
-    if ((!currentDependent.nomeCompletoDependente) || (!currentDependent.dataNasc) || (!currentDependent.parentesco) || (!currentDependent.cpfDependente) || (!currentDependent.celularDependente)) {
+    if ((!currentDependent.nomeCompletoDependente) || (!currentDependent.dataNasc) || (!currentDependent.parentesco) || (!currentDependent.cpfDependente) || (!currentDependent.celularDependente) || (currentDependent.cpfDependente.length < 14) || (currentDependent.celularDependente.length < 15)) {
       setOpenError(true);
     }
 
@@ -220,6 +223,7 @@ const MemberShip = () => {
       postoDeTrabalho,
       orgaoExpedidor,
       situacaoAtual,
+      religiao,
       dependentes
     };
     
@@ -255,6 +259,14 @@ const MemberShip = () => {
     if (!postoDeTrabalho) erros.postoDeTrabalho = 1;
     if (!orgaoExpedidor) erros.orgaoExpedidor = 1;
     if (!situacaoAtual) erros.situacaoAtual = 1;
+    if(cpf.length < 14) erros.cpf = 1;
+    if(rg.length < 9) erros.rg = 1;
+    if(cep.length < 9) erros.cep = 1;
+    if(telefone.length < 14) erros.telefone = 1;
+    if(celular.length < 15) erros.celular = 1;
+    
+    
+
     
     if (Object.keys(erros).length > 0) {
       setOpenError(true);
@@ -295,6 +307,7 @@ const MemberShip = () => {
         postoDeTrabalho,
         orgaoExpedidor,
         situacaoAtual,
+        religiao,
         dependentes
       };
 
@@ -317,12 +330,18 @@ const MemberShip = () => {
 
         <h3> Dados Pessoais </h3>
 
-        <div className="section-form">
           <FieldText
             label="Nome Completo"
             value={nomeCompleto}
             onChange={(e) => setnomeCompleto(e.target.value)}
           />
+        <div className="section-form">
+          
+          <FieldText
+            label="Religião"
+            value={religiao}
+            onChange={(e) => setReligiao(e.target.value)}
+            />
 
           <FieldSelect
             label="Tipo Sanguíneo"
