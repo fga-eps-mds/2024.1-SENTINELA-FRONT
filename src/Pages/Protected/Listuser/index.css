@@ -1,4 +1,5 @@
 @media screen and (min-width:700px) {
+
     .forms-container-list {
         margin: 5rem;
         width: 100%;
@@ -7,7 +8,7 @@
         flex-direction: column;
       }
 
-    .container{
+    .container-list{
         display: flex;
     }
     .double-box-list {
