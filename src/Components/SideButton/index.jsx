@@ -1,9 +1,9 @@
-import PropTypes from "prop-types";
 import { Button } from "@mui/material";
+import PropTypes from "prop-types";
 
 const rgbaValue01 = `rgba(174, 136, 60, 0.1);`;
 
-export default function SideButton ({ itemKey, text, onClick }) {
+export default function SideButton({ itemKey, text, onClick }) {
   return (
     <Button
       key={itemKey}
@@ -21,5 +21,6 @@ export default function SideButton ({ itemKey, text, onClick }) {
 
 SideButton.propTypes = {
   text: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
+  itemKey: PropTypes.string.isRequired,
 };

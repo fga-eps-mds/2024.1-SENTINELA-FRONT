@@ -8,77 +8,87 @@ import { useAuth } from "../../../../Context/auth";
 import "./index.css";
 
 export default function UserHubPage() {
-    const navigate = useNavigate();
-    const context = useAuth();
+  const navigate = useNavigate();
+  const context = useAuth();
 
-    const handleListaClick = () => {
-        navigate("/usuarios");
-    };
+  const handleListaClick = () => {
+    navigate("/usuarios");
+  };
 
-    const handleCadastroClick = () => {
-        navigate("/usuarios/criar");
-    };
+  const handleCadastroClick = () => {
+    navigate("/usuarios/criar");
+  };
 
-    const handleHomeClick = () => {
-        navigate("/home");
-    };
+  const handleHomeClick = () => {
+    navigate("/home");
+  };
 
-    const handleRegistrationClick = () => {
-        navigate("/usuarios/hub");
-    };
+  const handleRegistrationClick = () => {
+    navigate("/usuarios/hub");
+  };
 
-    const handleLogout = () => {
-        context.Logout();
-        navigate("/");
-    };
+  const handleLogout = () => {
+    context.Logout();
+    navigate("/");
+  };
 
-    const getUserName = () => {
-        const tokenString = localStorage.getItem('@App:user');
-        if (tokenString) {
-            const user = JSON.parse(tokenString);
-            return user?.user?.name || 'Usuário';
-        }
-        return 'Usuário';
-    };
+  const getUserName = () => {
+    const tokenString = localStorage.getItem("@App:user");
+    if (tokenString) {
+      const user = JSON.parse(tokenString);
+      return user?.user?.name || "Usuário";
+    }
+    return "Usuário";
+  };
 
-    const userName = getUserName();
+  const userName = getUserName();
 
-    const buttons = [
-        <SideButton key="home" text="Pagina Inicial" onClick={handleHomeClick} />,
-        <SideButton key="cadastros" text="Cadastros" onClick={handleRegistrationClick} />,
-        <SideButton key="financeiro" text="Financeiro" />,
-        <SideButton key="benefícios" text="Benefícios" />,
-        <h2 key="profile-status" className="profile-status">
-            Você está logado <br />como {userName} <AiOutlineUser className="profile-icon" />
-        </h2>,
-        <button key="logout" className="btn-logout" onClick={handleLogout}>
-            LOGOUT <RiLogoutCircleRLine className="logout-icon" />
-        </button>
-    ];
+  const buttons = [
+    <SideButton key="home" text="Pagina Inicial" onClick={handleHomeClick} />,
+    <SideButton
+      key="cadastros"
+      text="Cadastros"
+      onClick={handleRegistrationClick}
+    />,
+    <SideButton key="financeiro" text="Financeiro" />,
+    <SideButton key="benefícios" text="Benefícios" />,
+    <h2 key="profile-status" className="profile-status">
+      Você está logado <br />
+      como {userName} <AiOutlineUser className="profile-icon" />
+    </h2>,
+    <button key="logout" className="btn-logout" onClick={handleLogout}>
+      LOGOUT <RiLogoutCircleRLine className="logout-icon" />
+    </button>,
+  ];
 
-    return (
-        <section className="container">
-            <SideBar className="side-menu" buttons={buttons} />
-            
-            
-            <div className="area-card">
-                <div className="card">
-                    <img
-                        className="logo"
-                        src="src/assets/sindpol-logo.png"
-                        alt="Sindpol Logo"
-                    />
-                    <img
-                        className="sentinela"
-                        src="src/assets/sentinela-logo.png"
-                        alt="Sentinela Logo"
-                    />
-                    
-                    <SecondaryButton text="SOLICITAÇÃO DE FILIAÇÃO" onClick={''} />
-                    <SecondaryButton text="CADASTRO DE USUÁRIOS" onClick={handleCadastroClick} />
-                    <SecondaryButton text="LISTA DE USUÁRIOS" onClick={handleListaClick} />
-                </div>
-            </div>
-        </section>
-    );
+  return (
+    <section className="container">
+      <SideBar className="side-menu" buttons={buttons} />
+
+      <div className="area-card">
+        <div className="card">
+          <img
+            className="logo"
+            src="src/assets/sindpol-logo.png"
+            alt="Sindpol Logo"
+          />
+          <img
+            className="sentinela"
+            src="src/assets/sentinela-logo.png"
+            alt="Sentinela Logo"
+          />
+
+          <SecondaryButton text="SOLICITAÇÃO DE FILIAÇÃO" onClick={""} />
+          <SecondaryButton
+            text="CADASTRO DE USUÁRIOS"
+            onClick={handleCadastroClick}
+          />
+          <SecondaryButton
+            text="LISTA DE USUÁRIOS"
+            onClick={handleListaClick}
+          />
+        </div>
+      </div>
+    </section>
+  );
 }

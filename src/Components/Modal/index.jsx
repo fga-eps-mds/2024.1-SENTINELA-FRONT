@@ -1,8 +1,7 @@
-import React from "react";
 import "./index.css";
 import PropTypes from "prop-types";
 import { Alert, AlertTitle } from "@mui/material";
-import theme from '../../Styles/global';
+import theme from "../../Styles/global";
 
 export default function Modal({ show, children, alertTitle, buttons }) {
   if (!show) {
@@ -13,7 +12,7 @@ export default function Modal({ show, children, alertTitle, buttons }) {
     <div className="modal-overlay">
       <div className="modal">
         <Alert
-          severity="success" 
+          severity="success"
           variant="filled"
           sx={{
             backgroundColor: theme.palette.custom.button,
@@ -30,9 +29,7 @@ export default function Modal({ show, children, alertTitle, buttons }) {
           {children}
         </Alert>
 
-        <div className="modal-buttons">
-          {buttons}
-        </div>
+        <div className="modal-buttons">{buttons}</div>
       </div>
     </div>
   );
@@ -41,5 +38,6 @@ export default function Modal({ show, children, alertTitle, buttons }) {
 Modal.propTypes = {
   show: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
-  alertTitle: PropTypes.string.isRequired
+  alertTitle: PropTypes.string.isRequired,
+  buttons: PropTypes.any,
 };

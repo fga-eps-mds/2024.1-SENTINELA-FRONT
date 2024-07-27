@@ -1,6 +1,6 @@
 import { createTheme } from "@mui/material/styles";
 
- const theme = createTheme({
+const theme = createTheme({
   palette: {
     custom: {
       button: "#AE883C", // Cor para o texto e stroke do botão
@@ -14,5 +14,4 @@ import { createTheme } from "@mui/material/styles";
   },
 });
 
-
-export default theme; 
+export default theme;

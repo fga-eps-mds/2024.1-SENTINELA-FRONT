@@ -1,37 +1,32 @@
 @media screen and (max-width: 1080px) {
+  .double-box-user {
+    display: contents;
+    grid-template-columns: 0.5fr 0.5fr;
+  }
 
-    .double-box-user{
-        display: contents;
-        grid-template-columns: 0.5fr .5fr;
+  .double-buttons-user {
+    display: contents;
+    grid-template-columns: 0.5fr 0.3fr;
+  }
 
-    }
-
-    .double-buttons-user{
-        display: contents;
-        grid-template-columns: 0.5fr .3fr;
-    }
-
-    #addDependentBttn {
-        cursor: pointer
-    }
+  #addDependentBttn {
+    cursor: pointer;
+  }
 }
 
-@media screen and (min-width:700px) {
-    
-    .double-buttons-user{
-        display: flex;
-        justify-content: space-between; /* Distribui os botões igualmente no espaço disponível */
-        align-items: end; /* Alinha os botões verticalmente */
-        gap: 20px;
-    }
-    
-    
-    .double-buttons-user button {
-        flex: 1; /* Faz com que os botões ocupem o espaço disponível igualmente */
-        height: 40px;
+@media screen and (min-width: 700px) {
+  .double-buttons-user {
+    display: flex;
+    justify-content: space-between; /* Distribui os botões igualmente no espaço disponível */
+    align-items: end; /* Alinha os botões verticalmente */
+    gap: 20px;
+  }
 
-    }
-    #addDependentBttn {
-        cursor: pointer
-    }
+  .double-buttons-user button {
+    flex: 1; /* Faz com que os botões ocupem o espaço disponível igualmente */
+    height: 40px;
+  }
+  #addDependentBttn {
+    cursor: pointer;
+  }
 }
