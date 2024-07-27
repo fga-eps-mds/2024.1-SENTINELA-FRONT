@@ -36,15 +36,13 @@ export default function ListBankAccount() {
         <SideButton key="filiacao" text="CADASTROS" />,
         <SideButton key="financeiro" text="FINANCEIRO" onClick={() => navigate("/finance/")}/>,
         <SideButton key="beneficios" text="BENEFÍCIOS" />,
-        <h2 className="profile-status">Você está logado <br />como {nome}</h2>,
-        <button className="btn-logout" onClick={handleLogout}> LOGOUT </button>
     ];
 
     
     return user && (
     <section className="listContainer">
         <div>
-            <SideBar className="side-menu" buttons={buttons} />
+            <SideBar className="side-menu" buttons={buttons} nome = {user.nome}/>
         </div>
 
         <div className="listContainer list">
