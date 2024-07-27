@@ -21,6 +21,7 @@ const MuiDialog = ({ openSuccessDialog, setOpenSuccessDialog, submitForm, handle
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
         >
+            <div className='custom-dialog-header'>
             <DialogTitle id="alert-dialog-title" >
                 {"Ao confirmar essa solicitação, você estará concordando com a declaração a seguir:"}
             </DialogTitle>
@@ -33,6 +34,7 @@ const MuiDialog = ({ openSuccessDialog, setOpenSuccessDialog, submitForm, handle
                     
                 </DialogContentText>
             </DialogContent>
+            </div>
             <DialogActions>
                 <div className='botoes-dialogo'>
                     <SecondaryButton 
@@ -40,7 +42,7 @@ const MuiDialog = ({ openSuccessDialog, setOpenSuccessDialog, submitForm, handle
                         onClick={handleCloseSuccessDialog}
                     />
                     <PrimaryButton 
-                        text='FILIAR-ME AO SINDICATO'
+                        text='solicitar filiação ao sindpol-df'
                         onClick={handleSubmit}
                         autoFocus
                     />

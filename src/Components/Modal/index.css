@@ -1,12 +1,12 @@
 
-/* Modal Overlay */
+Modal Overlay
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: green;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,22 +19,39 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 338px;
+  width: 400px;
   height: 284px;
-  background: #EAE3D7; /* Cor de fundo do modal */
+  background: green; /* Cor de fundo do modal */
   padding: 40px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   position: relative;
+  color :green;
+}
+
+
+.botoes-dialogo{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0%;
+  border:1px solid black;
+  height: 2rem;
+  width: 100%;
 }
 .custom-dialog-content-text{
-  font-size: 16;
+  font-size: 20px;
   font-weight: 500;
-  color: #000000;
-  margin-bottom: 1rem;
+  color: green;
   font-family: Noto Sans;
-  
-  
-  
+  background-color: #AE883C;
+  border-radius: 10px;
+}
+.custom-dialog-header{
+  background-color: #AE883C;
+  color :#EAE3D7;
+  margin :10px;
+  border-radius: 10px;
 }
 
 
