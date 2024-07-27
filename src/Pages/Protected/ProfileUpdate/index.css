@@ -1,191 +1,189 @@
-@media screen and (max-width: 1080px) { /*celular*/
+@media screen and (max-width: 1080px) {
+  /*celular*/
 
-  .container{
+  .container {
     display: flex;
-    font-family: 'Noto Sans';
-    color: #341F14;
-}
-
-  .profile-view{
-      
-      margin-top: -23rem;
-      margin-left: -3.5rem;
-      font-size: 26px;
-
-      font-weight: bold; 
+    font-family: "Noto Sans";
+    color: #341f14;
   }
 
-  .personal-data{
-      font-size: 18px;
-      margin-left: -3.5rem;
-      
+  .profile-view {
+    margin-top: -23rem;
+    margin-left: -3.5rem;
+    font-size: 26px;
+
+    font-weight: bold;
   }
 
-  .campos-container{ 
-      margin: 3.5rem;
-      line-height: 2;
-      height: 350px; 
-      width: 100%;
-      margin-top: 20rem; 
-      display: inherit;
-      justify-content: center;
-      flex-direction: column;   
+  .personal-data {
+    font-size: 18px;
+    margin-left: -3.5rem;
   }
 
-  .section-campo{
+  .campos-container {
+    margin: 3.5rem;
+    line-height: 2;
+    height: 350px;
+    width: 100%;
+    margin-top: 20rem;
+    display: inherit;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .section-campo {
     display: grid;
     margin-left: -4.2rem;
     margin-right: 9rem;
     font-size: 16px;
-}
+  }
 
-  .section-campo input:disabled { 
-    background-color: #EAE3D7; 
-    border: 1px solid #EAE3D7; 
-    border-top-left-radius: 5%; 
+  .section-campo input:disabled {
+    background-color: #eae3d7;
+    border: 1px solid #eae3d7;
+    border-top-left-radius: 5%;
     border-top-right-radius: 5%;
-    font-family: 'Overpass';
-    font-size: 16px; 
-    font-weight: thin;
-}
-
-  .section-campo input { 
-    background-color: #EAE3D7; 
-    border: 1px solid #EAE3D7; 
-    border-top-left-radius: 5%; 
-    border-top-right-radius: 5%;
-    font-family: 'Overpass';
-    font-size: 16px; 
+    font-family: "Overpass";
+    font-size: 16px;
     font-weight: thin;
   }
 
-  .double-box{
+  .section-campo input {
+    background-color: #eae3d7;
+    border: 1px solid #eae3d7;
+    border-top-left-radius: 5%;
+    border-top-right-radius: 5%;
+    font-family: "Overpass";
+    font-size: 16px;
+    font-weight: thin;
+  }
+
+  .double-box {
     display: grid;
     margin-left: -4.2rem;
     margin-right: 9rem;
-   
+
     grid-template-columns: 1fr;
-    color: #EAE3D7;
-    
+    color: #eae3d7;
+
     font-size: 16px;
-}
+  }
   .double-box input {
-    background-color: #EAE3D7; 
-    color: #000000; 
-    border: 1px solid #EAE3D7; 
-    border-top-left-radius: 5%; 
-    border-top-right-radius: 5%; 
-    font-family: 'Overpass';
-    font-size: 16px; 
+    background-color: #eae3d7;
+    color: #000000;
+    border: 1px solid #eae3d7;
+    border-top-left-radius: 5%;
+    border-top-right-radius: 5%;
+    font-family: "Overpass";
+    font-size: 16px;
     font-weight: thin;
-}
+  }
 
   .section-doublebtn {
     align-items: center;
-    flex-direction: column; 
-    flex-direction: column; 
-    align-items: stretch; 
+    flex-direction: column;
+    flex-direction: column;
+    align-items: stretch;
     margin-left: -3.2rem;
     margin-right: 50rem;
   }
-    
 
   .section-doublebtn button {
     width: 300px;
     flex: 1;
-    height: 44px;  
-}
+    height: 44px;
+  }
 
-  .profile-status{ 
-    font-size: 18px; 
+  .profile-status {
+    font-size: 18px;
     font-weight: 600;
     font-size: medium;
     margin-left: 8rem;
     margin-top: 5rem;
   }
 
-  .profile-icon{
+  .profile-icon {
     margin-top: -10rem;
-    margin-left:-9rem;
-    font-size: 37px; 
-}
+    margin-left: -9rem;
+    font-size: 37px;
+  }
 
   .btn-logout {
     background-color: transparent;
     height: 40px;
-    font-family: 'Noto Sans';
+    font-family: "Noto Sans";
     font-size: 14px;
     font-weight: 600;
     padding: 6px;
     display: flex;
-    align-items: center; 
-    justify-content: center; 
-    border: none; 
-    color: #341F14;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    color: #341f14;
   }
   .logout-icon {
     font-size: 21px;
-    margin-left: 10px; 
+    margin-left: 10px;
   }
 
-  .isEmailValid{
-    font-size: 12px;
-    font-weight: 400;
-    margin-top: -0.8rem; 
-    margin-left: 1rem;
-    color: red!important; 
-  }
-  .isValidNumber{
+  .isEmailValid {
     font-size: 12px;
     font-weight: 400;
     margin-top: -0.8rem;
-    margin-left: 1rem; 
-    color: red!important;  
+    margin-left: 1rem;
+    color: red !important;
+  }
+  .isValidNumber {
+    font-size: 12px;
+    font-weight: 400;
+    margin-top: -0.8rem;
+    margin-left: 1rem;
+    color: red !important;
   }
 
   .custom-dialog .MuiDialog-paper {
-    width: 338px; 
-    height: 220px; 
+    width: 338px;
+    height: 220px;
     border-radius: 20px;
-    background-color: #EAE3D7;
+    background-color: #eae3d7;
   }
   .custom-dialog .MuiDialogTitle-root {
     width: 269px;
     height: 44px;
     display: flex;
     justify-content: center;
-    padding:6px;
-    font-size: 16px; 
-    color: white; 
-    background-color:  #AE883C;
-    margin-top: 46px;  
+    padding: 6px;
+    font-size: 16px;
+    color: white;
+    background-color: #ae883c;
+    margin-top: 46px;
     margin-left: 35px;
     border-width: 3px;
-    border-color: #AE883C;
-    border-style: solid; 
+    border-color: #ae883c;
+    border-style: solid;
     border-radius: 4px;
   }
   .custom-dialog-button {
     width: 269px;
     height: 44px;
-    font-family: 'Nato Sans';
+    font-family: "Nato Sans";
     font-size: 16px !important;
-    background-color: #EAE3D7 !important; 
-    color: #AE883C !important;
-    padding:6px !important; 
-    margin-right: 25px !important; 
-    margin-top: 36px !important; 
-    border-width: 3px !important; 
-    border-color: #AE883C !important; 
-    border-style: solid !important; 
+    background-color: #eae3d7 !important;
+    color: #ae883c !important;
+    padding: 6px !important;
+    margin-right: 25px !important;
+    margin-top: 36px !important;
+    border-width: 3px !important;
+    border-color: #ae883c !important;
+    border-style: solid !important;
     border-radius: 4px !important;
-    cursor: pointer !important; 
+    cursor: pointer !important;
     display: flex;
     justify-content: center;
   }
   .custom-dialog-button:hover {
-    background-color: rgba(0, 0, 0, 0.1) !important; 
-}
+    background-color: rgba(0, 0, 0, 0.1) !important;
+  }
 
   .hidden-menu {
     display: block;
@@ -201,7 +199,7 @@
 
   .side-menu {
     width: 100%;
-    position:fixed;
+    position: fixed;
     z-index: 99;
     left: -100%;
     transition: left 0.3s;
@@ -212,107 +210,106 @@
   }
 }
 
-@media screen and (min-width:700px){
-
-  .container{
+@media screen and (min-width: 700px) {
+  .container {
     display: flex;
-    font-family: 'Noto Sans';
-    color: #341F14;
-}
-
-  .profile-view{
-      font-size: 34px; 
-      font-weight: bold; 
+    font-family: "Noto Sans";
+    color: #341f14;
   }
 
-  .personal-data{
-      font-size: 24px;
+  .profile-view {
+    font-size: 34px;
+    font-weight: bold;
   }
 
-  .campos-container{
-      margin: 3.5rem;
-      line-height: 2;
-      height: 350px; 
-      width: 100%;
-      margin-top: 20rem; 
-      display: inherit;
-      justify-content: center;
-      flex-direction: column;   
-  }
-  .section-campo{
-      display: grid;
-      grid-template-columns: 2.3fr 0f;
-      color: #EAE3D7;
-      margin-left: 0.8rem;
-      font-size: 16px;
-  }
-  .section-campo input:disabled { 
-      background-color: #EAE3D7; 
-      border: 1px solid #EAE3D7; 
-      border-top-left-radius: 5%; 
-      border-top-right-radius: 5%;
-      font-family: 'Overpass';
-      font-size: 16px; 
-      font-weight: thin;
+  .personal-data {
+    font-size: 24px;
   }
 
-  .section-campo input { 
-    background-color: #EAE3D7; 
-    border: 1px solid #EAE3D7; 
-    border-top-left-radius: 5%; 
+  .campos-container {
+    margin: 3.5rem;
+    line-height: 2;
+    height: 350px;
+    width: 100%;
+    margin-top: 20rem;
+    display: inherit;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .section-campo {
+    display: grid;
+    grid-template-columns: 2.3fr 0f;
+    color: #eae3d7;
+    margin-left: 0.8rem;
+    font-size: 16px;
+  }
+  .section-campo input:disabled {
+    background-color: #eae3d7;
+    border: 1px solid #eae3d7;
+    border-top-left-radius: 5%;
     border-top-right-radius: 5%;
-    font-family: 'Overpass';
-    font-size: 16px; 
+    font-family: "Overpass";
+    font-size: 16px;
     font-weight: thin;
   }
 
-  .double-box{
-      display: grid;
-      grid-template-columns: 2.3fr 2.3fr;
-      color: #EAE3D7;
-      margin-left: 0.8rem;
-      font-size: 16px;
+  .section-campo input {
+    background-color: #eae3d7;
+    border: 1px solid #eae3d7;
+    border-top-left-radius: 5%;
+    border-top-right-radius: 5%;
+    font-family: "Overpass";
+    font-size: 16px;
+    font-weight: thin;
+  }
+
+  .double-box {
+    display: grid;
+    grid-template-columns: 2.3fr 2.3fr;
+    color: #eae3d7;
+    margin-left: 0.8rem;
+    font-size: 16px;
   }
   .double-box input {
-      background-color: #EAE3D7; 
-      color: #000000; 
-      border: 1px solid #EAE3D7; 
-      border-top-left-radius: 5%; 
-      border-top-right-radius: 5%; 
-      font-family: 'Overpass';
-      font-size: 16px; 
-      font-weight: thin;
+    background-color: #eae3d7;
+    color: #000000;
+    border: 1px solid #eae3d7;
+    border-top-left-radius: 5%;
+    border-top-right-radius: 5%;
+    font-family: "Overpass";
+    font-size: 16px;
+    font-weight: thin;
   }
 
-  .profile-view{ 
-      font-weight: bold;
-      margin-bottom: 3rem;
-      margin-top: -15rem;
+  .profile-view {
+    font-weight: bold;
+    margin-bottom: 3rem;
+    margin-top: -15rem;
   }
 
-  .personal-data{
-      font-weight: 400;
-      margin-left: 1.5rem;
-      margin-top: -2rem;
+  .personal-data {
+    font-weight: 400;
+    margin-left: 1.5rem;
+    margin-top: -2rem;
   }
 
-  .profile-status{ 
-      font-size: 18px; 
-      font-weight: 600;
-      font-size: medium;
-      margin-left: 8rem;
-      margin-top: 12rem;
+  .profile-status {
+    font-size: 18px;
+    font-weight: 600;
+    font-size: medium;
+    margin-left: 8rem;
+    margin-top: 12rem;
   }
 
-  .profile-icon{
+  .profile-icon {
     margin-top: -10rem;
-    margin-left:-9rem;
-    font-size: 37px; 
+    margin-left: -9rem;
+    font-size: 37px;
   }
 
   .logout-container {
     display: flex;
-    align-items: center; 
+    align-items: center;
     margin-top: 0.5rem;
     margin-left: 9rem;
   }
@@ -320,54 +317,54 @@
   .btn-logout {
     background-color: transparent;
     height: 40px;
-    font-family: 'Noto Sans';
+    font-family: "Noto Sans";
     font-size: 14px;
     font-weight: 600;
     padding: 6px;
     display: flex;
-    align-items: center; 
-    justify-content: center; 
-    border: none; 
-    color: #341F14;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    color: #341f14;
   }
 
   .logout-icon {
     font-size: 21px;
-    margin-left: 10px; 
+    margin-left: 10px;
   }
 
   .section-doublebtn {
-      display: flex;
-      justify-content: space-between; 
-      align-items: end; 
-      gap: 30px;
-      margin-left: 1.5rem;
-      margin-right: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 30px;
+    margin-left: 1.5rem;
+    margin-right: 0.5rem;
   }
   .section-doublebtn button {
-      flex: 1;
-      height: 44px;
+    flex: 1;
+    height: 44px;
   }
 
-  .isEmailValid{
+  .isEmailValid {
     font-size: 14px;
     font-weight: 400;
     margin-left: 1rem;
     margin-top: -0.5rem;
-    color: red!important; 
-}
+    color: red !important;
+  }
 
-  .isValidNumber{
+  .isValidNumber {
     font-size: 14px;
     margin-top: 1.5rem;
-    color: red!important;  
+    color: red !important;
   }
 
   .custom-dialog .MuiDialog-paper {
-    width: 338px; 
-    height: 220px; 
+    width: 338px;
+    height: 220px;
     border-radius: 20px;
-    background-color: #EAE3D7;
+    background-color: #eae3d7;
   }
 
   .custom-dialog .MuiDialogTitle-root {
@@ -375,74 +372,62 @@
     height: 44px;
     display: flex;
     justify-content: center;
-    padding:6px;
-    font-size: 16px; 
-    color: white; 
-    background-color:  #AE883C;
-    margin-top: 46px;  
+    padding: 6px;
+    font-size: 16px;
+    color: white;
+    background-color: #ae883c;
+    margin-top: 46px;
     margin-left: 35px;
     border-width: 3px;
-    border-color: #AE883C;
-    border-style: solid; 
+    border-color: #ae883c;
+    border-style: solid;
     border-radius: 4px;
   }
 
   .custom-dialog-button {
     width: 269px;
     height: 44px;
-    font-family: 'Nato Sans';
+    font-family: "Nato Sans";
     font-size: 16px !important;
-    background-color: #EAE3D7 !important; 
-    color: #AE883C !important;
-    padding:6px !important; 
-    margin-right: 25px !important; 
-    margin-top: 36px !important; 
-    border-width: 3px !important; 
-    border-color: #AE883C !important; 
-    border-style: solid !important; 
+    background-color: #eae3d7 !important;
+    color: #ae883c !important;
+    padding: 6px !important;
+    margin-right: 25px !important;
+    margin-top: 36px !important;
+    border-width: 3px !important;
+    border-color: #ae883c !important;
+    border-style: solid !important;
     border-radius: 4px !important;
-    cursor: pointer !important; 
+    cursor: pointer !important;
     display: flex;
     justify-content: center;
   }
 
   .custom-dialog-button:hover {
-    background-color: rgba(0, 0, 0, 0.1) !important; 
+    background-color: rgba(0, 0, 0, 0.1) !important;
   }
 
-
   .side-menu {
-      background-color: #eae3d7;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
-      width: 380px;
-      height: 100vh;
-      padding: 85px;
-    }
-    
-    .logo {
-      width: 107px;
-      height: 107px;
-    }
-    
+    background-color: #eae3d7;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 380px;
+    height: 100vh;
+    padding: 85px;
+  }
 
-    .menu-lateral {
-      margin-top: 20px;
-    }
-    
-    .hidden-menu {
-      display: none;
-    }
+  .logo {
+    width: 107px;
+    height: 107px;
+  }
 
-} 
+  .menu-lateral {
+    margin-top: 20px;
+  }
 
-
-
-
-
-  
-  
-
-  
+  .hidden-menu {
+    display: none;
+  }
+}

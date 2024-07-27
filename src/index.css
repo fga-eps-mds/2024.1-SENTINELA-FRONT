@@ -1,9 +1,11 @@
 :root {
   font-family: "Noto Sans", "Overpass", sans-serif;
-  background-color: #F9F6F3;
+  background-color: #f9f6f3;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 

@@ -2,10 +2,9 @@ import PropTypes from "prop-types";
 import { theme } from "../../Styles/global";
 import { Button } from "@mui/material";
 
-
 const rgbaValue01 = `rgba(174, 136, 60, 0.1);`;
 
-export default function SecondaryButton ({ text, onClick }) {
+export default function SecondaryButton({ text, onClick }) {
   return (
     <Button
       onClick={onClick}
@@ -30,5 +29,5 @@ export default function SecondaryButton ({ text, onClick }) {
 
 SecondaryButton.propTypes = {
   text: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired
+  onClick: PropTypes.func.isRequired,
 };

@@ -5,21 +5,20 @@ import PrimaryButton from "../../../Components/PrimaryButton";
 import SecondaryButton from "../../../Components/SecondaryButton";
 import UnderlinedTextButton from "../../../Components/UnderlinedTextButton";
 import SideButton from "../../../Components/SideButton";
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import AuthContext from "../../../Context/auth";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-
   const context = useContext(AuthContext);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
 
   const handleLogin = () => {
     context.Login(email, senha);
-    navigate("/home")
+    navigate("/home");
   };
 
   const buttons = [
@@ -27,7 +26,6 @@ export default function Login() {
     <SideButton key="filiacao" text="Filiação" />,
     <SideButton key="sobre" text="Sobre" />,
   ];
-
 
   return (
     <div className="screen">
@@ -56,7 +54,7 @@ export default function Login() {
             type="password"
             value={senha}
             onChange={(e) => setSenha(e.target.value)}
-            />
+          />
           <div className="recupera-senha">
             <UnderlinedTextButton key="recupera-senha" text="Esqueci a senha" />
           </div>

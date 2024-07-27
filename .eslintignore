@@ -1,0 +1,6 @@
+/coverage/*
+/build/*
+/node-modules/*
+/.github/*
+/.husky/*
+/dist/*
