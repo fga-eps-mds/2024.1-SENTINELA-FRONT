@@ -6,6 +6,8 @@ import SideBar from "../../../Components/SideBar";
 import SideButton from "../../../Components/SideButton";
 import PrimaryButton from "../../../Components/PrimaryButton";
 import SecondaryButton from "../../../Components/SecondaryButton";
+import sindpolLogo from "../../../assets/sindpol-logo.png";
+import sentinelaLogo from "../../../assets/sentinela-logo.png"
 import "./index.css";
 
 
@@ -44,13 +46,13 @@ export default function Finance() {
                 <div className="redirect buttons">
                   <img
                     className="logo"
-                    src="src/assets/sindpol-logo.png"
+                    src={sindpolLogo}
                     alt="Sindpol Logo"
                   />
 
                   <img
                     className="sentinela"
-                    src="src/assets/sentinela-logo.png"
+                    src= {sentinelaLogo}
                     alt="Sentinela Logo"
                   />
 
