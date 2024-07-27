@@ -6,16 +6,19 @@ import sentinelaLogo from "../../assets/sentinela-logo.png"
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import AuthContext from "../../Context/auth";
+import { useNavigate } from "react-router-dom";
 import {useContext} from "react";
 
 export default function SideBar({ buttons, nome }) {
 
   const context = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     context.Logout();
-    navigate("/");
+    navigate("/")
   };
+
 
   return (
     <div className="side-bar">

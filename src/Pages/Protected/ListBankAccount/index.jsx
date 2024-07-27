@@ -22,11 +22,7 @@ export default function ListBankAccount() {
         navigate("/home");
     };
 
-    const handleLogout = () => {
-        context.logout();
-        navigate("/");
-      };
-
+    
       const handleSearch = async () => {
         try {
             // Chama listBankAccount e aguarda a resposta

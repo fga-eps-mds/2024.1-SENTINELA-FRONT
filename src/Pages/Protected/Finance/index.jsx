@@ -25,11 +25,12 @@ export default function Finance() {
       };
 
     const buttons = [
-        <SideButton key="home" text="PÁGINA INICIAL" onClick={handleHome} />,
-        <SideButton key="filiacao" text="CADASTROS" />,
-        <SideButton key="financeiro" text="FINANCEIRO" />,
-        <SideButton key="beneficios" text="BENEFÍCIOS" />,
-      ];
+      <SideButton key="home" text="PÁGINA INICIAL" onClick={() => navigate("/home/")} />,
+      <SideButton key="filiacao" text="CADASTROS" />,
+      <SideButton key="financeiro" text="FINANCEIRO" onClick={() => navigate("/finance/")}/>,
+      <SideButton key="beneficios" text="BENEFÍCIOS" />,
+    ];
+    
     return user && (
         <section className="container">
             <div>

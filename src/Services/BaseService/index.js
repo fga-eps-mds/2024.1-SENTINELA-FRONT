@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseUserURL = "http://localhost:3002/"
+const baseUserURL = "http://localhost:3001/"
 const baseBankURL = "..."
 
 const APIUsers = axios.create({

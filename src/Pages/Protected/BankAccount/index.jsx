@@ -72,6 +72,7 @@ const BankAccount = () => {
         try {
             const response = await createBankAccount(formData); // Enviando dados diretamente
             console.log('Resposta do servidor:', response);
+            navigate('/finance/')
         } catch (error) {
             console.error('Erro ao enviar dados:', error);
         }
@@ -103,7 +104,7 @@ const BankAccount = () => {
       };
 
     const buttons = [
-        <SideButton key="home" text="PÁGINA INICIAL" onClick={handleHome} />,
+        <SideButton key="home" text="PÁGINA INICIAL" onClick={() => navigate("/home/")} />,
         <SideButton key="filiacao" text="CADASTROS" />,
         <SideButton key="financeiro" text="FINANCEIRO" onClick={() => navigate("/finance/")}/>,
         <SideButton key="beneficios" text="BENEFÍCIOS" />,
