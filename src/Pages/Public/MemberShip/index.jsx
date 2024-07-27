@@ -14,18 +14,10 @@ import BasicDateField from '../../../Components/DateField';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { Snackbar } from '@mui/material';
 import Alert from '@mui/material/Alert';
-import SecodaryButton from '../../../Components/SecondaryButton';
+import SecondaryButton from '../../../Components/SecondaryButton';
 import Modal from '../../../Components/Modal';
 
-//para o dialog
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import SecondaryButton from '../../../Components/SecondaryButton';
-import MuiDialog from '../../../Components/Modal';
+
 
 const MemberShip = () => {
   console.log('MemberShip called');
@@ -74,6 +66,11 @@ const MemberShip = () => {
   const cargoList = ['Advogado', 'Agente', 'Outro'];
   const lotacaoList = ['Sede', 'Out', 'Outro'];
   const situacaoAtualList = ['Ativo', 'Inativo'];
+
+   
+    
+
+
 
   const [dependentes, setDependentes] = useState([]);
   const [showDependentForm, setShowDependentForm] = useState(false);
@@ -202,6 +199,20 @@ const MemberShip = () => {
   
     return emailRegex.test(email);
   };
+  // const modalButton = [
+  //   <SecondaryButton
+  
+  //     text="OK"
+  //     onClick= {() => handleCloseSuccessDialog()}
+  //     width="338px"
+  //   />,
+  //   // <PrimaryButton
+     
+  //   //   text="Confirmar"
+  //   //   onClick= {submitForm}
+  //   //   width="338px"
+  //   //   />
+  // ];
 
   const buttons = [
     <SideButton key="login" text="Login" />,
@@ -658,52 +669,29 @@ const MemberShip = () => {
           </Alert>
         </Snackbar>
         
-        <MuiDialog 
-                openSuccessDialog={openSuccessDialog} 
-                setOpenSuccessDialog={setOpenSuccessDialog} 
-                submitForm={submitForm} 
-                handleCloseSuccessDialog={handleCloseSuccessDialog}
-                text="Declaro que, ao filiar-me nesta data ao SINDPOL-DF, concordo e ratifico com todas as minhas obrigações previstas no Estatuto Social, regime interno e deliberação das assembleias gerais do Sindicato dos Policiais Penais do Distrito Federal. Ao tempo que comprometo-me em contribuir mensalmente com o valor de 1,5% vencimento básico, conforme Art. 105 do Estatuto APROVADO pela assembleia geral, o qual AUTORIZO que consignado em folha de pagamento junto ao órgão competente em favor do SINDPOL-DF, bem como outras contribuições de caráter extraordinário - desde que aprovadas em assembleia específica - Reconheço ainda que tais contribuições têm o condão de manter a entidade de representação sindical forte e independente no intuito de garantir melhores condições de trabalho para toda a categoria. Fico ciente que, ao desejar afastar-me do quadro social do sindicato, devo manifestar-me por escrito, em formulário específico, com antecedência de 60 (sessenta) dias. Pela presente, solicito minha admissão no quadro de filiados do SINDICATO DOS POLICIAIS PENAIS DO DISTRITO FEDERAL."
-            />
-        
-        {/* <Dialog
-          open={openSuccessDialog}
-          onClose={handleCloseSuccessDialog}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">
-            {"Ao confirmar essa solicitação, você estará concordando com a declaração a seguir:"}
-          </DialogTitle >
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description" className="custom-dialog-content-text">
-              Declaro que, ao filiar-me nesta data ao SINDPOL-DF, concordo e ratifico com todas as minhas obrigações previstas no Estatuto Social,
-              regime interno e deliberação das assembleias gerais do Sindicato dos Policiais Penais do Distrito Federal.
-              Ao tempo que comprometo-me em contribuir mensalmente com o valor de 1,5% vencimento básico, conforme Art. 105 do Estatuto APROVADO pela assembleia geral,
-              o qual AUTORIZO que consignado em folha de pagamento junto ao órgão competente em favor do SINDPOL-DF, bem como outras contribuições de caráter 
-              extraordinário - desde que aprovadas em assembleia específica - Reconheço ainda que tais contribuições têm o condão de manter a entidade de 
-              representação sindical forte e independente no intuito de garantir melhores condições de trabalho para toda a categoria. Fico ciente que,
-              ao desejar afastar-me do quadro social do sindicato, devo manifestar-me por escrito, em formulário específico, com antecedência de 60 (sessenta) dias. 
-              Pela presente, solicito minha admissão no quadro de filiados do 
-              SINDICATO DOS POLICIAIS PENAIS DO DISTRITO FEDERAL.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <div className='botoes-dialogo'>
-            <SecondaryButton 
-            text = "CANCELAR"
-            onClick={handleCloseSuccessDialog}>
-              
-            </SecondaryButton>
-            <PrimaryButton 
-            text= 'FILIAR-ME AO SINDICATO'
-            onClick={() => {setOpenSuccessDialog(false); submitForm()}} autoFocus>
-              
-            </PrimaryButton>
-            </div>
-          </DialogActions>
-        </Dialog> */}
+        <Modal 
+                show={openSuccessDialog} 
+                // setOpenSuccessDialog={setOpenSuccessDialog} 
+                // submitForm={submitForm}
 
+                width= '608px'
+                alertTitle='Ao confirmar essa solicitação, você estará concordando com a declaração a seguir:'
+                
+                alert="Declaro que, ao filiar-me nesta data ao SINDPOL-DF, concordo e ratifico com todas as minhas obrigações previstas no Estatuto Social, regime interno e deliberação das assembleias gerais do Sindicato dos Policiais Penais do Distrito Federal. Ao tempo que comprometo-me em contribuir mensalmente com o valor de 1,5% vencimento básico, conforme Art. 105 do Estatuto APROVADO pela assembleia geral, o qual AUTORIZO que consignado em folha de pagamento junto ao órgão competente em favor do SINDPOL-DF, bem como outras contribuições de caráter extraordinário - desde que aprovadas em assembleia específica - Reconheço ainda que tais contribuições têm o condão de manter a entidade de representação sindical forte e independente no intuito de garantir melhores condições de trabalho para toda a categoria. Fico ciente que, ao desejar afastar-me do quadro social do sindicato, devo manifestar-me por escrito, em formulário específico, com antecedência de 60 (sessenta) dias. Pela presente, solicito minha admissão no quadro de filiados do SINDICATO DOS POLICIAIS PENAIS DO DISTRITO FEDERAL."
+            > <SecondaryButton
+  
+            text="cancelar"
+            onClick= {() => handleCloseSuccessDialog()}
+            width="608px"
+          />
+          <PrimaryButton
+            text="solicitar filiação ao sindpol-df"
+            onClick= {submitForm}
+            width="608px"
+          />
+            </Modal>
+        
+        
       </div>
     </section>
   );

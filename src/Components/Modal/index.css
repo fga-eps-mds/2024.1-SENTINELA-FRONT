@@ -1,58 +1,40 @@
-
-Modal Overlay
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: green;
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
 }
 
-/* Modal Container */
 .modal {
   border-radius: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 400px;
-  height: 284px;
-  background: green; /* Cor de fundo do modal */
+  background: #eae3d7;
   padding: 40px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   position: relative;
-  color :green;
+  width: auto;
+  max-width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
-
-.botoes-dialogo{
-  display:flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 0%;
-  border:1px solid black;
-  height: 2rem;
+.modal-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  margin-top: 10px;
+  gap: 10px;
   width: 100%;
 }
-.custom-dialog-content-text{
-  font-size: 20px;
-  font-weight: 500;
-  color: green;
-  font-family: Noto Sans;
-  background-color: #AE883C;
-  border-radius: 10px;
-}
-.custom-dialog-header{
-  background-color: #AE883C;
-  color :#EAE3D7;
-  margin :10px;
-  border-radius: 10px;
-}
 
-
-/* Container para os botões */
+.modal-buttons button {
+  flex: 1 1 auto;
+}
