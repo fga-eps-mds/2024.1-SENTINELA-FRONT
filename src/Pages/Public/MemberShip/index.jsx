@@ -63,8 +63,7 @@ const MemberShip = () => {
   const ufList = ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'];
   const estadoCivilList = ['Solteiro', 'Casado', 'Separado', 'Viúvo'];
   const escolaridadeList = ['Ensino Fundamental', 'Ensino Médio', 'Ensino Superior', 'Pós-Graduação', 'Mestrado', 'Doutorado'];
-  const cargoList = ['Advogado', 'Agente', 'Outro'];
-  const lotacaoList = ['Sede', 'Out', 'Outro'];
+
   const situacaoAtualList = ['Ativo', 'Inativo'];
 
    
@@ -526,11 +525,11 @@ const MemberShip = () => {
 
         <h3> Dados de Contratação </h3>
         <div className="section-form">
-          <FieldSelect
+          <FieldText
             label="Cargo"
             value={cargo}
             onChange={(e) => setCargo(e.target.value)}
-            options={cargoList}
+            
           />
 
           <DataSelect
@@ -538,11 +537,11 @@ const MemberShip = () => {
             value={dataContratacao}
             onChange={(newValue) => setDataContratacao(newValue)}
           />
-          <FieldSelect
+          <FieldText
             label="Lotação"
             value={lotacao}
             onChange={(e) => setlotacao(e.target.value)}
-            options={lotacaoList}
+          
           />
 
           <FieldText
