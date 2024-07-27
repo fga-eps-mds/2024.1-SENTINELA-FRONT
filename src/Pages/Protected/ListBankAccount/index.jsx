@@ -5,11 +5,14 @@ import { AuthProvider, useAuth } from "../../../Context/auth";
 import SideBar from "../../../Components/SideBar";
 import SideButton from "../../../Components/SideButton";
 import PrimaryButtom from "../../../Components/PrimaryButton"
+import SecondaryButton from "../../../Components/SecondaryButton"
+import FieldText from "../../../Components/FieldText";
 import "./index.css"
 
 export default function ListBankAccount() {
     
     const [nome, setNome] = useState('');
+    const [busca, setBusca] = useState('');
 
     const context = useContext(AuthContext);
     const navigate = useNavigate();
@@ -23,6 +26,10 @@ export default function ListBankAccount() {
         context.logout();
         navigate("/");
       };
+
+    const handleSearch = () => {
+        alert("Uma pesquisa")
+    }
 
     const buttons = [
         <SideButton key="home" text="PÁGINA INICIAL" onClick={handleHome} />,
@@ -46,8 +53,20 @@ export default function ListBankAccount() {
                 <PrimaryButtom text="Cadastrar contas bancárias" onClick={() => navigate("/finance/bankAccount")}/>
             </div>
 
-            <div>
-                teste
+            <div className="search">
+                <FieldText
+                    label="Pesquisar Conta"
+                    value={busca}
+                    onChange={(e) => setBusca(e.target.value)}
+                />
+
+                <div>
+                    <SecondaryButton 
+                        text="Pesquisar"
+                        onClick={handleSearch}
+                    />
+                </div>
+                
             </div>
         </div>
 

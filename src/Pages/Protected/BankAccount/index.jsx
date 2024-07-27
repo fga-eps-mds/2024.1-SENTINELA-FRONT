@@ -55,17 +55,17 @@ const BankAccount = () => {
         }
     }
 
-    const handleSubmit = async () => {
-        const formData = {
-            name,
-            pix,
-            bank,
-            accountType,
-            accountNumber,
-            dv,
-            status,
-            agency
-        };
+    const handleSubmit = async (formData) => {
+        //const formData = {
+        //    name,
+        //    pix,
+        //    bank,
+        //    accountType,
+        //    accountNumber,
+        //    dv,
+        //    status,
+        //    agency
+        //};
 
         console.log('Dados enviados:', formData);
     
