@@ -17,11 +17,14 @@ export async function createBankAccount (formData) {
       }
 }
 
-export async function listBankAccount () {
-    try {
-        const response = await APIUsers.get("/finance/listBankAccount")
-        return response.data
-    } catch (error) {
-        return error.response.data
-    }
+export async function listBankAccount(name) {
+  try {
+      // Incluindo 'name' como um parâmetro de consulta na URL
+      const response = await APIUsers.get("/finance/bankAccount", {
+          params: { name } // Corrigido para passar 'name' como parâmetro de consulta
+      });
+      return response.data;
+  } catch (error) {
+      return error.response.data;
+  }
 }

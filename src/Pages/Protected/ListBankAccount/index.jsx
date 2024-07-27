@@ -8,7 +8,7 @@ import PrimaryButtom from "../../../Components/PrimaryButton"
 import SecondaryButton from "../../../Components/SecondaryButton"
 import FieldText from "../../../Components/FieldText";
 import "./index.css"
-
+import { listBankAccount } from "../../../Services/bankAccountService";
 export default function ListBankAccount() {
     
     const [nome, setNome] = useState('');
@@ -27,8 +27,19 @@ export default function ListBankAccount() {
         navigate("/");
       };
 
-    const handleSearch = () => {
-        alert("Uma pesquisa")
+      const handleSearch = async () => {
+        try {
+            // Chama listBankAccount e aguarda a resposta
+            const result = await listBankAccount(busca);
+            console.log(result); // Exibe o resultado da pesquisa
+            
+    
+            // Exibe um alerta com a resposta da pesquisa (ou ajuste conforme necessário)
+            alert("Pesquisa realizada com sucesso. Veja o console para mais detalhes.");
+        } catch (error) {
+            console.error("Erro ao realizar a pesquisa:", error);
+            alert("Ocorreu um erro ao realizar a pesquisa.");
+        }
     }
 
     const buttons = [
