@@ -86,6 +86,22 @@ const BankAccount = () => {
         navigate("/");
     };
 
+    //mascaras
+    const agencia = (value) => {
+        // Remove qualquer caractere que não seja um dígito e limita a 5 caracteres
+        return value.replace(/\D/g, '').slice(0, 5);
+    };
+
+    const numeroConta = (value) => {
+        // Remove qualquer caractere que não seja um dígito e limita a 11 caracteres
+        return value.replace(/\D/g, '').slice(0, 11);
+    };
+
+    const digitverificator = (value) => {
+        // Remove qualquer caractere que não seja um dígito e limita a 5 caracteres
+        return value.replace(/\D/g, '').slice(0, 1);
+      };
+
     const buttons = [
         <SideButton key="home" text="PÁGINA INICIAL" onClick={handleHome} />,
         <SideButton key="filiacao" text="CADASTROS" />,
@@ -104,9 +120,9 @@ const BankAccount = () => {
                     <FieldText label="Nome *" value={name} onChange={(e) => setName(e.target.value)} />
                     <FieldSelect label="Tipo de conta*" value={accountType} onChange={handleChangeAccountType} options={listAccountType} />
                     <FieldText label="Banco *" value={bank} onChange={(e) => setBank(e.target.value)} />
-                    <FieldText label="Agência" value={agency} onChange={(e) => setAgency(e.target.value)} />
-                    <FieldText label="Número da conta" value={accountNumber} onChange={(e) => setAccountNumber(e.target.value)} />
-                    <FieldText label="DV" value={dv} onChange={(e) => setDv(e.target.value)} />
+                    <FieldText label="Agência" value={agency} onChange={(e) => setAgency(agencia(e.target.value))} />
+                    <FieldText label="Número da conta" value={accountNumber} onChange={(e) => setAccountNumber(numeroConta(e.target.value))} />
+                    <FieldText label="DV" value={dv} onChange={(e) => setDv(digitverificator(e.target.value))} />
                     <FieldText label="Pix" value={pix} onChange={(e) => setPix(e.target.value)} />
                     <FieldSelect label="Status *" value={status} onChange={(e) => setStatus(e.target.value)} options={listStatus} />
                 </div>
