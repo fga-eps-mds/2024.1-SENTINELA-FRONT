@@ -19,12 +19,9 @@ export default function Finance() {
     const context = useContext(AuthContext);
     const { user } = useAuth();
     const navigate = useNavigate();
+    
     const handleHome = () => {
         navigate("/home");
-      };
-    const handleLogout = () => {
-        context.logout();
-        navigate("/");
       };
 
     const buttons = [
@@ -32,8 +29,6 @@ export default function Finance() {
         <SideButton key="filiacao" text="CADASTROS" />,
         <SideButton key="financeiro" text="FINANCEIRO" />,
         <SideButton key="beneficios" text="BENEFÍCIOS" />,
-        <h2 className="profile-status">Você está logado <br />como {nome}</h2>,
-        <button className="btn-logout" onClick={handleLogout}> LOGOUT </button>
       ];
     return user && (
         <section className="container">
