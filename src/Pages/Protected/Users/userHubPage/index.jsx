@@ -69,12 +69,12 @@ export default function UserHubPage() {
         <div className="card">
           <img
             className="logo"
-            src="src/assets/sindpol-logo.png"
+            src="/src/assets/sindpol-logo.png"
             alt="Sindpol Logo"
           />
           <img
             className="sentinela"
-            src="src/assets/sentinela-logo.png"
+            src="/src/assets/sentinela-logo.png"
             alt="Sentinela Logo"
           />
 

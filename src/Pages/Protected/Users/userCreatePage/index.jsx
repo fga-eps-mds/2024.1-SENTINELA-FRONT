@@ -12,7 +12,6 @@ import SecondaryButton from "../../../../Components/SecondaryButton";
 import SideBar from "../../../../Components/SideBar";
 import SideButton from "../../../../Components/SideButton";
 import { createUser, getRoles } from "../../../../Services/userService";
-import "../userHubPage/index.css";
 import "./index.css";
 
 export default function UserCreatePage() {
@@ -140,7 +139,7 @@ export default function UserCreatePage() {
   ];
 
   return (
-    <section className="container">
+    <section className="container-user">
       <SideBar className="side-menu" buttons={buttons} />
       <div className="forms-container-user">
         <h1>Cadastro de usuário</h1>

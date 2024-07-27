@@ -22,9 +22,9 @@ export default function Login() {
   };
 
   const buttons = [
-    <SideButton key="login" text="Login" />,
-    <SideButton key="filiacao" text="Filiação" />,
-    <SideButton key="sobre" text="Sobre" />,
+    <SideButton itemKey="login" key="login" text="Login" />,
+    <SideButton itemKey="filiacao" key="filiacao" text="Filiação" />,
+    <SideButton itemKey="sobre" key="sobre" text="Sobre" />,
   ];
 
   return (
@@ -58,7 +58,7 @@ export default function Login() {
           <div className="recupera-senha">
             <UnderlinedTextButton key="recupera-senha" text="Esqueci a senha" />
           </div>
-          <SecondaryButton text="Filiar-me ao sindicato" />
+          <SecondaryButton text="Filiar-me ao sindicato" onClick={()=>{}} />
 
           <PrimaryButton text="Entrar" onClick={handleLogin} />
         </div>
