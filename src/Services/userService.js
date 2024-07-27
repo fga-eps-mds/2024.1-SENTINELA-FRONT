@@ -2,8 +2,7 @@ import { APIUsers } from "./BaseService";
 
 export async function userLogin(email, password) {
   try {
-
-    console.log("paseiii")
+    console.log("paseiii");
     const response = await APIUsers.post("/login", {
       email,
       password,

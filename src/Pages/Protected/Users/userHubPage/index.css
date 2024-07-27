@@ -39,7 +39,7 @@
   margin-left: 10px;
 }
 
-.container{
+.container {
   display: flex;
   flex-direction: row;
 }

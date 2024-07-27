@@ -58,7 +58,7 @@ export default function Login() {
           <div className="recupera-senha">
             <UnderlinedTextButton key="recupera-senha" text="Esqueci a senha" />
           </div>
-          <SecondaryButton text="Filiar-me ao sindicato" onClick={()=>{}} />
+          <SecondaryButton text="Filiar-me ao sindicato" onClick={() => {}} />
 
           <PrimaryButton text="Entrar" onClick={handleLogin} />
         </div>
