@@ -2,12 +2,9 @@ import React from "react";
 import "./index.css";
 import PropTypes from "prop-types";
 import { Alert, AlertTitle } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import theme from '../../Styles/global';
 
 export default function Modal({ show, children, alertTitle, buttons }) {
-  const navigate = useNavigate();
-
   if (!show) {
     return null;
   }
@@ -44,6 +41,5 @@ export default function Modal({ show, children, alertTitle, buttons }) {
 Modal.propTypes = {
   show: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
-  alertTitle: PropTypes.string.isRequired,
-  buttons: PropTypes.array
+  alertTitle: PropTypes.string.isRequired
 };

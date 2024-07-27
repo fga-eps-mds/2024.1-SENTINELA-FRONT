@@ -1,21 +1,21 @@
-import { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import SideBar from "../../../Components/SideBar";
-import SideButton from "../../../Components/SideButton";
-import FieldText from "../../../Components/FieldText";
-import FieldSelect from "../../../Components/FieldSelect";
-import FieldNumber from '../../../Components/FieldNumber';
-import PrimaryButton from '../../../Components/PrimaryButton';
-import SecondaryButton from '../../../Components/SecondaryButton';
-import { RadioGroup, FormControlLabel, Radio } from '@mui/material';
-import { getUserById, deleteUserById, patchUserById, getRoles } from '../../../Services/userService';
-import "./index.css";
-import Modal from '../../../Components/Modal';
+import { FormControlLabel, Radio, RadioGroup } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { AiOutlineUser } from "react-icons/ai";
 import { RiLogoutCircleRLine } from "react-icons/ri";
+import { useLocation, useNavigate } from 'react-router-dom';
+import FieldNumber from '../../../../Components/FieldNumber';
+import FieldSelect from "../../../../Components/FieldSelect";
+import FieldText from "../../../../Components/FieldText";
+import Modal from '../../../../Components/Modal';
+import PrimaryButton from '../../../..//Components/PrimaryButton';
+import SecondaryButton from '../../../../Components/SecondaryButton';
+import SideBar from "../../../../Components/SideBar";
+import SideButton from "../../../../Components/SideButton";
+import { deleteUserById, getRoles, getUserById, patchUserById } from '../../../../Services/userService';
+import "./index.css";
 
 
-export default function updateUser() {
+export default function UserUpdatePage() {
     const { state } = useLocation();
     const navigate = useNavigate();
     const userId = state?.userId;
@@ -131,7 +131,7 @@ export default function updateUser() {
     };
 
     const handleRegistrationClick = () => {
-        navigate("/cadastros");
+        navigate("/usuarios");
     };
 
     const handleLogout = () => {
@@ -182,7 +182,7 @@ export default function updateUser() {
 
     const handleSaveCloseDialog = () => {
         setShowSaveModal(false);
-        navigate("/cadastros/usuarios");
+        navigate("/usuarios");
     };
 
     const handleDeleteCloseDialog = () => {
@@ -191,7 +191,7 @@ export default function updateUser() {
 
     const handleDeletedCloseDialog = () => {
         setShowDeletedModal(false);
-        navigate('/cadastros/usuarios');
+        navigate("/usuarios");
     };
 
     const modalSaveButton = [<SecondaryButton key={'saveButtons'} text='OK' onClick={() => handleSave()} width="338px" />];
@@ -265,18 +265,26 @@ export default function updateUser() {
                     alertTitle="Alterações Salvas"
                     show={showSaveModal}
                     buttons={modalSaveButton}
-                />
+                >
+                    <>
+                    </>
+                </Modal>
 
                 <Modal
                     alertTitle="Deseja deletar o usuário do sistema?"
                     show={showDeleteModal}
                     buttons={modalDeleteButton}
-                />
+                >
+                    <>
+                    </>
+                </Modal>
                 <Modal
                     alertTitle="Usuario Deletado"
                     show={showDeletedModal}
                     buttons={<SecondaryButton key={'okButtons'} text='OK' onClick={() => handleDeletedCloseDialog()} width="338px" />}
-                />
+                >
+                    <></>
+                </Modal>
             </div>
         </section>
     );

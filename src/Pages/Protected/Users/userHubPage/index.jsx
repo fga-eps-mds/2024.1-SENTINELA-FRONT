@@ -1,22 +1,22 @@
-import { useNavigate } from "react-router-dom";
-import SideBar from "../../../Components/SideBar";
-import SideButton from "../../../Components/SideButton";
-import SecondaryButton from "../../../Components/SecondaryButton";
-import { useAuth } from "../../../Context/auth";
 import { AiOutlineUser } from "react-icons/ai";
 import { RiLogoutCircleRLine } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
+import SecondaryButton from "../../../../Components/SecondaryButton";
+import SideBar from "../../../../Components/SideBar";
+import SideButton from "../../../../Components/SideButton";
+import { useAuth } from "../../../../Context/auth";
 import "./index.css";
 
-export default function Registrations() {
+export default function UserHubPage() {
     const navigate = useNavigate();
     const context = useAuth();
 
     const handleListaClick = () => {
-        navigate("/cadastros/usuarios");
+        navigate("/usuarios");
     };
 
     const handleCadastroClick = () => {
-        navigate("/cadastros/novoCadastro");
+        navigate("/usuarios/criar");
     };
 
     const handleHomeClick = () => {
@@ -24,7 +24,7 @@ export default function Registrations() {
     };
 
     const handleRegistrationClick = () => {
-        navigate("/cadastros");
+        navigate("/usuarios/hub");
     };
 
     const handleLogout = () => {

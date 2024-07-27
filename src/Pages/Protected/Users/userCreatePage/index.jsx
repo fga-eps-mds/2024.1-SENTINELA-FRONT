@@ -1,22 +1,21 @@
+import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from "react-router-dom";
-import "./index.css";
-import "../../../index.css";
-import SideBar from "../../../Components/SideBar";
-import SideButton from "../../../Components/SideButton";
-import FieldText from "../../../Components/FieldText";
-import FieldSelect from "../../../Components/FieldSelect";
-import FieldNumber from '../../../Components/FieldNumber';
-import PrimaryButton from '../../../Components/PrimaryButton';
-import { Radio, RadioGroup, FormControlLabel} from '@mui/material';
-import { createUser, getRoles } from '../../../Services/userService';
-import Modal from '../../../Components/Modal';
-import SecondaryButton from '../../../Components/SecondaryButton';
-import "../Registrations/index.css";
 import { AiOutlineUser } from "react-icons/ai";
 import { RiLogoutCircleRLine } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
+import FieldNumber from "../../../../Components/FieldNumber";
+import FieldSelect from "../../../../Components/FieldSelect";
+import FieldText from "../../../../Components/FieldText";
+import Modal from "../../../../Components/Modal";
+import PrimaryButton from "../../../../Components/PrimaryButton";
+import SecondaryButton from "../../../../Components/SecondaryButton";
+import SideBar from "../../../../Components/SideBar";
+import SideButton from "../../../../Components/SideButton";
+import { createUser, getRoles } from "../../../../Services/userService";
+import "../userHubPage/index.css";
+import "./index.css";
 
-export default function Register_User() {
+export default function UserCreatePage() {
     const navigate = useNavigate();
     const [nomeCompleto, setNomeCompleto] = useState('');
     const [celular, setCelular] = useState('');
@@ -34,7 +33,7 @@ export default function Register_User() {
     };
 
     const handleRegistrationClick = () => {
-        navigate("/cadastros");
+        navigate("/usuarios/hub");
     };
 
     const handleLogout = () => {
@@ -66,7 +65,7 @@ export default function Register_User() {
 
     const handleCloseDialog = () => {
         setShowModal(false);
-        navigate("/home");
+        navigate("/usuarios");
     };
 
     const handleSubmit = async (e) => {

@@ -1,21 +1,21 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import './index.css';
-import "../Registrations/index.css";
-import SideBar from "../../../Components/SideBar";
-import PrimaryButton from "../../../Components/PrimaryButton";
-import FieldText from "../../../Components/FieldText";
-import SideButton from "../../../Components/SideButton";
+import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-import Divider from '@mui/material/Divider';
-import { APIUsers } from "../../../Services/BaseService";
+import { useEffect, useState } from "react";
 import { AiOutlineUser } from "react-icons/ai";
 import { RiLogoutCircleRLine } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
+import FieldText from "../../../../Components/FieldText";
+import PrimaryButton from "../../../../Components/PrimaryButton";
+import SideBar from "../../../../Components/SideBar";
+import SideButton from "../../../../Components/SideButton";
+import { APIUsers } from "../../../../Services/BaseService";
+import "../userHubPage/index.css";
+import './index.css';
 
-export default function ListUser() {
+export default function UserListPage() {
     const [users, setUsers] = useState([]);
     const [search, setSearch] = useState('');
     const navigate = useNavigate();
@@ -33,7 +33,6 @@ export default function ListUser() {
                 });
 
                 const data = response.data;
-                console.log('Dados recebidos:', data);
                 if (Array.isArray(data)) {
                     setUsers(data);
                 } else {
@@ -52,7 +51,7 @@ export default function ListUser() {
     };
 
     const handleRegistrationClick = () => {
-        navigate("/cadastros");
+        navigate("/usuarios/hub");
     };
 
     const handleLogout = () => {
@@ -74,8 +73,8 @@ export default function ListUser() {
     const buttons = [
         <SideButton key="home" text="Pagina Inicial" onClick={handleHomeClick} />,
         <SideButton key="cadastros" text="Cadastros" onClick={handleRegistrationClick} />,
-        <SideButton key="financeiro" text="Financeiro" />,
-        <SideButton key="benefícios" text="Benefícios" />,
+        <SideButton key="financeiro" text="Financeiro" onClick={() =>{}}/>,
+        <SideButton key="benefícios" text="Benefícios" onClick={() =>{}}/>,
         <h2 key="profile-status" className="profile-status">
             Você está logado <br />como {userName} <AiOutlineUser className="profile-icon" />
         </h2>,
@@ -85,11 +84,11 @@ export default function ListUser() {
     ];
 
     const handleRegisterClick = () => {
-        navigate('/cadastros/novoCadastro');
+        navigate('/usuarios/criar');
     };
 
     const handleItemClick = (user) => {
-        navigate(`/cadastros/usuarios/${user.name}`, { state: { userId: user._id } });
+        navigate(`/usuarios/editar/${user.name}`, { state: { userId: user._id } });
     };
 
 
