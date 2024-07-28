@@ -48,6 +48,7 @@ export default function ListBankAccount() {
         <SideButton key="beneficios" text="BENEFÍCIOS" />,
     ];
 
+   
     
     return user && (
     <section className="listContainer">
@@ -77,7 +78,7 @@ export default function ListBankAccount() {
                 
             </div>
 
-            {dataMap ? (
+            {dataMap && dataMap.name ? (
             <div className="result">
               <div>
                 <SecondaryButton text={dataMap.name} />
