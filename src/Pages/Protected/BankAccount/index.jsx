@@ -5,12 +5,14 @@ import { useAuth } from "../../../Context/auth";
 import SideBar from "../../../Components/SideBar";
 import SideButton from "../../../Components/SideButton";
 import PrimaryButton from "../../../Components/PrimaryButton";
+import SecondaryButton from "../../../Components/SecondaryButton";
 import FieldSelect from "../../../Components/FieldSelect";
 import FieldText from "../../../Components/FieldText";
 import "./index.css";
 import { Snackbar } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import { createBankAccount } from "../../../Services/bankAccountService";
+import Modal from "../../../Components/Moldal"
 
 const BankAccount = () => {
     const [name, setName] = useState("");
@@ -26,6 +28,7 @@ const BankAccount = () => {
     const context = useContext(AuthContext);
     const { user } = useAuth();
     const navigate = useNavigate();
+    const [successCreate, setSuccessCreate] = useState(false);
 
     const listAccountType = ['Conta Corrente', 'Poupança', 'Investimento', 'Caixa'];
     const listStatus = ['Ativo', 'Inativo'];
@@ -72,7 +75,7 @@ const BankAccount = () => {
         try {
             const response = await createBankAccount(formData); // Enviando dados diretamente
             console.log('Resposta do servidor:', response);
-            navigate('/finance/')
+            setSuccessCreate(true);
         } catch (error) {
             console.error('Erro ao enviar dados:', error);
         }
@@ -141,6 +144,20 @@ const BankAccount = () => {
                     Certifique-se de que todos os campos obrigatórios estão preenchidos
                 </Alert>
             </Snackbar>
+
+            <Modal
+                show={successCreate}
+                width="400px"
+                alertTitle="Cadastro concluído"
+                alert=""
+            >
+                <SecondaryButton
+                    text="ok"
+                    onClick={() => navigate('/finance/')}
+                    style={"width: 250px; margin-top : 10px"}
+                    sx={{ width: "250px", "margin-top" : "10px" }}
+                />
+            </Modal>
             
         </section>
     ) : null;
