@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { theme } from "../../Styles/global";
+import theme from "../../Styles/global";
 import { Button } from "@mui/material";
 
 export default function PrimaryButton({ text, onClick }) {

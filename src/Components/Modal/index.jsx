@@ -1,19 +1,19 @@
 import "./index.css";
 import PropTypes from "prop-types";
 import { Alert, AlertTitle } from "@mui/material";
-import SecondaryButton from "../SecondaryButton";
-import { useNavigate } from "react-router-dom";
 import theme from "../../Styles/global";
 
-export default function Modal({ show, children, text, width }) {
-  const navigate = useNavigate();
-
+export default function Modal({
+  show,
+  children,
+  alertTitle,
+  buttons,
+  alert,
+  width,
+}) {
   if (!show) {
     return null;
   }
-  const handleLoginPage = () => {
-    navigate("/");
-  };
 
   return (
     <div className="modal-overlay">
@@ -22,29 +22,33 @@ export default function Modal({ show, children, text, width }) {
           severity="success"
           variant="filled"
           sx={{
-            backgroundColor: theme.pallete.button,
+            backgroundColor: theme.palette.custom.button,
             "& .MuiAlertTitle-root": {
               fontFamily: theme.typography.fontFamilyPrimary,
             },
             "& .MuiAlert-message": {
               fontFamily: theme.typography.fontFamilySecondary,
             },
-            width: "270px",
+            width: "100%", // Ajusta para 100% da largura do modal
+            maxWidth: width, // Largura máxima do modal
           }}
         >
-          <AlertTitle>Solicitação enviada</AlertTitle>
-          Você deve receber um e-mail em breve com mais informações.
+          <AlertTitle>{alertTitle}</AlertTitle>
+          {alert}
         </Alert>
-        <SecondaryButton text={text} onClick={handleLoginPage} width={width} />
         {children}
+
+        <div className="modal-buttons">{buttons}</div>
       </div>
     </div>
   );
 }
 
 Modal.propTypes = {
-  text: PropTypes.string.isRequired,
-  width: PropTypes.string.isRequired,
   show: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
+  alertTitle: PropTypes.string.isRequired,
+  width: PropTypes.string.isRequired,
+  alert: PropTypes.string.isRequired,
+  buttons: PropTypes.any,
 };

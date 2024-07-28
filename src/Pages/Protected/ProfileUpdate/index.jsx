@@ -11,18 +11,16 @@ import AuthContext from "../../../Context/auth";
 import { APIUsers } from "../../../Services/BaseService";
 import { AiOutlineUser } from "react-icons/ai";
 import { RiLogoutCircleRLine } from "react-icons/ri";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogTitle from "@mui/material/DialogTitle";
-import Button from "@mui/material/Button";
+import Modal from "../../../Components/Modal";
+import { Button } from "@mui/material";
 import "./index.css";
 
 const ProfileUpdate = () => {
   const context = useContext(AuthContext);
   const navigate = useNavigate();
   const { user } = useAuth();
-  const storagedUserString = localStorage.getItem("@App:user"); // Usuario logado
-  const storagedUser = JSON.parse(storagedUserString); // Usuario logado => JSON
+  const storagedUserString = localStorage.getItem("@App:user");
+  const storagedUser = JSON.parse(storagedUserString);
 
   const [nome, setNome] = useState("");
   const [celular, setCelular] = useState("");
@@ -34,7 +32,7 @@ const ProfileUpdate = () => {
 
   useEffect(() => {
     getUser();
-  }, []);
+  });
 
   useEffect(() => {
     setIsEmailValid(isValidEmail(email));
@@ -45,13 +43,7 @@ const ProfileUpdate = () => {
   }, [celular]);
 
   const isValidEmail = (email) => {
-    const allowedDomains = [
-      "com",
-      "net",
-      "org",
-      "com.br",
-      "org.br",
-    ]; /* ainda necessário melhoria */
+    const allowedDomains = ["com", "net", "org", "com.br", "org.br"];
     const domainPattern = allowedDomains.join("|");
     const emailRegex = new RegExp(
       `^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.${domainPattern}$`,
@@ -63,25 +55,16 @@ const ProfileUpdate = () => {
   const validatePhoneNumber = (phoneNumber) =>
     /^\d+$/.test(phoneNumber) && phoneNumber.length >= 10;
 
-  let status = "";
-
-  const removeMask = (celular) => celular.replace(/\D/g, ""); // Remove a mascara do FielNumber
+  const removeMask = (celular) => celular.replace(/\D/g, "");
 
   const getUser = async () => {
-    // Busca usuario no banco
     try {
       const response = await APIUsers.get(`users/${storagedUser.user._id}`, {
         headers: { Authorization: `Bearer ${storagedUser.token}` },
       });
       setNome(response.data.name);
       setCelular(response.data.phone);
-
-      if (response.data.status === true) {
-        status = "Ativo";
-      } else {
-        status = "Inativo";
-      }
-      setLogin(status);
+      setLogin(response.data.status ? "Ativo" : "Inativo");
       setEmail(response.data.email);
     } catch (error) {
       console.log(error);
@@ -95,11 +78,9 @@ const ProfileUpdate = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!isValidNumber || !isEmailValid) {
       return;
     }
-
     try {
       await APIUsers.patch(
         `users/patch/${storagedUser.user._id}`,
@@ -194,25 +175,21 @@ const ProfileUpdate = () => {
             <PrimaryButton text="Salvar" onClick={handleSubmit} />
           </div>
         </div>
-        <Dialog
-          open={openDialog}
-          onClose={handleCloseDialog}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-          className="custom-dialog"
-        >
-          <DialogTitle className="alert-dialog-title">
-            {"Alterações Salvas"}
-          </DialogTitle>
-          <DialogActions>
+        <Modal
+          show={openDialog}
+          alertTitle={
+            <div className="custom-alert-title">Alterações Salvas</div>
+          }
+          buttons={
             <Button
               onClick={handleCloseDialog}
               className="custom-dialog-button"
             >
               OK
             </Button>
-          </DialogActions>
-        </Dialog>
+          }
+          width="338px"
+        />
       </section>
     )
   );
