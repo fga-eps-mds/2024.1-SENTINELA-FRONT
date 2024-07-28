@@ -17,6 +17,8 @@ const ProtectedRoutes = () => {
         <Route path="/finance/bankAccount" element={<BankAccount />} />
         <Route path="/finance/listBankAccount" element={<ListBankAccount />} />
         <Route path="/finance/listBankAccount/:id" element={<BankAccountId/>} />
+       
+
 
         
       </Routes>

@@ -47,3 +47,14 @@ export async function deleteBankAccount(id) {
       return error.response.data;
   }
 }
+
+export async function updateBankAccount(id, formData) {
+  try {
+      const response = await APIBank.patch(`/finance/updateBankAccount/${id}`, {
+          formData
+      });
+      return response.data;
+  } catch (error) {
+      return error.response.data;
+  }
+}
