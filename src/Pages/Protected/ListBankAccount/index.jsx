@@ -13,6 +13,7 @@ export default function ListBankAccount() {
     
     const [nome, setNome] = useState('');
     const [busca, setBusca] = useState('');
+    const [dataMap, setDataMap] = useState(new Map());
 
     const context = useContext(AuthContext);
     const navigate = useNavigate();
@@ -27,8 +28,7 @@ export default function ListBankAccount() {
         try {
             // Chama listBankAccount e aguarda a resposta
             const result = await listBankAccount(busca);
-            console.log(result); // Exibe o resultado da pesquisa
-            
+            const jsonData = response.data;
     
             // Exibe um alerta com a resposta da pesquisa (ou ajuste conforme necessário)
             alert("Pesquisa realizada com sucesso. Veja o console para mais detalhes.");
