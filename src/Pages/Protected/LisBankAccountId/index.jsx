@@ -11,8 +11,8 @@ import FieldText from "../../../Components/FieldText";
 import "./index.css";
 import { Snackbar } from '@mui/material';
 import Alert from '@mui/material/Alert';
-import { createBankAccount } from "../../../Services/bankAccountService";
-import { getBankAccount } from "../../../Services/bankAccountService";
+import { createBankAccount, getBankAccount, deleteBankAccount } from "../../../Services/bankAccountService";
+import Modal from "../../../Components/Moldal" 
 
 
 const BankAccountId = () => {
@@ -36,6 +36,8 @@ const BankAccountId = () => {
     const listStatus = ['Ativo', 'Inativo'];
     const [bankAccountType, setBankAccountType] = useState('')
     const [bankStatus, setBankStatus] = useState('')
+
+    const [openDeleteBankAccount, setOpenDeleteBankAccount] = useState(false);
 
     const handleChangeAccountType = (e) => {
         setAccountType(e.target.value);
@@ -155,7 +157,7 @@ const BankAccountId = () => {
                     <FieldSelect  label="Status *" value={status? status: bankStatus} onChange={(e) => setStatus(e.target.value)}  options={listStatus}/>
                 </div>
                 <div className="edit-buttons">
-                    <SecondaryButton text="Deletar" onClick={"#"} />
+                    <SecondaryButton text="Deletar" onClick={() => {deleteBankAccount(id); setOpenDeleteBankAccount(true)}} />
                     <PrimaryButton text="Salvar" onClick={"#"} />
                 </div>
             </div>
@@ -169,6 +171,20 @@ const BankAccountId = () => {
                     Certifique-se de que todos os campos obrigatórios estão preenchidos
                 </Alert>
             </Snackbar>
+
+            <Modal
+                show={openDeleteBankAccount}
+                width="400px"
+                alertTitle="Conta bancária excluída"
+                alert=""
+            >
+                <SecondaryButton
+                    text="ok"
+                    onClick={() => navigate('/finance/')}
+                    style={"width: 250px; margin-top : 10px"}
+                    sx={{ width: "250px", "margin-top" : "10px" }}
+                />
+            </Modal>
             
         </section>
     ) : null;
