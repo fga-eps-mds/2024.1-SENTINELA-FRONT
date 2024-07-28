@@ -1,131 +1,154 @@
-import React, { useState } from 'react';
+import { useState } from "react";
 import "./index.css";
 import "../../../index.css";
 import SideBar from "../../../Components/SideBar";
 import SideButton from "../../../Components/SideButton";
-import dayjs from 'dayjs';
-import 'dayjs/locale/pt-br'; // Importa a localização desejada para o dayjs
-import FieldText from "../../../Components/FieldText"
-import DataSelect from "../../../Components/DataSelect"
-import FieldSelect from "../../../Components/FieldSelect"
-import { createMemberShip  } from '../../../Services/MemberShipService';
+import dayjs from "dayjs";
+import "dayjs/locale/pt-br"; // Importa a localização desejada para o dayjs
+import FieldText from "../../../Components/FieldText";
+import DataSelect from "../../../Components/DataSelect";
+import FieldSelect from "../../../Components/FieldSelect";
+import { createMemberShip } from "../../../Services/MemberShipService";
 import PrimaryButton from "../../../Components/PrimaryButton";
-import BasicDateField from '../../../Components/DateField';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { Snackbar } from '@mui/material';
-import Alert from '@mui/material/Alert';
-import SecondaryButton from '../../../Components/SecondaryButton';
-import Modal from '../../../Components/Modal';
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import { Snackbar } from "@mui/material";
+import Alert from "@mui/material/Alert";
+import SecondaryButton from "../../../Components/SecondaryButton";
+import Modal from "../../../Components/Modal";
 import { useNavigate } from "react-router-dom";
-
-
-
 
 const MemberShip = () => {
   const navigate = useNavigate();
-  
-  const [email, setEmail] = useState('');
-  const [sexo, setSexo] = useState('');
-  const [estadoCivil, setEstadoCivil] = useState('');
-  const [tipoSanguineo, setTipoSanguineo] = useState('');
-  const [uf_naturalidade, setUfNaturalidade] = useState('');
-  const [uf_orgao , setUfOrgao] = useState('');
-  const [uf_endereco, setUfEndereco] = useState('');
-  const [escolaridade, setEscolaridade] = useState('');
+
+  const [email, setEmail] = useState("");
+  const [sexo, setSexo] = useState("");
+  const [estadoCivil, setEstadoCivil] = useState("");
+  const [tipoSanguineo, setTipoSanguineo] = useState("");
+  const [uf_naturalidade, setUfNaturalidade] = useState("");
+  const [uf_orgao, setUfOrgao] = useState("");
+  const [uf_endereco, setUfEndereco] = useState("");
+  const [escolaridade, setEscolaridade] = useState("");
   const [dataContratacao, setDataContratacao] = useState(null);
   const [dataDeNascimento, setdataDeNascimento] = useState(null);
   const [dataExpedicao, setDataExpedicao] = useState(null);
-  const [cargo, setCargo] = useState('');
-  const [lotacao, setlotacao] = useState('');
-  const [matricula, setMatricula] = useState('');
-  const [nomeCompleto, setnomeCompleto] = useState(''); 
-  const [dataNasc, setDataNasc] = useState(null);
-  const [naturalidade, setNaturalidade] = useState('');
-  const [rg, setRg] = useState('');
-  const [orgao, setOrgao] = useState('');
-  const [cpf, setCpf] = useState('');
-  const [nomeDaMae, setnomeDaMae] = useState('');
-  const [nomeDoPai, setnomeDoPai] = useState('');
-  const [cep, setCep] = useState('');
-  const [cidade, setCidade] = useState('');
-  const [logradouro, setLogradouro] = useState('');
-  const [complemento, setComplemento] = useState('');
-  const [telefone, setTelefone] = useState('');
-  const [celular, setCelular] = useState('');
-  const [postoDeTrabalho, setpostoDeTrabalho] = useState('');
-  const [orgaoExpedidor, setOrgaoExpedidor] = useState('');
-  const [situacaoAtual, setSituacaoAtual] = useState('');
+  const [cargo, setCargo] = useState("");
+  const [lotacao, setlotacao] = useState("");
+  const [matricula, setMatricula] = useState("");
+  const [nomeCompleto, setnomeCompleto] = useState("");
+  const [naturalidade, setNaturalidade] = useState("");
+  const [rg, setRg] = useState("");
+  const [orgao, setOrgao] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [nomeDaMae, setnomeDaMae] = useState("");
+  const [nomeDoPai, setnomeDoPai] = useState("");
+  const [cep, setCep] = useState("");
+  const [cidade, setCidade] = useState("");
+  const [logradouro, setLogradouro] = useState("");
+  const [complemento, setComplemento] = useState("");
+  const [telefone, setTelefone] = useState("");
+  const [celular, setCelular] = useState("");
+  const [postoDeTrabalho, setpostoDeTrabalho] = useState("");
+  const [orgaoExpedidor, setOrgaoExpedidor] = useState("");
+  const [situacaoAtual, setSituacaoAtual] = useState("");
   const [openError, setOpenError] = useState(false);
   const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
   const [errorFields, setErrorFields] = useState(false);
-  const [religiao, setReligiao] = useState('');
+  const [religiao, setReligiao] = useState("");
   const [openSuccessSubmit, setOpenSuccessSubmit] = useState(false);
-    
+
   //listas dos selects
-  const tipoSanguineoList = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
-  const sexoList = ['Masculino', 'Feminino'];
-  const ufList = ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'];
-  const estadoCivilList = ['Solteiro', 'Casado', 'Separado', 'Viúvo'];
-  const escolaridadeList = ['Ensino Fundamental', 'Ensino Médio', 'Ensino Superior', 'Pós-Graduação', 'Mestrado', 'Doutorado'];
+  const tipoSanguineoList = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
+  const sexoList = ["Masculino", "Feminino"];
+  const ufList = [
+    "AC",
+    "AL",
+    "AP",
+    "AM",
+    "BA",
+    "CE",
+    "DF",
+    "ES",
+    "GO",
+    "MA",
+    "MT",
+    "MS",
+    "MG",
+    "PA",
+    "PB",
+    "PR",
+    "PE",
+    "PI",
+    "RJ",
+    "RN",
+    "RS",
+    "RO",
+    "RR",
+    "SC",
+    "SP",
+    "SE",
+    "TO",
+  ];
+  const estadoCivilList = ["Solteiro", "Casado", "Separado", "Viúvo"];
+  const escolaridadeList = [
+    "Ensino Fundamental",
+    "Ensino Médio",
+    "Ensino Superior",
+    "Pós-Graduação",
+    "Mestrado",
+    "Doutorado",
+  ];
 
-  const situacaoAtualList = ['Ativo', 'Inativo'];
-
-   
-    
-
-
+  const situacaoAtualList = ["Ativo", "Inativo"];
 
   const [dependentes, setDependentes] = useState([]);
   const [showDependentForm, setShowDependentForm] = useState(false);
-  const [currentDependent, setCurrentDependent] = useState({ nomeCompletoDependente: '', dataNasc: '', parentesco: '' , cpfDependente: '', celularDependente: ''});
-  
-  
+  const [currentDependent, setCurrentDependent] = useState({
+    nomeCompletoDependente: "",
+    dataNasc: "",
+    parentesco: "",
+    cpfDependente: "",
+    celularDependente: "",
+  });
 
   //máscaras
   const mascaraCPF = (cpf) => {
-    let formattedCPF = cpf.replace(/\D/g, ''); // Remove caracteres não numéricos
+    let formattedCPF = cpf.replace(/\D/g, ""); // Remove caracteres não numéricos
     if (formattedCPF.length > 11) formattedCPF = formattedCPF.slice(0, 11); // Limita a 11 dígitos numéricos
-    
-    
+
     return formattedCPF
-      .replace(/(\d{3})(\d)/, '$1.$2') // Adiciona ponto após os três primeiros dígitos
-      .replace(/(\d{3})(\d)/, '$1.$2') // Adiciona ponto após os seis primeiros dígitos
-      .replace(/(\d{3})(\d{1,2})$/, '$1-$2'); // Adiciona traço após os nove primeiros dígitos
+      .replace(/(\d{3})(\d)/, "$1.$2") // Adiciona ponto após os três primeiros dígitos
+      .replace(/(\d{3})(\d)/, "$1.$2") // Adiciona ponto após os seis primeiros dígitos
+      .replace(/(\d{3})(\d{1,2})$/, "$1-$2"); // Adiciona traço após os nove primeiros dígitos
   };
 
   const mascaraRg = (rg) => {
-    let formattedRG = rg.replace(/\D/g, ''); // Remove caracteres não numéricos
+    let formattedRG = rg.replace(/\D/g, ""); // Remove caracteres não numéricos
     if (formattedRG.length > 9) formattedRG = formattedRG.slice(0, 9); // Limita a 9 dígitos numéricos
-    return formattedRG
-   
+    return formattedRG;
   };
 
-  
   const mascaraTelefone = (telefone) => {
-    let formattedTelefone = telefone.replace(/\D/g, ''); // Remove caracteres não numéricos
+    let formattedTelefone = telefone.replace(/\D/g, ""); // Remove caracteres não numéricos
     if (formattedTelefone.length > 11) {
       formattedTelefone = formattedTelefone.slice(0, 11); // Limita a 11 dígitos numéricos
     }
     return formattedTelefone
-      .replace(/^(\d{2})(\d)/g, '($1) $2') // Adiciona parênteses em volta dos dois primeiros dígitos
-      .replace(/(\d{4,5})(\d{4})$/, '$1-$2'); // Adiciona traço entre o quarto ou quinto e o último grupo de dígitos
+      .replace(/^(\d{2})(\d)/g, "($1) $2") // Adiciona parênteses em volta dos dois primeiros dígitos
+      .replace(/(\d{4,5})(\d{4})$/, "$1-$2"); // Adiciona traço entre o quarto ou quinto e o último grupo de dígitos
   };
-  
+
   const mascaraCEP = (cep) => {
-    let formattedCEP = cep.replace(/\D/g, ''); // Remove caracteres não numéricos
+    let formattedCEP = cep.replace(/\D/g, ""); // Remove caracteres não numéricos
     if (formattedCEP.length > 8) {
       formattedCEP = formattedCEP.slice(0, 8); // Limita a 8 dígitos numéricos
     }
-    return formattedCEP.replace(/(\d{5})(\d)/, '$1-$2'); // Adiciona traço após os cinco primeiros dígitos
+    return formattedCEP.replace(/(\d{5})(\d)/, "$1-$2"); // Adiciona traço após os cinco primeiros dígitos
   };
-  
 
   //eventos
   const handleChangeUf = (event) => {
     setUfNaturalidade(event.target.value);
   };
-
-  
 
   const handleChangeUfOrgao = (event) => {
     setUfOrgao(event.target.value);
@@ -144,13 +167,25 @@ const MemberShip = () => {
   };
 
   const handleSaveDependent = () => {
-    if ((!currentDependent.nomeCompletoDependente) || (!currentDependent.dataNasc) || (!currentDependent.parentesco) || (!currentDependent.cpfDependente) || (!currentDependent.celularDependente) || (currentDependent.cpfDependente.length < 14) || (currentDependent.celularDependente.length < 15)) {
+    if (
+      !currentDependent.nomeCompletoDependente ||
+      !currentDependent.dataNasc ||
+      !currentDependent.parentesco ||
+      !currentDependent.cpfDependente ||
+      !currentDependent.celularDependente ||
+      currentDependent.cpfDependente.length < 14 ||
+      currentDependent.celularDependente.length < 15
+    ) {
       setOpenError(true);
-    }
-
-    else{
+    } else {
       setDependentes([...dependentes, currentDependent]);
-      setCurrentDependent({ nomeCompletoDependente: '', dataNasc: '', parentesco: '',cpfDependente: '', celularDependente: '' });
+      setCurrentDependent({
+        nomeCompletoDependente: "",
+        dataNasc: "",
+        parentesco: "",
+        cpfDependente: "",
+        celularDependente: "",
+      });
       setShowDependentForm(true);
     }
   };
@@ -180,37 +215,50 @@ const MemberShip = () => {
     setSituacaoAtual(event.target.value);
   };
 
-  const handleCloseError = () => {
-    setOpenError(false);
-  };
+  // const handleCloseError = () => {
+  //   setOpenError(false);
+  // };
 
   const handleCloseSuccessDialog = () => {
     setOpenSuccessDialog(false);
   };
   const isValidEmail = (email) => {
     // Lista de domínios permitidos
-    const allowedDomains = ['com', 'net', 'org', 'com.br', 'org.br', 'edu', 'gov'];
-  
+    const allowedDomains = [
+      "com",
+      "net",
+      "org",
+      "com.br",
+      "org.br",
+      "edu",
+      "gov",
+    ];
+
     // Expressão regular melhorada para emails com suporte a subdomínios
-    const domainPattern = allowedDomains.map(domain => {
-      // Escape os caracteres especiais e permite subdomínios
-      const escapedDomain = domain.replace(/\./g, '\\.');
-      return `(?:[a-zA-Z0-9.-]+\\.)?${escapedDomain}`;
-    }).join('|');
-  
-    const emailRegex = new RegExp(`^[a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9.-]+\\.)?(${domainPattern})$`, 'i');
-  
+    const domainPattern = allowedDomains
+      .map((domain) => {
+        // Escape os caracteres especiais e permite subdomínios
+        const escapedDomain = domain.replace(/\./g, "\\.");
+        return `(?:[a-zA-Z0-9.-]+\\.)?${escapedDomain}`;
+      })
+      .join("|");
+
+    const emailRegex = new RegExp(
+      `^[a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9.-]+\\.)?(${domainPattern})$`,
+      "i"
+    );
+
     return emailRegex.test(email);
   };
   // const modalButton = [
   //   <SecondaryButton
-  
+
   //     text="OK"
   //     onClick= {() => handleCloseSuccessDialog()}
   //     width="338px"
   //   />,
   //   // <PrimaryButton
-     
+
   //   //   text="Confirmar"
   //   //   onClick= {submitForm}
   //   //   width="338px"
@@ -223,44 +271,8 @@ const MemberShip = () => {
     <SideButton key="sobre" text="Sobre" />,
   ];
 
-  const handleSubmit =  () => {
-    
-    const formData = {
-      email,
-      sexo,
-      estadoCivil,
-      tipoSanguineo,
-      uf_naturalidade,
-      uf_orgao,
-      uf_endereco,
-      escolaridade,
-      dataContratacao,
-      dataDeNascimento,
-      dataExpedicao,
-      cargo,
-      lotacao,
-      matricula,
-      nomeCompleto,
-      naturalidade,
-      rg,
-      orgao,
-      cpf,
-      nomeDaMae,
-      nomeDoPai,
-      cep,
-      cidade,
-      logradouro,
-      complemento,
-      telefone,
-      celular,
-      postoDeTrabalho,
-      orgaoExpedidor,
-      situacaoAtual,
-      religiao,
-      dependentes
-    };
-    
-    const erros = {}
+  const handleSubmit = () => {
+    const erros = {};
 
     if (!email) erros.email = 1;
     if (!sexo) erros.sexo = 1;
@@ -293,90 +305,85 @@ const MemberShip = () => {
     if (!orgaoExpedidor) erros.orgaoExpedidor = 1;
     if (!situacaoAtual) erros.situacaoAtual = 1;
     if (!religiao) erros.religiao = 1;
-    if(isValidEmail(email) === false) erros.email = 1;
-    if(cpf.length < 14) erros.cpf = 1;
-    if(rg.length < 9) erros.rg = 1;
-    if(cep.length < 9) erros.cep = 1;
-    if(telefone.length < 14) erros.telefone = 1;
-    if(celular.length < 15) erros.celular = 1;
-    
-    
+    if (isValidEmail(email) === false) erros.email = 1;
+    if (cpf.length < 14) erros.cpf = 1;
+    if (rg.length < 9) erros.rg = 1;
+    if (cep.length < 9) erros.cep = 1;
+    if (telefone.length < 14) erros.telefone = 1;
+    if (celular.length < 15) erros.celular = 1;
 
-    
+    console.log(erros);
     if (Object.keys(erros).length > 0) {
       setOpenError(true);
     } else {
       setOpenSuccessDialog(true);
-    }}
-
-
-    const submitForm = async () => {
-      const formData = {
-        email,
-        sexo,
-        estadoCivil,
-        tipoSanguineo,
-        uf_naturalidade,
-        uf_orgao,
-        uf_endereco,
-        escolaridade,
-        dataContratacao,
-        dataDeNascimento,
-        dataExpedicao,
-        cargo,
-        lotacao,
-        matricula,
-        nomeCompleto,
-        naturalidade,
-        rg,
-        orgao,
-        cpf,
-        nomeDaMae,
-        nomeDoPai,
-        cep,
-        cidade,
-        logradouro,
-        complemento,
-        telefone,
-        celular,
-        postoDeTrabalho,
-        orgaoExpedidor,
-        situacaoAtual,
-        religiao,
-        dependentes
-      };
-
-      const message = await createMemberShip(formData);
-      console.log(message);
-      setErrorFields(message);
-      setOpenSuccessSubmit(true);
     }
+  };
+
+  const submitForm = async () => {
+    const formData = {
+      email,
+      sexo,
+      estadoCivil,
+      tipoSanguineo,
+      uf_naturalidade,
+      uf_orgao,
+      uf_endereco,
+      escolaridade,
+      dataContratacao,
+      dataDeNascimento,
+      dataExpedicao,
+      cargo,
+      lotacao,
+      matricula,
+      nomeCompleto,
+      naturalidade,
+      rg,
+      orgao,
+      cpf,
+      nomeDaMae,
+      nomeDoPai,
+      cep,
+      cidade,
+      logradouro,
+      complemento,
+      telefone,
+      celular,
+      postoDeTrabalho,
+      orgaoExpedidor,
+      situacaoAtual,
+      religiao,
+      dependentes,
+    };
+
+    const message = await createMemberShip(formData);
+    console.log(message);
+    setErrorFields(message);
+    setOpenSuccessSubmit(true);
+  };
 
   return (
     <section className="container">
-
       <div className="bar-container">
-        <SideBar buttons={buttons} fullHeight={false}/>
+        <SideBar buttons={buttons} fullHeight={false} />
       </div>
 
-      <div className='forms-container'>
-
+      <div className="forms-container">
         <h1>Formulário de Filiação</h1>
 
         <h3> Dados Pessoais </h3>
 
-          <FieldText
-            label="Nome Completo"
-            value={nomeCompleto}
-            onChange={(e) => setnomeCompleto(e.target.value)}
-          />
+        <FieldText
+          label="Nome Completo"
+          value={nomeCompleto}
+          onChange={(e) => setnomeCompleto(e.target.value)}
+        />
         <div className="section-form">
-          
           <FieldText
             label="Religião"
             value={religiao}
             onChange={(e) => setReligiao(e.target.value)}
-            />
+          />
 
           <FieldSelect
             label="Tipo Sanguíneo"
@@ -385,11 +392,11 @@ const MemberShip = () => {
             options={tipoSanguineoList}
           />
 
-          <FieldText 
+          <FieldText
             label="Matrícula"
             value={matricula}
             onChange={(e) => setMatricula(e.target.value)}
-             />
+          />
 
           <DataSelect
             label="Data de Nascimento"
@@ -404,13 +411,13 @@ const MemberShip = () => {
             options={sexoList}
           />
 
-          <div className='double-box'>
+          <div className="double-box">
             <FieldText
-            label="Naturalidade"
-            value={naturalidade}
-            onChange={(e) => setNaturalidade(e.target.value)}
+              label="Naturalidade"
+              value={naturalidade}
+              onChange={(e) => setNaturalidade(e.target.value)}
             />
-            
+
             <FieldSelect
               label="UF"
               value={uf_naturalidade}
@@ -433,17 +440,18 @@ const MemberShip = () => {
             options={escolaridadeList}
           />
 
-          <FieldText 
+          <FieldText
             label="RG"
             value={rg}
             onChange={(e) => setRg(mascaraRg(e.target.value))}
-             />
+          />
 
-          <div className='double-box'>
-            <FieldText  
-              label = "Órgão Expeditor"
-              value = {orgaoExpedidor} 
-              onChange={(e) => setOrgaoExpedidor(e.target.value)}/>
+          <div className="double-box">
+            <FieldText
+              label="Órgão Expeditor"
+              value={orgaoExpedidor}
+              onChange={(e) => setOrgaoExpedidor(e.target.value)}
+            />
 
             <FieldSelect
               label="UF"
@@ -454,8 +462,8 @@ const MemberShip = () => {
           </div>
 
           <FieldText
-            label = "CPF" 
-            value = {cpf}
+            label="CPF"
+            value={cpf}
             onChange={(e) => setCpf(mascaraCPF(e.target.value))}
           />
 
@@ -466,65 +474,73 @@ const MemberShip = () => {
           />
 
           <FieldText
-            label = "Nome do Pai" 
-            value = {nomeDoPai}
-            onChange={(e) => setnomeDoPai(e.target.value)}/>
+            label="Nome do Pai"
+            value={nomeDoPai}
+            onChange={(e) => setnomeDoPai(e.target.value)}
+          />
 
           <FieldText
-            label = "Nome da Mãe" 
-            value = {nomeDaMae}
-            onChange={(e) => setnomeDaMae(e.target.value)}/>  
-        
+            label="Nome da Mãe"
+            value={nomeDaMae}
+            onChange={(e) => setnomeDaMae(e.target.value)}
+          />
         </div>
 
         <h3> Dados de Contato </h3>
 
         <FieldText
-            label = "E-mail" 
-            value = {email}
-            onChange={(e) => setEmail(e.target.value)}/>
+          label="E-mail"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
         <div className="section-form">
           <FieldText
-            label = "Celular" 
-            value = {celular}
-            onChange={(e) => setCelular(mascaraTelefone(e.target.value))}/>
+            label="Celular"
+            value={celular}
+            onChange={(e) => setCelular(mascaraTelefone(e.target.value))}
+          />
 
           <FieldText
-            label = "Telefone" 
-            value = {telefone}
-            onChange={(e) => setTelefone(mascaraTelefone(e.target.value))}/>
+            label="Telefone"
+            value={telefone}
+            onChange={(e) => setTelefone(mascaraTelefone(e.target.value))}
+          />
         </div>
 
         <h3> Endereço </h3>
         <div className="section-form">
-        <FieldText
-            label = "CEP" 
-            value = {cep}
-            onChange={(e) => setCep(mascaraCEP(e.target.value))}/>
-      <div className='double-box'>
-        <FieldText
-            label = "Cidade" 
-            value = {cidade}
-            onChange={(e) => setCidade(e.target.value)}/>
-
-          <FieldSelect
-            label="UF"
-            value={uf_endereco}
-            onChange={handleChangeUfEndereco}
-            options={ufList}
+          <FieldText
+            label="CEP"
+            value={cep}
+            onChange={(e) => setCep(mascaraCEP(e.target.value))}
           />
-        </div>
+          <div className="double-box">
+            <FieldText
+              label="Cidade"
+              value={cidade}
+              onChange={(e) => setCidade(e.target.value)}
+            />
+
+            <FieldSelect
+              label="UF"
+              value={uf_endereco}
+              onChange={handleChangeUfEndereco}
+              options={ufList}
+            />
+          </div>
 
           <FieldText
-            label = "Logradouro" 
-            value = {logradouro}
-            onChange={(e) => setLogradouro(e.target.value)}/>
+            label="Logradouro"
+            value={logradouro}
+            onChange={(e) => setLogradouro(e.target.value)}
+          />
 
           <FieldText
-            label = "Complemento" 
-            value = {complemento}
-            onChange={(e) => setComplemento(e.target.value)}/>
+            label="Complemento"
+            value={complemento}
+            onChange={(e) => setComplemento(e.target.value)}
+          />
         </div>
 
         <h3> Dados de Contratação </h3>
@@ -533,7 +549,6 @@ const MemberShip = () => {
             label="Cargo"
             value={cargo}
             onChange={(e) => setCargo(e.target.value)}
-            
           />
 
           <DataSelect
@@ -545,115 +560,138 @@ const MemberShip = () => {
             label="Lotação"
             value={lotacao}
             onChange={(e) => setlotacao(e.target.value)}
-          
           />
 
           <FieldText
-            label = "Órgão" 
-            value = {orgao}
-            onChange={(e) => setOrgao(e.target.value)}/>
+            label="Órgão"
+            value={orgao}
+            onChange={(e) => setOrgao(e.target.value)}
+          />
           <FieldText
-            label = "Posto de Trabalho" 
-            value = {postoDeTrabalho}
-            onChange={(e) => setpostoDeTrabalho(e.target.value)}/>
-          
-            
+            label="Posto de Trabalho"
+            value={postoDeTrabalho}
+            onChange={(e) => setpostoDeTrabalho(e.target.value)}
+          />
+
           <FieldSelect
             label="Situação Atual"
             value={situacaoAtual}
             onChange={handleChangeSituacaoAtual}
             options={situacaoAtualList}
           />
-
         </div>
-          <div> 
-            <div id="addDependentBttn" onClick={handleAddDependent}>
-              <h3>Adicionar participantes <AddCircleOutlineIcon /></h3>
-            </div>
-            {showDependentForm && (
-              <div >
-                <div className='dependentToAdd'>
-                  <div className="section-dependent-form">
-                    <FieldText
-                      label="Nome Completo"
-                      value={currentDependent.nomeCompletoDependente}
-                      onChange={(e) => handleDependentChange('nomeCompletoDependente', e.target.value)}
-                    />
+        <div>
+          <div id="addDependentBttn" onClick={handleAddDependent}>
+            <h3>
+              Adicionar participantes <AddCircleOutlineIcon />
+            </h3>
+          </div>
+          {showDependentForm && (
+            <div>
+              <div className="dependentToAdd">
+                <div className="section-dependent-form">
+                  <FieldText
+                    label="Nome Completo"
+                    value={currentDependent.nomeCompletoDependente}
+                    onChange={(e) =>
+                      handleDependentChange(
+                        "nomeCompletoDependente",
+                        e.target.value
+                      )
+                    }
+                  />
 
-                <DataSelect
-                  label="Data de Nascimento"
-                  value={dataNasc}
-                  onChange={(newDate) => handleDependentChange('dataNasc', newDate)}
-                />
+                  <DataSelect
+                    label="Data de Nascimento"
+                    value={currentDependent.dataNasc}
+                    onChange={(newDate) =>
+                      handleDependentChange("dataNasc", newDate)
+                    }
+                  />
 
-                    <FieldText
-                      label="Parentesco"
-                      value={currentDependent.parentesco}
-                      onChange={(e) => handleDependentChange('parentesco', e.target.value)}
-                    />
+                  <FieldText
+                    label="Parentesco"
+                    value={currentDependent.parentesco}
+                    onChange={(e) =>
+                      handleDependentChange("parentesco", e.target.value)
+                    }
+                  />
 
-                    <FieldText
-                      label="CPF"
-                      value={currentDependent.cpfDependente}
-                      onChange={(e) => handleDependentChange('cpfDependente', mascaraCPF(e.target.value))}
-                    />
+                  <FieldText
+                    label="CPF"
+                    value={currentDependent.cpfDependente}
+                    onChange={(e) =>
+                      handleDependentChange(
+                        "cpfDependente",
+                        mascaraCPF(e.target.value)
+                      )
+                    }
+                  />
 
-                    <FieldText
-                      label="Celular"
-                      value={currentDependent.celularDependente}
-                      onChange={(e) => handleDependentChange('celularDependente', mascaraTelefone(e.target.value))}
-                    />        
-                  </div>
-                  <PrimaryButton sx={{ width: '100%' }} text="Adicionar Dependente" onClick={handleSaveDependent} />
+                  <FieldText
+                    label="Celular"
+                    value={currentDependent.celularDependente}
+                    onChange={(e) =>
+                      handleDependentChange(
+                        "celularDependente",
+                        mascaraTelefone(e.target.value)
+                      )
+                    }
+                  />
                 </div>
-
-                {dependentes.map((dependent, index) => (
-                  <div >
-                    <h3 id='dependentTitle'>Dependente {index+1}</h3>
-                    <div className='dependentBox' key={index}>
-                      <div className='section-dependent-form'>
-                        <FieldText 
-                          label="Nome Completo"
-                          value={dependent.nomeCompletoDependente}
-                        />
-                        <FieldText
-                          label="Data de Nascimento"  
-                          value={dayjs(dependent.dataNasc).format('DD/MM/YYYY')}
-                        />
-
-                        
-
-                        <FieldText 
-                          label="Parentesco"
-                          value={dependent.parentesco}
-                        />
-
-                        <FieldText 
-                          label="CPF"
-                          value={dependent.cpfDependente}
-                        />
-
-                        <FieldText 
-                          label="Celular"
-                          value={dependent.celularDependente}
-                        />
-                      </div>
-                        <PrimaryButton text="Remover Dependente"
-                                       onClick={() => handleRemoveDependent(index)}
-                                       sx={{ width: '100%' }}
-                                       />
-                    </div>
-                  </div>
-                  
-                ))}
+                <PrimaryButton
+                  sx={{ width: "100%" }}
+                  text="Adicionar Dependente"
+                  onClick={handleSaveDependent}
+                />
               </div>
-            )}
-          </div>
-          <div id='envio'>
-            <PrimaryButton text="ENVIAR SOLICITAÇÃO" sx={{ width: '100%' }} onClick={() => handleSubmit()} />
-          </div>
-          
-          <Snackbar
+
+              {dependentes.map((dependent, index) => (
+                <div key={index}>
+                  <h3 id="dependentTitle">Dependente {index + 1}</h3>
+                  <div className="dependentBox" key={index}>
+                    <div className="section-dependent-form">
+                      <FieldText
+                        label="Nome Completo"
+                        value={dependent.nomeCompletoDependente}
+                      />
+                      <FieldText
+                        label="Data de Nascimento"
+                        value={dayjs(dependent.dataNasc).format("DD/MM/YYYY")}
+                      />
+
+                      <FieldText
+                        label="Parentesco"
+                        value={dependent.parentesco}
+                      />
+
+                      <FieldText label="CPF" value={dependent.cpfDependente} />
+
+                      <FieldText
+                        label="Celular"
+                        value={dependent.celularDependente}
+                      />
+                    </div>
+                    <PrimaryButton
+                      text="Remover Dependente"
+                      onClick={() => handleRemoveDependent(index)}
+                      sx={{ width: "100%" }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+        <div id="envio">
+          <PrimaryButton
+            text="ENVIAR SOLICITAÇÃO"
+            sx={{ width: "100%" }}
+            onClick={() => handleSubmit()}
+          />
+        </div>
+
+        <Snackbar
           open={openError}
           autoHideDuration={6000}
           onClose={() => setOpenError(false)}
@@ -663,7 +701,7 @@ const MemberShip = () => {
           </Alert>
         </Snackbar>
         <Snackbar
-          open={errorFields }
+          open={errorFields}
           autoHideDuration={6000}
           onClose={() => setErrorFields(false)}
         >
@@ -671,44 +709,44 @@ const MemberShip = () => {
             {errorFields}
           </Alert>
         </Snackbar>
-        
-        <Modal 
-                show={openSuccessDialog} 
-                // setOpenSuccessDialog={setOpenSuccessDialog} 
-                // submitForm={submitForm}
 
-                width= '608px'
-                alertTitle='Ao confirmar essa solicitação, você estará concordando com a declaração a seguir:'
-                
-                alert="Declaro que, ao filiar-me nesta data ao SINDPOL-DF, concordo e ratifico com todas as minhas obrigações previstas no Estatuto Social, regime interno e deliberação das assembleias gerais do Sindicato dos Policiais Penais do Distrito Federal. Ao tempo que comprometo-me em contribuir mensalmente com o valor de 1,5% vencimento básico, conforme Art. 105 do Estatuto APROVADO pela assembleia geral, o qual AUTORIZO que consignado em folha de pagamento junto ao órgão competente em favor do SINDPOL-DF, bem como outras contribuições de caráter extraordinário - desde que aprovadas em assembleia específica - Reconheço ainda que tais contribuições têm o condão de manter a entidade de representação sindical forte e independente no intuito de garantir melhores condições de trabalho para toda a categoria. Fico ciente que, ao desejar afastar-me do quadro social do sindicato, devo manifestar-me por escrito, em formulário específico, com antecedência de 60 (sessenta) dias. Pela presente, solicito minha admissão no quadro de filiados do SINDICATO DOS POLICIAIS PENAIS DO DISTRITO FEDERAL."
-            > <SecondaryButton
-  
+        <Modal
+          show={openSuccessDialog}
+          // setOpenSuccessDialog={setOpenSuccessDialog}
+          // submitForm={submitForm}
+
+          width="608px"
+          alertTitle="Ao confirmar essa solicitação, você estará concordando com a declaração a seguir:"
+          alert="Declaro que, ao filiar-me nesta data ao SINDPOL-DF, concordo e ratifico com todas as minhas obrigações previstas no Estatuto Social, regime interno e deliberação das assembleias gerais do Sindicato dos Policiais Penais do Distrito Federal. Ao tempo que comprometo-me em contribuir mensalmente com o valor de 1,5% vencimento básico, conforme Art. 105 do Estatuto APROVADO pela assembleia geral, o qual AUTORIZO que consignado em folha de pagamento junto ao órgão competente em favor do SINDPOL-DF, bem como outras contribuições de caráter extraordinário - desde que aprovadas em assembleia específica - Reconheço ainda que tais contribuições têm o condão de manter a entidade de representação sindical forte e independente no intuito de garantir melhores condições de trabalho para toda a categoria. Fico ciente que, ao desejar afastar-me do quadro social do sindicato, devo manifestar-me por escrito, em formulário específico, com antecedência de 60 (sessenta) dias. Pela presente, solicito minha admissão no quadro de filiados do SINDICATO DOS POLICIAIS PENAIS DO DISTRITO FEDERAL."
+        >
+          {" "}
+          <SecondaryButton
             text="cancelar"
-            onClick= {() => handleCloseSuccessDialog()}
+            onClick={() => handleCloseSuccessDialog()}
             width="608px"
           />
           <PrimaryButton
-            sx={{ width: '608px' }}
+            sx={{ width: "608px" }}
             text="solicitar filiação ao sindpol-df"
-            onClick= {submitForm}
+            onClick={submitForm}
           />
-            </Modal>
+        </Modal>
 
-          <Modal
-            show={openSuccessSubmit}
-            width='250px'
-            alertTitle='Solicitação enviada!'
-            alert='Você deve receber um e-mail em breve com mais informações.'  
-          >
+        <Modal
+          show={openSuccessSubmit}
+          width="250px"
+          alertTitle="Solicitação enviada!"
+          alert="Você deve receber um e-mail em breve com mais informações."
+        >
           <PrimaryButton
-            sx={{ width: '100%' }}
+            sx={{ width: "100%" }}
             text="OK"
-            onClick= {()=>{navigate('/')}}
+            onClick={() => {
+              navigate("/");
+            }}
             width="250px"
           />
-          </Modal>
-        
-        
+        </Modal>
       </div>
     </section>
   );

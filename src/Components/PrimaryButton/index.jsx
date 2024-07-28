@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
-import  theme  from "../../Styles/global";
+import theme from "../../Styles/global";
 import { Button } from "@mui/material";
 
-export default function PrimaryButton ({ text, onClick, sx }) {
+export default function PrimaryButton({ text, onClick, sx }) {
   const rgbaValue09 = `rgba(174, 136, 60, 0.9);`;
 
   return (
@@ -30,5 +30,5 @@ export default function PrimaryButton ({ text, onClick, sx }) {
 PrimaryButton.propTypes = {
   text: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
-  sx: PropTypes.object
+  sx: PropTypes.object,
 };

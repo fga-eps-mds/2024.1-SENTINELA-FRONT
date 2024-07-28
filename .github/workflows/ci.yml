@@ -1,0 +1,160 @@
+name: front-ci
+
+on:
+  push:
+    branches: [main, devel]
+  pull_request:
+    branches:
+      - main
+      - devel
+    types: [opened, synchronize, reopened]
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+
+      - name: 📬 Caching
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ github.workspace }}/node_modules
+            ${{ github.workspace }}/dist
+          key: ${{ runner.os }}-vite-${{ hashFiles('*/package-lock.json') }}-${{ hashFiles('/.{js,jsx,ts,tsx}') }}
+          restore-keys: |
+            ${{ runner.os }}-vite-${{ hashFiles('**/package-lock.json') }}-
+
+      - name: 🧰 Instala bibliotecas e dependências
+        run: npm i
+
+      - name: 🔍 Verifica estilização do código
+        run: npm run check-format
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+
+      - name: 📬 Caching
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ github.workspace }}/node_modules
+            ${{ github.workspace }}/dist
+          key: ${{ runner.os }}-vite-${{ hashFiles('*/package-lock.json') }}-${{ hashFiles('/.{js,jsx,ts,tsx}') }}
+          restore-keys: |
+            ${{ runner.os }}-vite-${{ hashFiles('**/package-lock.json') }}-
+
+      - name: 🧰 Instala bibliotecas e dependências
+        run: npm i
+        
+      - name: 🧹 Verifica eslint
+        run: npm run lint
+
+  build:
+    needs: [format, lint]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+
+      - name: 📬 Caching
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ github.workspace }}/node_modules
+            ${{ github.workspace }}/dist
+          key: ${{ runner.os }}-vite-${{ hashFiles('*/package-lock.json') }}-${{ hashFiles('/.{js,jsx,ts,tsx}') }}
+          restore-keys: |
+            ${{ runner.os }}-vite-${{ hashFiles('**/package-lock.json') }}-
+
+      - name: 🧰 Instala bibliotecas e dependências
+        run: npm i
+
+      - name: 📦 Builda o projeto
+        run: npm run build
+
+  test:
+    runs-on: ubuntu-latest
+    # TO DO: adicionar variaveis de ambiente conforme necessario
+    # env:
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+
+      - name: 📬 Caching
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ github.workspace }}/node_modules
+            ${{ github.workspace }}/dist
+          key: ${{ runner.os }}-vite-${{ hashFiles('*/package-lock.json') }}-${{ hashFiles('/.{js,jsx,ts,tsx}') }}
+          restore-keys: |
+            ${{ runner.os }}-vite-${{ hashFiles('**/package-lock.json') }}-
+
+      - name: 🧰 Instala bibliotecas e dependências
+        run: npm i 
+
+      - name: 🧪 Roda suíte de testes
+        run: npm test
+
+  sonarcloud:
+    # TO DO: adicionar variaveis de ambiente conforme necessario
+    # env:
+    name: sonarcloud
+    needs: [test]
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: 📬 Caching
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ github.workspace }}/node_modules
+            ${{ github.workspace }}/dist
+          key: ${{ runner.os }}-vite-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.{js,jsx,ts,tsx}') }}
+          restore-keys: |
+            ${{ runner.os }}-vite-${{ hashFiles('**/package-lock.json') }}-
+
+      - name: 🧰 Instala bibliotecas e dependências
+        run: npm i
+
+      - name: 📜 Relatório do eslint
+        run: npx eslint -f json -o reports/eslint-report.json src || true
+
+      - name: 🧪 Testes e cobertura
+        run: VITEST_REPORTER=vitest-sonar-reporter CI=true npm test -- --coverage
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
