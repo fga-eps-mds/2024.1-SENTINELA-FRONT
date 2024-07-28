@@ -14,5 +14,16 @@ export default ({ mode }) => {
         src: "/src",
       },
     },
+    base: "/", // Ensure this is set for Netlify
+    build: {
+      outDir: "dist",
+      rollupOptions: {
+        output: {
+          entryFileNames: `[name].[hash].js`,
+          chunkFileNames: `[name].[hash].js`,
+          assetFileNames: `[name].[hash].[ext]`,
+        },
+      },
+    },
   });
 };
