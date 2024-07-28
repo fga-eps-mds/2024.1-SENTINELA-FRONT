@@ -29,3 +29,21 @@ export async function listBankAccount(name) {
       return error.response.data;
   }
 }
+
+export async function getBankAccount(id) {
+  try {
+      const response = await APIBank.get(`/finance/bankAccount/${id}`);
+      return response.data;
+  } catch (error) {
+      return error.response.data;
+  }
+}
+
+export async function deleteBankAccount(id) {
+  try {
+      const response = await APIBank.delete(`/finance/deleteBankAccount/${id}`);
+      return response.data;
+  } catch (error) {
+      return error.response.data;
+  }
+}
