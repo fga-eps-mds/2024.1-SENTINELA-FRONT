@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import AuthContext from "../../../Context/auth";
 import { useNavigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "../../../Context/auth";
@@ -13,7 +13,7 @@ export default function ListBankAccount() {
     
     const [nome, setNome] = useState('');
     const [busca, setBusca] = useState('');
-    const [dataMap, setDataMap] = useState(new Map());
+    const [dataMap, setDataMap] = useState(null);
 
     const context = useContext(AuthContext);
     const navigate = useNavigate();
@@ -28,15 +28,18 @@ export default function ListBankAccount() {
         try {
             // Chama listBankAccount e aguarda a resposta
             const result = await listBankAccount(busca);
-            const jsonData = response.data;
-    
-            // Exibe um alerta com a resposta da pesquisa (ou ajuste conforme necessário)
-            alert("Pesquisa realizada com sucesso. Veja o console para mais detalhes.");
+            setDataMap(result);
         } catch (error) {
             console.error("Erro ao realizar a pesquisa:", error);
             alert("Ocorreu um erro ao realizar a pesquisa.");
         }
     }
+
+    useEffect(() => {
+        if (dataMap) {
+            console.log(dataMap);
+        }
+    }, [dataMap]);
 
     const buttons = [
         <SideButton key="home" text="PÁGINA INICIAL" onClick={handleHome} />,
@@ -73,6 +76,17 @@ export default function ListBankAccount() {
                 </div>
                 
             </div>
+
+            {dataMap ? (
+            <div className="result">
+              <div>
+                <SecondaryButton text={dataMap.name} />
+              </div>
+            </div>
+          ) : (
+            <div>Nenhum resultado encontrado.</div>
+          )}
+
         </div>
 
     
