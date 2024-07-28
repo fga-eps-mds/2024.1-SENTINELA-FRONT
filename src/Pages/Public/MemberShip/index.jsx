@@ -16,11 +16,14 @@ import { Snackbar } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import SecondaryButton from '../../../Components/SecondaryButton';
 import Modal from '../../../Components/Modal';
+import { useNavigate } from "react-router-dom";
+
 
 
 
 const MemberShip = () => {
-  console.log('MemberShip called');
+  const navigate = useNavigate();
+  
   const [email, setEmail] = useState('');
   const [sexo, setSexo] = useState('');
   const [estadoCivil, setEstadoCivil] = useState('');
@@ -56,6 +59,7 @@ const MemberShip = () => {
   const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
   const [errorFields, setErrorFields] = useState(false);
   const [religiao, setReligiao] = useState('');
+  const [openSuccessSubmit, setOpenSuccessSubmit] = useState(false);
     
   //listas dos selects
   const tipoSanguineoList = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
@@ -343,16 +347,16 @@ const MemberShip = () => {
       };
 
       const message = await createMemberShip(formData);
+      console.log(message);
       setErrorFields(message);
-      console.log(JSON.stringify(formData));
-      alert('deu certo!')
+      setOpenSuccessSubmit(true);
     }
 
   return (
     <section className="container">
 
       <div className="bar-container">
-        <SideBar buttons={buttons} />
+        <SideBar buttons={buttons} style=".side-bar {height: 100%}"/>
       </div>
 
       <div className='forms-container'>
@@ -563,9 +567,9 @@ const MemberShip = () => {
 
         </div>
           <div> 
-            <buttons id="addDependentBttn" onClick={handleAddDependent}>
+            <div id="addDependentBttn" onClick={handleAddDependent}>
               <h3>Adicionar participantes <AddCircleOutlineIcon /></h3>
-            </buttons>
+            </div>
             {showDependentForm && (
               <div >
                 <div className='dependentToAdd'>
@@ -689,6 +693,19 @@ const MemberShip = () => {
             width="608px"
           />
             </Modal>
+
+          <Modal
+            show={openSuccessSubmit}
+            width='250px'
+            alertTitle='Solicitação enviada!'
+            alert='Você deve receber um e-mail em breve com mais informações.'  
+          >
+          <PrimaryButton
+            text="OK"
+            onClick= {()=>{navigate('/')}}
+            width="250px"
+          />
+          </Modal>
         
         
       </div>
