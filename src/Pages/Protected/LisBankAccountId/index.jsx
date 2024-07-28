@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import AuthContext from "../../../Context/auth";
 import { useAuth } from "../../../Context/auth";
 import SideBar from "../../../Components/SideBar";
@@ -12,6 +12,7 @@ import "./index.css";
 import { Snackbar } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import { createBankAccount } from "../../../Services/bankAccountService";
+import { getBankAccount } from "../../../Services/bankAccountService";
 
 
 const BankAccountId = () => {
@@ -27,6 +28,7 @@ const BankAccountId = () => {
     
     const context = useContext(AuthContext);
     const { user } = useAuth();
+    const { id } = useParams();  // Pega o ID da URL
     const navigate = useNavigate();
 
     const listAccountType = ['Conta Corrente', 'Poupança', 'Investimento', 'Caixa'];
@@ -111,6 +113,21 @@ const BankAccountId = () => {
         <SideButton key="financeiro" text="FINANCEIRO" onClick={() => navigate("/finance/")}/>,
         <SideButton key="beneficios" text="BENEFÍCIOS" />,
     ];
+
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const result = await getBankAccount(id);
+            console.log(result);
+          } catch (error) {
+            console.error("Erro ao buscar dados:", error);
+          }
+        };
+    
+        if (id) {
+          fetchData();
+        }
+      }, [id]);
 
     return user ? (
         <section className="bank-container">
