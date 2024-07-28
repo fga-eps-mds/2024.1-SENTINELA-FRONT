@@ -8,6 +8,8 @@ import SideButton from "../../../Components/SideButton";
 import { useState, useContext } from "react";
 import AuthContext from "../../../Context/auth";
 import { useNavigate } from "react-router-dom";
+import sindpol_logo from "src/assets/sindpol-logo.png";
+import sentinela_logo from "src/assets/sentinela-logo.png";
 
 export default function Login() {
   const context = useContext(AuthContext);
@@ -32,14 +34,10 @@ export default function Login() {
       <SideBar buttons={buttons} />
       <div className="area-card">
         <div className="card">
-          <img
-            className="logo"
-            src="src/assets/sindpol-logo.png"
-            alt="Sindpol Logo"
-          />
+          <img className="logo" src={sindpol_logo} alt="Sindpol Logo" />
           <img
             className="sentinela"
-            src="src/assets/sentinela-logo.png"
+            src={sentinela_logo}
             alt="Sentinela Logo"
           />
           <LabeledTextField

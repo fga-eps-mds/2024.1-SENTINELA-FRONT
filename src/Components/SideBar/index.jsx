@@ -1,16 +1,14 @@
 import "./index.css";
 import PropTypes from "prop-types";
+import sindpol_logo from "src/assets/sindpol-logo.png";
+import sentinela_logo from "src/assets/sentinela-logo.png";
 import { ButtonGroup } from "@mui/material";
 
 export default function SideBar({ buttons }) {
   return (
     <div className="side-bar">
-      <img className="logo" src="/assets/sindpol-logo.png" alt="Sindpol Logo" />
-      <img
-        className="sentinela"
-        src="/assets/sentinela-logo.png"
-        alt="Sentinela Logo"
-      />
+      <img className="logo" src={sindpol_logo} alt="Sindpol Logo" />
+      <img className="sentinela" src={sentinela_logo} alt="Sentinela Logo" />
       <div className="menu-lateral">
         <ButtonGroup
           orientation="vertical"
