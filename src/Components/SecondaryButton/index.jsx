@@ -5,7 +5,7 @@ import { Button } from "@mui/material";
 
 const rgbaValue01 = `rgba(174, 136, 60, 0.1);`;
 
-export default function SecondaryButton ({ text ,width,onClick}) {
+export default function SecondaryButton ({ text, onClick, sx }) {
   return (
     <Button
       variant="contained"
@@ -15,14 +15,14 @@ export default function SecondaryButton ({ text ,width,onClick}) {
         color: theme.palette.custom.button, // Cor do texto do botão
         backgroundColor: "transparent", // Fundo transparente
         border: `2px solid ${theme.palette.custom.button}`, // Cor do stroke em torno do botão
-        width: "100%", // Largura do botão
-        maxWidth:width, // Largura máxima do botão
+        width: "400px", // Largura do botão
 
         marginTop: "50px",
         "&amp;:hover": {
           transform: "scale(1.03)",
           backgroundColor: rgbaValue01,
         },
+        ...sx,
       }}
     >
       {text}
@@ -32,7 +32,6 @@ export default function SecondaryButton ({ text ,width,onClick}) {
 
 SecondaryButton.propTypes = {
   text: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
-  width: PropTypes.string
-  
+  onClick: PropTypes.func.isRequired, 
+  sx: PropTypes.object,
 };

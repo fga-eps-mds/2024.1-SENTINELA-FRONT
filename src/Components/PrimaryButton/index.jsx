@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import  theme  from "../../Styles/global";
 import { Button } from "@mui/material";
 
-export default function PrimaryButton ({ text, onClick,width }) {
+export default function PrimaryButton ({ text, onClick, sx }) {
   const rgbaValue09 = `rgba(174, 136, 60, 0.9);`;
 
   return (
@@ -13,13 +13,13 @@ export default function PrimaryButton ({ text, onClick,width }) {
         fontFamily: "Noto Sans, sans-serif", // Definindo a fonte para Noto Sans Display Medium
         color: theme.palette.custom.content, // Cor do texto do botão
         backgroundColor: theme.palette.custom.button, // Fundo transparente
-        width: "100%", // Largura do botão
-        maxWidth:width, // Largura máxima do botão // Largura do botão
+        width: "400px", // Largura do botão
         marginTop: "15px",
         "&amp;:hover": {
           transform: "scale(1.03)",
           backgroundColor: rgbaValue09,
         },
+        ...sx,
       }}
     >
       {text}
@@ -30,5 +30,5 @@ export default function PrimaryButton ({ text, onClick,width }) {
 PrimaryButton.propTypes = {
   text: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
-  width: PropTypes.string
+  sx: PropTypes.object
 };

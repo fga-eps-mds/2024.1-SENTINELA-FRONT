@@ -356,7 +356,7 @@ const MemberShip = () => {
     <section className="container">
 
       <div className="bar-container">
-        <SideBar buttons={buttons} style=".side-bar {height: 100%}"/>
+        <SideBar buttons={buttons} fullHeight={false}/>
       </div>
 
       <div className='forms-container'>
@@ -604,7 +604,7 @@ const MemberShip = () => {
                       onChange={(e) => handleDependentChange('celularDependente', mascaraTelefone(e.target.value))}
                     />        
                   </div>
-                  <PrimaryButton text="Adicionar Dependente" onClick={handleSaveDependent} />
+                  <PrimaryButton sx={{ width: '100%' }} text="Adicionar Dependente" onClick={handleSaveDependent} />
                 </div>
 
                 {dependentes.map((dependent, index) => (
@@ -640,7 +640,7 @@ const MemberShip = () => {
                       </div>
                         <PrimaryButton text="Remover Dependente"
                                        onClick={() => handleRemoveDependent(index)}
-                                       
+                                       sx={{ width: '100%' }}
                                        />
                     </div>
                   </div>
@@ -650,7 +650,7 @@ const MemberShip = () => {
             )}
           </div>
           <div id='envio'>
-            <PrimaryButton text="ENVIAR SOLICITAÇÃO" onClick={() => handleSubmit()} />
+            <PrimaryButton text="ENVIAR SOLICITAÇÃO" sx={{ width: '100%' }} onClick={() => handleSubmit()} />
           </div>
           
           <Snackbar
@@ -688,9 +688,9 @@ const MemberShip = () => {
             width="608px"
           />
           <PrimaryButton
+            sx={{ width: '608px' }}
             text="solicitar filiação ao sindpol-df"
             onClick= {submitForm}
-            width="608px"
           />
             </Modal>
 
@@ -701,6 +701,7 @@ const MemberShip = () => {
             alert='Você deve receber um e-mail em breve com mais informações.'  
           >
           <PrimaryButton
+            sx={{ width: '100%' }}
             text="OK"
             onClick= {()=>{navigate('/')}}
             width="250px"

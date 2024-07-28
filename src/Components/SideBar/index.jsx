@@ -2,9 +2,9 @@ import "./index.css";
 import PropTypes from "prop-types";
 import { ButtonGroup } from "@mui/material";
 
-export default function SideBar({ buttons }) {
+export default function SideBar({ buttons, fullHeight = true }) {
   return (
-    <div className="side-bar">
+    <div className="side-bar" style={{ height: fullHeight ? '100vh' : '100%' }}>
       <img
         className="logo"
         src="src/assets/sindpol-logo.png"
@@ -21,6 +21,7 @@ export default function SideBar({ buttons }) {
           aria-label="Vertical button group"
           variant="text"
           sx={{
+            height: '100%',
             width: "380px",
             "& .MuiButton-root": {
               color: "#3D160D", // Cor do texto dos botões
@@ -37,4 +38,5 @@ export default function SideBar({ buttons }) {
 
 SideBar.propTypes = {
   buttons: PropTypes.array.isRequired,
+  fullHeight: PropTypes.bool,
 };
