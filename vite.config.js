@@ -14,7 +14,7 @@ export default ({ mode }) => {
         src: "/src",
       },
     },
-    base: "/", // Ensure this is set for Netlify
+    base: "/", // Ensure this is set for correct asset paths
     build: {
       outDir: "dist",
       rollupOptions: {
