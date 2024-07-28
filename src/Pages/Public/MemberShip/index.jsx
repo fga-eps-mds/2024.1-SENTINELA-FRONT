@@ -723,7 +723,7 @@ const MemberShip = () => {
           <SecondaryButton
             text="cancelar"
             onClick={() => handleCloseSuccessDialog()}
-            width="608px"
+            sx={{ width: "608px" }}
           />
           <PrimaryButton
             sx={{ width: "608px" }}
