@@ -140,47 +140,58 @@
     margin-left: 1rem;
     color: red !important;
   }
-
-  .custom-dialog .MuiDialog-paper {
-    width: 338px;
-    height: 220px;
-    border-radius: 20px;
-    background-color: #eae3d7;
-  }
-  .custom-dialog .MuiDialogTitle-root {
-    width: 269px;
-    height: 44px;
+  
+  .modal-editor {
+    position: relative; /* Pode ser necessário para o posicionamento do modal */
+    width: 100vw; /* Largura da viewport */
+    height: 100vh; /* Altura da viewport */
     display: flex;
     justify-content: center;
-    padding: 6px;
-    font-size: 16px;
-    color: white;
-    background-color: #ae883c;
-    margin-top: 46px;
-    margin-left: 35px;
-    border-width: 3px;
-    border-color: #ae883c;
-    border-style: solid;
-    border-radius: 4px;
+    align-items: center;
   }
+  
+  .modal-body {
+    margin-top: 20px; /* Ajuste a distância conforme necessário */
+  }
+  
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 90%;
+    width: 338px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+
   .custom-dialog-button {
-    width: 269px;
+    width: 100px; /* Ajuste para coincidir com a largura do título */
     height: 44px;
     font-family: "Nato Sans";
     font-size: 16px !important;
     background-color: #eae3d7 !important;
     color: #ae883c !important;
-    padding: 6px !important;
-    margin-right: 25px !important;
-    margin-top: 36px !important;
     border-width: 3px !important;
     border-color: #ae883c !important;
     border-style: solid !important;
     border-radius: 4px !important;
     cursor: pointer !important;
-    display: flex;
-    justify-content: center;
+   
   }
+  
   .custom-dialog-button:hover {
     background-color: rgba(0, 0, 0, 0.1) !important;
   }
@@ -360,40 +371,27 @@
     color: red !important;
   }
 
-  .custom-dialog .MuiDialog-paper {
-    width: 338px;
-    height: 220px;
-    border-radius: 20px;
-    background-color: #eae3d7;
-  }
-
-  .custom-dialog .MuiDialogTitle-root {
-    width: 269px;
-    height: 44px;
+  .modal{
+    gap: 24px;
+  } 
+  
+  .custom-alert-title{
     display: flex;
-    justify-content: center;
-    padding: 6px;
-    font-size: 16px;
-    color: white;
-    background-color: #ae883c;
-    margin-top: 46px;
-    margin-left: 35px;
-    border-width: 3px;
-    border-color: #ae883c;
-    border-style: solid;
-    border-radius: 4px;
+    justify-content: center;  
+    align-items: center;      
+    text-align: center;  
+    margin: 2px; 
+    padding-left: 18px;
   }
 
   .custom-dialog-button {
-    width: 269px;
+    width: 269px; 
     height: 44px;
     font-family: "Nato Sans";
     font-size: 16px !important;
     background-color: #eae3d7 !important;
     color: #ae883c !important;
     padding: 6px !important;
-    margin-right: 25px !important;
-    margin-top: 36px !important;
     border-width: 3px !important;
     border-color: #ae883c !important;
     border-style: solid !important;
@@ -401,8 +399,9 @@
     cursor: pointer !important;
     display: flex;
     justify-content: center;
+    align-items: center; /* Alinha o texto verticalmente */
   }
-
+  
   .custom-dialog-button:hover {
     background-color: rgba(0, 0, 0, 0.1) !important;
   }
