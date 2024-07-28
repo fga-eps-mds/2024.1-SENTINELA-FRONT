@@ -34,6 +34,8 @@ const BankAccountId = () => {
 
     const listAccountType = ['Conta Corrente', 'Poupança', 'Investimento', 'Caixa'];
     const listStatus = ['Ativo', 'Inativo'];
+    const [bankAccountType, setBankAccountType] = useState('')
+    const [bankStatus, setBankStatus] = useState('')
 
     const handleChangeAccountType = (e) => {
         setAccountType(e.target.value);
@@ -121,6 +123,8 @@ const BankAccountId = () => {
             const result = await getBankAccount(id);
             console.log(result);
             setDataMap(result);
+            setBankAccountType(result.accountType);
+            setBankStatus(result.status)
           } catch (error) {
             console.error("Erro ao buscar dados:", error);
           }
@@ -131,6 +135,8 @@ const BankAccountId = () => {
         }
       }, [id]);
 
+
+
     return user ? (
         <section className="bank-container">
             <div>
@@ -140,13 +146,13 @@ const BankAccountId = () => {
                 <h1>Visualização de Conta Bancária</h1>
                 <div className="form">
                     <FieldText label="Nome *" value={name ? name : dataMap.name} onChange={(e) => setName(e.target.value)} />
-                    <FieldSelect  label="Tipo de conta*" value={accountType} onChange={handleChangeAccountType}  options={listAccountType}/>
+                    <FieldSelect  label="Tipo de conta*" value={accountType? accountType : bankAccountType} onChange={handleChangeAccountType}  options={listAccountType}/>
                     <FieldText label="Banco *" value={bank ? bank : dataMap.bank} onChange={(e) => setBank(e.target.value)} />
                     <FieldText label="Agência" value={dataMap.agency} onChange={(e) => setAgency(agencia(e.target.value))} />
                     <FieldText label="Número da conta" value={dataMap.accountNumber} onChange={(e) => setAccountNumber(numeroConta(e.target.value))} />
                     <FieldText label="DV" value={dataMap.dv} onChange={(e) => setDv(digitverificator(e.target.value))} />
                     <FieldText label="Pix" value={dataMap.pix} onChange={(e) => setPix(e.target.value)} />
-                    <FieldText label="Status *" value={dataMap.status} onChange={(e) => setStatus(e.target.value)}/>
+                    <FieldSelect  label="Status *" value={status? status: bankStatus} onChange={(e) => setStatus(e.target.value)}  options={listStatus}/>
                 </div>
                 <div className="edit-buttons">
                     <SecondaryButton text="Deletar" onClick={"#"} />
