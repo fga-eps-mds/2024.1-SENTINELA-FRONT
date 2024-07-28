@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import AuthContext from "../../../Context/auth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AuthProvider, useAuth } from "../../../Context/auth";
 import SideBar from "../../../Components/SideBar";
 import SideButton from "../../../Components/SideButton";
@@ -14,6 +14,7 @@ export default function ListBankAccount() {
     const [nome, setNome] = useState('');
     const [busca, setBusca] = useState('');
     const [dataMap, setDataMap] = useState(null);
+    const { id } = useParams();  // Pega o ID da URL
 
     const context = useContext(AuthContext);
     const navigate = useNavigate();
@@ -40,6 +41,10 @@ export default function ListBankAccount() {
             console.log(dataMap);
         }
     }, [dataMap]);
+
+    const handleNavigateWithId = (id) => {
+        navigate(`/finance/listBankAccount/${id}`);
+      };
 
     const buttons = [
         <SideButton key="home" text="PÁGINA INICIAL" onClick={handleHome} />,
@@ -81,7 +86,9 @@ export default function ListBankAccount() {
             {dataMap && dataMap.name ? (
             <div className="result">
               <div>
-                <SecondaryButton text={dataMap.name} />
+                <SecondaryButton 
+                text={dataMap.name}
+                onClick={() => handleNavigateWithId(dataMap._id)} />
               </div>
             </div>
           ) : (

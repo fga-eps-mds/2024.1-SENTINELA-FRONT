@@ -5,6 +5,7 @@ import Home from '../Pages/Protected/Home';
 import BankAccount from '../Pages/Protected/BankAccount';
 import Finance from '../Pages/Protected/Finance';
 import ListBankAccount from '../Pages/Protected/ListBankAccount';
+import BankAccountId from '../Pages/Protected/LisBankAccountId';
 
 const ProtectedRoutes = () => {
   return (
@@ -14,7 +15,8 @@ const ProtectedRoutes = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/finance" element={<Finance />} />
         <Route path="/finance/bankAccount" element={<BankAccount />} />
-        <Route path="/finance/listBankAccount" element={<ListBankAccount />} /> 
+        <Route path="/finance/listBankAccount" element={<ListBankAccount />} />
+        <Route path="/finance/listBankAccount/:id" element={<BankAccountId/>} />
 
         
       </Routes>
