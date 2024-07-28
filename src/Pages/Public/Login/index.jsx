@@ -34,12 +34,12 @@ export default function Login() {
         <div className="card">
           <img
             className="logo"
-            src="/assets/sindpol-logo.png"
+            src="src/assets/sindpol-logo.png"
             alt="Sindpol Logo"
           />
           <img
             className="sentinela"
-            src="/assets/sentinela-logo.png"
+            src="src/assets/sentinela-logo.png"
             alt="Sentinela Logo"
           />
           <LabeledTextField
