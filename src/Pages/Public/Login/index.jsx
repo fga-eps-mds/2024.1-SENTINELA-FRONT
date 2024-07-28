@@ -10,10 +10,13 @@ import AuthContext from "../../../Context/auth";
 import { useNavigate } from "react-router-dom";
 import sindpol_logo from "src/assets/sindpol-logo.png";
 import sentinela_logo from "src/assets/sentinela-logo.png";
+import { baseUserURL } from "../../../Services/BaseService/index";
 
 export default function Login() {
   const context = useContext(AuthContext);
   const navigate = useNavigate();
+
+  console.log(baseUserURL);
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
