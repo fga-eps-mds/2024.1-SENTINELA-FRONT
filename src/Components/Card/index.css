@@ -2,7 +2,8 @@
   background-color: #eae3d7;
   max-width: 500px;
   width: 90%;
-  height: 690px;
+  height: fit-content;
+  padding-bottom: 5%;
   border-radius: 20px;
   display: flex;
   flex-direction: column;

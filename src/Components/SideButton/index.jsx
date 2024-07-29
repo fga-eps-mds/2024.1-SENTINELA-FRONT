@@ -21,6 +21,6 @@ export default function SideButton({ itemKey, text, onClick }) {
 
 SideButton.propTypes = {
   text: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
   itemKey: PropTypes.string,
 };
