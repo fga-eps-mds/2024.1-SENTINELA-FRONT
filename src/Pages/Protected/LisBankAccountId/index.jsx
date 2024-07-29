@@ -11,7 +11,7 @@ import FieldText from "../../../Components/FieldText";
 import "./index.css";
 import { Snackbar } from '@mui/material';
 import Alert from '@mui/material/Alert';
-import { createBankAccount, getBankAccount, deleteBankAccount } from "../../../Services/bankAccountService";
+import { createBankAccount, getBankAccount, deleteBankAccount, updateBankAccount } from "../../../Services/bankAccountService";
 import Modal from "../../../Components/Moldal" 
 
 
@@ -96,6 +96,7 @@ const BankAccountId = () => {
         navigate("/");
     };
 
+    
     //mascaras
     const agencia = (value) => {
         // Remove qualquer caractere que não seja um dígito e limita a 5 caracteres
@@ -138,7 +139,31 @@ const BankAccountId = () => {
       }, [id]);
 
 
-
+      const handleUpdate = async () => {
+        // Construir o objeto de dados atualizados dinamicamente
+        const updatedData = {
+            ...(name && { name }), // Inclui name se não estiver vazio
+            ...(pix && { pix }), // Inclui pix se não estiver vazio
+            ...(bank && { bank }), // Inclui bank se não estiver vazio
+            ...(accountType && { accountType }), // Inclui accountType se não estiver vazio
+            ...(accountNumber && { accountNumber }), // Inclui accountNumber se não estiver vazio
+            ...(dv && { dv }), // Inclui dv se não estiver vazio
+            ...(status && { status }), // Inclui status se não estiver vazio
+            ...(agency && { agency }) // Inclui agency se não estiver vazio
+        };
+        
+        console.log('Dados enviados:', updatedData);
+    
+        try {
+            // Certificar-se de que id é uma string válida e não um objeto
+            console.log('id:', id);
+            const response = await updateBankAccount(id, updatedData);
+            console.log('Resposta do servidor:', response);
+            // Você pode redirecionar ou atualizar o estado aqui
+        } catch (error) {
+            console.error('Erro ao enviar dados:', error);
+        }
+    };
     return user ? (
         <section className="bank-container">
             <div>
@@ -158,7 +183,7 @@ const BankAccountId = () => {
                 </div>
                 <div className="edit-buttons">
                     <SecondaryButton text="Deletar" onClick={() => {deleteBankAccount(id); setOpenDeleteBankAccount(true)}} />
-                    <PrimaryButton text="Salvar" onClick={"#"} />
+                    <PrimaryButton text="Salvar" onClick={handleUpdate } />
                 </div>
             </div>
 
