@@ -4,18 +4,22 @@ import {
 } from "../BaseService"
 
 
-export async function createBankAccount (formData) {
-    try {
-        const response = await APIBank.post('finance/createBankAccount', {
-         
-          formData
-        });
-        
-      } catch (error) {
-        console.log(error.response.data.erro);
-        
-        return error.response.data.erro;
-      }
+export async function createBankAccount(formData) {
+  try {
+    // Envia a requisição POST com formData diretamente
+    const response = await APIBank.post('finance/createBankAccount', { formData });
+    return response; // Retorna o objeto de resposta completo
+} catch (error) {
+    // Se o erro tiver uma resposta, retorne-a
+    if (error.response) {
+        console.log(error.response.data.error);
+        return error.response; // Retorna a resposta do erro
+    } else {
+        // Caso contrário, retorne um erro genérico
+        console.log('Erro desconhecido:', error.message);
+        return { status: 500, data: { error: 'Erro desconhecido' } }; 
+    }
+}
 }
 
 export async function listBankAccount(name) {

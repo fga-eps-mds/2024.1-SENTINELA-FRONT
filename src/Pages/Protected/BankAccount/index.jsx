@@ -24,6 +24,7 @@ const BankAccount = () => {
     const [status, setStatus] = useState("");
     const [agency, setAgency] = useState("");
     const [openError, setOpenError] = useState(false);
+    const [ openErrorUnique, setOpenErrorUnique ] = useState(false);
     
     const context = useContext(AuthContext);
     const { user } = useAuth();
@@ -38,6 +39,7 @@ const BankAccount = () => {
     };
 
     const handleCheck = () => {
+
         if(!name || !accountType || !bank || !status) {
             setOpenError(true)
         } 
@@ -73,11 +75,23 @@ const BankAccount = () => {
         console.log('Dados enviados:', formData);
     
         try {
-            const response = await createBankAccount(formData); // Enviando dados diretamente
+            const response = await createBankAccount(formData);
+    
+            if (response && response.status === 409 && response.data.error === 'Nome já cadastrado') {
+                // Se o status for 409 e a mensagem de erro indicar nome repetido
+              
+                setOpenErrorUnique(true);
+            } else if (response && response.status === 201) {
+                // Se a resposta for bem-sucedida
+                setSuccessCreate(true);
+            } else {
+                // Outros casos de erro
+                console.error('Erro inesperado:', response.data.error || 'Erro inesperado');
+            }
+    
             console.log('Resposta do servidor:', response);
-            setSuccessCreate(true);
         } catch (error) {
-            console.error('Erro ao enviar dados:', error);
+            console.error('Erro ao enviar dados:', error.response || error.message);
         }
     };
 
@@ -142,6 +156,15 @@ const BankAccount = () => {
             >
                 <Alert onClose={() => setOpenError(false)} severity="error">
                     Certifique-se de que todos os campos obrigatórios estão preenchidos
+                </Alert>
+            </Snackbar>
+            <Snackbar
+                open={openErrorUnique}
+                autoHideDuration={6000}
+                onClose={() => setOpenErrorUnique(false)}
+            >
+                <Alert onClose={() => setOpenErrorUnique(false)} severity="error">
+                    Nome já cadastrado
                 </Alert>
             </Snackbar>
 
