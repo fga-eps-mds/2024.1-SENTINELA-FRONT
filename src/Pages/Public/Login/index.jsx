@@ -9,6 +9,8 @@ import { useState, useContext } from "react";
 import AuthContext from "../../../Context/auth";
 import { useNavigate } from "react-router-dom";
 import Card from "../../../Components/Card";
+import sindpol_logo from "src/assets/sindpol-logo.png";
+import sentinela_logo from "src/assets/sentinela-logo.png";
 
 export default function Login() {
   const context = useContext(AuthContext);

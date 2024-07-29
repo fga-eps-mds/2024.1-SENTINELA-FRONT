@@ -1,6 +1,8 @@
 import "./index.css";
 import PropTypes from "prop-types";
 import { AiOutlineMenu } from "react-icons/ai";
+import sindpol_logo from "src/assets/sindpol-logo.png";
+import sentinela_logo from "src/assets/sentinela-logo.png";
 import { ButtonGroup } from "@mui/material";
 import { useState } from "react";
 
@@ -16,12 +18,12 @@ export default function SideBar({ buttons }) {
       <div className={`side-bar ${isSideBarOpen ? "open" : ""}`}>
         <img
           className="logo"
-          src="src/assets/sindpol-logo.png"
+          src={sindpol_logo}
           alt="Sindpol Logo"
         />
         <img
           className="sentinela"
-          src="src/assets/sentinela-logo.png"
+          src={sentinela_logo}
           alt="Sentinela Logo"
         />
         <div className="menu-lateral">
