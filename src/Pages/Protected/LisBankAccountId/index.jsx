@@ -37,7 +37,9 @@ const BankAccountId = () => {
     const [bankAccountType, setBankAccountType] = useState('')
     const [bankStatus, setBankStatus] = useState('')
 
+    const [openSave, setOpenSave] = useState(false);    
     const [openDeleteBankAccount, setOpenDeleteBankAccount] = useState(false);
+    const[openVerificationDelete, setOpenVerificationDelete] = useState(false);
 
     const handleChangeAccountType = (e) => {
         setAccountType(e.target.value);
@@ -112,7 +114,13 @@ const BankAccountId = () => {
         // Remove qualquer caractere que não seja um dígito e limita a 5 caracteres
         return value.replace(/\D/g, '').slice(0, 1);
       };
+    const handleDeleteBank = () => {
 
+        deleteBankAccount(id);
+        setOpenVerificationDelete(false)
+        setOpenDeleteBankAccount(true)
+    }
+    
     const buttons = [
         <SideButton key="home" text="PÁGINA INICIAL" onClick={() => navigate("/home/")} />,
         <SideButton key="filiacao" text="CADASTROS" />,
@@ -175,15 +183,15 @@ const BankAccountId = () => {
                     <FieldText label="Nome *" value={name ? name : dataMap.name} onChange={(e) => setName(e.target.value)} />
                     <FieldSelect  label="Tipo de conta*" value={accountType? accountType : bankAccountType} onChange={handleChangeAccountType}  options={listAccountType}/>
                     <FieldText label="Banco *" value={bank ? bank : dataMap.bank} onChange={(e) => setBank(e.target.value)} />
-                    <FieldText label="Agência" value={dataMap.agency} onChange={(e) => setAgency(agencia(e.target.value))} />
-                    <FieldText label="Número da conta" value={dataMap.accountNumber} onChange={(e) => setAccountNumber(numeroConta(e.target.value))} />
-                    <FieldText label="DV" value={dataMap.dv} onChange={(e) => setDv(digitverificator(e.target.value))} />
-                    <FieldText label="Pix" value={dataMap.pix} onChange={(e) => setPix(e.target.value)} />
+                    <FieldText label="Agência" value={agency ? agency : dataMap.agency} onChange={(e) => setAgency(agencia(e.target.value))} />
+                    <FieldText label="Número da conta" value={accountNumber ? accountNumber :dataMap.accountNumber} onChange={(e) => setAccountNumber(numeroConta(e.target.value))} />
+                    <FieldText label="DV" value={dv ? dv :dataMap.dv} onChange={(e) => setDv(digitverificator(e.target.value))} />
+                    <FieldText label="Pix" value={pix ? pix :dataMap.pix} onChange={(e) => setPix(e.target.value)} />
                     <FieldSelect  label="Status *" value={status? status: bankStatus} onChange={(e) => setStatus(e.target.value)}  options={listStatus}/>
                 </div>
                 <div className="edit-buttons">
-                    <SecondaryButton text="Deletar" onClick={() => {deleteBankAccount(id); setOpenDeleteBankAccount(true)}} />
-                    <PrimaryButton text="Salvar" onClick={handleUpdate } />
+                    <SecondaryButton text="Deletar" onClick={() => { setOpenVerificationDelete(true)}} />
+                    <PrimaryButton text="Salvar" onClick= {()=>{handleUpdate ; setOpenSave(true)}}  />
                 </div>
             </div>
 
@@ -210,7 +218,43 @@ const BankAccountId = () => {
                     sx={{ width: "250px", "margin-top" : "10px" }}
                 />
             </Modal>
-            
+            <Modal
+            show={openVerificationDelete}
+            width="400px"
+            alertTitle="Deseja deletar conta bancária do sistema?"
+            alert=""
+        >
+            <SecondaryButton
+                text="Excluir Conta bancária"
+                onClick={() => {handleDeleteBank()}}
+                
+                style={"width: 250px; margin-top : 10px"}
+                sx={{ width: "250px", "margin-top" : "10px" }}
+            />
+            <SecondaryButton
+                text="Cancelar e manter cadastro"
+                onClick={() => {setOpenVerificationDelete(false)}}
+                
+                style={"width: 250px; margin-top : 10px"}
+                sx={{ width: "250px", "margin-top" : "10px" }}
+            />
+        </Modal>
+        <Modal
+            show={openSave}
+            width="400px"
+            alertTitle="Alterações salvas"
+            alert=""
+        >
+            <SecondaryButton
+                text="ok"
+                onClick={() => navigate('/finance/listBankAccount')}
+                style={"width: 250px; margin-top : 10px"}
+                sx={{ width: "250px", "margin-top" : "10px" }}
+            />
+        </Modal>
+
+        
+
         </section>
     ) : null;
 };
