@@ -46,7 +46,7 @@ const ProfileUpdate = () => {
     };
 
     getUser();
-  }, []);
+  });
 
   useEffect(() => {
     setIsEmailValid(isValidEmail(email));
@@ -86,10 +86,9 @@ const ProfileUpdate = () => {
         `users/patch/${storagedUser.user._id}`,
         {
           updatedUser: {
-
             phone: celular,
             email: email,
-          }
+          },
         },
         {
           headers: { Authorization: `Bearer ${storagedUser.token}` },
@@ -191,7 +190,6 @@ const ProfileUpdate = () => {
               OK
             </Button>
           }
-          width="338px"
         />
       </section>
     )
