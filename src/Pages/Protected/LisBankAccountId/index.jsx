@@ -120,6 +120,11 @@ const BankAccountId = () => {
         setOpenVerificationDelete(false)
         setOpenDeleteBankAccount(true)
     }
+    const saveUpdate = () => {  
+        handleUpdate();
+        setOpenSave(true);
+    }
+
     
     const buttons = [
         <SideButton key="home" text="PÁGINA INICIAL" onClick={() => navigate("/home/")} />,
@@ -167,6 +172,8 @@ const BankAccountId = () => {
             console.log('id:', id);
             const response = await updateBankAccount(id, updatedData);
             console.log('Resposta do servidor:', response);
+
+            return response;
             // Você pode redirecionar ou atualizar o estado aqui
         } catch (error) {
             console.error('Erro ao enviar dados:', error);
@@ -180,7 +187,7 @@ const BankAccountId = () => {
             <div className="section">
                 <h1>Visualização de Conta Bancária</h1>
                 <div className="form">
-                    <FieldText label="Nome *" value={name ? name : dataMap.name} onChange={(e) => setName(e.target.value)} />
+                    <FieldText label="Nome *" value={dataMap.name} onChange={(e) => setName(e.target.value)} />
                     <FieldSelect  label="Tipo de conta*" value={accountType? accountType : bankAccountType} onChange={handleChangeAccountType}  options={listAccountType}/>
                     <FieldText label="Banco *" value={bank ? bank : dataMap.bank} onChange={(e) => setBank(e.target.value)} />
                     <FieldText label="Agência" value={agency ? agency : dataMap.agency} onChange={(e) => setAgency(agencia(e.target.value))} />
@@ -191,7 +198,7 @@ const BankAccountId = () => {
                 </div>
                 <div className="edit-buttons">
                     <SecondaryButton text="Deletar" onClick={() => { setOpenVerificationDelete(true)}} />
-                    <PrimaryButton text="Salvar" onClick= {()=>{handleUpdate ; setOpenSave(true)}}  />
+                    <PrimaryButton text="Salvar" onClick= {saveUpdate}  />
                 </div>
             </div>
 
