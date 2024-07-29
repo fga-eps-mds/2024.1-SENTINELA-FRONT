@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import { useState } from "react";
 // import AuthContext from "../../../Context/auth";
 import { useNavigate } from "react-router-dom";
 import SideBar from "../../../Components/SideBar";
@@ -43,13 +43,24 @@ export default function PasswordRecovery() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <SecondaryButton text="Voltar" onClick={() => handleLoginPage()} maxWidth="400px"/>
-        <PrimaryButton text="Recuperar senha" onClick={() => openModal()} maxWidth="400px"/>
+        <SecondaryButton
+          text="Voltar"
+          onClick={() => handleLoginPage()}
+          maxWidth="400px"
+        />
+        <PrimaryButton
+          text="Recuperar senha"
+          onClick={() => openModal()}
+          maxWidth="400px"
+        />
       </Card>
 
-      <Modal show={showModal} onClose={closeModal} text="ok" width="270px">
-        
-      </Modal>
+      <Modal
+        show={showModal}
+        onClose={closeModal}
+        text="ok"
+        width="270px"
+      ></Modal>
     </div>
   );
 }

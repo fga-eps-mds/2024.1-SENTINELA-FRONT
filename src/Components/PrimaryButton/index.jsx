@@ -1,8 +1,9 @@
 import PropTypes from "prop-types";
-import theme from '../../Styles/global';
+import theme from "../../Styles/global";
 import { Button } from "@mui/material";
 
 export default function PrimaryButton({ text, onClick, maxWidth }) {
+  const rgbaValue09 = `rgba(174, 136, 60, 0.9);`;
 
   return (
     <Button
@@ -16,6 +17,7 @@ export default function PrimaryButton({ text, onClick, maxWidth }) {
         width: "90%",
         marginTop: "15px",
         "&amp;:hover": {
+          backgroundColor: rgbaValue09,
           transform: "scale(1.03)",
         },
       }}

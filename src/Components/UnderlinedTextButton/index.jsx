@@ -1,11 +1,10 @@
 import PropTypes from "prop-types";
-import theme from '../../Styles/global';
+import theme from "../../Styles/global";
 import { Button } from "@mui/material";
 
-
 export default function UnderlinedTextButton({ text, onClick }) {
+  const rgbaValue01 = `rgba(174, 136, 60, 0.1);`;
 
-  
   return (
     <Button
       onClick={onClick}
@@ -17,7 +16,7 @@ export default function UnderlinedTextButton({ text, onClick }) {
         color: theme.palette.main, // Cor do texto do botão
         "&amp;:hover": {
           transform: "scale(1.03)",
-          backgroundColor: theme.palette.contrastText,
+          backgroundColor: rgbaValue01,
         },
       }}
     >

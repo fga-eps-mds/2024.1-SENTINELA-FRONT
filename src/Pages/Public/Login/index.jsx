@@ -5,7 +5,7 @@ import PrimaryButton from "../../../Components/PrimaryButton";
 import SecondaryButton from "../../../Components/SecondaryButton";
 import UnderlinedTextButton from "../../../Components/UnderlinedTextButton";
 import SideButton from "../../../Components/SideButton";
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import AuthContext from "../../../Context/auth";
 import { useNavigate } from "react-router-dom";
 import Card from "../../../Components/Card";
@@ -19,11 +19,12 @@ export default function Login() {
   const [error, setError] = useState(""); // Adiciona um estado para mensagens de erro
 
   const handleLogin = () => {
-    if (!email || !senha) { // Verifica se os campos estão preenchidos
+    if (!email || !senha) {
+      // Verifica se os campos estão preenchidos
       setError("Por favor, preencha todos os campos.");
       return;
     }
-    
+
     // Limpa mensagens de erro
     setError("");
 
@@ -59,7 +60,8 @@ export default function Login() {
           value={senha}
           onChange={(e) => setSenha(e.target.value)}
         />
-        {error && <div className="error-message">{error}</div>} {/* Exibe a mensagem de erro */}
+        {error && <div className="error-message">{error}</div>}{" "}
+        {/* Exibe a mensagem de erro */}
         <div className="recupera-senha">
           <UnderlinedTextButton
             key="recupera-senha"
@@ -68,7 +70,11 @@ export default function Login() {
           />
         </div>
         <SecondaryButton text="Filiar-me ao sindicato" maxWidth="400px" />
-        <PrimaryButton text="Entrar" onClick={() => handleLogin()} maxWidth="400px" />
+        <PrimaryButton
+          text="Entrar"
+          onClick={() => handleLogin()}
+          maxWidth="400px"
+        />
       </Card>
     </div>
   );

@@ -1,10 +1,9 @@
-import React from "react";
 import "./index.css";
 import PropTypes from "prop-types";
 import { Alert, AlertTitle } from "@mui/material";
 import SecondaryButton from "../SecondaryButton";
 import { useNavigate } from "react-router-dom";
-import theme from '../../Styles/global';
+import theme from "../../Styles/global";
 
 export default function Modal({ show, children, text, width }) {
   const navigate = useNavigate();
@@ -20,7 +19,7 @@ export default function Modal({ show, children, text, width }) {
     <div className="modal-overlay">
       <div className="modal">
         <Alert
-          severity="success" 
+          severity="success"
           variant="filled"
           sx={{
             backgroundColor: theme.pallete.button,
@@ -30,7 +29,7 @@ export default function Modal({ show, children, text, width }) {
             "& .MuiAlert-message": {
               fontFamily: theme.typography.fontFamilySecondary,
             },
-            width:"270px",
+            width: "270px",
           }}
         >
           <AlertTitle>Solicitação enviada</AlertTitle>
