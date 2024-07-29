@@ -31,8 +31,22 @@ const ProfileUpdate = () => {
   const [openDialog, setOpenDialog] = useState(false);
 
   useEffect(() => {
+    const getUser = async () => {
+      try {
+        const response = await APIUsers.get(`users/${storagedUser.user._id}`, {
+          headers: { Authorization: `Bearer ${storagedUser.token}` },
+        });
+        setNome(response.data.name);
+        setCelular(response.data.phone);
+        setLogin(response.data.status ? "Ativo" : "Inativo");
+        setEmail(response.data.email);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     getUser();
-  });
+  }, []);
 
   useEffect(() => {
     setIsEmailValid(isValidEmail(email));
@@ -57,20 +71,6 @@ const ProfileUpdate = () => {
 
   const removeMask = (celular) => celular.replace(/\D/g, "");
 
-  const getUser = async () => {
-    try {
-      const response = await APIUsers.get(`users/${storagedUser.user._id}`, {
-        headers: { Authorization: `Bearer ${storagedUser.token}` },
-      });
-      setNome(response.data.name);
-      setCelular(response.data.phone);
-      setLogin(response.data.status ? "Ativo" : "Inativo");
-      setEmail(response.data.email);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const handleLogout = () => {
     context.Logout();
     navigate("/");
@@ -85,8 +85,11 @@ const ProfileUpdate = () => {
       await APIUsers.patch(
         `users/patch/${storagedUser.user._id}`,
         {
-          phone: celular,
-          email: email,
+          updatedUser: {
+
+            phone: celular,
+            email: email,
+          }
         },
         {
           headers: { Authorization: `Bearer ${storagedUser.token}` },
