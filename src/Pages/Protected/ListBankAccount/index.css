@@ -1,5 +1,32 @@
 @media screen and (max-width: 1080px) {
-  
+    .listContainer {
+        display: block;
+    }
+
+    .list {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        
+        margin: .5rem;
+    }
+
+    .header{
+        width: 100%;
+        
+        display: grid;
+        margin-top: 1rem;
+        grid-template-columns: 1fr;
+
+    }
+
+    .search{
+        margin-top: 2rem;
+        width: 400px;
+        display: grid;
+        grid-template-columns: 1fr;
+        align-items: center;
+    }
 }
 
 
