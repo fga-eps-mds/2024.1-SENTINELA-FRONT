@@ -2,27 +2,20 @@ import PropTypes from "prop-types";
 import theme from "../../Styles/global";
 import TextField from "@mui/material/TextField";
 
-export default function LabeledTextField({
-  label,
-  placeholder,
-  type,
-  value,
-  onChange,
-}) {
+export default function FieldText({ label, value, onChange, disabled }) {
   return (
     <TextField
+      id="filled-basic"
       label={label}
-      placeholder={placeholder}
-      variant="standard"
-      focused
-      type={type}
       value={value}
+      variant="filled"
       onChange={onChange}
+      disabled={disabled}
       sx={{
-        maxWidth: "400px",
-        width: "90%",
-        fontFamily: theme.typography.fontFamilyPrimary,
-        marginTop: "33px",
+        margin: ".7rem",
+        background: "#EAE3D7",
+        backgroundColor: "#EAE3D7",
+        borderRadius: "5px",
         "& .MuiInput-underline:before": {
           borderBottomColor: theme.palette.main, // Cor da borda inferior antes do foco
         },
@@ -37,23 +30,22 @@ export default function LabeledTextField({
         },
         "& .MuiInputLabel-root": {
           color: theme.palette.main,
-          fontFamily: theme.typography.fontFamilyPrimary,
+          fontFamily: '"Noto Sans", sans-serif',
         },
         "& .MuiInputLabel-root.Mui-focused": {
           color: theme.palette.main, // Cor do rótulo quando focado
         },
         "& .MuiInputBase-input::placeholder": {
-          fontFamily: theme.typography.fontFamilySecondary, // Fonte do placeholder
+          fontFamily: '"Overpass", sans-serif', // Fonte do placeholder
         },
       }}
     />
   );
 }
 
-LabeledTextField.propTypes = {
+FieldText.propTypes = {
   label: PropTypes.string.isRequired,
-  placeholder: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
 };

@@ -23,3 +23,33 @@
 .menu-lateral {
   margin-top: 20px;
 }
+
+.hidden-menu {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .hidden-menu {
+    display: block;
+    padding-left: 10px;
+    z-index: 100;
+    cursor: pointer;
+
+    svg {
+      font-size: 40px;
+      color: #3d160d;
+    }
+  }
+
+  .side-bar {
+    width: 100%;
+    position: absolute;
+    z-index: 99;
+    left: -100%;
+    transition: left 0.3s;
+  }
+
+  .side-bar.open {
+    left: 0;
+  }
+}
