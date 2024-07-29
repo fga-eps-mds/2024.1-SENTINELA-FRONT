@@ -8,8 +8,7 @@ import SideButton from "../../../Components/SideButton";
 import { useState, useContext } from "react";
 import AuthContext from "../../../Context/auth";
 import { useNavigate } from "react-router-dom";
-import sindpol_logo from "src/assets/sindpol-logo.png";
-import sentinela_logo from "src/assets/sentinela-logo.png";
+import Card from "../../../Components/Card";
 
 export default function Login() {
   const context = useContext(AuthContext);
@@ -17,10 +16,24 @@ export default function Login() {
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [error, setError] = useState(""); // Adiciona um estado para mensagens de erro
 
   const handleLogin = () => {
+    if (!email || !senha) {
+      // Verifica se os campos estão preenchidos
+      setError("Por favor, preencha todos os campos.");
+      return;
+    }
+
+    // Limpa mensagens de erro
+    setError("");
+
     context.Login(email, senha);
     navigate("/home");
+  };
+
+  const handlePasswordRecovery = () => {
+    navigate("/passwordrecovery");
   };
 
   const buttons = [
@@ -32,35 +45,37 @@ export default function Login() {
   return (
     <div className="screen">
       <SideBar buttons={buttons} />
-      <div className="area-card">
-        <div className="card">
-          <img className="logo" src={sindpol_logo} alt="Sindpol Logo" />
-          <img
-            className="sentinela"
-            src={sentinela_logo}
-            alt="Sentinela Logo"
+      <Card>
+        <LabeledTextField
+          label="EMAIL"
+          placeholder="Digite seu email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <LabeledTextField
+          label="SENHA"
+          placeholder="Digite sua senha"
+          type="password"
+          value={senha}
+          onChange={(e) => setSenha(e.target.value)}
+        />
+        {error && <div className="error-message">{error}</div>}{" "}
+        {/* Exibe a mensagem de erro */}
+        <div className="recupera-senha">
+          <UnderlinedTextButton
+            key="recupera-senha"
+            text="Esqueci a senha"
+            onClick={() => handlePasswordRecovery()}
           />
-          <LabeledTextField
-            label="EMAIL"
-            placeholder="Digite seu email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <LabeledTextField
-            label="SENHA"
-            placeholder="Digite sua senha"
-            type="password"
-            value={senha}
-            onChange={(e) => setSenha(e.target.value)}
-          />
-          <div className="recupera-senha">
-            <UnderlinedTextButton key="recupera-senha" text="Esqueci a senha" />
-          </div>
-          <SecondaryButton text="Filiar-me ao sindicato" />
-
-          <PrimaryButton text="Entrar" onClick={handleLogin} />
         </div>
-      </div>
+        <SecondaryButton text="Filiar-me ao sindicato" maxWidth="400px" />
+        <PrimaryButton
+          text="Entrar"
+          onClick={() => handleLogin()}
+          maxWidth="400px"
+        />
+      </Card>
     </div>
   );
 }
