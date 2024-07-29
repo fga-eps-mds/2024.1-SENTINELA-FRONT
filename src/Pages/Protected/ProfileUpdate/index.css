@@ -1,0 +1,428 @@
+@media screen and (max-width: 1080px) {
+  /*celular*/
+
+  .container {
+    display: flex;
+    font-family: "Noto Sans";
+    color: #341f14;
+  }
+
+  .profile-view {
+    margin-top: -23rem;
+    margin-left: -3.5rem;
+    font-size: 26px;
+
+    font-weight: bold;
+  }
+
+  .personal-data {
+    font-size: 18px;
+    margin-left: -3.5rem;
+  }
+
+  .campos-container {
+    margin: 3.5rem;
+    line-height: 2;
+    height: 350px;
+    width: 100%;
+    margin-top: 20rem;
+    display: inherit;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .section-campo {
+    display: grid;
+    margin-left: -4.2rem;
+    margin-right: 9rem;
+    font-size: 16px;
+  }
+
+  .section-campo input:disabled {
+    background-color: #eae3d7;
+    border: 1px solid #eae3d7;
+    border-top-left-radius: 5%;
+    border-top-right-radius: 5%;
+    font-family: "Overpass";
+    font-size: 16px;
+    font-weight: thin;
+  }
+
+  .section-campo input {
+    background-color: #eae3d7;
+    border: 1px solid #eae3d7;
+    border-top-left-radius: 5%;
+    border-top-right-radius: 5%;
+    font-family: "Overpass";
+    font-size: 16px;
+    font-weight: thin;
+  }
+
+  .double-box {
+    display: grid;
+    margin-left: -4.2rem;
+    margin-right: 9rem;
+
+    grid-template-columns: 1fr;
+    color: #eae3d7;
+
+    font-size: 16px;
+  }
+  .double-box input {
+    background-color: #eae3d7;
+    color: #000000;
+    border: 1px solid #eae3d7;
+    border-top-left-radius: 5%;
+    border-top-right-radius: 5%;
+    font-family: "Overpass";
+    font-size: 16px;
+    font-weight: thin;
+  }
+
+  .section-doublebtn {
+    align-items: center;
+    flex-direction: column;
+    flex-direction: column;
+    align-items: stretch;
+    margin-left: -3.2rem;
+    margin-right: 50rem;
+  }
+
+  .section-doublebtn button {
+    width: 300px;
+    flex: 1;
+    height: 44px;
+  }
+
+  .profile-status {
+    font-size: 18px;
+    font-weight: 600;
+    font-size: medium;
+    margin-left: 8rem;
+    margin-top: 5rem;
+  }
+
+  .profile-icon {
+    margin-top: -10rem;
+    margin-left: -9rem;
+    font-size: 37px;
+  }
+
+  .btn-logout {
+    background-color: transparent;
+    height: 40px;
+    font-family: "Noto Sans";
+    font-size: 14px;
+    font-weight: 600;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    color: #341f14;
+  }
+  .logout-icon {
+    font-size: 21px;
+    margin-left: 10px;
+  }
+
+  .isEmailValid {
+    font-size: 12px;
+    font-weight: 400;
+    margin-top: -0.8rem;
+    margin-left: 1rem;
+    color: red !important;
+  }
+  .isValidNumber {
+    font-size: 12px;
+    font-weight: 400;
+    margin-top: -0.8rem;
+    margin-left: 1rem;
+    color: red !important;
+  }
+  .modal-editor {
+    position: relative; /* Pode ser necessário para o posicionamento do modal */
+    width: 100vw; /* Largura da viewport */
+    height: 100vh; /* Altura da viewport */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal-body {
+    margin-top: 20px; /* Ajuste a distância conforme necessário */
+  }
+
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  .modal-content {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 90%;
+    width: 338px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .custom-dialog-button {
+    width: 100px; /* Ajuste para coincidir com a largura do título */
+    height: 44px;
+    font-family: "Nato Sans";
+    font-size: 16px !important;
+    background-color: #eae3d7 !important;
+    color: #ae883c !important;
+    border-width: 3px !important;
+    border-color: #ae883c !important;
+    border-style: solid !important;
+    border-radius: 4px !important;
+    cursor: pointer !important;
+  }
+
+  .custom-dialog-button:hover {
+    background-color: rgba(0, 0, 0, 0.1) !important;
+  }
+
+  .hidden-menu {
+    display: block;
+    padding-left: 10px;
+    z-index: 100;
+    cursor: pointer;
+
+    svg {
+      font-size: 40px;
+      color: #3d160d;
+    }
+  }
+
+  .side-menu {
+    width: 100%;
+    position: fixed;
+    z-index: 99;
+    left: -100%;
+    transition: left 0.3s;
+  }
+
+  .side-bar.open {
+    left: 0;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .container {
+    display: flex;
+    font-family: "Noto Sans";
+    color: #341f14;
+  }
+
+  .profile-view {
+    font-size: 34px;
+    font-weight: bold;
+  }
+
+  .personal-data {
+    font-size: 24px;
+  }
+
+  .campos-container {
+    margin: 3.5rem;
+    line-height: 2;
+    height: 350px;
+    width: 100%;
+    margin-top: 20rem;
+    display: inherit;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .section-campo {
+    display: grid;
+    grid-template-columns: 2.3fr 0f;
+    color: #eae3d7;
+    margin-left: 0.8rem;
+    font-size: 16px;
+  }
+  .section-campo input:disabled {
+    background-color: #eae3d7;
+    border: 1px solid #eae3d7;
+    border-top-left-radius: 5%;
+    border-top-right-radius: 5%;
+    font-family: "Overpass";
+    font-size: 16px;
+    font-weight: thin;
+  }
+
+  .section-campo input {
+    background-color: #eae3d7;
+    border: 1px solid #eae3d7;
+    border-top-left-radius: 5%;
+    border-top-right-radius: 5%;
+    font-family: "Overpass";
+    font-size: 16px;
+    font-weight: thin;
+  }
+
+  .double-box {
+    display: grid;
+    grid-template-columns: 2.3fr 2.3fr;
+    color: #eae3d7;
+    margin-left: 0.8rem;
+    font-size: 16px;
+  }
+  .double-box input {
+    background-color: #eae3d7;
+    color: #000000;
+    border: 1px solid #eae3d7;
+    border-top-left-radius: 5%;
+    border-top-right-radius: 5%;
+    font-family: "Overpass";
+    font-size: 16px;
+    font-weight: thin;
+  }
+
+  .profile-view {
+    font-weight: bold;
+    margin-bottom: 3rem;
+    margin-top: -15rem;
+  }
+
+  .personal-data {
+    font-weight: 400;
+    margin-left: 1.5rem;
+    margin-top: -2rem;
+  }
+
+  .profile-status {
+    font-size: 18px;
+    font-weight: 600;
+    font-size: medium;
+    margin-left: 8rem;
+    margin-top: 12rem;
+  }
+
+  .profile-icon {
+    margin-top: -10rem;
+    margin-left: -9rem;
+    font-size: 37px;
+  }
+
+  .logout-container {
+    display: flex;
+    align-items: center;
+    margin-top: 0.5rem;
+    margin-left: 9rem;
+  }
+
+  .btn-logout {
+    background-color: transparent;
+    height: 40px;
+    font-family: "Noto Sans";
+    font-size: 14px;
+    font-weight: 600;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    color: #341f14;
+  }
+
+  .logout-icon {
+    font-size: 21px;
+    margin-left: 10px;
+  }
+
+  .section-doublebtn {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 30px;
+    margin-left: 1.5rem;
+    margin-right: 0.5rem;
+  }
+  .section-doublebtn button {
+    flex: 1;
+    height: 44px;
+  }
+
+  .isEmailValid {
+    font-size: 14px;
+    font-weight: 400;
+    margin-left: 1rem;
+    margin-top: -0.5rem;
+    color: red !important;
+  }
+
+  .isValidNumber {
+    font-size: 14px;
+    margin-top: 1.5rem;
+    color: red !important;
+  }
+
+  .modal {
+    gap: 24px;
+  }
+
+  .custom-alert-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 2px;
+    padding-left: 18px;
+  }
+
+  .custom-dialog-button {
+    width: 269px;
+    height: 44px;
+    font-family: "Nato Sans";
+    font-size: 16px !important;
+    background-color: #eae3d7 !important;
+    color: #ae883c !important;
+    padding: 6px !important;
+    border-width: 3px !important;
+    border-color: #ae883c !important;
+    border-style: solid !important;
+    border-radius: 4px !important;
+    cursor: pointer !important;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Alinha o texto verticalmente */
+  }
+
+  .custom-dialog-button:hover {
+    background-color: rgba(0, 0, 0, 0.1) !important;
+  }
+
+  .side-menu {
+    background-color: #eae3d7;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 380px;
+    height: 100vh;
+    padding: 85px;
+  }
+
+  .logo {
+    width: 107px;
+    height: 107px;
+  }
+
+  .menu-lateral {
+    margin-top: 20px;
+  }
+
+  .hidden-menu {
+    display: none;
+  }
+}

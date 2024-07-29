@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Alert, AlertTitle } from "@mui/material";
 import theme from "../../Styles/global";
 
-export default function Modal({ show, children, alertTitle }) {
+export default function Modal({ show, children, alertTitle, buttons }) {
   if (!show) {
     return null;
   }
@@ -29,6 +29,8 @@ export default function Modal({ show, children, alertTitle }) {
         </Alert>
 
         {children}
+
+        <div className="modal-buttons">{buttons}</div>
       </div>
     </div>
   );
@@ -38,4 +40,5 @@ Modal.propTypes = {
   show: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
   alertTitle: PropTypes.string.isRequired,
+  buttons: PropTypes.any,
 };
