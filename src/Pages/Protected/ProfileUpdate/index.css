@@ -140,7 +140,6 @@
     margin-left: 1rem;
     color: red !important;
   }
-
   .modal-editor {
     position: relative; /* Pode ser necessário para o posicionamento do modal */
     width: 100vw; /* Largura da viewport */
@@ -166,7 +165,6 @@
     align-items: center;
     z-index: 1000;
   }
-
   .modal-content {
     background: #fff;
     border-radius: 8px;

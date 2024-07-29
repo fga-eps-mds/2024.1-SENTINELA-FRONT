@@ -38,3 +38,16 @@
 .modal-buttons button {
   flex: 1 1 auto;
 }
+
+.modal-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  margin-top: 10px;
+  gap: 10px;
+  width: 100%;
+}
+
+.modal-buttons button {
+  flex: 1 1 auto;
+}
