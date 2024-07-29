@@ -22,7 +22,7 @@ export default function Modal({
           severity="success"
           variant="filled"
           sx={{
-            backgroundColor: theme.palette.custom.button,
+            backgroundColor: theme.palette.button,
             "& .MuiAlertTitle-root": {
               fontFamily: theme.typography.fontFamilyPrimary,
             },
@@ -30,12 +30,11 @@ export default function Modal({
               fontFamily: theme.typography.fontFamilySecondary,
             },
             width: "100%", // Ajusta para 100% da largura do modal
-            maxWidth: width, // Largura máxima do modal
           }}
         >
           <AlertTitle>{alertTitle}</AlertTitle>
-          {alert}
         </Alert>
+
         {children}
 
         <div className="modal-buttons">{buttons}</div>

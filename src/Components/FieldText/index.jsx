@@ -13,26 +13,27 @@ export default function FieldText({ label, value, onChange, disabled }) {
       disabled={disabled}
       sx={{
         margin: ".7rem",
-        backgroundColor: theme.palette.background.paper,
+        background: "#EAE3D7",
+        backgroundColor: "#EAE3D7",
         borderRadius: "5px",
         "& .MuiInput-underline:before": {
-          borderBottomColor: theme.palette.custom.main, // Cor da borda inferior antes do foco
+          borderBottomColor: theme.palette.main, // Cor da borda inferior antes do foco
         },
         "& .MuiInput-underline:hover:before": {
-          borderBottomColor: theme.palette.custom.main, // Cor da borda inferior ao passar o mouse
+          borderBottomColor: theme.palette.main, // Cor da borda inferior ao passar o mouse
         },
         "& .MuiInput-underline:after": {
-          borderBottomColor: theme.palette.custom.main, // Cor da borda inferior após o foco
+          borderBottomColor: theme.palette.main, // Cor da borda inferior após o foco
         },
         "& .MuiInputBase-input": {
-          color: theme.palette.custom.contrastText, // Cor do texto
+          color: theme.palette.contrastText, // Cor do texto
         },
         "& .MuiInputLabel-root": {
-          color: theme.palette.custom.main,
+          color: theme.palette.main,
           fontFamily: '"Noto Sans", sans-serif',
         },
         "& .MuiInputLabel-root.Mui-focused": {
-          color: theme.palette.custom.main, // Cor do rótulo quando focado
+          color: theme.palette.main, // Cor do rótulo quando focado
         },
         "& .MuiInputBase-input::placeholder": {
           fontFamily: '"Overpass", sans-serif', // Fonte do placeholder
