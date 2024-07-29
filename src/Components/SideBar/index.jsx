@@ -1,8 +1,8 @@
 import "./index.css";
 import PropTypes from "prop-types";
 import { AiOutlineMenu } from "react-icons/ai";
-import sindpol_logo from "src/assets/sindpol-logo.png";
-import sentinela_logo from "src/assets/sentinela-logo.png";
+import sindpol_logo from "../../assets/sindpol-logo.png";
+import sentinela_logo from "../../assets/sentinela-logo.png";
 import { ButtonGroup } from "@mui/material";
 import { useState } from "react";
 
