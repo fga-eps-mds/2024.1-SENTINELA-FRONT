@@ -9,6 +9,8 @@ import SecondaryButton from "../../../Components/SecondaryButton"
 import FieldText from "../../../Components/FieldText";
 import "./index.css"
 import { listBankAccount } from "../../../Services/bankAccountService";
+import ListComponent from "../../../Components/ListComponent";
+
 export default function ListBankAccount() {
     
     const [nome, setNome] = useState('');
@@ -82,13 +84,15 @@ export default function ListBankAccount() {
                 </div>
                 
             </div>
-
             {dataMap && dataMap.name ? (
             <div className="result">
               <div>
-                <SecondaryButton 
-                text={dataMap.name}
-                onClick={() => handleNavigateWithId(dataMap._id)} />
+                <ListComponent 
+                    label = {dataMap.name}
+                    onClick={() => handleNavigateWithId(dataMap._id)}
+                />
+                
+                
               </div>
             </div>
           ) : (
