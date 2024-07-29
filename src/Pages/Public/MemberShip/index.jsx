@@ -733,6 +733,7 @@ const MemberShip = () => {
         </Modal>
 
         <Modal
+          data-testid="success-modal"
           show={openSuccessSubmit}
           width="250px"
           alertTitle="Solicitação enviada!"
