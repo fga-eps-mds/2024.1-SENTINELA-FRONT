@@ -54,20 +54,6 @@ export default function SideBar({ buttons, nome }) {
 
       </div>
 
-      <div className="userInfo">
-        <div className="userInfo-box">
-          <h1><PersonOutlineIcon/></h1>
-          <p>Você está logado como {nome}</p>
-        </div>
-
-        <div 
-          className="userInfo-box-logout"
-          onClick={handleLogout}
-        >
-          <p>LOGOUT</p>
-          <h1><LogoutOutlinedIcon/></h1>
-        </div>
-      </div>
     </div>
   );
 }
