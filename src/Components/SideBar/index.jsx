@@ -1,38 +1,44 @@
 import "./index.css";
 import PropTypes from "prop-types";
+import { AiOutlineMenu } from "react-icons/ai";
+import sindpol_logo from "../../assets/sindpol-logo.png";
+import sentinela_logo from "../../assets/sentinela-logo.png";
 import { ButtonGroup } from "@mui/material";
+import { useState } from "react";
 
 export default function SideBar({ buttons, fullHeight = true }) {
+  const [isSideBarOpen, setIsSideBarOpen] = useState(false);
+  const handleSideBar = () => setIsSideBarOpen(!isSideBarOpen);
+
   return (
-    <div className="side-bar" style={{ height: fullHeight ? "100vh" : "100%" }}>
-      <img
-        className="logo"
-        src="src/assets/sindpol-logo.png"
-        alt="Sindpol Logo"
-      />
-      <img
-        className="sentinela"
-        src="src/assets/sentinela-logo.png"
-        alt="Sentinela Logo"
-      />
-      <div className="menu-lateral">
-        <ButtonGroup
-          orientation="vertical"
-          aria-label="Vertical button group"
-          variant="text"
-          sx={{
-            height: "100%",
-            width: "380px",
-            "& .MuiButton-root": {
-              color: "#3D160D", // Cor do texto dos botões
-              borderColor: "#3D160D", // Cor da borda dos botões
-            },
-          }}
-        >
-          {buttons}
-        </ButtonGroup>
+    <>
+      <div className="hidden-menu">
+        <AiOutlineMenu onClick={() => handleSideBar()} />
       </div>
-    </div>
+      <div
+        className={`side-bar ${isSideBarOpen ? "open" : ""}`}
+        style={{ height: fullHeight ? "100vh" : "100%" }}
+      >
+        <img className="logo" src={sindpol_logo} alt="Sindpol Logo" />
+        <img className="sentinela" src={sentinela_logo} alt="Sentinela Logo" />
+        <div className="menu-lateral">
+          <ButtonGroup
+            orientation="vertical"
+            aria-label="Vertical button group"
+            variant="text"
+            sx={{
+              width: "380px",
+              "& .MuiButton-root": {
+                color: "#3D160D", // Cor do texto dos botões
+                borderColor: "#3D160D", // Cor da borda dos botões
+              },
+            }}
+          >
+            {buttons}
+          </ButtonGroup>
+        </div>
+      </div>
+    </>
   );
 }
 

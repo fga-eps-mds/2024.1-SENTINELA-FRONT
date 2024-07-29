@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import theme from "../../Styles/global";
 import { Button } from "@mui/material";
 
-export default function PrimaryButton({ text, onClick, sx }) {
+export default function PrimaryButton({ text, onClick, maxWidth }) {
   const rgbaValue09 = `rgba(174, 136, 60, 0.9);`;
 
   return (
@@ -10,16 +10,16 @@ export default function PrimaryButton({ text, onClick, sx }) {
       onClick={onClick}
       variant="contained"
       sx={{
-        fontFamily: "Noto Sans, sans-serif", // Definindo a fonte para Noto Sans Display Medium
-        color: theme.palette.custom.content, // Cor do texto do botão
-        backgroundColor: theme.palette.custom.button, // Fundo transparente
-        width: "400px", // Largura do botão
+        fontFamily: theme.typography.fontFamilyPrimary, // Definindo a fonte para Noto Sans Display Medium
+        color: theme.palette.content, // Cor do texto do botão
+        backgroundColor: theme.palette.button, // Fundo transparente
+        maxWidth: { maxWidth }, // Largura do botão
+        width: "90%",
         marginTop: "15px",
         "&amp;:hover": {
-          transform: "scale(1.03)",
           backgroundColor: rgbaValue09,
+          transform: "scale(1.03)",
         },
-        ...sx,
       }}
     >
       {text}
@@ -28,7 +28,7 @@ export default function PrimaryButton({ text, onClick, sx }) {
 }
 
 PrimaryButton.propTypes = {
+  maxWidth: PropTypes.string,
   text: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
-  sx: PropTypes.object,
 };

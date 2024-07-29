@@ -19,17 +19,17 @@ function FieldSelect({ label, value, onChange, options }) {
         sx={{
           backgroundColor: "#EAE3D7",
           "& .MuiOutlinedInput-notchedOutline": {
-            borderColor: theme.palette.custom.main,
+            borderColor: theme.palette.main,
           },
           "&:hover .MuiOutlinedInput-notchedOutline": {
-            borderColor: theme.palette.custom.main,
+            borderColor: theme.palette.main,
           },
           "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-            borderColor: theme.palette.custom.main,
+            borderColor: theme.palette.main,
           },
           "& .MuiOutlinedInput-input": {
             backgroundColor: "#f5f5f5", //fundo
-            color: theme.palette.custom.main,
+            color: theme.palette.main,
           },
           "& .MuiSelect-selectMenu": {
             backgroundColor: "#fff",

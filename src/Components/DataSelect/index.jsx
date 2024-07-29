@@ -30,6 +30,6 @@ export default function DataSelect({ label, value, onChange }) {
 
 DataSelect.propTypes = {
   label: PropTypes.string.isRequired,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   onChange: PropTypes.func.isRequired,
 };
