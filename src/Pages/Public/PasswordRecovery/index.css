@@ -1,0 +1,8 @@
+.screen {
+  display: flex;
+  flex-direction: row;
+}
+
+.customcard {
+  height: 570px;
+}

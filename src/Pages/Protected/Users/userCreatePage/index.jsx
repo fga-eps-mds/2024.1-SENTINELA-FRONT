@@ -129,15 +129,6 @@ export default function UserCreatePage() {
     setIsEmailValid(!email || isValidEmail(email));
   }, [email]);
 
-  const modalButton = [
-    <SecondaryButton
-      key={"modalButtons"}
-      text="OK"
-      onClick={handleCloseDialog}
-      width="338px"
-    />,
-  ];
-
   return (
     <section className="container-user">
       <SideBar className="side-menu" buttons={buttons} />
@@ -157,7 +148,7 @@ export default function UserCreatePage() {
             format="(##) ##### ####"
           />
           <FieldSelect
-            label="Login"
+            label="Status"
             value={login}
             onChange={handleChangeLogin}
             options={login_options}
@@ -191,8 +182,14 @@ export default function UserCreatePage() {
           width="338px"
           alertTitle="Cadastro de usuário concluído"
           show={showModal}
-          buttons={modalButton}
-        />
+        >
+          <SecondaryButton
+            key={"modalButtons"}
+            text="OK"
+            onClick={handleCloseDialog}
+            width="338px"
+          />
+        </Modal>
       </div>
     </section>
   );

@@ -201,29 +201,6 @@ export default function UserUpdatePage() {
     navigate("/usuarios");
   };
 
-  const modalSaveButton = [
-    <SecondaryButton
-      key={"saveButtons"}
-      text="OK"
-      onClick={() => handleSave()}
-      width="338px"
-    />,
-  ];
-  const modalDeleteButton = [
-    <SecondaryButton
-      key={"deleteButtons"}
-      text="EXCLUIR USUÁRIO"
-      onClick={() => handleDelete()}
-      width="338px"
-    />,
-    <SecondaryButton
-      key={"modalButtons"}
-      text="CANCELAR E MANTER O CADASTRO"
-      onClick={() => handleDeleteCloseDialog()}
-      width="338px"
-    />,
-  ];
-
   return (
     <section className="container">
       <SideBar className="side-menu" buttons={buttons} />
@@ -247,7 +224,7 @@ export default function UserUpdatePage() {
           />
 
           <FieldSelect
-            label="Login"
+            label="Status"
             value={login}
             onChange={handleChangeLogin}
             options={loginOptions}
@@ -285,34 +262,39 @@ export default function UserUpdatePage() {
           <PrimaryButton text="Salvar" onClick={handleSaveModal} />
         </div>
 
-        <Modal
-          alertTitle="Alterações Salvas"
-          show={showSaveModal}
-          buttons={modalSaveButton}
-        >
-          <></>
+        <Modal alertTitle="Alterações Salvas" show={showSaveModal}>
+          <SecondaryButton
+            key={"saveButtons"}
+            text="OK"
+            onClick={() => handleSave()}
+            width="338px"
+          />
         </Modal>
 
         <Modal
           alertTitle="Deseja deletar o usuário do sistema?"
           show={showDeleteModal}
-          buttons={modalDeleteButton}
         >
-          <></>
+          <SecondaryButton
+            key={"deleteButtons"}
+            text="EXCLUIR USUÁRIO"
+            onClick={() => handleDelete()}
+            width="338px"
+          />
+          <SecondaryButton
+            key={"modalButtons"}
+            text="CANCELAR E MANTER O CADASTRO"
+            onClick={() => handleDeleteCloseDialog()}
+            width="338px"
+          />
         </Modal>
-        <Modal
-          alertTitle="Usuario Deletado"
-          show={showDeletedModal}
-          buttons={
-            <SecondaryButton
-              key={"okButtons"}
-              text="OK"
-              onClick={() => handleDeletedCloseDialog()}
-              width="338px"
-            />
-          }
-        >
-          <></>
+        <Modal alertTitle="Usuario Deletado" show={showDeletedModal}>
+          <SecondaryButton
+            key={"okButtons"}
+            text="OK"
+            onClick={() => handleDeletedCloseDialog()}
+            width="338px"
+          />
         </Modal>
       </div>
     </section>

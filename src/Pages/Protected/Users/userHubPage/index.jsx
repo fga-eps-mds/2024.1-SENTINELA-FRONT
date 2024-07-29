@@ -5,6 +5,8 @@ import SecondaryButton from "../../../../Components/SecondaryButton";
 import SideBar from "../../../../Components/SideBar";
 import SideButton from "../../../../Components/SideButton";
 import { useAuth } from "../../../../Context/auth";
+import sindpol_logo from "../../../../assets/sindpol-logo.png";
+import sentinela_logo from "../../../../assets/sentinela-logo.png";
 import "./index.css";
 
 export default function UserHubPage() {
@@ -67,14 +69,10 @@ export default function UserHubPage() {
 
       <div className="area-card">
         <div className="card">
-          <img
-            className="logo"
-            src="/src/assets/sindpol-logo.png"
-            alt="Sindpol Logo"
-          />
+          <img className="logo" src={sindpol_logo} alt="Sindpol Logo" />
           <img
             className="sentinela"
-            src="/src/assets/sentinela-logo.png"
+            src={sentinela_logo}
             alt="Sentinela Logo"
           />
 

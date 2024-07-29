@@ -25,16 +25,16 @@ function FieldSelect({ label, value, onChange, options }) {
           background: "#e0d4cc",
           backgroundColor: "#e0d4cc",
           "& .MuiSelect-select": {
-            borderColor: theme.palette.custom.main,
+            borderColor: theme.palette.main,
           },
           "& .MuiOutlinedInput-notchedOutline": {
-            borderColor: theme.palette.custom.main,
+            borderColor: theme.palette.main,
           },
           "&:hover .MuiOutlinedInput-notchedOutline": {
-            borderColor: theme.palette.custom.main,
+            borderColor: theme.palette.main,
           },
           "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-            borderColor: theme.palette.custom.main,
+            borderColor: theme.palette.main,
           },
         }}
       >
