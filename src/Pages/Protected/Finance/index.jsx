@@ -40,17 +40,19 @@ export default function Finance() {
             <div className="redirect">
 
                 <div className="redirect buttons">
-                  <img
-                    className="logo"
-                    src={sindpolLogo}
-                    alt="Sindpol Logo"
-                  />
+                  <div className="imagens-service">
+                    <img
+                      className="logo"
+                      src={sindpolLogo}
+                      alt="Sindpol Logo"
+                    />
 
-                  <img
-                    className="sentinela"
-                    src= {sentinelaLogo}
-                    alt="Sentinela Logo"
-                  />
+                    <img
+                      className="sentinela"
+                      src= {sentinelaLogo}
+                      alt="Sentinela Logo"
+                    />
+                  </div>
 
                   <SecondaryButton text="Cadastrar de Fornecedor" onClick='#' />
                   <SecondaryButton text="Listar forncedores" onClick='#' />
