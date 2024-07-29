@@ -171,15 +171,6 @@ export default function CreateSupplier() {
     navigate("/fornecedores");
   };
 
-  const modalButton = [
-    <SecondaryButton
-      key={"modalButtons"}
-      text="OK"
-      onClick={handleCloseDialog}
-      width="338px"
-    />,
-  ];
-
   return (
     <div className="container">
       <div className="forms-container">
@@ -329,9 +320,13 @@ export default function CreateSupplier() {
           width="338px"
           alertTitle="Cadastro de usuário concluído"
           show={showModal}
-          buttons={modalButton}
         >
-          <div></div>
+          <SecondaryButton
+            key={"modalButtons"}
+            text="OK"
+            onClick={handleCloseDialog}
+            width="338px"
+          />
         </Modal>
       </div>
     </div>

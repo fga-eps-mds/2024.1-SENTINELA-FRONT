@@ -8,7 +8,7 @@ import SecondaryButton from "../../../Components/SecondaryButton";
 import {
   getSupplierFormById,
   updateSupplierFormById,
-  deleteSupplierFormById
+  deleteSupplierFormById,
 } from "../../../Services/supplierService";
 import { useLocation, useNavigate } from "react-router-dom";
 import Modal from "../../../Components/Modal";
@@ -34,8 +34,11 @@ export default function UpdateSupplier() {
   const [dv, setDv] = useState("");
   const [chavePix, setChavePix] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [showSaveModal, setShowSaveModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showDeletedModal, setShowDeletedModal] = useState(false);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const { state } = useLocation();
   const supplierId = state?.supplierId;
@@ -167,14 +170,12 @@ export default function UpdateSupplier() {
     };
     const supplier = await updateSupplierFormById(supplierId, supplierData);
     setShowModal(true);
-    alert("fornecedor editado com sucesso!");
     navigate("/fornecedores");
   };
 
   const handleDeleteSupplierButton = async () => {
     const supplier = await deleteSupplierFormById(supplierId);
     setShowModal(true);
-    alert("fornecedor deletado com sucesso com sucesso!");
     navigate("/fornecedores");
   };
 
@@ -183,15 +184,28 @@ export default function UpdateSupplier() {
     navigate("/fornecedores");
   };
 
-  const modalButton = [
-    <SecondaryButton
-      key={"modalButtons"}
-      text="OK"
-      onClick={handleCloseDialog}
-      width="338px"
-    />,
-  ];
-  
+  const handleSaveModal = () => {
+    setShowSaveModal(true);
+  };
+
+  const handleDeleteModal = () => {
+    setShowDeleteModal(true);
+  };
+
+  const handleSaveCloseDialog = () => {
+    setShowSaveModal(false);
+    navigate("/fornecedores");
+  };
+
+  const handleDeleteCloseDialog = () => {
+    setShowDeleteModal(false);
+  };
+
+  const handleDeletedCloseDialog = () => {
+    setShowDeletedModal(false);
+    navigate("/fornecedores");
+  };
+
   return (
     <section className="container">
       <div className="forms-container">
@@ -332,18 +346,45 @@ export default function UpdateSupplier() {
         />
 
         <div className="double-buttons">
-          <SecondaryButton text="Deletar" onClick={() => {handleDeleteSupplierButton()}} />
-          <Modal
-          width="338px"
-          alertTitle="Deseja deletar o fornecedor do sistema?"
-          show={showModal}
-          buttons={modalButton}
-        >
-          <div></div>
+          <SecondaryButton text="Deletar" onClick={handleDeleteModal} />
+
+          <PrimaryButton text="Salvar" onClick={handleSaveModal} />
+        </div>
+
+        <Modal alertTitle="Alterações Salvas" show={showSaveModal}>
+          <SecondaryButton
+            key={"saveButtons"}
+            text="OK"
+            onClick={() => handleUpdateSupplierButton()}
+          />
         </Modal>
 
-          <PrimaryButton text="Salvar" onClick={() => {handleUpdateSupplierButton()}} />
-        </div>
+        <Modal
+          alertTitle="Deseja deletar o fornecedor do sistema?"
+          show={showDeleteModal}
+        >
+          <SecondaryButton
+            key={"deleteButtons"}
+            text="EXCLUIR FORNECEDOR"
+            onClick={() =>  handleDeleteSupplierButton()}
+            width="338px"
+          />
+          <SecondaryButton
+            key={"modalButtons"}
+            text="CANCELAR E MANTER O CADASTRO"
+            onClick={() => handleUpdateSupplierButton()}
+            width="338px"
+          />
+        </Modal>
+
+        <Modal alertTitle="Fornecedor Deletado" show={showDeletedModal}>
+          <SecondaryButton
+            key={"okButtons"}
+            text="OK"
+            onClick={() => handleDeletedCloseDialog()}
+            width="338px"
+          />
+        </Modal>
       </div>
     </section>
   );
