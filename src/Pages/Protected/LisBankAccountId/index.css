@@ -27,8 +27,11 @@
 
     .edit-buttons{
         display: flex;
-        justify-content: space-between;
-        height: 2rem;
+        justify-content: center;
+        height: 5rem;
+        flex-direction: column;
+        align-items: center;
+        margin : 1rem;
     }
 }
 

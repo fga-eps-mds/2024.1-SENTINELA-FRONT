@@ -1,31 +1,38 @@
 @media screen and (max-width: 1080px) {
-    .listContainer {
-        display: block;
-    }
-
+   
+.listContainer{
+    display: flex;
+    flex-direction: column;
+}
     .list {
         display: flex;
         flex-direction: column;
         width: 100%;
         
-        margin: .5rem;
+        /* margin: .5rem; */
     }
 
-    .header{
+
+    .listContainer .list .header{
         width: 100%;
         
-        display: grid;
+        display: flex;
         margin-top: 1rem;
-        grid-template-columns: 1fr;
+     
+        flex-direction: column;
 
     }
 
-    .search{
+    .listContainer .list .search{
         margin-top: 2rem;
         width: 400px;
         display: grid;
         grid-template-columns: 1fr;
         align-items: center;
+    }
+    .result {
+        margin-top: 20px;
+        width:400px;
     }
 }
 
