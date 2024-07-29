@@ -16,16 +16,8 @@ export default function SideBar({ buttons }) {
         <AiOutlineMenu onClick={() => handleSideBar()} />
       </div>
       <div className={`side-bar ${isSideBarOpen ? "open" : ""}`}>
-        <img
-          className="logo"
-          src={sindpol_logo}
-          alt="Sindpol Logo"
-        />
-        <img
-          className="sentinela"
-          src={sentinela_logo}
-          alt="Sentinela Logo"
-        />
+        <img className="logo" src={sindpol_logo} alt="Sindpol Logo" />
+        <img className="sentinela" src={sentinela_logo} alt="Sentinela Logo" />
         <div className="menu-lateral">
           <ButtonGroup
             orientation="vertical"
