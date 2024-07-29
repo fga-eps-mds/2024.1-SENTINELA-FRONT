@@ -59,7 +59,6 @@ describe("Login", () => {
 
     expect(screen.getByText("Login")).toBeInTheDocument();
     expect(screen.getByText("Filiação")).toBeInTheDocument();
-    expect(screen.getByText("Sobre")).toBeInTheDocument();
   });
   it("should update email field", () => {
     render(

@@ -1,0 +1,45 @@
+.profile-status {
+  font-size: 18px;
+  font-weight: 600;
+  font-size: medium;
+  margin-left: 8rem;
+  margin-top: 12rem;
+  color: #341f14;
+}
+
+.profile-icon {
+  margin-top: -10rem;
+  margin-left: -9rem;
+  font-size: 37px;
+}
+
+.logout-container {
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+  margin-left: 9rem;
+}
+
+.btn-logout {
+  background-color: transparent;
+  height: 40px;
+  font-family: "Noto Sans";
+  font-size: 14px;
+  font-weight: 600;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  color: #341f14;
+}
+
+.logout-icon {
+  font-size: 21px;
+  margin-left: 10px;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+}

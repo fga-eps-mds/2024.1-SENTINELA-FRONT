@@ -37,9 +37,8 @@ export default function Login() {
   };
 
   const buttons = [
-    <SideButton key="login" text="Login" />,
-    <SideButton key="filiacao" text="Filiação" />,
-    <SideButton key="sobre" text="Sobre" />,
+    <SideButton itemKey="login" key="login" text="Login" />,
+    <SideButton itemKey="filiacao" key="filiacao" text="Filiação" />,
   ];
 
   return (
