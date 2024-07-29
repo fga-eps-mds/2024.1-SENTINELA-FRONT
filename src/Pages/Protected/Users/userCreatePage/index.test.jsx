@@ -25,7 +25,7 @@ describe("UserCreatePage", () => {
     expect(screen.getByText("Cadastro de usuário")).toBeInTheDocument();
     expect(screen.getByLabelText("Nome Completo")).toBeInTheDocument();
     expect(screen.getByLabelText("Celular")).toBeInTheDocument();
-    expect(screen.getByLabelText("Login")).toBeInTheDocument();
+    expect(screen.getByLabelText("Status")).toBeInTheDocument();
     expect(screen.getByLabelText("Email")).toBeInTheDocument();
     expect(screen.getByText("Cadastrar")).toBeInTheDocument();
 
