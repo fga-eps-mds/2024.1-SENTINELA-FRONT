@@ -46,35 +46,28 @@ export default function UpdateSupplier() {
   const tipoPessoaList = ["Jurídica", "Física"];
   const statusFornecedorList = ["Ativo", "Inativo"];
   const naturezaTransacaoList = ["Receita", "Despesa"];
-  const uf_enderecoList = [
-    "AC",
-    "AL",
-    "AP",
-    "AM",
-    "BA",
-    "CE",
-    "DF",
-    "ES",
-    "GO",
-    "MA",
-    "MT",
-    "MS",
-    "MG",
-    "PA",
-    "PB",
-    "PR",
-    "PE",
-    "PI",
-    "RJ",
-    "RN",
-    "RS",
-    "RO",
-    "RR",
-    "SC",
-    "SP",
-    "SE",
-    "TO",
-  ];
+  const uf_enderecoList = ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'];
+
+  const mascaraCPFouCNPJ = (cpfCnpj) => {
+    let formattedValue = cpfCnpj.replace(/\D/g, "");
+
+    if (formattedValue.length > 14) {
+      formattedValue = formattedValue.slice(0, 14);
+    }
+
+    if (formattedValue.length <= 11) {
+      return formattedValue
+        .replace(/(\d{3})(\d)/, "$1.$2")
+        .replace(/(\d{3})(\d)/, "$1.$2")
+        .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+    } else {
+      return formattedValue
+        .replace(/(\d{2})(\d)/, "$1.$2")
+        .replace(/(\d{3})(\d)/, "$1.$2")
+        .replace(/(\d{3})(\d)/, "$1/$2")
+        .replace(/(\d{4})(\d{1,2})$/, "$1-$2");
+    }
+  };
 
   const mascaraCelular = (celular) => {
     let formattedCelular = celular.replace(/\D/g, "");
@@ -229,7 +222,7 @@ export default function UpdateSupplier() {
           <FieldText
             label="CPF/CNPJ"
             value={cpfCnpj}
-            onChange={(e) => setCpf(e.target.value)}
+            onChange={(e) => setCpfCnpj(mascaraCPFouCNPJ(e.target.value))}
           />
 
           <FieldSelect
@@ -372,7 +365,7 @@ export default function UpdateSupplier() {
           <SecondaryButton
             key={"modalButtons"}
             text="CANCELAR E MANTER O CADASTRO"
-            onClick={() => handleUpdateSupplierButton()}
+            onClick={() => handleDeleteCloseDialog()}
             width="338px"
           />
         </Modal>

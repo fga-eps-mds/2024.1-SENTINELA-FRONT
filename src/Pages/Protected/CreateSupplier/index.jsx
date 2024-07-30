@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./index.css";
 import { useNavigate } from "react-router-dom";
 import FieldText from "../../../Components/FieldText";
@@ -6,7 +6,6 @@ import FieldSelect from "../../../Components/FieldSelect";
 import PrimaryButton from "../../../Components/PrimaryButton";
 import SecondaryButton from "../../../Components/SecondaryButton";
 import Modal from "../../../Components/Modal";
-import "dayjs/locale/pt-br";
 import { createSupplierForm } from "../../../Services/supplierService";
 
 export default function CreateSupplier() {
@@ -36,35 +35,7 @@ export default function CreateSupplier() {
   const tipoPessoaList = ["Jurídica", "Física"];
   const statusFornecedorList = ["Ativo", "Inativo"];
   const naturezaTransacaoList = ["Receita", "Despesa"];
-  const uf_enderecoList = [
-    "AC",
-    "AL",
-    "AP",
-    "AM",
-    "BA",
-    "CE",
-    "DF",
-    "ES",
-    "GO",
-    "MA",
-    "MT",
-    "MS",
-    "MG",
-    "PA",
-    "PB",
-    "PR",
-    "PE",
-    "PI",
-    "RJ",
-    "RN",
-    "RS",
-    "RO",
-    "RR",
-    "SC",
-    "SP",
-    "SE",
-    "TO",
-  ];
+  const uf_enderecoList = ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'];
 
   const mascaraCPFouCNPJ = (cpfCnpj) => {
     let formattedValue = cpfCnpj.replace(/\D/g, "");
@@ -103,16 +74,16 @@ export default function CreateSupplier() {
       formattedTelefone = formattedTelefone.slice(0, 10);
     }
     return formattedTelefone
-      .replace(/^(\d{2})(\d)/g, "($1) $2") // Adiciona parênteses em volta dos dois primeiros dígitos
-      .replace(/(\d{4})(\d{4})$/, "$1-$2"); // Adiciona traço entre o quarto ou quinto e o último grupo de dígitos
+      .replace(/^(\d{2})(\d)/g, "($1) $2")
+      .replace(/(\d{4})(\d{4})$/, "$1-$2");
   };
 
   const mascaraCEP = (cep) => {
-    let formattedCEP = cep.replace(/\D/g, ""); // Remove caracteres não numéricos
+    let formattedCEP = cep.replace(/\D/g, "");
     if (formattedCEP.length > 8) {
-      formattedCEP = formattedCEP.slice(0, 8); // Limita a 8 dígitos numéricos
+      formattedCEP = formattedCEP.slice(0, 8);
     }
-    return formattedCEP.replace(/(\d{5})(\d)/, "$1-$2"); // Adiciona traço após os cinco primeiros dígitos
+    return formattedCEP.replace(/(\d{5})(\d)/, "$1-$2");
   };
 
   const handleChangeTipoPessoa = (event) => {
@@ -131,39 +102,36 @@ export default function CreateSupplier() {
     setUfEndereco(event.target.value);
   };
 
-  const getUserName = () => {
-    const tokenString = localStorage.getItem("@App:user");
-    if (tokenString) {
-      const user = JSON.parse(tokenString);
-      return user?.user?.name || "Usuário";
-    }
-    return "Usuário";
-  };
-
   const handleSubmit = async () => {
+    if (nome.trim() === "") {
+      alert("O campo 'Nome/Razão Social' é obrigatório.");
+      return;
+    }
+
     const supplierData = {
       nome,
-      tipoPessoa,
-      cpfCnpj,
-      statusFornecedor,
-      naturezaTransacao,
-      email,
-      nomeContato,
-      celular,
-      telefone,
-      cep,
-      cidade,
-      uf_endereco,
-      logradouro,
-      complemento,
-      nomeBanco,
-      agencia,
-      numeroBanco,
-      dv,
-      chavePix,
+      tipoPessoa: tipoPessoa || null,
+      cpfCnpj: cpfCnpj || null,
+      statusFornecedor: statusFornecedor || null,
+      naturezaTransacao: naturezaTransacao || null,
+      email: email || null,
+      nomeContato: nomeContato || null,
+      celular: celular || null,
+      telefone: telefone || null,
+      cep: cep || null,
+      cidade: cidade || null,
+      uf_endereco: uf_endereco || null,
+      logradouro: logradouro || null,
+      complemento: complemento || null,
+      nomeBanco: nomeBanco || null,
+      agencia: agencia || null,
+      numeroBanco: numeroBanco || null,
+      dv: dv || null,
+      chavePix: chavePix || null,
     };
-    createSupplierForm(supplierData);
+    await createSupplierForm(supplierData);
     setShowModal(true);
+    
   };
 
   const handleCloseDialog = () => {
@@ -182,6 +150,7 @@ export default function CreateSupplier() {
           label="Nome/Razão Social"
           value={nome}
           onChange={(e) => setNome(e.target.value)}
+          required
         />
 
         <div className="section-form">
