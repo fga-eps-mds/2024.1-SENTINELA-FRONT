@@ -1,8 +1,6 @@
 import { useState } from "react";
 import "./index.css";
 import "../../../index.css";
-import SideBar from "../../../Components/SideBar";
-import SideButton from "../../../Components/SideButton";
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import FieldText from "../../../Components/FieldText";
@@ -15,6 +13,7 @@ import { Snackbar } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import SecondaryButton from "../../../Components/SecondaryButton";
 import Modal from "../../../Components/Modal";
+import { useNavigate } from "react-router-dom";
 
 const MemberShip = () => {
   const [email, setEmail] = useState("");
@@ -52,6 +51,7 @@ const MemberShip = () => {
   const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
   const [errorFields, setErrorFields] = useState(false);
   const [religiao, setReligiao] = useState("");
+  const navigate = useNavigate();
 
   //listas dos selects
   const tipoSanguineoList = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
@@ -239,12 +239,6 @@ const MemberShip = () => {
     return emailRegex.test(email);
   };
 
-  const buttons = [
-    <SideButton key="login" text="Login" />,
-    <SideButton key="filiacao" text="Filiação" />,
-    <SideButton key="sobre" text="Sobre" />,
-  ];
-
   const handleSubmit = () => {
     const erros = {};
 
@@ -331,15 +325,11 @@ const MemberShip = () => {
 
     const message = await createMemberShip(formData);
     setErrorFields(message);
-    alert("deu certo!");
+    navigate("/home");
   };
 
   return (
     <section className="container">
-      <div className="bar-container">
-        <SideBar buttons={buttons} />
-      </div>
-
       <div className="forms-container">
         <h1>Formulário de Filiação</h1>
 
@@ -553,11 +543,15 @@ const MemberShip = () => {
           />
         </div>
         <div>
-          <buttons id="addDependentBttn" onClick={handleAddDependent}>
+          <div>
             <h3>
-              Adicionar participantes <AddCircleOutlineIcon />
+              Adicionar participantes{" "}
+              <AddCircleOutlineIcon
+                id="addDependentBttn"
+                onClick={handleAddDependent}
+              />
             </h3>
-          </buttons>
+          </div>
           {showDependentForm && (
             <div>
               <div className="dependentToAdd">

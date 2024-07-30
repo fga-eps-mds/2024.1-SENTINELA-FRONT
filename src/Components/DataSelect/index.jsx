@@ -12,7 +12,9 @@ export default function DataSelect({ label, value, onChange }) {
         value={value}
         onChange={onChange}
         format="DD/MM/YYYY" // Define o formato desejado
-        renderInput={(params) => <TextField {...params} variant="filled" />}
+        slots={{
+          textField: (params) => <TextField {...params} variant="filled" />,
+        }}
         sx={{
           backgroundColor: "#EAE3D7",
           margin: ".7rem",
