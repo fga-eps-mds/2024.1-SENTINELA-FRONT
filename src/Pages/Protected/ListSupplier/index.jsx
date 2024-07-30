@@ -12,15 +12,6 @@ import FieldText from "../../../Components/FieldText";
 import { APIBank } from "../../../Services/BaseService";
 
 export default function ListSupplier() {
-  const getUserName = () => {
-    const tokenString = localStorage.getItem("@App:user");
-    if (tokenString) {
-      const user = JSON.parse(tokenString);
-      return user?.user?.name || "Usuário";
-    }
-    return "Usuário";
-  };
-
   const [suppliers, setSuppliers] = useState([]);
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
@@ -66,7 +57,6 @@ export default function ListSupplier() {
 
   return (
     <section className="container">
-
       <div className="forms-container">
         <div className="double-box">
           <h1>Lista de fornecedores</h1>

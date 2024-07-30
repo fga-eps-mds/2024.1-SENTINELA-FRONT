@@ -1,9 +1,10 @@
-import React, { useState } from "react";
 import Checkbox from "@mui/material/Checkbox";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
+import React from "react";
+import PropTypes from "prop-types";
 
 export default function CheckList({ items, value, onChange }) {
   const handleToggle = (e) => () => {
@@ -22,7 +23,7 @@ export default function CheckList({ items, value, onChange }) {
     <List>
       {items.map((item, index) => (
         <React.Fragment key={item}>
-          <ListItem button onClick={handleToggle(item)}>
+          <ListItem onClick={handleToggle(item)}>
             <Checkbox
               edge="start"
               checked={value.indexOf(item) !== -1}
@@ -37,3 +38,9 @@ export default function CheckList({ items, value, onChange }) {
     </List>
   );
 }
+
+CheckList.propTypes = {
+  items: PropTypes.any,
+  value: PropTypes.any,
+  onChange: PropTypes.any,
+};

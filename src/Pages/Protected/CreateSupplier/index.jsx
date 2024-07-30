@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./index.css";
 import { useNavigate } from "react-router-dom";
 import FieldText from "../../../Components/FieldText";
@@ -35,7 +35,35 @@ export default function CreateSupplier() {
   const tipoPessoaList = ["Jurídica", "Física"];
   const statusFornecedorList = ["Ativo", "Inativo"];
   const naturezaTransacaoList = ["Receita", "Despesa"];
-  const uf_enderecoList = ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'];
+  const uf_enderecoList = [
+    "AC",
+    "AL",
+    "AP",
+    "AM",
+    "BA",
+    "CE",
+    "DF",
+    "ES",
+    "GO",
+    "MA",
+    "MT",
+    "MS",
+    "MG",
+    "PA",
+    "PB",
+    "PR",
+    "PE",
+    "PI",
+    "RJ",
+    "RN",
+    "RS",
+    "RO",
+    "RR",
+    "SC",
+    "SP",
+    "SE",
+    "TO",
+  ];
 
   const mascaraCPFouCNPJ = (cpfCnpj) => {
     let formattedValue = cpfCnpj.replace(/\D/g, "");
@@ -131,7 +159,6 @@ export default function CreateSupplier() {
     };
     await createSupplierForm(supplierData);
     setShowModal(true);
-    
   };
 
   const handleCloseDialog = () => {

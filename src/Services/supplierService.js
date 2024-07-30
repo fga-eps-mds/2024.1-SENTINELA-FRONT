@@ -1,4 +1,3 @@
-import { json } from "react-router-dom";
 import { APIBank, APIUsers } from "./BaseService";
 
 const storagedUser = localStorage.getItem("@App:user");
@@ -75,7 +74,7 @@ export const updateSupplierFormById = async (id, supplierData) => {
 
 export const deleteSupplierFormById = async (id) => {
   try {
-    const response = await APIBank.delete(`/SupplierForm/delete/${id}`);
+    await APIBank.delete(`/SupplierForm/delete/${id}`);
   } catch (error) {
     console.error(`Erro ao deletar fornecedor com ID ${id}:`, error);
   }

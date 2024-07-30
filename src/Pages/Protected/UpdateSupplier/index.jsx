@@ -33,7 +33,6 @@ export default function UpdateSupplier() {
   const [numeroBanco, setNumeroBanco] = useState("");
   const [dv, setDv] = useState("");
   const [chavePix, setChavePix] = useState("");
-  const [showModal, setShowModal] = useState(false);
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showDeletedModal, setShowDeletedModal] = useState(false);
@@ -46,7 +45,35 @@ export default function UpdateSupplier() {
   const tipoPessoaList = ["Jurídica", "Física"];
   const statusFornecedorList = ["Ativo", "Inativo"];
   const naturezaTransacaoList = ["Receita", "Despesa"];
-  const uf_enderecoList = ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'];
+  const uf_enderecoList = [
+    "AC",
+    "AL",
+    "AP",
+    "AM",
+    "BA",
+    "CE",
+    "DF",
+    "ES",
+    "GO",
+    "MA",
+    "MT",
+    "MS",
+    "MG",
+    "PA",
+    "PB",
+    "PR",
+    "PE",
+    "PI",
+    "RJ",
+    "RN",
+    "RS",
+    "RO",
+    "RR",
+    "SC",
+    "SP",
+    "SE",
+    "TO",
+  ];
 
   const mascaraCPFouCNPJ = (cpfCnpj) => {
     let formattedValue = cpfCnpj.replace(/\D/g, "");
@@ -161,19 +188,12 @@ export default function UpdateSupplier() {
       dv,
       chavePix,
     };
-    const supplier = await updateSupplierFormById(supplierId, supplierData);
-    setShowModal(true);
+    await updateSupplierFormById(supplierId, supplierData);
     navigate("/fornecedores");
   };
 
   const handleDeleteSupplierButton = async () => {
-    const supplier = await deleteSupplierFormById(supplierId);
-    setShowModal(true);
-    navigate("/fornecedores");
-  };
-
-  const handleCloseDialog = () => {
-    setShowModal(false);
+    await deleteSupplierFormById(supplierId);
     navigate("/fornecedores");
   };
 
@@ -183,11 +203,6 @@ export default function UpdateSupplier() {
 
   const handleDeleteModal = () => {
     setShowDeleteModal(true);
-  };
-
-  const handleSaveCloseDialog = () => {
-    setShowSaveModal(false);
-    navigate("/fornecedores");
   };
 
   const handleDeleteCloseDialog = () => {
@@ -359,7 +374,7 @@ export default function UpdateSupplier() {
           <SecondaryButton
             key={"deleteButtons"}
             text="EXCLUIR FORNECEDOR"
-            onClick={() =>  handleDeleteSupplierButton()}
+            onClick={() => handleDeleteSupplierButton()}
             width="338px"
           />
           <SecondaryButton
