@@ -6,7 +6,7 @@ import sentinela_logo from "../../assets/sentinela-logo.png";
 import { ButtonGroup } from "@mui/material";
 import { useState } from "react";
 
-export default function SideBar({ buttons }) {
+export default function SideBar({ buttons, fullHeight = true }) {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const handleSideBar = () => setIsSideBarOpen(!isSideBarOpen);
 
@@ -15,7 +15,10 @@ export default function SideBar({ buttons }) {
       <div className="hidden-menu">
         <AiOutlineMenu onClick={() => handleSideBar()} />
       </div>
-      <div className={`side-bar ${isSideBarOpen ? "open" : ""}`}>
+      <div
+        className={`side-bar ${isSideBarOpen ? "open" : ""}`}
+        style={{ height: fullHeight ? "100vh" : "100%" }}
+      >
         <img className="logo" src={sindpol_logo} alt="Sindpol Logo" />
         <img className="sentinela" src={sentinela_logo} alt="Sentinela Logo" />
         <div className="menu-lateral">
@@ -41,4 +44,5 @@ export default function SideBar({ buttons }) {
 
 SideBar.propTypes = {
   buttons: PropTypes.array.isRequired,
+  fullHeight: PropTypes.bool,
 };

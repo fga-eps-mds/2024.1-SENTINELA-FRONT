@@ -37,8 +37,13 @@ export default function Login() {
   };
 
   const buttons = [
-    <SideButton itemKey="login" key="login" text="Login" />,
-    <SideButton itemKey="filiacao" key="filiacao" text="Filiação" />,
+    <SideButton key="login" text="Login" />,
+    <SideButton
+      key="filiacao"
+      text="Filiação"
+      onClick={() => navigate("/filiacao")}
+    />,
+    <SideButton key="sobre" text="Sobre" />,
   ];
 
   return (
@@ -68,7 +73,11 @@ export default function Login() {
             onClick={() => handlePasswordRecovery()}
           />
         </div>
-        <SecondaryButton text="Filiar-me ao sindicato" maxWidth="400px" />
+        <SecondaryButton
+          text="Filiar-me ao sindicato"
+          maxWidth="400px"
+          onClick={() => navigate("/filiacao")}
+        />
         <PrimaryButton
           text="Entrar"
           onClick={() => handleLogin()}

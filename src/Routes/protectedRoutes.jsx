@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Login from "../Pages/Public/Login";
 import Home from "../Pages/Protected/Home";
 import ProfileUpdate from "../Pages/Protected/ProfileUpdate";
 import UserCreatePage from "../Pages/Protected/Users/userCreatePage";
@@ -11,7 +10,6 @@ const ProtectedRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="/usuarios/criar" element={<UserCreatePage />} />
         <Route path="/usuarios/editar/:id" element={<UserUpdatePage />} />

@@ -28,7 +28,7 @@ export default function PrimaryButton({ text, onClick, maxWidth }) {
 }
 
 PrimaryButton.propTypes = {
-  maxWidth: PropTypes.string.isRequired,
+  maxWidth: PropTypes.string,
   text: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
 };

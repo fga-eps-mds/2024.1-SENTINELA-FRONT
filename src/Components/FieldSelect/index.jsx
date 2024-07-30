@@ -1,18 +1,13 @@
 import theme from "../../Styles/global";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import "dayjs/locale/pt-br";
+import "dayjs/locale/pt-br"; // Importa a localização desejada para o dayjs
 import PropTypes from "prop-types";
 
 function FieldSelect({ label, value, onChange, options }) {
   return (
     <FormControl
-      fullWidth
-      sx={{
-        margin: ".7rem",
-        backgroundColor: "#f5f5f5",
-        borderRadius: "5px",
-        width: "inherit",
-      }}
+      variant="filled"
+      sx={{ margin: ".7rem", borderRadius: "5px", width: "inherit" }}
     >
       <InputLabel id={`label-${label}`}>{label}</InputLabel>
       <Select
@@ -22,11 +17,7 @@ function FieldSelect({ label, value, onChange, options }) {
         onChange={onChange}
         label={label}
         sx={{
-          background: "#e0d4cc",
-          backgroundColor: "#e0d4cc",
-          "& .MuiSelect-select": {
-            borderColor: theme.palette.main,
-          },
+          backgroundColor: "#EAE3D7",
           "& .MuiOutlinedInput-notchedOutline": {
             borderColor: theme.palette.main,
           },
@@ -36,6 +27,22 @@ function FieldSelect({ label, value, onChange, options }) {
           "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
             borderColor: theme.palette.main,
           },
+          "& .MuiOutlinedInput-input": {
+            backgroundColor: "#f5f5f5", //fundo
+            color: theme.palette.main,
+          },
+          "& .MuiSelect-selectMenu": {
+            backgroundColor: "#fff",
+            border: "1px solid #ced4da",
+          },
+          "& .MuiMenuItem-root": {
+            backgroundColor: "#f5f5f5",
+            color: "#3f51b5",
+          },
+          "& .MuiMenuItem-root:hover": {
+            backgroundColor: "#e0e0e0",
+          },
+          fontFamily: theme.typography.fontFamily,
         }}
       >
         {options.map((option) => (
@@ -53,10 +60,12 @@ function FieldSelect({ label, value, onChange, options }) {
 }
 
 FieldSelect.propTypes = {
-  label: PropTypes.any,
-  value: PropTypes.any,
-  onChange: PropTypes.any,
-  options: PropTypes.any,
+  label: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  onChange: PropTypes.func.isRequired,
+  options: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+  ).isRequired,
 };
 
 export default FieldSelect;
