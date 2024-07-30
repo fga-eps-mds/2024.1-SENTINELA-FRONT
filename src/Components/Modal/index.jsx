@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Alert, AlertTitle } from "@mui/material";
 import theme from "../../Styles/global";
 
-export default function Modal({ show, children, alertTitle }) {
+export default function Modal({ show, children, alertTitle, alert, width }) {
   if (!show) {
     return null;
   }
@@ -23,11 +23,12 @@ export default function Modal({ show, children, alertTitle }) {
               fontFamily: theme.typography.fontFamilySecondary,
             },
             width: "100%", // Ajusta para 100% da largura do modal
+            maxWidth: width, // Largura máxima do modal
           }}
         >
           <AlertTitle>{alertTitle}</AlertTitle>
+          {alert}
         </Alert>
-
         {children}
       </div>
     </div>
@@ -38,4 +39,6 @@ Modal.propTypes = {
   show: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
   alertTitle: PropTypes.string.isRequired,
+  alert: PropTypes.node.isRequired,
+  width: PropTypes.string,
 };

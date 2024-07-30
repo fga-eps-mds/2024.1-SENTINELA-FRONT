@@ -29,11 +29,7 @@ export default function PasswordRecovery() {
 
   const buttons = [
     <SideButton key="login" text="Login" onClick={() => handleLoginPage()} />,
-    <SideButton
-      key="filiacao"
-      text="Filiação"
-      onClick={() => console.log("filiacao")}
-    />,
+    <SideButton key="filiacao" text="Filiação" onClick={() => {}} />,
   ];
 
   return (

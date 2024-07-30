@@ -12,5 +12,4 @@ const theme = createTheme({
     fontFamilySecondary: '"Overpass", sans-serif',
   },
 });
-
 export default theme;

@@ -30,5 +30,5 @@ export default function SecondaryButton({ text, onClick, maxWidth }) {
 SecondaryButton.propTypes = {
   text: PropTypes.string.isRequired,
   maxWidth: PropTypes.string,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
 };
