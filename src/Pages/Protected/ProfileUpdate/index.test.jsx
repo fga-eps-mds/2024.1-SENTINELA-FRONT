@@ -64,6 +64,14 @@ describe("ProfileUpdate", () => {
   });
 
   it("navigates to home on cancel", async () => {
+    render(
+      <Router>
+        <AuthProvider>
+          <ProfileUpdate />
+        </AuthProvider>
+      </Router>
+    );
+
     fireEvent.click(screen.getByText(/Cancelar/i));
     await waitFor(() => {
       // Aqui você pode verificar o conteúdo esperado na página inicial
