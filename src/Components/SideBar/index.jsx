@@ -50,14 +50,6 @@ export default function SideBar({ fullHeight = true }) {
       onClick={() => {}}
     />,
     <SideButton
-      hidden={user ? "flex" : "none"}
-      key="perfil"
-      text="PERFIL"
-      onClick={() => {
-        navigate("/perfil");
-      }}
-    />,
-    <SideButton
       hidden={user ? "none" : "flex"}
       key="login"
       text="LOGIN"

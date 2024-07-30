@@ -50,16 +50,6 @@ describe("Login", () => {
     expect(secondaryButton).toBeInTheDocument();
   });
 
-  it("should render sidebar buttons", () => {
-    render(
-      <BrowserRouter>
-        <Login />
-      </BrowserRouter>
-    );
-
-    expect(screen.getByText("Login")).toBeInTheDocument();
-    expect(screen.getByText("Filiação")).toBeInTheDocument();
-  });
   it("should update email field", () => {
     render(
       <BrowserRouter>

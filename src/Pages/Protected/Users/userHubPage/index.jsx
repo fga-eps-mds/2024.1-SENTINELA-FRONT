@@ -15,6 +15,10 @@ export default function UserHubPage() {
     navigate("/usuarios/criar");
   };
 
+  const handleAtualizarClick = () => {
+    navigate("/perfil");
+  };
+
   return (
     <section className="container">
       <div className="area-card">
@@ -33,6 +37,10 @@ export default function UserHubPage() {
           <SecondaryButton
             text="LISTA DE USUÁRIOS"
             onClick={handleListaClick}
+          />
+          <SecondaryButton
+            text="ATUALIZAR USUÁRIO"
+            onClick={handleAtualizarClick}
           />
         </div>
       </div>

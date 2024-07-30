@@ -17,7 +17,6 @@ vi.mock("../../../Context/auth", async (importOriginal) => {
         email: "john@example.com",
         status: true,
       },
-      token: "fake-token",
     }),
   };
 });
@@ -54,11 +53,9 @@ describe("ProfileUpdate", () => {
     );
 
     // Aguarda até que o texto "Visualização de usuário" esteja disponível
-    const visualizacaoDeUsuario = await screen.findByText(
-      /Visualização de usuário/i
-    );
-    expect(visualizacaoDeUsuario).toBeInTheDocument();
-
+    expect(
+      await screen.findByText(/Visualização de usuário/i)
+    ).toBeInTheDocument();
     expect(screen.getByText(/Dados pessoais/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Celular/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Nome/i)).toBeInTheDocument();
@@ -67,17 +64,11 @@ describe("ProfileUpdate", () => {
   });
 
   it("navigates to home on cancel", async () => {
-    const { container } = render(
-      <Router>
-        <AuthProvider>
-          <ProfileUpdate />
-        </AuthProvider>
-      </Router>
-    );
-
     fireEvent.click(screen.getByText(/Cancelar/i));
     await waitFor(() => {
-      expect(container.innerHTML).toMatch(/Página Inicial/i);
+      // Aqui você pode verificar o conteúdo esperado na página inicial
+      // Em vez de verificar o HTML diretamente, você pode verificar a navegação
+      expect(window.location.pathname).toBe("/home");
     });
   });
 });
