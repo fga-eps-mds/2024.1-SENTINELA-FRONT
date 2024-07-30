@@ -6,6 +6,10 @@ import SideBar from "../../../Components/SideBar";
 import SideButton from "../../../Components/SideButton";
 import { AiOutlineUser } from "react-icons/ai";
 import { RiLogoutCircleRLine } from "react-icons/ri";
+import SecondaryButton from "../../../Components/SecondaryButton";
+
+
+import "./index.css";
 
 const Benefits = () => {
   const context = useContext(AuthContext);
@@ -63,6 +67,13 @@ const Benefits = () => {
     user && (
       <section className="container">
         <SideBar className="side-menu" buttons={buttons} />
+        <div className="area-card">
+        <div className="card">
+        <SecondaryButton text="CADASTRO DE CONVENIO" onClick={""} />
+        <SecondaryButton text="LISTA DE CONVENIO" onClick={""} /> 
+        </div>
+      </div>
+        
       </section>
     )
   );
