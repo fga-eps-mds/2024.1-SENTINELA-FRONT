@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import AuthContext, { useAuth } from "../../../Context/auth";
 import { useNavigate } from "react-router-dom";
 
@@ -9,9 +9,11 @@ const Home = () => {
   const { user } = useAuth();
 
   const handleLogout = () => {
-    context.Logout();
     navigate("/");
+    context.Logout();
   };
+
+  useEffect(() => {}, [user]);
 
   const profileUpdate = () => {
     navigate("/profileupdate");

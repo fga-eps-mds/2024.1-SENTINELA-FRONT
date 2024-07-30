@@ -1,8 +1,5 @@
 import { useState } from "react";
-// import AuthContext from "../../../Context/auth";
 import { useNavigate } from "react-router-dom";
-import SideBar from "../../../Components/SideBar";
-import SideButton from "../../../Components/SideButton";
 import "./index.css";
 import LabeledTextField from "../../../Components/LabeledTextField";
 import PrimaryButton from "../../../Components/PrimaryButton";
@@ -27,14 +24,8 @@ export default function PasswordRecovery() {
     setShowModal(false);
   };
 
-  const buttons = [
-    <SideButton key="login" text="Login" onClick={() => handleLoginPage()} />,
-    <SideButton key="filiacao" text="Filiação" onClick={() => {}} />,
-  ];
-
   return (
     <div className="screen">
-      <SideBar buttons={buttons} />
       <Card className={"customcard"}>
         <LabeledTextField
           type="text"

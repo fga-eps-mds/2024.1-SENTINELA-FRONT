@@ -3,15 +3,15 @@ import LabeledTextField from "../../../Components/LabeledTextField";
 import PrimaryButton from "../../../Components/PrimaryButton";
 import SecondaryButton from "../../../Components/SecondaryButton";
 import UnderlinedTextButton from "../../../Components/UnderlinedTextButton";
-import { useState, useContext } from "react";
-import AuthContext from "../../../Context/auth";
+import { useState, useContext, useEffect } from "react";
+import AuthContext, { useAuth } from "../../../Context/auth";
 import { useNavigate } from "react-router-dom";
 import Card from "../../../Components/Card";
 
 export default function Login() {
   const context = useContext(AuthContext);
   const navigate = useNavigate();
-
+  const { user } = useAuth();
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [error, setError] = useState(""); // Adiciona um estado para mensagens de erro
@@ -31,6 +31,12 @@ export default function Login() {
   const handlePasswordRecovery = () => {
     navigate("/passwordrecovery");
   };
+
+  useEffect(() => {
+    if (user) {
+      navigate("/home");
+    }
+  }, [user]);
 
   return (
     <div className="screen">
