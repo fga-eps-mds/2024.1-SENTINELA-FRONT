@@ -11,7 +11,6 @@ const ProtectedRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="/usuarios/criar" element={<UserCreatePage />} />
         <Route path="/usuarios/editar/:id" element={<UserUpdatePage />} />

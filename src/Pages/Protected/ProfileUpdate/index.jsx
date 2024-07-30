@@ -46,7 +46,7 @@ const ProfileUpdate = () => {
     };
 
     getUser();
-  });
+  }, []);
 
   useEffect(() => {
     setIsEmailValid(isValidEmail(email));
@@ -182,15 +182,11 @@ const ProfileUpdate = () => {
           alertTitle={
             <div className="custom-alert-title">Alterações Salvas</div>
           }
-          buttons={
-            <Button
-              onClick={handleCloseDialog}
-              className="custom-dialog-button"
-            >
-              OK
-            </Button>
-          }
-        />
+        >
+          <Button onClick={handleCloseDialog} className="custom-dialog-button">
+            OK
+          </Button>
+        </Modal>
       </section>
     )
   );

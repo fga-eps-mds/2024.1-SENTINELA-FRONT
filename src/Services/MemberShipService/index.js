@@ -6,8 +6,6 @@ export async function createMemberShip(formData) {
       formData,
     });
   } catch (error) {
-    console.log(error.response.data.erro);
-
     return error.response.data.erro;
   }
 }

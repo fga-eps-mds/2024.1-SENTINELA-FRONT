@@ -1,10 +1,10 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import "./index.css";
 import "../../../index.css";
 import SideBar from "../../../Components/SideBar";
 import SideButton from "../../../Components/SideButton";
 import dayjs from "dayjs";
-import "dayjs/locale/pt-br"; // Importa a localização desejada para o dayjs
+import "dayjs/locale/pt-br";
 import FieldText from "../../../Components/FieldText";
 import DataSelect from "../../../Components/DataSelect";
 import FieldSelect from "../../../Components/FieldSelect";
@@ -15,11 +15,8 @@ import { Snackbar } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import SecondaryButton from "../../../Components/SecondaryButton";
 import Modal from "../../../Components/Modal";
-import { useNavigate } from "react-router-dom";
 
 const MemberShip = () => {
-  const navigate = useNavigate();
-
   const [email, setEmail] = useState("");
   const [sexo, setSexo] = useState("");
   const [estadoCivil, setEstadoCivil] = useState("");
@@ -35,6 +32,7 @@ const MemberShip = () => {
   const [lotacao, setlotacao] = useState("");
   const [matricula, setMatricula] = useState("");
   const [nomeCompleto, setnomeCompleto] = useState("");
+  const [dataNasc, setDataNasc] = useState(null);
   const [naturalidade, setNaturalidade] = useState("");
   const [rg, setRg] = useState("");
   const [orgao, setOrgao] = useState("");
@@ -54,7 +52,6 @@ const MemberShip = () => {
   const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
   const [errorFields, setErrorFields] = useState(false);
   const [religiao, setReligiao] = useState("");
-  const [openSuccessSubmit, setOpenSuccessSubmit] = useState(false);
 
   //listas dos selects
   const tipoSanguineoList = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
@@ -97,9 +94,7 @@ const MemberShip = () => {
     "Mestrado",
     "Doutorado",
   ];
-
   const situacaoAtualList = ["Ativo", "Inativo"];
-
   const [dependentes, setDependentes] = useState([]);
   const [showDependentForm, setShowDependentForm] = useState(false);
   const [currentDependent, setCurrentDependent] = useState({
@@ -112,37 +107,37 @@ const MemberShip = () => {
 
   //máscaras
   const mascaraCPF = (cpf) => {
-    let formattedCPF = cpf.replace(/\D/g, ""); // Remove caracteres não numéricos
-    if (formattedCPF.length > 11) formattedCPF = formattedCPF.slice(0, 11); // Limita a 11 dígitos numéricos
+    let formattedCPF = cpf.replace(/\D/g, "");
+    if (formattedCPF.length > 11) formattedCPF = formattedCPF.slice(0, 11);
 
     return formattedCPF
-      .replace(/(\d{3})(\d)/, "$1.$2") // Adiciona ponto após os três primeiros dígitos
-      .replace(/(\d{3})(\d)/, "$1.$2") // Adiciona ponto após os seis primeiros dígitos
-      .replace(/(\d{3})(\d{1,2})$/, "$1-$2"); // Adiciona traço após os nove primeiros dígitos
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
   };
 
   const mascaraRg = (rg) => {
-    let formattedRG = rg.replace(/\D/g, ""); // Remove caracteres não numéricos
-    if (formattedRG.length > 9) formattedRG = formattedRG.slice(0, 9); // Limita a 9 dígitos numéricos
+    let formattedRG = rg.replace(/\D/g, "");
+    if (formattedRG.length > 9) formattedRG = formattedRG.slice(0, 9);
     return formattedRG;
   };
 
   const mascaraTelefone = (telefone) => {
-    let formattedTelefone = telefone.replace(/\D/g, ""); // Remove caracteres não numéricos
+    let formattedTelefone = telefone.replace(/\D/g, "");
     if (formattedTelefone.length > 11) {
-      formattedTelefone = formattedTelefone.slice(0, 11); // Limita a 11 dígitos numéricos
+      formattedTelefone = formattedTelefone.slice(0, 11);
     }
     return formattedTelefone
-      .replace(/^(\d{2})(\d)/g, "($1) $2") // Adiciona parênteses em volta dos dois primeiros dígitos
-      .replace(/(\d{4,5})(\d{4})$/, "$1-$2"); // Adiciona traço entre o quarto ou quinto e o último grupo de dígitos
+      .replace(/^(\d{2})(\d)/g, "($1) $2")
+      .replace(/(\d{4,5})(\d{4})$/, "$1-$2");
   };
 
   const mascaraCEP = (cep) => {
-    let formattedCEP = cep.replace(/\D/g, ""); // Remove caracteres não numéricos
+    let formattedCEP = cep.replace(/\D/g, "");
     if (formattedCEP.length > 8) {
-      formattedCEP = formattedCEP.slice(0, 8); // Limita a 8 dígitos numéricos
+      formattedCEP = formattedCEP.slice(0, 8);
     }
-    return formattedCEP.replace(/(\d{5})(\d)/, "$1-$2"); // Adiciona traço após os cinco primeiros dígitos
+    return formattedCEP.replace(/(\d{5})(\d)/, "$1-$2");
   };
 
   //eventos
@@ -215,15 +210,10 @@ const MemberShip = () => {
     setSituacaoAtual(event.target.value);
   };
 
-  // const handleCloseError = () => {
-  //   setOpenError(false);
-  // };
-
   const handleCloseSuccessDialog = () => {
     setOpenSuccessDialog(false);
   };
   const isValidEmail = (email) => {
-    // Lista de domínios permitidos
     const allowedDomains = [
       "com",
       "net",
@@ -234,10 +224,8 @@ const MemberShip = () => {
       "gov",
     ];
 
-    // Expressão regular melhorada para emails com suporte a subdomínios
     const domainPattern = allowedDomains
       .map((domain) => {
-        // Escape os caracteres especiais e permite subdomínios
         const escapedDomain = domain.replace(/\./g, "\\.");
         return `(?:[a-zA-Z0-9.-]+\\.)?${escapedDomain}`;
       })
@@ -250,20 +238,6 @@ const MemberShip = () => {
 
     return emailRegex.test(email);
   };
-  // const modalButton = [
-  //   <SecondaryButton
-
-  //     text="OK"
-  //     onClick= {() => handleCloseSuccessDialog()}
-  //     width="338px"
-  //   />,
-  //   // <PrimaryButton
-
-  //   //   text="Confirmar"
-  //   //   onClick= {submitForm}
-  //   //   width="338px"
-  //   //   />
-  // ];
 
   const buttons = [
     <SideButton key="login" text="Login" />,
@@ -272,6 +246,41 @@ const MemberShip = () => {
   ];
 
   const handleSubmit = () => {
+    const formData = {
+      email,
+      sexo,
+      estadoCivil,
+      tipoSanguineo,
+      uf_naturalidade,
+      uf_orgao,
+      uf_endereco,
+      escolaridade,
+      dataContratacao,
+      dataDeNascimento,
+      dataExpedicao,
+      cargo,
+      lotacao,
+      matricula,
+      nomeCompleto,
+      naturalidade,
+      rg,
+      orgao,
+      cpf,
+      nomeDaMae,
+      nomeDoPai,
+      cep,
+      cidade,
+      logradouro,
+      complemento,
+      telefone,
+      celular,
+      postoDeTrabalho,
+      orgaoExpedidor,
+      situacaoAtual,
+      religiao,
+      dependentes,
+    };
+
     const erros = {};
 
     if (!email) erros.email = 1;
@@ -312,7 +321,6 @@ const MemberShip = () => {
     if (telefone.length < 14) erros.telefone = 1;
     if (celular.length < 15) erros.celular = 1;
 
-    console.log(erros);
     if (Object.keys(erros).length > 0) {
       setOpenError(true);
     } else {
@@ -357,15 +365,14 @@ const MemberShip = () => {
     };
 
     const message = await createMemberShip(formData);
-    console.log(message);
     setErrorFields(message);
-    setOpenSuccessSubmit(true);
+    alert("deu certo!");
   };
 
   return (
     <section className="container">
       <div className="bar-container">
-        <SideBar buttons={buttons} fullHeight={false} />
+        <SideBar buttons={buttons} />
       </div>
 
       <div className="forms-container">
@@ -581,11 +588,11 @@ const MemberShip = () => {
           />
         </div>
         <div>
-          <div id="addDependentBttn" onClick={handleAddDependent}>
+          <buttons id="addDependentBttn" onClick={handleAddDependent}>
             <h3>
               Adicionar participantes <AddCircleOutlineIcon />
             </h3>
-          </div>
+          </buttons>
           {showDependentForm && (
             <div>
               <div className="dependentToAdd">
@@ -603,7 +610,7 @@ const MemberShip = () => {
 
                   <DataSelect
                     label="Data de Nascimento"
-                    value={currentDependent.dataNasc}
+                    value={dataNasc}
                     onChange={(newDate) =>
                       handleDependentChange("dataNasc", newDate)
                     }
@@ -640,14 +647,13 @@ const MemberShip = () => {
                   />
                 </div>
                 <PrimaryButton
-                  sx={{ width: "100%" }}
                   text="Adicionar Dependente"
                   onClick={handleSaveDependent}
                 />
               </div>
 
               {dependentes.map((dependent, index) => (
-                <div key={index}>
+                <div>
                   <h3 id="dependentTitle">Dependente {index + 1}</h3>
                   <div className="dependentBox" key={index}>
                     <div className="section-dependent-form">
@@ -675,7 +681,6 @@ const MemberShip = () => {
                     <PrimaryButton
                       text="Remover Dependente"
                       onClick={() => handleRemoveDependent(index)}
-                      sx={{ width: "100%" }}
                     />
                   </div>
                 </div>
@@ -686,7 +691,6 @@ const MemberShip = () => {
         <div id="envio">
           <PrimaryButton
             text="ENVIAR SOLICITAÇÃO"
-            sx={{ width: "100%" }}
             onClick={() => handleSubmit()}
           />
         </div>
@@ -712,9 +716,6 @@ const MemberShip = () => {
 
         <Modal
           show={openSuccessDialog}
-          // setOpenSuccessDialog={setOpenSuccessDialog}
-          // submitForm={submitForm}
-
           width="608px"
           alertTitle="Ao confirmar essa solicitação, você estará concordando com a declaração a seguir:"
           alert="Declaro que, ao filiar-me nesta data ao SINDPOL-DF, concordo e ratifico com todas as minhas obrigações previstas no Estatuto Social, regime interno e deliberação das assembleias gerais do Sindicato dos Policiais Penais do Distrito Federal. Ao tempo que comprometo-me em contribuir mensalmente com o valor de 1,5% vencimento básico, conforme Art. 105 do Estatuto APROVADO pela assembleia geral, o qual AUTORIZO que consignado em folha de pagamento junto ao órgão competente em favor do SINDPOL-DF, bem como outras contribuições de caráter extraordinário - desde que aprovadas em assembleia específica - Reconheço ainda que tais contribuições têm o condão de manter a entidade de representação sindical forte e independente no intuito de garantir melhores condições de trabalho para toda a categoria. Fico ciente que, ao desejar afastar-me do quadro social do sindicato, devo manifestar-me por escrito, em formulário específico, com antecedência de 60 (sessenta) dias. Pela presente, solicito minha admissão no quadro de filiados do SINDICATO DOS POLICIAIS PENAIS DO DISTRITO FEDERAL."
@@ -723,29 +724,12 @@ const MemberShip = () => {
           <SecondaryButton
             text="cancelar"
             onClick={() => handleCloseSuccessDialog()}
-            sx={{ width: "608px" }}
+            width="608px"
           />
           <PrimaryButton
-            sx={{ width: "608px" }}
             text="solicitar filiação ao sindpol-df"
             onClick={submitForm}
-          />
-        </Modal>
-
-        <Modal
-          data-testid="success-modal"
-          show={openSuccessSubmit}
-          width="250px"
-          alertTitle="Solicitação enviada!"
-          alert="Você deve receber um e-mail em breve com mais informações."
-        >
-          <PrimaryButton
-            sx={{ width: "100%" }}
-            text="OK"
-            onClick={() => {
-              navigate("/");
-            }}
-            width="250px"
+            width="608px"
           />
         </Modal>
       </div>

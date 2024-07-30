@@ -9,7 +9,6 @@ const PublicRoutes = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/home" element={<Home />} />
         <Route path="/filiacao" element={<MemberShip />} />
         <Route path="/passwordrecovery" element={<PasswordRecovery />} />
       </Routes>
