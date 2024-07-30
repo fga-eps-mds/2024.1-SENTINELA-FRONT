@@ -1,5 +1,4 @@
-import { useContext } from "react";
-import AuthContext, { useAuth } from "../../../Context/auth";
+import { useAuth } from "../../../Context/auth";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
