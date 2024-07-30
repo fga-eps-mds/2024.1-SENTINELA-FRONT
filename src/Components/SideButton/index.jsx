@@ -24,5 +24,5 @@ SideButton.propTypes = {
   itemKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   text: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
-  hidden: PropTypes.bool,
+  hidden: PropTypes.any,
 };

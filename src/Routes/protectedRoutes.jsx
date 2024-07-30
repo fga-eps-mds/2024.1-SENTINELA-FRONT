@@ -20,7 +20,7 @@ const ProtectedRoutes = () => {
       <Route path="/usuarios/editar/:id" element={<UserUpdatePage />} />
       <Route path="/usuarios" element={<UserListPage />} />
       <Route path="/usuarios/hub" element={<UserHubPage />} />
-      <Route path="/profileupdate" element={<ProfileUpdate />} />
+      <Route path="/perfil" element={<ProfileUpdate />} />
     </Routes>
   );
 };

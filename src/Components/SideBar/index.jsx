@@ -20,7 +20,7 @@ export default function SideBar({ fullHeight = true }) {
 
   const buttons = [
     <SideButton
-      hidden={user ? null : "none"}
+      hidden={user ? "flex" : "none"}
       key="home"
       text="PÁGINA INICIAL"
       onClick={() => {
@@ -28,7 +28,7 @@ export default function SideBar({ fullHeight = true }) {
       }}
     />,
     <SideButton
-      hidden={user ? null : "none"}
+      hidden={user ? "flex" : "none"}
       key="filiacao"
       text="CADASTROS"
       onClick={() => {
@@ -36,7 +36,7 @@ export default function SideBar({ fullHeight = true }) {
       }}
     />,
     <SideButton
-      hidden={user ? null : "none"}
+      hidden={user ? "flex" : "none"}
       key="financeiro"
       text="FINANCEIRO"
       onClick={() => {
@@ -44,13 +44,21 @@ export default function SideBar({ fullHeight = true }) {
       }}
     />,
     <SideButton
-      hidden={user ? null : "none"}
+      hidden={user ? "flex" : "none"}
       key="beneficios"
       text="BENEFÍCIOS (em obras)"
       onClick={() => {}}
     />,
     <SideButton
-      hidden={user ? "none" : null}
+      hidden={user ? "flex" : "none"}
+      key="perfil"
+      text="PERFIL"
+      onClick={() => {
+        navigate("/perfil");
+      }}
+    />,
+    <SideButton
+      hidden={user ? "none" : "flex"}
       key="login"
       text="LOGIN"
       onClick={() => {
@@ -58,7 +66,7 @@ export default function SideBar({ fullHeight = true }) {
       }}
     />,
     <SideButton
-      hidden={user ? "none" : null}
+      hidden={user ? "none" : "flex"}
       key="filiacão"
       text="FILIAÇÃO"
       onClick={() => {
@@ -97,9 +105,8 @@ export default function SideBar({ fullHeight = true }) {
           </ButtonGroup>
         </div>
         <div
-          hidden={!user}
           style={{
-            display: "flex",
+            display: user ? "flex" : "none",
             justifyContent: "center",
             alignItems: "center",
             flexDirection: "column",

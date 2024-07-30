@@ -24,10 +24,8 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("@App:user", JSON.stringify(response.data));
       localStorage.setItem("@App:token", "TOKEN");
       // api.defaults.headers.Authorization = `Bearer ${response.data.token}`;
-      // console.log(response)
       return false;
     } catch (err) {
-      console.log("ueeee");
       return true;
     }
   };

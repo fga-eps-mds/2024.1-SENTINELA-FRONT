@@ -10,10 +10,8 @@ export async function userLogin(email, password) {
       password,
     });
 
-    console.log(response);
     return response;
   } catch (error) {
-    console.log(error);
     return null;
   }
 }
@@ -40,7 +38,6 @@ export const getSupplierForm = async () => {
     if (!token) {
       throw new Error("No token found");
     }
-    console.log("Token being used:", token); // Log para depuração
     const response = await APIBank.get("/supplier", {
       headers: {
         Authorization: `Bearer ${token}`,

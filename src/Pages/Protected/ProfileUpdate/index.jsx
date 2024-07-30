@@ -35,12 +35,12 @@ const ProfileUpdate = () => {
         setLogin(response.data.status ? "Ativo" : "Inativo");
         setEmail(response.data.email);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
 
     getUser();
-  }, [storagedUser]);
+  }, []);
 
   useEffect(() => {
     setIsEmailValid(isValidEmail(email));
@@ -87,7 +87,7 @@ const ProfileUpdate = () => {
       setEmail(email);
       setOpenDialog(true);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -119,6 +119,7 @@ const ProfileUpdate = () => {
               label="Celular"
               value={celular}
               onChange={(e) => setCelular(e.target.value)}
+              format="(##) #####-####"
             />
             {!isValidNumber && (
               <label className="isValidNumber">*Insira um celular válido</label>
@@ -145,12 +146,7 @@ const ProfileUpdate = () => {
             <PrimaryButton text="Salvar" onClick={handleSubmit} />
           </div>
         </div>
-        <Modal
-          show={openDialog}
-          alertTitle={
-            <div className="custom-alert-title">Alterações Salvas</div>
-          }
-        >
+        <Modal show={openDialog} alertTitle="Alterações Salvas">
           <Button onClick={handleCloseDialog} className="custom-dialog-button">
             OK
           </Button>

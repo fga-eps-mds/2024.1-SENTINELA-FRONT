@@ -26,8 +26,6 @@ export default function Login() {
 
     const message = await context.Login(email, senha);
 
-    console.log(message);
-
     if (message) {
       alert("erro de login. Senha ou email incorretos.");
     } else {
