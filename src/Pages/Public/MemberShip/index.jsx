@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./index.css";
 import "../../../index.css";
 import SideBar from "../../../Components/SideBar";
@@ -32,7 +32,7 @@ const MemberShip = () => {
   const [lotacao, setlotacao] = useState("");
   const [matricula, setMatricula] = useState("");
   const [nomeCompleto, setnomeCompleto] = useState("");
-  const [dataNasc, setDataNasc] = useState(null);
+  const [dataNasc] = useState(null);
   const [naturalidade, setNaturalidade] = useState("");
   const [rg, setRg] = useState("");
   const [orgao, setOrgao] = useState("");
@@ -246,41 +246,6 @@ const MemberShip = () => {
   ];
 
   const handleSubmit = () => {
-    const formData = {
-      email,
-      sexo,
-      estadoCivil,
-      tipoSanguineo,
-      uf_naturalidade,
-      uf_orgao,
-      uf_endereco,
-      escolaridade,
-      dataContratacao,
-      dataDeNascimento,
-      dataExpedicao,
-      cargo,
-      lotacao,
-      matricula,
-      nomeCompleto,
-      naturalidade,
-      rg,
-      orgao,
-      cpf,
-      nomeDaMae,
-      nomeDoPai,
-      cep,
-      cidade,
-      logradouro,
-      complemento,
-      telefone,
-      celular,
-      postoDeTrabalho,
-      orgaoExpedidor,
-      situacaoAtual,
-      religiao,
-      dependentes,
-    };
-
     const erros = {};
 
     if (!email) erros.email = 1;
@@ -653,7 +618,7 @@ const MemberShip = () => {
               </div>
 
               {dependentes.map((dependent, index) => (
-                <div>
+                <div key={index}>
                   <h3 id="dependentTitle">Dependente {index + 1}</h3>
                   <div className="dependentBox" key={index}>
                     <div className="section-dependent-form">
@@ -688,7 +653,7 @@ const MemberShip = () => {
             </div>
           )}
         </div>
-        <div id="envio">
+        <div id="enviar">
           <PrimaryButton
             text="ENVIAR SOLICITAÇÃO"
             onClick={() => handleSubmit()}
