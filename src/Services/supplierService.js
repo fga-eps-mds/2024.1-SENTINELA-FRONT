@@ -26,8 +26,11 @@ export const createSupplierForm = async (supplierData) => {
       },
       supplierData: supplierData,
     });
+
+    return false;
   } catch (error) {
     alert("Erro ao cadastrar fornecedor");
+    return true;
   }
 };
 

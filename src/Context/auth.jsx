@@ -18,11 +18,18 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const Login = async (email, password) => {
-    const response = await userLogin(email, password);
-    setUser(response.data);
-    localStorage.setItem("@App:user", JSON.stringify(response.data));
-    localStorage.setItem("@App:token", "TOKEN");
-    // api.defaults.headers.Authorization = `Bearer ${response.data.token}`;
+    try {
+      const response = await userLogin(email, password);
+      setUser(response.data);
+      localStorage.setItem("@App:user", JSON.stringify(response.data));
+      localStorage.setItem("@App:token", "TOKEN");
+      // api.defaults.headers.Authorization = `Bearer ${response.data.token}`;
+      // console.log(response)
+      return false;
+    } catch (err) {
+      console.log("ueeee");
+      return true;
+    }
   };
 
   const Logout = async () => {

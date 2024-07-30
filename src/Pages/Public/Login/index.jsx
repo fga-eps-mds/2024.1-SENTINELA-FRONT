@@ -16,7 +16,7 @@ export default function Login() {
   const [senha, setSenha] = useState("");
   const [error, setError] = useState(""); // Adiciona um estado para mensagens de erro
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (!email || !senha) {
       setError("Por favor, preencha todos os campos.");
       return;
@@ -24,8 +24,15 @@ export default function Login() {
 
     setError("");
 
-    context.Login(email, senha);
-    navigate("/home");
+    const message = await context.Login(email, senha);
+
+    console.log(message);
+
+    if (message) {
+      alert("erro de login. Senha ou email incorretos.");
+    } else {
+      navigate("/home");
+    }
   };
 
   const handlePasswordRecovery = () => {
@@ -35,8 +42,9 @@ export default function Login() {
   useEffect(() => {
     if (user) {
       navigate("/home");
+      window.location.reload();
     }
-  }, [user]);
+  }, [user, navigate]);
 
   return (
     <div className="screen">

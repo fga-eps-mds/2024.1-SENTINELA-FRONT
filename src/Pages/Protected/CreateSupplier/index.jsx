@@ -157,8 +157,11 @@ export default function CreateSupplier() {
       dv: dv || null,
       chavePix: chavePix || null,
     };
-    await createSupplierForm(supplierData);
-    setShowModal(true);
+    const erro = await createSupplierForm(supplierData);
+
+    if (erro) {
+      setShowModal(true);
+    }
   };
 
   const handleCloseDialog = () => {

@@ -119,7 +119,6 @@ const ProfileUpdate = () => {
               label="Celular"
               value={celular}
               onChange={(e) => setCelular(e.target.value)}
-              format="(##) #####-####"
             />
             {!isValidNumber && (
               <label className="isValidNumber">*Insira um celular válido</label>

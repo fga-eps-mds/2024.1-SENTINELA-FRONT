@@ -25,8 +25,7 @@ export default function UserHubPage() {
             src={sentinela_logo}
             alt="Sentinela Logo"
           />
-
-          <SecondaryButton text="SOLICITAÇÃO DE FILIAÇÃO" onClick={""} />
+          {/* <SecondaryButton text="SOLICITAÇÕES DE FILIAÇÃO" onClick={""} /> */}
           <SecondaryButton
             text="CADASTRO DE USUÁRIOS"
             onClick={handleCadastroClick}
