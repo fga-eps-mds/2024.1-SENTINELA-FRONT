@@ -29,6 +29,10 @@ export default function UserHubPage() {
     navigate("/usuarios/hub");
   };
 
+  const handleUserEditor = () => {
+    navigate("/profileupdate");
+  };
+
   const handleLogout = () => {
     context.Logout();
     navigate("/");
@@ -85,6 +89,11 @@ export default function UserHubPage() {
             text="LISTA DE USUÁRIOS"
             onClick={handleListaClick}
           />
+          <SecondaryButton
+          text="EDITAR DADOS COMO USUÁRIO"
+          onClick={handleUserEditor} 
+          />
+
         </div>
       </div>
     </section>
