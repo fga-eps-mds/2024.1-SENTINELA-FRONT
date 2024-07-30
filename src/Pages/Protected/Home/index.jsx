@@ -1,6 +1,9 @@
 import { useContext } from "react";
 import AuthContext, { useAuth } from "../../../Context/auth";
 import { useNavigate } from "react-router-dom";
+import SideBar from "../../../Components/SideBar";
+import SideButton from "../../../Components/SideButton";
+
 
 const Home = () => {
   const context = useContext(AuthContext);
@@ -8,24 +11,18 @@ const Home = () => {
 
   const { user } = useAuth();
 
-  const handleLogout = () => {
-    context.Logout();
-    navigate("/");
-  };
-
-  const profileUpdate = () => {
-    navigate("/profileupdate");
-  };
+  const buttons = [
+    <SideButton key="home" text="PÁGINA INICIAL"/>,
+    <SideButton key="filiacao" text="CADASTROS" />,
+    <SideButton key="financeiro" text="FINANCEIRO" />,
+    <SideButton key="beneficios" text="BENEFÍCIOS" />,
+];
 
   return (
     user && (
-      <div>
-        <h1>Home</h1>
-        <div>Bem vindo {user.nomeCompleto}</div>
-
-        <button onClick={handleLogout}> SAIR </button>
-        <button onClick={profileUpdate}> ATUALIZAR</button>
-      </div>
+      <section className="container">
+        <SideBar className="side-menu" buttons={buttons} />
+      </section>
     )
   );
 };
