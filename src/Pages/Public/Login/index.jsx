@@ -8,11 +8,14 @@ import SideButton from "../../../Components/SideButton";
 import { useState, useContext } from "react";
 import AuthContext from "../../../Context/auth";
 import { useNavigate } from "react-router-dom";
+import { baseUserURL } from "../../../Services/BaseService/index";
 import Card from "../../../Components/Card";
 
 export default function Login() {
   const context = useContext(AuthContext);
   const navigate = useNavigate();
+
+  console.log(baseUserURL);
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
