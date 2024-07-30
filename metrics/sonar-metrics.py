@@ -25,7 +25,7 @@ def generate_metrics():
     repository_version = sys.argv[2]
     underlined_repo_name = repository_name[:16] + \
         repository_name[16:].replace('-', "_")
-    url = f'{base_url}{repository_name}&metricKeys={",".join(metrics)}'
+    url = f'{base_url}{prefix}_{repository_name}&metricKeys={",".join(metrics)}'
     with urllib.request.urlopen(url) as res:
         data = json.load(res)
         date = datetime.now()
