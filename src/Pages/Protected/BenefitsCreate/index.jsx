@@ -70,6 +70,11 @@ export default function BenefitsCreate() {
     setSitContrato(event.target.value);
   };
 
+  const mascaraNome = (e) => {
+    const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, '');
+    setNome(value);
+  };
+
   const mascaraCpfCnpj = (cpfCnpj) => {
     let formattedValue = cpfCnpj.replace(/\D/g, "");
     if (formattedValue.length > 14) {
@@ -116,7 +121,7 @@ export default function BenefitsCreate() {
           <FieldText
             label="Nome fantasia"
             value={nome}
-            onChange={(e) => setNome(e.target.value)}
+            onChange={mascaraNome}
             required
           />
 
