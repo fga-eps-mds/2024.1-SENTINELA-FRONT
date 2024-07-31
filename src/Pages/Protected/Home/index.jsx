@@ -3,9 +3,6 @@ import AuthContext, { useAuth } from "../../../Context/auth";
 import { useNavigate } from "react-router-dom";
 import { APIUsers } from "../../../Services/BaseService";
 import SideBar from "../../../Components/SideBar";
-import SideButton from "../../../Components/SideButton";
-import { AiOutlineUser } from "react-icons/ai";
-import { RiLogoutCircleRLine } from "react-icons/ri";
 
 const Home = () => {
   const context = useContext(AuthContext);
@@ -39,20 +36,6 @@ const Home = () => {
     context.Logout();
     navigate("/");
   };
-
-  const buttons = [
-    <SideButton key="home" text="PÁGINA INICIAL" />,
-    <SideButton key="filiacao" text="CADASTROS " onClick={handleRegister} />,
-    <SideButton key="financeiro" text="FINANCEIRO" />,
-    <SideButton key="beneficios" text="BENEFÍCIOS" />,
-    <h2 key="loggedStatus" className="profile-status">
-      testando {nome} <AiOutlineUser className="profile-icon" />
-    </h2>,
-    <button key="logout" className="btn-logout" onClick={handleLogout}>
-      {" "}
-      LOGOUT <RiLogoutCircleRLine className="logout-icon" />{" "}
-    </button>,
-  ];
 
   return (
     user && (

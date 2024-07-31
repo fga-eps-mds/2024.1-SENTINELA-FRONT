@@ -7,9 +7,14 @@ const Routes = () => {
   const { signed } = useContext(AuthContext);
   // const context = useContext(useAuth)
 
-  console.log("signed: " + signed);
-
-  return signed ? <ProtectedRoutes /> : <PublicRoutes />;
+  return signed ? (
+    <>
+      <ProtectedRoutes />
+      <PublicRoutes />
+    </>
+  ) : (
+    <PublicRoutes />
+  );
 };
 
 export default Routes;

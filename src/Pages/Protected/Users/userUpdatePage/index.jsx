@@ -1,7 +1,5 @@
 import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import { useEffect, useState } from "react";
-import { AiOutlineUser } from "react-icons/ai";
-import { RiLogoutCircleRLine } from "react-icons/ri";
 import { useLocation, useNavigate } from "react-router-dom";
 import FieldNumber from "../../../../Components/FieldNumber";
 import FieldSelect from "../../../../Components/FieldSelect";
@@ -9,8 +7,6 @@ import FieldText from "../../../../Components/FieldText";
 import Modal from "../../../../Components/Modal";
 import PrimaryButton from "../../../..//Components/PrimaryButton";
 import SecondaryButton from "../../../../Components/SecondaryButton";
-import SideBar from "../../../../Components/SideBar";
-import SideButton from "../../../../Components/SideButton";
 import {
   deleteUserById,
   getRoles,
@@ -129,47 +125,6 @@ export default function UserUpdatePage() {
     }
   };
 
-  const handleHomeClick = () => {
-    navigate("/home");
-  };
-
-  const handleRegistrationClick = () => {
-    navigate("/usuarios");
-  };
-
-  const handleLogout = () => {
-    navigate("/");
-  };
-
-  const getUserName = () => {
-    const tokenString = localStorage.getItem("@App:user");
-    if (tokenString) {
-      const user = JSON.parse(tokenString);
-      return user?.user?.name || "Usuário";
-    }
-    return "Usuário";
-  };
-
-  const userName = getUserName();
-
-  const buttons = [
-    <SideButton key="home" text="Pagina Inicial" onClick={handleHomeClick} />,
-    <SideButton
-      key="cadastros"
-      text="Cadastros"
-      onClick={handleRegistrationClick}
-    />,
-    <SideButton key="financeiro" text="Financeiro" />,
-    <SideButton key="benefícios" text="Benefícios" />,
-    <h2 key="profile-status" className="profile-status">
-      Você está logado <br />
-      como {userName} <AiOutlineUser className="profile-icon" />
-    </h2>,
-    <button key="logout" className="btn-logout" onClick={handleLogout}>
-      LOGOUT <RiLogoutCircleRLine className="logout-icon" />
-    </button>,
-  ];
-
   const loginOptions = ["Ativo", "Inativo"];
   const handleChangeLogin = (event) => {
     setLogin(event.target.value);
@@ -203,8 +158,6 @@ export default function UserUpdatePage() {
 
   return (
     <section className="container">
-      <SideBar className="side-menu" buttons={buttons} />
-
       <div className="forms-container-user">
         <h1>Visualização de usuário</h1>
 

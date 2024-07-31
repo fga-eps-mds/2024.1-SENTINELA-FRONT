@@ -1,0 +1,171 @@
+@media screen and (max-width: 1080px) {
+  .bar-container {
+    display: none;
+  }
+
+  .container {
+    display: flex;
+  }
+
+  .forms-container {
+    margin: 1rem;
+    width: 100%;
+
+    display: inherit;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .section-form {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .double-box {
+    display: inherit;
+  }
+
+  h1 {
+    font-weight: 800;
+    margin-bottom: 3rem;
+  }
+
+  h3 {
+    font-weight: 400;
+    margin-left: 1rem;
+    margin-top: 3rem;
+  }
+
+  #addDependentBttn {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+
+  .dependentBox {
+    background-color: #341f143e;
+    border-radius: 5px;
+  }
+
+  .dependentToAdd {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    border-radius: 15px;
+
+    margin-top: 1rem;
+    padding: 1rem;
+  }
+
+  .section-dependent-form {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .dependentBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    border-radius: 15px;
+
+    background-color: #ae883c98;
+    margin-top: 1rem;
+    padding: 1rem;
+  }
+
+  .dependentContainer {
+    display: grid;
+    grid-template-columns: 1fr;
+    color: black;
+  }
+
+  #envio {
+    margin-top: 1rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+@media screen and (min-width: 1081px) {
+  .container {
+    display: flex;
+  }
+
+  .forms-container {
+    margin: 3.5rem;
+    width: 100%;
+
+    display: inherit;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .section-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .double-box {
+    display: grid;
+    grid-template-columns: 2.3fr 0.7fr;
+  }
+
+  h1 {
+    font-weight: 800;
+    margin-bottom: 3rem;
+  }
+
+  h3 {
+    font-weight: 400;
+    margin-left: 1rem;
+    margin-top: 3rem;
+  }
+
+  #addDependentBttn {
+    cursor: pointer;
+  }
+
+  .dependentToAdd {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    border-radius: 15px;
+    margin-top: 1rem;
+    padding: 1rem;
+  }
+
+  .section-dependent-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+  }
+
+  .dependentBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    border-radius: 15px;
+
+    background-color: #ae883c98;
+    margin-top: 1rem;
+    padding: 1rem;
+  }
+
+  .dependentContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  #envio {
+    margin-top: 1rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+}

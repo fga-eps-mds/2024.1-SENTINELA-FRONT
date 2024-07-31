@@ -1,17 +1,11 @@
-import { AiOutlineUser } from "react-icons/ai";
-import { RiLogoutCircleRLine } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import SecondaryButton from "../../../../Components/SecondaryButton";
-import SideBar from "../../../../Components/SideBar";
-import SideButton from "../../../../Components/SideButton";
-import { useAuth } from "../../../../Context/auth";
 import sindpol_logo from "../../../../assets/sindpol-logo.png";
 import sentinela_logo from "../../../../assets/sentinela-logo.png";
 import "./index.css";
 
 export default function UserHubPage() {
   const navigate = useNavigate();
-  const context = useAuth();
 
   const handleListaClick = () => {
     navigate("/usuarios");
@@ -69,8 +63,6 @@ export default function UserHubPage() {
 
   return (
     <section className="container">
-      <SideBar className="side-menu" buttons={buttons} />
-
       <div className="area-card">
         <div className="card">
           <img className="logo" src={sindpol_logo} alt="Sindpol Logo" />
@@ -79,8 +71,7 @@ export default function UserHubPage() {
             src={sentinela_logo}
             alt="Sentinela Logo"
           />
-
-          <SecondaryButton text="SOLICITAÇÃO DE FILIAÇÃO" onClick={""} />
+          {/* <SecondaryButton text="SOLICITAÇÕES DE FILIAÇÃO" onClick={""} /> */}
           <SecondaryButton
             text="CADASTRO DE USUÁRIOS"
             onClick={handleCadastroClick}

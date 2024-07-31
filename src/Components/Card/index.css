@@ -2,11 +2,13 @@
   background-color: #eae3d7;
   max-width: 500px;
   width: 90%;
-  height: 690px;
+  height: fit-content;
   border-radius: 20px;
   display: flex;
+  gap: 10px;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 30px;
   /* justify-content: space-around; */
 }
 
