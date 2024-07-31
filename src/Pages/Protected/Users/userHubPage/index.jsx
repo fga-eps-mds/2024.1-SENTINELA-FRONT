@@ -90,10 +90,9 @@ export default function UserHubPage() {
             onClick={handleListaClick}
           />
           <SecondaryButton
-          text="EDITAR DADOS COMO USUÁRIO"
-          onClick={handleUserEditor} 
+            text="EDITAR DADOS COMO USUÁRIO"
+            onClick={handleUserEditor}
           />
-
         </div>
       </div>
     </section>

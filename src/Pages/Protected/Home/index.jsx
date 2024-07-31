@@ -7,7 +7,6 @@ import SideButton from "../../../Components/SideButton";
 import { AiOutlineUser } from "react-icons/ai";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 
-
 const Home = () => {
   const context = useContext(AuthContext);
   const navigate = useNavigate();
@@ -32,7 +31,6 @@ const Home = () => {
     getUser();
   });
 
-
   const handleRegister = () => {
     navigate("/usuarios/hub");
   };
@@ -48,13 +46,12 @@ const Home = () => {
     <SideButton key="financeiro" text="FINANCEIRO" />,
     <SideButton key="beneficios" text="BENEFÍCIOS" />,
     <h2 key="loggedStatus" className="profile-status">
-    Você está logado <br />
-    como {nome} <AiOutlineUser className="profile-icon" />
+      testando {nome} <AiOutlineUser className="profile-icon" />
     </h2>,
     <button key="logout" className="btn-logout" onClick={handleLogout}>
       {" "}
       LOGOUT <RiLogoutCircleRLine className="logout-icon" />{" "}
-    </button>
+    </button>,
   ];
 
   return (
