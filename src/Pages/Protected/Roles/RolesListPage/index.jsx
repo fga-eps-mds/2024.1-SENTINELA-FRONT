@@ -10,7 +10,7 @@
 // import SecondaryButton from "../../../../Components/SecondaryButton";
 // import FieldText from "../../../../Components/FieldText";
 
-export default function ProfilePermsListPage() {
+export default function RolesListPage() {
   //   const [suppliers, setSuppliers] = useState([]);
   //   const [search, setSearch] = useState("");
   //   const navigate = useNavigate();

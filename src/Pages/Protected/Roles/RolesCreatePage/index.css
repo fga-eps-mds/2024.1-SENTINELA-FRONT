@@ -58,9 +58,13 @@
     grid-template-columns: 0.5fr 0.5fr;
   }
 
-  .double-buttons {
+  .double-box-roles {
     display: contents;
-    width: 100%;
+    grid-template-columns: 0.5fr 0.5fr;
+  }
+
+  .double-buttons-roles {
+    display: contents;
     grid-template-columns: 0.5fr 0.3fr;
   }
 
@@ -149,6 +153,21 @@
     flex: 1;
     display: flex;
     justify-content: center;
+  }
+
+  .double-buttons-roles {
+    display: flex;
+    justify-content: space-between; /* Distribui os botões igualmente no espaço disponível */
+    align-items: end; /* Alinha os botões verticalmente */
+    gap: 20px;
+  }
+
+  .double-buttons-roles button {
+    flex: 1; /* Faz com que os botões ocupem o espaço disponível igualmente */
+    height: 40px;
+  }
+  #addDependentBttn {
+    cursor: pointer;
   }
 
   label {

@@ -6,7 +6,7 @@ import SecondaryButton from "../../../../Components/SecondaryButton";
 import Modal from "../../../../Components/Modal";
 import { Checkbox } from "@mui/material";
 
-export default function ProfilePermsCreatePage() {
+export default function RolesCreatePage() {
   const [showModal, setShowModal] = useState(false);
   const handleSubmit = () => {
     try {

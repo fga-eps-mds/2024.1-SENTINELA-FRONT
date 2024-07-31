@@ -8,9 +8,9 @@ import UserUpdatePage from "../Pages/Protected/Users/userUpdatePage";
 import Supplier from "../Pages/Protected/CreateSupplier";
 import ListSupplier from "../Pages/Protected/ListSupplier";
 import ViewSupplier from "../Pages/Protected/UpdateSupplier";
-import ProfilePermsCreatePage from "../Pages/Protected/ProfilePermissions/ProfilePermsCreatePage";
-import ProfilePermsListPage from "../Pages/Protected/ProfilePermissions/ProfilePermsListPage";
-import ProfilePermsUpdatePage from "../Pages/Protected/ProfilePermissions/ProfilePermsUpdatePage";
+import RolesCreatePage from "../Pages/Protected/Roles/RolesCreatePage";
+import RolesListPage from "../Pages/Protected/Roles/RolesListPage";
+import RolesUpdatePage from "../Pages/Protected/Roles/RolesUpdatePage";
 const ProtectedRoutes = () => {
   return (
     <Routes>
@@ -22,9 +22,9 @@ const ProtectedRoutes = () => {
       <Route path="/usuarios/editar/:id" element={<UserUpdatePage />} />
       <Route path="/usuarios" element={<UserListPage />} />
       <Route path="/usuarios/hub" element={<UserHubPage />} />
-      <Route path="/perfis" element={<ProfilePermsListPage />} />
-      <Route path="/perfis/criar" element={<ProfilePermsCreatePage />} />
-      <Route path="/perfis/editar/:name" element={<ProfilePermsUpdatePage />} />
+      <Route path="/perfis" element={<RolesListPage />} />
+      <Route path="/perfis/criar" element={<RolesCreatePage />} />
+      <Route path="/perfis/editar/:name" element={<RolesUpdatePage />} />
       <Route path="/perfil" element={<ProfileUpdate />} />
     </Routes>
   );
