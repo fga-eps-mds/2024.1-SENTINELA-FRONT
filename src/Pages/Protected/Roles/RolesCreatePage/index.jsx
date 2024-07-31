@@ -1,6 +1,5 @@
 import { useState } from "react";
 import "./index.css";
-import SideBar from "../../../../Components/SideBar";
 import FieldText from "../../../../Components/FieldText";
 import PrimaryButton from "../../../../Components/PrimaryButton";
 import SecondaryButton from "../../../../Components/SecondaryButton";
@@ -22,7 +21,6 @@ export default function ProfilePermsCreatePage() {
 
   return (
     <section className="container">
-      <SideBar />
       <div className="forms-container">
         <h1>Cadastro de Perfil</h1>
         <h3>Informações do Perfil</h3>
