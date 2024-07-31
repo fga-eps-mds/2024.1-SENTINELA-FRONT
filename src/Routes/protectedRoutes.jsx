@@ -24,7 +24,7 @@ const ProtectedRoutes = () => {
       <Route path="/usuarios/hub" element={<UserHubPage />} />
       <Route path="/perfis" element={<ProfilePermsListPage />} />
       <Route path="/perfis/criar" element={<ProfilePermsCreatePage />} />
-      <Route path="/perfis/editar/:id" element={<ProfilePermsUpdatePage />} />
+      <Route path="/perfis/editar/:name" element={<ProfilePermsUpdatePage />} />
       <Route path="/perfil" element={<ProfileUpdate />} />
     </Routes>
   );
