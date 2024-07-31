@@ -4,7 +4,7 @@ import FieldText from "../../../Components/FieldText";
 import FieldSelect from "../../../Components/FieldSelect";
 import DataSelect from "../../../Components/DataSelect";
 
-export default function CreateAssurance() {
+export default function BenefitsCreate() {
   const [nome, setNome] = useState("");
   const [razaoSocial, setRazaoSocial] = useState("");
   const [descricao, setDescricao] = useState("");

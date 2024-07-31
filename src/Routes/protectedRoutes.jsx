@@ -10,6 +10,7 @@ import ListSupplier from "../Pages/Protected/ListSupplier";
 import ViewSupplier from "../Pages/Protected/UpdateSupplier";
 import Benefits from "../Pages/Protected/Benefits";
 import BenefitsList from "../Pages/Protected/BenefitsList";
+import BenefitsCreate from "../Pages/Protected/BenefitsCreate";
 
 const ProtectedRoutes = () => {
   return (
@@ -25,6 +26,7 @@ const ProtectedRoutes = () => {
       <Route path="/perfil" element={<ProfileUpdate />} />
       <Route path="/beneficios" element={<Benefits />} />
       <Route path="/beneficios/lista" element={<BenefitsList />} />
+      <Route path="/beneficios/criar" element={<BenefitsCreate />} />
     </Routes>
   );
 };
