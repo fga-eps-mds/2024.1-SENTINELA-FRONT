@@ -7,6 +7,8 @@ import SideButton from "../../../Components/SideButton";
 import { AiOutlineUser } from "react-icons/ai";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import SecondaryButton from "../../../Components/SecondaryButton";
+import sindpol_logo from "../../../assets/sindpol-logo.png";
+import sentinela_logo from "../../../assets/sentinela-logo.png";
 
 import "./index.css";
 
@@ -72,6 +74,12 @@ const Benefits = () => {
         <SideBar className="side-menu" buttons={buttons} />
         <div className="area-card">
           <div className="card">
+            <img className="logo" src={sindpol_logo} alt="Sindpol Logo" />
+            <img
+              className="sentinela"
+              src={sentinela_logo}
+              alt="Sentinela Logo"
+            />
             <SecondaryButton text="CADASTRO DE CONVENIO" onClick={""} />
             <SecondaryButton
               text="LISTA DE CONVENIO"
