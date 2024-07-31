@@ -46,8 +46,10 @@ export default function SideBar({ fullHeight = true }) {
     <SideButton
       hidden={user ? "flex" : "none"}
       key="beneficios"
-      text="BENEFÍCIOS (em obras)"
-      onClick={() => {}}
+      text="BENEFÍCIOS"
+      onClick={() => {
+        navigate("/beneficios");
+      }}
     />,
     <SideButton
       hidden={user ? "none" : "flex"}
