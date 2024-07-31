@@ -1,54 +1,51 @@
-import SideBar from "../../../Components/SideBar";
 import "./index.css";
 import LabeledTextField from "../../../Components/LabeledTextField";
 import PrimaryButton from "../../../Components/PrimaryButton";
 import SecondaryButton from "../../../Components/SecondaryButton";
 import UnderlinedTextButton from "../../../Components/UnderlinedTextButton";
-import SideButton from "../../../Components/SideButton";
-import { useState, useContext } from "react";
-import AuthContext from "../../../Context/auth";
+import { useState, useContext, useEffect } from "react";
+import AuthContext, { useAuth } from "../../../Context/auth";
 import { useNavigate } from "react-router-dom";
 import Card from "../../../Components/Card";
 
 export default function Login() {
   const context = useContext(AuthContext);
   const navigate = useNavigate();
-
+  const { user } = useAuth();
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [error, setError] = useState(""); // Adiciona um estado para mensagens de erro
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (!email || !senha) {
-      // Verifica se os campos estão preenchidos
       setError("Por favor, preencha todos os campos.");
       return;
     }
 
-    // Limpa mensagens de erro
     setError("");
 
-    context.Login(email, senha);
-    navigate("/home");
+    const message = await context.Login(email, senha);
+
+    if (message) {
+      alert("erro de login. Senha ou email incorretos.");
+    } else {
+      navigate("/home");
+    }
   };
 
   const handlePasswordRecovery = () => {
     navigate("/passwordrecovery");
   };
 
-  const buttons = [
-    <SideButton key="login" text="Login" />,
-    <SideButton
-      key="filiacao"
-      text="Filiação"
-      onClick={() => navigate("/filiacao")}
-    />,
-    <SideButton key="sobre" text="Sobre" />,
-  ];
+  useEffect(() => {
+    if (user) {
+      navigate("/home");
+      window.location.reload();
+    }
+  }, [user, navigate]);
 
   return (
     <div className="screen">
-      <SideBar buttons={buttons} />
       <Card>
         <LabeledTextField
           label="EMAIL"

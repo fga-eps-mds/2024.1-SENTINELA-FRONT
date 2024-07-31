@@ -1,22 +1,16 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import SideBar from "../../../Components/SideBar";
-import SideButton from "../../../Components/SideButton";
 import FieldText from "../../../Components/FieldText";
 import FieldNumber from "../../../Components/FieldNumber";
 import PrimaryButton from "../../../Components/PrimaryButton";
 import SecondaryButton from "../../../Components/SecondaryButton";
 import { useAuth } from "../../../Context/auth";
-import AuthContext from "../../../Context/auth";
 import { APIUsers } from "../../../Services/BaseService";
-import { AiOutlineUser } from "react-icons/ai";
-import { RiLogoutCircleRLine } from "react-icons/ri";
 import Modal from "../../../Components/Modal";
 import { Button } from "@mui/material";
 import "./index.css";
 
 const ProfileUpdate = () => {
-  const context = useContext(AuthContext);
   const navigate = useNavigate();
   const { user } = useAuth();
   const storagedUserString = localStorage.getItem("@App:user");
@@ -41,7 +35,7 @@ const ProfileUpdate = () => {
         setLogin(response.data.status ? "Ativo" : "Inativo");
         setEmail(response.data.email);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
 
@@ -71,11 +65,6 @@ const ProfileUpdate = () => {
 
   const removeMask = (celular) => celular.replace(/\D/g, "");
 
-  const handleLogout = () => {
-    context.Logout();
-    navigate("/");
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isValidNumber || !isEmailValid) {
@@ -98,15 +87,11 @@ const ProfileUpdate = () => {
       setEmail(email);
       setOpenDialog(true);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
   const handleCancel = () => {
-    navigate("/home");
-  };
-
-  const handleHome = () => {
     navigate("/home");
   };
 
@@ -115,25 +100,9 @@ const ProfileUpdate = () => {
     navigate("/home");
   };
 
-  const buttons = [
-    <SideButton key="home" text="PÁGINA INICIAL" onClick={handleHome} />,
-    <SideButton key="filiacao" text="CADASTROS" />,
-    <SideButton key="financeiro" text="FINANCEIRO" />,
-    <SideButton key="beneficios" text="BENEFÍCIOS" />,
-    <h2 key="loggedStatus" className="profile-status">
-      Você está logado <br />
-      como {nome} <AiOutlineUser className="profile-icon" />
-    </h2>,
-    <button key="logout" className="btn-logout" onClick={handleLogout}>
-      {" "}
-      LOGOUT <RiLogoutCircleRLine className="logout-icon" />{" "}
-    </button>,
-  ];
-
   return (
     user && (
       <section className="container">
-        <SideBar className="side-menu" buttons={buttons} />
         <div className="campos-container">
           <h3 className="profile-view">Visualização de usuário</h3>
           <h4 className="personal-data">Dados pessoais</h4>
@@ -177,12 +146,7 @@ const ProfileUpdate = () => {
             <PrimaryButton text="Salvar" onClick={handleSubmit} />
           </div>
         </div>
-        <Modal
-          show={openDialog}
-          alertTitle={
-            <div className="custom-alert-title">Alterações Salvas</div>
-          }
-        >
+        <Modal show={openDialog} alertTitle="Alterações Salvas">
           <Button onClick={handleCloseDialog} className="custom-dialog-button">
             OK
           </Button>

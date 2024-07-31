@@ -15,7 +15,6 @@ export default function SecondaryButton({ text, onClick, maxWidth }) {
         border: `2px solid ${theme.palette.button}`, // Cor do stroke em torno do botão
         maxWidth: { maxWidth }, // Largura do botão
         width: "90%",
-        marginTop: "50px",
         "&amp;:hover": {
           transform: "scale(1.03)",
           backgroundColor: rgbaValue01,
