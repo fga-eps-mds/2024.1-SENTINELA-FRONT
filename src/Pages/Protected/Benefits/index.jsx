@@ -32,21 +32,12 @@ const Benefits = () => {
     getUser();
   });
 
-  const handleRegister = () => {
-    navigate("/usuarios/hub");
-  };
-
-  const handleBenefits = () => {
-    navigate("/beneficios");
-  };
-
   const handleBenefitsList = () => {
     navigate("/beneficios/lista");
   };
 
-  const handleLogout = () => {
-    context.Logout();
-    navigate("/");
+  const handleBenefitsCreate = () => {
+    navigate("/beneficios/criar");
   };
 
   return (
@@ -63,7 +54,7 @@ const Benefits = () => {
             <SecondaryButton
               className="btn-register"
               text="CADASTRO DE CONVENIO"
-              onClick={""}
+              onClick={handleBenefitsCreate}
             />
             <SecondaryButton
               className="btn-list"
@@ -78,3 +69,4 @@ const Benefits = () => {
 };
 
 export default Benefits;
+
