@@ -72,16 +72,21 @@ const Benefits = () => {
     user && (
       <section className="container">
         <SideBar className="side-menu" buttons={buttons} />
-        <div className="area-card">
-          <div className="card">
+        <div className="area-hub">
+          <div className="card-benefits">
             <img className="logo" src={sindpol_logo} alt="Sindpol Logo" />
             <img
               className="sentinela"
               src={sentinela_logo}
               alt="Sentinela Logo"
             />
-            <SecondaryButton text="CADASTRO DE CONVENIO" onClick={""} />
             <SecondaryButton
+              className="btn-register"
+              text="CADASTRO DE CONVENIO"
+              onClick={""}
+            />
+            <SecondaryButton
+              className="btn-list"
               text="LISTA DE CONVENIO"
               onClick={handleBenefitsList}
             />
