@@ -12,7 +12,19 @@ export default function RolesUpdatePage() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
+  const [financeiro, setFinanceiro] = useState([false, false, false, false]);
+  const [beneficios, setBeneficios] = useState([false, false, false, false]);
+  const [usuarios, setUsuarios] = useState([false, false, false, false]);
+
   const navigate = useNavigate();
+
+  const handleCheckboxChange = (setState, index) => {
+    setState((prevState) => {
+      const newState = [...prevState];
+      newState[index] = !newState[index];
+      return newState;
+    });
+  };
 
   const handleSubmit = () => {
     setShowSaveModal(true);
@@ -62,26 +74,75 @@ export default function RolesUpdatePage() {
           </div>
           <div className="row">
             <label>Financeiro</label>
-            <Checkbox />
-            <Checkbox />
-            <Checkbox />
-            <Checkbox />
+            <Checkbox
+              name="create"
+              checked={financeiro[0]}
+              onChange={() => handleCheckboxChange(setFinanceiro, 0)}
+            />
+            <Checkbox
+              name="editar"
+              checked={financeiro[1]}
+              onChange={() => handleCheckboxChange(setFinanceiro, 1)}
+            />
+            <Checkbox
+              name="visualizar"
+              checked={financeiro[2]}
+              onChange={() => handleCheckboxChange(setFinanceiro, 2)}
+            />
+            <Checkbox
+              name="deletar"
+              checked={financeiro[3]}
+              onChange={() => handleCheckboxChange(setFinanceiro, 3)}
+            />
           </div>
           <div className="row">
             <label>Benefícios</label>
-            <Checkbox />
-            <Checkbox />
-            <Checkbox />
-            <Checkbox />
+            <Checkbox
+              name="create"
+              checked={beneficios[0]}
+              onChange={() => handleCheckboxChange(setBeneficios, 0)}
+            />
+            <Checkbox
+              name="editar"
+              checked={beneficios[1]}
+              onChange={() => handleCheckboxChange(setBeneficios, 1)}
+            />
+            <Checkbox
+              name="visualizar"
+              checked={beneficios[2]}
+              onChange={() => handleCheckboxChange(setBeneficios, 2)}
+            />
+            <Checkbox
+              name="deletar"
+              checked={beneficios[3]}
+              onChange={() => handleCheckboxChange(setBeneficios, 3)}
+            />
           </div>
           <div className="row">
             <label>Usuarios</label>
-            <Checkbox />
-            <Checkbox />
-            <Checkbox />
-            <Checkbox />
+            <Checkbox
+              name="create"
+              checked={usuarios[0]}
+              onChange={() => handleCheckboxChange(setUsuarios, 0)}
+            />
+            <Checkbox
+              name="editar"
+              checked={usuarios[1]}
+              onChange={() => handleCheckboxChange(setUsuarios, 1)}
+            />
+            <Checkbox
+              name="visualizar"
+              checked={usuarios[2]}
+              onChange={() => handleCheckboxChange(setUsuarios, 2)}
+            />
+            <Checkbox
+              name="deletar"
+              checked={usuarios[3]}
+              onChange={() => handleCheckboxChange(setUsuarios, 3)}
+            />
           </div>
         </div>
+
         <div className="double-buttons-roles">
           <SecondaryButton text="DELETAR" onClick={handleDelete} />
           <Modal
