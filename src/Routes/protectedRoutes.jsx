@@ -6,6 +6,7 @@ import UserListPage from "../Pages/Protected/Users/userListPage";
 import UserHubPage from "../Pages/Protected/Users/userHubPage";
 import UserUpdatePage from "../Pages/Protected/Users/userUpdatePage";
 import Benefits from "../Pages/Protected/Benefits";
+import BenefitsList from "../Pages/Protected/BenefitsList";
 
 const ProtectedRoutes = () => {
   return (
@@ -18,6 +19,7 @@ const ProtectedRoutes = () => {
         <Route path="/usuarios/hub" element={<UserHubPage />} />
         <Route path="/profileupdate" element={<ProfileUpdate />} />
         <Route path="/beneficios" element={<Benefits />} />
+        <Route path="/beneficios/lista" element={<BenefitsList />} />
       </Routes>
     </BrowserRouter>
   );

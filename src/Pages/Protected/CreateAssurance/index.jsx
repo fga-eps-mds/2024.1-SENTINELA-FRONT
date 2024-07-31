@@ -24,7 +24,7 @@ export default function CreateAssurance() {
   const [dataInicio, setDataInicio] = useState("");
   const [sitContrato, setSitContrato] = useState("");
   const [dataFinal, setDataFinal] = useState("");
-  const [contratoEntreg, setContratoEntreg] = useState(""); //pesquisar sobre como implementar checkbox no campo
+  //const [contratoEntreg, setContratoEntreg] = useState(""); //pesquisar sobre como implementar checkbox no campo
 
   const tipoPessoaList = ["Jurídica", "Física"];
   const categoriaList = [

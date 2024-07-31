@@ -6,11 +6,8 @@ import SideBar from "../../../Components/SideBar";
 import SideButton from "../../../Components/SideButton";
 import { AiOutlineUser } from "react-icons/ai";
 import { RiLogoutCircleRLine } from "react-icons/ri";
-import SecondaryButton from "../../../Components/SecondaryButton";
 
-import "./index.css";
-
-const Benefits = () => {
+export default function BenefitsList() {
   const context = useContext(AuthContext);
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -42,10 +39,6 @@ const Benefits = () => {
     navigate("/beneficios");
   };
 
-  const handleBenefitsList = () => {
-    navigate("/beneficios/lista");
-  };
-
   const handleLogout = () => {
     context.Logout();
     navigate("/");
@@ -70,18 +63,8 @@ const Benefits = () => {
     user && (
       <section className="container">
         <SideBar className="side-menu" buttons={buttons} />
-        <div className="area-card">
-          <div className="card">
-            <SecondaryButton text="CADASTRO DE CONVENIO" onClick={""} />
-            <SecondaryButton
-              text="LISTA DE CONVENIO"
-              onClick={handleBenefitsList}
-            />
-          </div>
-        </div>
+        <h2>Lista de convenios </h2>
       </section>
     )
   );
-};
-
-export default Benefits;
+}
