@@ -2,10 +2,17 @@ import PropTypes from "prop-types";
 import theme from "../../Styles/global";
 import TextField from "@mui/material/TextField";
 import Checkbox from "@mui/material/Checkbox";
-import Box from "@mui/material/Box";
+//import Box from "@mui/material/Box";
 import InputAdornment from "@mui/material/InputAdornment";
 
-export default function FieldTextCheckbox({ label, value, onChange, disabled, checked, onCheckboxChange }) {
+export default function FieldTextCheckbox({
+  label,
+  value,
+  onChange,
+  disabled,
+  checked,
+  onCheckboxChange,
+}) {
   return (
     <TextField
       id="filled-basic"

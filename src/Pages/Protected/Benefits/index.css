@@ -17,7 +17,7 @@
   align-items: center;
 }
 
-.hub-btn{
+.hub-btn {
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -26,7 +26,3 @@
   gap: 30px;
   width: 100%;
 }
-
-
-
-

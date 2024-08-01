@@ -5,7 +5,6 @@ import SecondaryButton from "../../../Components/SecondaryButton";
 import FieldText from "../../../Components/FieldText";
 import { APIBenefits } from "../../../Services/BaseService";
 
-
 export default function ListSupplier() {
   //const [suppliers, setSuppliers] = useState([]);
   const [search, setSearch] = useState("");
@@ -20,16 +19,13 @@ export default function ListSupplier() {
       try {
         const response = await APIBenefits.get(`benefits`);
         console.log(response);
-
       } catch (error) {
         console.log(error);
       }
     };
-    
+
     getBenefits();
-
   }, []);
-
 
   return (
     <section className="container">
@@ -45,13 +41,8 @@ export default function ListSupplier() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          <SecondaryButton
-            text="Pesquisar"
-            onClick={""}
-          />
+          <SecondaryButton text="Pesquisar" onClick={""} />
         </div>
-
-        
       </div>
     </section>
   );

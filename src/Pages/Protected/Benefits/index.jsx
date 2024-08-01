@@ -1,7 +1,7 @@
-import { useEffect, useState, useContext } from "react";
-import AuthContext, { useAuth } from "../../../Context/auth";
+//import { useEffect, useState } from "react";
+import { useAuth } from "../../../Context/auth";
 import { useNavigate } from "react-router-dom";
-import { APIUsers } from "../../../Services/BaseService";
+//import { APIUsers } from "../../../Services/BaseService";
 import SecondaryButton from "../../../Components/SecondaryButton";
 import sindpol_logo from "../../../assets/sindpol-logo.png";
 import sentinela_logo from "../../../assets/sentinela-logo.png";
@@ -9,28 +9,11 @@ import sentinela_logo from "../../../assets/sentinela-logo.png";
 import "./index.css";
 
 const Benefits = () => {
-  const context = useContext(AuthContext);
+  //const context = useContext(AuthContext);
   const navigate = useNavigate();
   const { user } = useAuth();
-  const storagedUserString = localStorage.getItem("@App:user");
-  const storagedUser = JSON.parse(storagedUserString);
-
-  const [nome, setNome] = useState("");
-
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        const response = await APIUsers.get(`users/${storagedUser.user._id}`, {
-          headers: { Authorization: `Bearer ${storagedUser.token}` },
-        });
-        setNome(response.data.name);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    getUser();
-  });
+  //const storagedUserString = localStorage.getItem("@App:user");
+  //const storagedUser = JSON.parse(storagedUserString);
 
   const handleBenefitsList = () => {
     navigate("/beneficios/lista");
@@ -52,14 +35,14 @@ const Benefits = () => {
               alt="Sentinela Logo"
             />
             <div className="hub-btn">
-            <SecondaryButton
-              text="CADASTRO DE CONVENIO"
-              onClick={handleBenefitsCreate}
-            />
-            <SecondaryButton
-              text="LISTA DE CONVENIO"
-              onClick={handleBenefitsList}
-            />
+              <SecondaryButton
+                text="CADASTRO DE CONVENIO"
+                onClick={handleBenefitsCreate}
+              />
+              <SecondaryButton
+                text="LISTA DE CONVENIO"
+                onClick={handleBenefitsList}
+              />
             </div>
           </div>
         </div>
@@ -69,4 +52,3 @@ const Benefits = () => {
 };
 
 export default Benefits;
-

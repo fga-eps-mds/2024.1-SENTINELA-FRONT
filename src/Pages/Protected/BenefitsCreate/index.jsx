@@ -1,7 +1,7 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import "./index.css";
-import AuthContext, { useAuth } from "../../../Context/auth";
-import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../Context/auth";
+//import { useNavigate } from "react-router-dom";
 import FieldText from "../../../Components/FieldText";
 import FieldSelect from "../../../Components/FieldSelect";
 import DataSelect from "../../../Components/DataSelect";
@@ -13,11 +13,11 @@ import { Snackbar } from "@mui/material";
 import Alert from "@mui/material/Alert";
 
 export default function BenefitsCreate() {
-  const context = useContext(AuthContext);
-  const navigate = useNavigate();
+  //const context = useContext(AuthContext);
+  //const navigate = useNavigate();
   const { user } = useAuth();
-  const storagedUserString = localStorage.getItem("@App:user");
-  const storagedUser = JSON.parse(storagedUserString);
+  //const storagedUserString = localStorage.getItem("@App:user");
+  //const storagedUser = JSON.parse(storagedUserString);
 
   const [nome, setNome] = useState("");
   const [razaoSocial, setRazaoSocial] = useState("");
@@ -136,7 +136,7 @@ export default function BenefitsCreate() {
     ) {
       setOpenError(true);
     } else {
-      const benefitsData = {
+      /*const benefitsData = {
         nome,
         razaoSocial,
         descricao,
@@ -150,16 +150,16 @@ export default function BenefitsCreate() {
         descontoAut,
         logotipo,
         site,
-        emaill,
+        email,
         telefCelular,
-        dataAssinaturara,
+        dataAssinatura,
         dataInicio,
         sitContrato,
         dataFinal,
         contratoSit,
-      };
+      };*/
 
-      handleSubmit(benefitsData);
+      //handleSubmit(benefitsData);
       setShowModal(true);
     }
   };
