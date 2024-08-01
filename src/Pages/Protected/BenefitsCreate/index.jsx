@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import FieldText from "../../../Components/FieldText";
 import FieldSelect from "../../../Components/FieldSelect";
 import DataSelect from "../../../Components/DataSelect";
+import FieldTextCheckbox from "../../../Components/FieldTextCheckbox";
 
 export default function BenefitsCreate() {
   const context = useContext(AuthContext);
@@ -31,6 +32,9 @@ export default function BenefitsCreate() {
   const [dataInicio, setDataInicio] = useState(null);
   const [sitContrato, setSitContrato] = useState("");
   const [dataFinal, setDataFinal] = useState(null);
+  const [contratoSit, setContratoSit] = useState("");
+  const [isChecked, setIsChecked] = useState(false);
+
 
   const tipoPessoaList = ["Jurídica", "Física"];
   const categoriaList = [
@@ -43,8 +47,9 @@ export default function BenefitsCreate() {
   const statusConvenioList = ["Ativo", "Inativo"];
   const considerarIrList = ["Sim", "Não"];
   const descontoAutList = ["Sim", "Não"];
-  //const logotipoList = []; //confirmar quais seriam as opções exatas do campo
   const sitContratoList = ["Concluído", "Pendência", "Cancelado"];
+  
+  const checklistItems = ["Contrato entregue"];
 
   const handleChangeTipoPessoa = (event) => {
     setTipoPessoa(event.target.value);
@@ -211,9 +216,7 @@ export default function BenefitsCreate() {
           <FieldText
             label="Telefone/Celular"
             value={telefCelular}
-            onChange={(e) =>
-              setTelefCelular(mascaraTelefCelular(e.target.value))
-            }
+            onChange={(e) => setTelefCelular(mascaraTelefCelular(e.target.value))}
           />
 
           <DataSelect
@@ -228,26 +231,29 @@ export default function BenefitsCreate() {
             onChange={(newValue) => setDataInicio(newValue)}
           />
 
+          <FieldSelect
+            label="Situação"
+            value={sitContrato}
+            onChange={handleChangeSitContrato}
+            options={sitContratoList}
+          />
+
           <DataSelect
             label="Data final"
             value={dataFinal}
             onChange={(newValue) => setDataFinal(newValue)}
           />
 
-          <FieldSelect
-            label="Considerado no IR"
-            value={considerarIr}
-            onChange={handleChangeConsiderarIr}
-            options={considerarIrList}
-          />
-
-          <DataSelect
-            label="Data de assinatura"
-            value={dataAssinatura}
-            onChange={(newValue) => setDataAssinatura(newValue)}
+          <FieldTextCheckbox
+            label="Site"
+            value={site}
+            onChange={(e) => setContratoSit(e.target.value)}
+            checked={isChecked}
+            onCheckboxChange={(e) => setIsChecked(e.target.checked)}
+            disabled={true}
           />
         </div>
-      </div> //falta criar o campo do Contrato entregue, pesquisar como fazer uma checkbox
+      </div>
     )
   );
 }
