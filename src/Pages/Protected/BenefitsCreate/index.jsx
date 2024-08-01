@@ -9,6 +9,8 @@ import FieldTextCheckbox from "../../../Components/FieldTextCheckbox";
 import PrimaryButton from "../../../Components/PrimaryButton";
 import Modal from "../../../Components/Modal";
 import SecondaryButton from "../../../Components/SecondaryButton";
+import { Snackbar } from "@mui/material";
+import Alert from "@mui/material/Alert";
 
 export default function BenefitsCreate() {
   const context = useContext(AuthContext);
@@ -39,6 +41,7 @@ export default function BenefitsCreate() {
   const [contratoSit, setContratoSit] = useState("");
   const [isChecked, setIsChecked] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [openError, setOpenError] = useState(false);
 
   const tipoPessoaList = ["Jurídica", "Física"];
   const categoriaList = [
@@ -122,7 +125,46 @@ export default function BenefitsCreate() {
     }
   };
 
-  const handleSubmit = async () => {
+  const handleCheck = () => {
+    if (
+      !nome ||
+      !razaoSocial ||
+      !statusConvenio ||
+      !statusConvenio ||
+      !considerarIr ||
+      !descontoAut
+    ) {
+      setOpenError(true);
+    } else {
+      const benefitsData = {
+        nome,
+        razaoSocial,
+        descricao,
+        tipoPessoa,
+        cpfCnpj,
+        ans,
+        categoria,
+        statusConvenio,
+        dataCadastro,
+        considerarIr,
+        descontoAut,
+        logotipo,
+        site,
+        emaill,
+        telefCelular,
+        dataAssinaturara,
+        dataInicio,
+        sitContrato,
+        dataFinal,
+        contratoSit,
+      };
+
+      handleSubmit(benefitsData);
+      setShowModal(true);
+    }
+  };
+
+  /*const handleSubmit = async () => {
     const benefitsData = {
       nome,
       razaoSocial,
@@ -152,7 +194,7 @@ export default function BenefitsCreate() {
     } else {
       setShowModal(true);
     }
-  };
+  };*/
 
   return (
     user && (
@@ -164,14 +206,14 @@ export default function BenefitsCreate() {
 
           <div className="section-form">
             <FieldText
-              label="Nome fantasia"
+              label="Nome fantasia *"
               value={nome}
               onChange={mascaraNome}
               required
             />
 
             <FieldText
-              label="Razão social"
+              label="Razão social *"
               value={razaoSocial}
               onChange={(e) => setRazaoSocial(e.target.value)}
             />
@@ -211,7 +253,7 @@ export default function BenefitsCreate() {
             />
 
             <FieldSelect
-              label="Status"
+              label="Status *"
               value={statusConvenio}
               onChange={handleChangeStatusConvenio}
               options={statusConvenioList}
@@ -224,14 +266,14 @@ export default function BenefitsCreate() {
             />
 
             <FieldSelect
-              label="Considerado no IR"
+              label="Considerado no IR *"
               value={considerarIr}
               onChange={handleChangeConsiderarIr}
               options={considerarIrList}
             />
 
             <FieldSelect
-              label="Desconto automático"
+              label="Desconto automático *"
               value={descontoAut}
               onChange={handleChangeDescontoAut}
               options={descontoAutList}
@@ -303,8 +345,19 @@ export default function BenefitsCreate() {
           />
 
           <div id="envio">
-            <PrimaryButton text="CADASTRAR" onClick={handleSubmit} />
+            <PrimaryButton text="CADASTRAR" onClick={handleCheck} />
           </div>
+
+          <Snackbar
+            open={openError}
+            autoHideDuration={6000}
+            onClose={() => setOpenError(false)}
+          >
+            <Alert onClose={() => setOpenError(false)} severity="error">
+              Certifique-se de que todos os campos obrigatórios estão
+              preenchidos
+            </Alert>
+          </Snackbar>
 
           <Modal width="338px" alertTitle="Cadastro concluído" show={showModal}>
             <SecondaryButton
