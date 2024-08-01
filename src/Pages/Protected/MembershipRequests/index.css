@@ -6,3 +6,8 @@
    
 
 }
+.read-only {
+    pointer-events: none; /* Desativa todos os eventos de mouse */
+  /* Reduz a opacidade para indicar que está desativado */
+  }
+  

@@ -6,6 +6,7 @@ import PrimaryButton from "../../../Components/PrimaryButton";
 import LabeledTextField from "../../../Components/LabeledTextField";
 import FieldText from "../../../Components/FieldText";
 import SecondaryButton from "../../../Components/SecondaryButton";
+import CheckList from "../../../Components/Checklist";
 
 export default function MembershipRequest() {
   const { user } = useAuth();
@@ -51,13 +52,17 @@ export default function MembershipRequest() {
           />
           <SecondaryButton text="Pesquisar" onClick={handleSearch} />
         </div>
-        <div>
+        <div className="read-only">
           {dataMap ? (
             <LabeledTextField
               label="Nome do Membro"
               value={dataMap.nomeCompleto || ""}
               readOnly={isResultReadOnly} // Make this field read-only if search has been performed
+             
             />
+          
+          
+            
           ) : (
             <p>Nenhum membro encontrado.</p>
           )}
