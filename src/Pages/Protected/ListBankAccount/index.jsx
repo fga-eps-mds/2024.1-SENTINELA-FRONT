@@ -10,6 +10,8 @@ import FieldText from "../../../Components/FieldText";
 import "./index.css"
 import { listBankAccount } from "../../../Services/bankAccountService";
 import ListComponent from "../../../Components/ListComponent";
+import { Snackbar } from "@mui/material"
+import Alert from "@mui/material/Alert";
 
 
 export default function ListBankAccount() {
@@ -18,6 +20,8 @@ export default function ListBankAccount() {
     const [busca, setBusca] = useState('');
     const [dataMap, setDataMap] = useState(null);
     const { id } = useParams();  // Pega o ID da URL
+    const [messageAlert, setMessageAlert] = useState('');
+    const [openModal , setOpenModal] = useState(false);
 
     const context = useContext(AuthContext);
     const navigate = useNavigate();
@@ -34,7 +38,8 @@ export default function ListBankAccount() {
             // Chama listBankAccount e aguarda a resposta
             const result = await listBankAccount(busca);
             if(result.message) {
-                alert(result.message);
+                setMessageAlert(result.message);
+                setOpenModal(true);
                 return;
             }
             setDataMap(result);
@@ -106,6 +111,16 @@ export default function ListBankAccount() {
           )}
 
         </div>
+    
+        <Snackbar
+          open={openModal}
+          autoHideDuration={6000}
+          onClose={() => setOpenModal(false)}
+        >
+          <Alert onClose={() => setOpenModal(false)} severity="error">
+            Conta não encontrada!
+          </Alert>
+        </Snackbar>
 
     
     </section>
