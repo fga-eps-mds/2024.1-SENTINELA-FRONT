@@ -1,0 +1,46 @@
+@media screen and (max-width: 1080px) {
+    .bank-container {
+        display: block;
+        
+    }
+
+    .bank-container .section {
+        display: grid;
+        width: 100%;
+        margin: 2rem;
+    }
+
+    .bank-container .section .form {
+        width: 100%;
+        display: inherit;
+        grid-template-columns: 1fr;
+    }
+
+    .Botao-submit{
+        margin: auto;
+    }
+
+}
+
+@media screen and (min-width:1081px){
+    .bank-container {
+        display: flex;
+        flex-direction: flex-end;
+    }
+
+    .bank-container .section {
+        display: grid;
+        width: 100%;
+        margin: 2rem;
+    }
+
+    .bank-container .section .form {
+        width: 100%;
+        display: inherit;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .Botao-submit{
+        margin: auto;
+    }
+}
