@@ -7,6 +7,8 @@ import FieldSelect from "../../../Components/FieldSelect";
 import DataSelect from "../../../Components/DataSelect";
 import FieldTextCheckbox from "../../../Components/FieldTextCheckbox";
 import PrimaryButton from "../../../Components/PrimaryButton";
+import Modal from "../../../Components/Modal";
+import SecondaryButton from "../../../Components/SecondaryButton";
 
 export default function BenefitsCreate() {
   const context = useContext(AuthContext);
@@ -36,6 +38,7 @@ export default function BenefitsCreate() {
   const [dataFinal, setDataFinal] = useState(null);
   const [contratoSit, setContratoSit] = useState("");
   const [isChecked, setIsChecked] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const tipoPessoaList = ["Jurídica", "Física"];
   const categoriaList = [
@@ -72,6 +75,11 @@ export default function BenefitsCreate() {
 
   const handleChangeSitContrato = (event) => {
     setSitContrato(event.target.value);
+  };
+
+  const handleCloseDialog = () => {
+    setShowModal(false);
+    //navigate("/");
   };
 
   const mascaraNome = (e) => {
@@ -138,6 +146,12 @@ export default function BenefitsCreate() {
       contratoSit: contratoSit || null,
     };
     const erro = await createBenefits(benefitsData);
+
+    if (erro) {
+      setShowModal(false);
+    } else {
+      setShowModal(true);
+    }
   };
 
   return (
@@ -291,6 +305,15 @@ export default function BenefitsCreate() {
           <div id="envio">
             <PrimaryButton text="CADASTRAR" onClick={handleSubmit} />
           </div>
+
+          <Modal width="338px" alertTitle="Cadastro concluído" show={showModal}>
+            <SecondaryButton
+              key={"modalButtons"}
+              text="OK"
+              onClick={handleCloseDialog}
+              width="338px"
+            />
+          </Modal>
         </div>
       </div>
     )
