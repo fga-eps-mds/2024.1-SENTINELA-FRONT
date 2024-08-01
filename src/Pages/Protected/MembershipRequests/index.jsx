@@ -1,9 +1,7 @@
 import "./index.css";
 import { useAuth } from "../../../Context/auth";
-import { getMemberShip } from "../../../Services/MemberShipService";
+import { getMemberShip, updateMemberStatus } from "../../../Services/MemberShipService";
 import { useEffect, useState } from "react";
-import PrimaryButton from "../../../Components/PrimaryButton";
-import LabeledTextField from "../../../Components/LabeledTextField";
 import FieldText from "../../../Components/FieldText";
 import SecondaryButton from "../../../Components/SecondaryButton";
 import CheckList from "../../../Components/Checklist";
@@ -11,33 +9,60 @@ import CheckList from "../../../Components/Checklist";
 export default function MembershipRequest() {
   const { user } = useAuth();
   const [members, setMembers] = useState([]);
-  const [showMembers, setShowMembers] = useState(false);
-  const [dataMap, setDataMap] = useState(null);
+  const [filteredMembers, setFilteredMembers] = useState([]);
   const [search, setSearch] = useState("");
   const [isResultReadOnly, setIsResultReadOnly] = useState(false);
+  const [checkedItems, setCheckedItems] = useState([]);
 
-  const handleSearch = async () => {
-    try {
-      const result = await getMemberShip();
-      if (result.message) {
-        console.log(result.message);
-        return;
+  // Fetch all members on component mount
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const result = await getMemberShip();
+        if (result.message) {
+          console.log(result.message);
+          return;
+        }
+        setMembers(result);
+        setFilteredMembers(result); // Show all members initially
+      } catch (error) {
+        console.log(error);
       }
-      const filteredData = result.filter(member =>
-        member.nomeCompleto.toLowerCase().includes(search.toLowerCase())
-      );
-      setDataMap(filteredData.length > 0 ? filteredData[0] : null); // Display the first matching result
-      setIsResultReadOnly(true); // Make the result field read-only after search
+    }
+    fetchData();
+  }, []);
+
+  const handleSearch = () => {
+    // Filter members based on the search query
+    const filteredData = members.filter(member =>
+      member.nomeCompleto.toLowerCase().includes(search.toLowerCase())
+    );
+    setFilteredMembers(filteredData);
+    setIsResultReadOnly(true); // Make this field read-only after search
+  };
+
+  const handleCheckboxChange = async (newChecked) => {
+    try {
+      // Find the member ID that was checked or unchecked
+      
+      const changedMember = filteredMembers.find(member => !checkedItems.includes(member.nomeCompleto) && newChecked.includes(member.nomeCompleto));
+      
+      if (changedMember) {
+        // Update status in the database
+        console.log('oii',changedMember._id, !changedMember.status);
+        const res = await updateMemberStatus(changedMember._id, !changedMember.status);
+        
+        console.log(res);
+        // Update state with the new checked items
+        setCheckedItems(newChecked);
+      }
     } catch (error) {
-      console.log(error);
+      console.error("Error updating checkbox:", error);
     }
   };
 
-  useEffect(() => {
-    if (dataMap) {
-      console.log(dataMap);
-    }
-  }, [dataMap]);
+  // Filter members with userStatus = false
+  const membersForCheckList = filteredMembers.filter(member => !member.status);
 
   return (
     user && (
@@ -52,17 +77,13 @@ export default function MembershipRequest() {
           />
           <SecondaryButton text="Pesquisar" onClick={handleSearch} />
         </div>
-        <div className="read-only">
-          {dataMap ? (
-            <LabeledTextField
-              label="Nome do Membro"
-              value={dataMap.nomeCompleto || ""}
-              readOnly={isResultReadOnly} // Make this field read-only if search has been performed
-             
+        <div className="member-list">
+          {membersForCheckList.length > 0 ? (
+            <CheckList
+              items={membersForCheckList.map(member => member.nomeCompleto)}
+              value={checkedItems}
+              onChange={handleCheckboxChange}
             />
-          
-          
-            
           ) : (
             <p>Nenhum membro encontrado.</p>
           )}

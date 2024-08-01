@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-import theme  from "../../Styles/global";
+import theme from "../../Styles/global";
 
 export default function ListComponent({
     label,

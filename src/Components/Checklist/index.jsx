@@ -5,6 +5,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import React from "react";
 import PropTypes from "prop-types";
+import "./index.css"; // Ensure the CSS is imported
 
 export default function CheckList({ items, value, onChange }) {
   const handleToggle = (e) => () => {
@@ -23,14 +24,14 @@ export default function CheckList({ items, value, onChange }) {
     <List>
       {items.map((item, index) => (
         <React.Fragment key={item}>
-          <ListItem onClick={handleToggle(item)}>
+          <ListItem className="checklist-item" button onClick={handleToggle(item)}>
+            <ListItemText primary={item} />
             <Checkbox
-              edge="start"
+              edge="end"
               checked={value.indexOf(item) !== -1}
               tabIndex={-1}
               disableRipple
             />
-            <ListItemText primary={item} />
           </ListItem>
           {index !== items.length - 1 && <Divider />}
         </React.Fragment>

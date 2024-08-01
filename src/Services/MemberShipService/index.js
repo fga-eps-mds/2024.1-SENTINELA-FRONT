@@ -19,3 +19,15 @@ export async function getMemberShip() {
     return error.response.data.erro;
   }
 }
+
+export const updateMemberStatus = async (memberId, newStatus) => {
+  try {
+    const reponse = await APIUsers.patch(`membership/updateStatus/${memberId}`, {
+      status: newStatus,
+    });
+    return reponse.data;
+  }
+  catch (error) {
+    return error.response.data.erro;
+  }
+};

@@ -6,8 +6,22 @@
    
 
 }
-.read-only {
-    pointer-events: none; /* Desativa todos os eventos de mouse */
-  /* Reduz a opacidade para indicar que está desativado */
+/* index.css */
+/* index.css */
+.member-list .MuiListItem-root {
+    display: flex;
+    justify-content: space-between; /* Distribute space between children */
+    align-items: center;
   }
   
+  .member-list .MuiListItemText-root {
+    flex: 1; /* Allow the text to take up available space */
+  }
+  
+  .member-list .MuiCheckbox-root {
+    margin-left: auto; /* Push checkbox to the right */
+  }
+  
+  
+
+ 
