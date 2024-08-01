@@ -16,7 +16,7 @@ export async function userLogin(email, password) {
   }
 }
 
-export const createSupplierForm = async (benefitsData) => {
+export const createBenefits = async (benefitsData) => {
   try {
     await APIBank.post(`/SupplierForm/create`, {
       headers: {
@@ -27,7 +27,7 @@ export const createSupplierForm = async (benefitsData) => {
 
     return false;
   } catch (error) {
-    alert("Erro ao cadastrar fornecedor");
+    alert("Erro ao cadastrar convênio");
     return true;
   }
 };

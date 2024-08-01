@@ -1,10 +1,12 @@
 import { useState, useContext } from "react";
+import "./index.css";
 import AuthContext, { useAuth } from "../../../Context/auth";
 import { useNavigate } from "react-router-dom";
 import FieldText from "../../../Components/FieldText";
 import FieldSelect from "../../../Components/FieldSelect";
 import DataSelect from "../../../Components/DataSelect";
 import FieldTextCheckbox from "../../../Components/FieldTextCheckbox";
+import PrimaryButton from "../../../Components/PrimaryButton";
 
 export default function BenefitsCreate() {
   const context = useContext(AuthContext);
@@ -112,29 +114,31 @@ export default function BenefitsCreate() {
     }
   };
 
-  const benefitsData = {
-    nome,
-    razaoSocial,
-    descricao: descricao || null,
-    tipoPessoa: tipoPessoa || null,
-    cpfCnpj: cpfCnpj || null,
-    ans: ans || null,
-    categoria: categoria || null,
-    statusConvenio,
-    dataCadastro: dataCadastro || null,
-    considerarIr,
-    descontoAut,
-    logotipo: logotipo || null,
-    site: site || null,
-    email: email || null,
-    telefCelular: telefCelular || null,
-    dataAssinatura: dataAssinatura || null,
-    dataInicio: dataInicio || null,
-    sitContrato: sitContrato || null,
-    dataFinal: dataFinal || null,
-    contratoSit: contratoSit || null,
+  const handleSubmit = async () => {
+    const benefitsData = {
+      nome,
+      razaoSocial,
+      descricao: descricao || null,
+      tipoPessoa: tipoPessoa || null,
+      cpfCnpj: cpfCnpj || null,
+      ans: ans || null,
+      categoria: categoria || null,
+      statusConvenio,
+      dataCadastro: dataCadastro || null,
+      considerarIr,
+      descontoAut,
+      logotipo: logotipo || null,
+      site: site || null,
+      email: email || null,
+      telefCelular: telefCelular || null,
+      dataAssinatura: dataAssinatura || null,
+      dataInicio: dataInicio || null,
+      sitContrato: sitContrato || null,
+      dataFinal: dataFinal || null,
+      contratoSit: contratoSit || null,
+    };
+    const erro = await createBenefits(benefitsData);
   };
-  //const erro = await createBenefits(benefitsData);
 
   return (
     user && (
@@ -144,18 +148,20 @@ export default function BenefitsCreate() {
 
           <h3>Dados do convênio</h3>
 
-          <FieldText
-            label="Nome fantasia"
-            value={nome}
-            onChange={mascaraNome}
-            required
-          />
+          <div className="section-form">
+            <FieldText
+              label="Nome fantasia"
+              value={nome}
+              onChange={mascaraNome}
+              required
+            />
 
-          <FieldText
-            label="Razão social"
-            value={razaoSocial}
-            onChange={(e) => setRazaoSocial(e.target.value)}
-          />
+            <FieldText
+              label="Razão social"
+              value={razaoSocial}
+              onChange={(e) => setRazaoSocial(e.target.value)}
+            />
+          </div>
 
           <FieldText
             label="Descrição"
@@ -163,111 +169,115 @@ export default function BenefitsCreate() {
             onChange={(e) => setDescricao(e.target.value)}
           />
 
-          <FieldSelect
-            label="Classificação de pessoa"
-            value={tipoPessoa}
-            onChange={handleChangeTipoPessoa}
-            options={tipoPessoaList}
-          />
+          <div className="section-form">
+            <FieldSelect
+              label="Classificação de pessoa"
+              value={tipoPessoa}
+              onChange={handleChangeTipoPessoa}
+              options={tipoPessoaList}
+            />
 
-          <FieldText
-            label="CPF/CNPJ"
-            value={cpfCnpj}
-            onChange={(e) => setCpfCnpj(mascaraCpfCnpj(e.target.value))}
-          />
+            <FieldText
+              label="CPF/CNPJ"
+              value={cpfCnpj}
+              onChange={(e) => setCpfCnpj(mascaraCpfCnpj(e.target.value))}
+            />
 
-          <FieldText
-            label="ANS"
-            value={ans}
-            onChange={(e) => setAns(e.target.value)}
-          />
+            <FieldText
+              label="ANS"
+              value={ans}
+              onChange={(e) => setAns(e.target.value)}
+            />
 
-          <FieldSelect
-            label="Categoria"
-            value={categoria}
-            onChange={handleChangeCategoria}
-            options={categoriaList}
-          />
+            <FieldSelect
+              label="Categoria"
+              value={categoria}
+              onChange={handleChangeCategoria}
+              options={categoriaList}
+            />
 
-          <FieldSelect
-            label="Status"
-            value={statusConvenio}
-            onChange={handleChangeStatusConvenio}
-            options={statusConvenioList}
-          />
+            <FieldSelect
+              label="Status"
+              value={statusConvenio}
+              onChange={handleChangeStatusConvenio}
+              options={statusConvenioList}
+            />
 
-          <DataSelect
-            label="Data de cadastro"
-            value={dataCadastro}
-            onChange={(newValue) => setDataCadastro(newValue)}
-          />
+            <DataSelect
+              label="Data de cadastro"
+              value={dataCadastro}
+              onChange={(newValue) => setDataCadastro(newValue)}
+            />
 
-          <FieldSelect
-            label="Considerado no IR"
-            value={considerarIr}
-            onChange={handleChangeConsiderarIr}
-            options={considerarIrList}
-          />
+            <FieldSelect
+              label="Considerado no IR"
+              value={considerarIr}
+              onChange={handleChangeConsiderarIr}
+              options={considerarIrList}
+            />
 
-          <FieldSelect
-            label="Desconto automático"
-            value={descontoAut}
-            onChange={handleChangeDescontoAut}
-            options={descontoAutList}
-          />
+            <FieldSelect
+              label="Desconto automático"
+              value={descontoAut}
+              onChange={handleChangeDescontoAut}
+              options={descontoAutList}
+            />
 
-          <FieldText
-            label="Logotipo"
-            value={logotipo}
-            onChange={(e) => setLogotipo(e.target.value)}
-          />
+            <FieldText
+              label="Logotipo"
+              value={logotipo}
+              onChange={(e) => setLogotipo(e.target.value)}
+            />
 
-          <FieldText
-            label="Site"
-            value={site}
-            onChange={(e) => setSite(e.target.value)}
-          />
+            <FieldText
+              label="Site"
+              value={site}
+              onChange={(e) => setSite(e.target.value)}
+            />
 
-          <FieldText
-            label="E-mail"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+            <FieldText
+              label="E-mail"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
 
-          <FieldText
-            label="Telefone/Celular"
-            value={telefCelular}
-            onChange={(e) =>
-              setTelefCelular(mascaraTelefCelular(e.target.value))
-            }
-          />
+            <FieldText
+              label="Telefone/Celular"
+              value={telefCelular}
+              onChange={(e) =>
+                setTelefCelular(mascaraTelefCelular(e.target.value))
+              }
+            />
+          </div>
 
           <h3>Dados do contrato de convênio</h3>
 
-          <DataSelect
-            label="Data de assinatura"
-            value={dataAssinatura}
-            onChange={(newValue) => setDataAssinatura(newValue)}
-          />
+          <div className="section-form">
+            <DataSelect
+              label="Data de assinatura"
+              value={dataAssinatura}
+              onChange={(newValue) => setDataAssinatura(newValue)}
+            />
 
-          <DataSelect
-            label="Data de início"
-            value={dataInicio}
-            onChange={(newValue) => setDataInicio(newValue)}
-          />
+            <DataSelect
+              label="Data de início"
+              value={dataInicio}
+              onChange={(newValue) => setDataInicio(newValue)}
+            />
 
-          <FieldSelect
-            label="Situação"
-            value={sitContrato}
-            onChange={handleChangeSitContrato}
-            options={sitContratoList}
-          />
+            <FieldSelect
+              label="Situação"
+              value={sitContrato}
+              onChange={handleChangeSitContrato}
+              options={sitContratoList}
+            />
 
-          <DataSelect
-            label="Data final"
-            value={dataFinal}
-            onChange={(newValue) => setDataFinal(newValue)}
-          />
+            <DataSelect
+              label="Data final"
+              value={dataFinal}
+              onChange={(newValue) => setDataFinal(newValue)}
+            />
+          </div>
 
           <FieldTextCheckbox
             label="Contrato entregue"
@@ -277,6 +287,10 @@ export default function BenefitsCreate() {
             onCheckboxChange={(e) => setIsChecked(e.target.checked)}
             disabled={true}
           />
+
+          <div id="envio">
+            <PrimaryButton text="CADASTRAR" onClick={handleSubmit} />
+          </div>
         </div>
       </div>
     )
