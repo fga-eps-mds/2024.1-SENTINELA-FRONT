@@ -8,6 +8,7 @@ import UserUpdatePage from "../Pages/Protected/Users/userUpdatePage";
 import Supplier from "../Pages/Protected/CreateSupplier";
 import ListSupplier from "../Pages/Protected/ListSupplier";
 import ViewSupplier from "../Pages/Protected/UpdateSupplier";
+import MembershipRequest from "../Pages/Protected/MembershipRequests";
 
 const ProtectedRoutes = () => {
   return (
@@ -21,6 +22,7 @@ const ProtectedRoutes = () => {
       <Route path="/usuarios" element={<UserListPage />} />
       <Route path="/usuarios/hub" element={<UserHubPage />} />
       <Route path="/perfil" element={<ProfileUpdate />} />
+      <Route path="usuarios/hub/membershipRequests" element={<MembershipRequest/>} />
     </Routes>
   );
 };
