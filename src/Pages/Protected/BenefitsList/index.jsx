@@ -1,50 +1,45 @@
-import { useEffect, useState, useContext } from "react";
-import AuthContext, { useAuth } from "../../../Context/auth";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { APIUsers } from "../../../Services/BaseService";
+import PrimaryButton from "../../../Components/PrimaryButton";
+import SecondaryButton from "../../../Components/SecondaryButton";
+import FieldText from "../../../Components/FieldText";
 
-export default function BenefitsList() {
-  const context = useContext(AuthContext);
+
+export default function ListSupplier() {
+  const [suppliers, setSuppliers] = useState([]);
+  const [search, setSearch] = useState("");
   const navigate = useNavigate();
-  const { user } = useAuth();
-  const storagedUserString = localStorage.getItem("@App:user");
-  const storagedUser = JSON.parse(storagedUserString);
 
-  const [nome, setNome] = useState("");
+  const storagedUser = localStorage.getItem("@App:user");
 
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        const response = await APIUsers.get(`users/${storagedUser.user._id}`, {
-          headers: { Authorization: `Bearer ${storagedUser.token}` },
-        });
-        setNome(response.data.name);
-      } catch (error) {
-        console.log(error);
-      }
-    };
 
-    getUser();
-  });
-
-  const handleRegister = () => {
-    navigate("/usuarios/hub");
+  const handleSubmit = () => {
+    navigate("/beneficios/criar");
   };
 
-  const handleBenefits = () => {
-    navigate("/beneficios");
-  };
-
-  const handleLogout = () => {
-    context.Logout();
-    navigate("/");
-  };
 
   return (
-    user && (
-      <section className="container">
-        <h2>Lista de convenios </h2>
-      </section>
-    )
+    <section className="container">
+      <div className="forms-container">
+        <div className="double-box">
+          <h1>Lista de convenios</h1>
+          <PrimaryButton text="Cadastrar convenio" onClick={handleSubmit} />
+        </div>
+
+        <div className="search-box">
+          <FieldText
+            label="Pesquisar convenios"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <SecondaryButton
+            text="Pesquisar"
+            onClick={""}
+          />
+        </div>
+
+        
+      </div>
+    </section>
   );
 }
