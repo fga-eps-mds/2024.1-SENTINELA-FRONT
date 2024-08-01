@@ -545,7 +545,7 @@ const MemberShip = () => {
         <div>
           <div>
             <h3>
-              Adicionar participantes{" "}
+              Adicionar dependentes{" "}
               <AddCircleOutlineIcon
                 id="addDependentBttn"
                 onClick={handleAddDependent}
