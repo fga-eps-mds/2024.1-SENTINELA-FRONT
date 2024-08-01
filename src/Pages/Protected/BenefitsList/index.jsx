@@ -3,19 +3,32 @@ import { useNavigate } from "react-router-dom";
 import PrimaryButton from "../../../Components/PrimaryButton";
 import SecondaryButton from "../../../Components/SecondaryButton";
 import FieldText from "../../../Components/FieldText";
+import { APIBenefits } from "../../../Services/BaseService";
 
 
 export default function ListSupplier() {
-  const [suppliers, setSuppliers] = useState([]);
+  //const [suppliers, setSuppliers] = useState([]);
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
-
-  const storagedUser = localStorage.getItem("@App:user");
-
 
   const handleSubmit = () => {
     navigate("/beneficios/criar");
   };
+
+  useEffect(() => {
+    const getBenefits = async () => {
+      try {
+        const response = await APIBenefits.get(`benefits`);
+        console.log(response);
+
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    
+    getBenefits();
+
+  }, []);
 
 
   return (
