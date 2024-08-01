@@ -35,7 +35,6 @@ export default function BenefitsCreate() {
   const [contratoSit, setContratoSit] = useState("");
   const [isChecked, setIsChecked] = useState(false);
 
-
   const tipoPessoaList = ["Jurídica", "Física"];
   const categoriaList = [
     "Alimentação",
@@ -49,8 +48,6 @@ export default function BenefitsCreate() {
   const descontoAutList = ["Sim", "Não"];
   const sitContratoList = ["Concluído", "Pendência", "Cancelado"];
   
-  const checklistItems = ["Contrato entregue"];
-
   const handleChangeTipoPessoa = (event) => {
     setTipoPessoa(event.target.value);
   };
@@ -245,8 +242,8 @@ export default function BenefitsCreate() {
           />
 
           <FieldTextCheckbox
-            label="Site"
-            value={site}
+            label="Contrato entregue"
+            value={contratoSit}
             onChange={(e) => setContratoSit(e.target.value)}
             checked={isChecked}
             onCheckboxChange={(e) => setIsChecked(e.target.checked)}
