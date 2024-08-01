@@ -1,6 +1,6 @@
 .card-benefits {
   background-color: #eae3d7;
-  height: 503px;
+  height: 430px;
   width: 436px;
   border-radius: 20px;
   display: flex;
@@ -16,3 +16,17 @@
   justify-content: center;
   align-items: center;
 }
+
+.hub-btn{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 30px;
+  width: 100%;
+}
+
+
+
+

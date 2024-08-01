@@ -51,16 +51,16 @@ const Benefits = () => {
               src={sentinela_logo}
               alt="Sentinela Logo"
             />
+            <div className="hub-btn">
             <SecondaryButton
-              className="btn-register"
               text="CADASTRO DE CONVENIO"
               onClick={handleBenefitsCreate}
             />
             <SecondaryButton
-              className="btn-list"
               text="LISTA DE CONVENIO"
               onClick={handleBenefitsList}
             />
+            </div>
           </div>
         </div>
       </section>
