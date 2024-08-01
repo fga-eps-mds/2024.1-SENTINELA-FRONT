@@ -12,8 +12,7 @@ import "./index.css";
 import { Snackbar } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import { createBankAccount, getBankAccount, deleteBankAccount, updateBankAccount } from "../../../Services/bankAccountService";
-import Modal from "../../../Components/Moldal" 
-
+import Modal from "../../../Components/Moldal";
 
 const BankAccountId = () => {
     const [name, setName] = useState("");
@@ -25,8 +24,8 @@ const BankAccountId = () => {
     const [status, setStatus] = useState("");
     const [agency, setAgency] = useState("");
     const [openError, setOpenError] = useState(false);
-    const [dataMap, setDataMap] = useState("");
-    
+    const [dataMap, setDataMap] = useState(null);
+
     const context = useContext(AuthContext);
     const { user } = useAuth();
     const { id } = useParams();  // Pega o ID da URL
@@ -34,23 +33,19 @@ const BankAccountId = () => {
 
     const listAccountType = ['Conta Corrente', 'Poupança', 'Investimento', 'Caixa'];
     const listStatus = ['Ativo', 'Inativo'];
-    const [bankAccountType, setBankAccountType] = useState('')
-    const [bankStatus, setBankStatus] = useState('')
 
     const [openSave, setOpenSave] = useState(false);    
     const [openDeleteBankAccount, setOpenDeleteBankAccount] = useState(false);
-    const[openVerificationDelete, setOpenVerificationDelete] = useState(false);
+    const [openVerificationDelete, setOpenVerificationDelete] = useState(false);
 
     const handleChangeAccountType = (e) => {
         setAccountType(e.target.value);
     };
 
     const handleCheck = () => {
-        if(!name || !accountType || !bank || !status) {
-            setOpenError(true)
-        } 
-        
-        else {
+        if (!name || !accountType || !bank || !status) {
+            setOpenError(true);
+        } else {
             const formData = {
                 name,
                 pix,
@@ -61,29 +56,17 @@ const BankAccountId = () => {
                 status,
                 agency
             };
-
-            handleSubmit(formData)
+            handleSubmit(formData);
         }
-    }
+    };
 
     const handleSubmit = async (formData) => {
-        //const formData = {
-        //    name,
-        //    pix,
-        //    bank,
-        //    accountType,
-        //    accountNumber,
-        //    dv,
-        //    status,
-        //    agency
-        //};
-
         console.log('Dados enviados:', formData);
     
         try {
             const response = await createBankAccount(formData); // Enviando dados diretamente
             console.log('Resposta do servidor:', response);
-            navigate('/finance/')
+            navigate('/finance/');
         } catch (error) {
             console.error('Erro ao enviar dados:', error);
         }
@@ -98,34 +81,34 @@ const BankAccountId = () => {
         navigate("/");
     };
 
-    
-    //mascaras
+    // Máscaras
     const agencia = (value) => {
-        // Remove qualquer caractere que não seja um dígito e limita a 5 caracteres
         return value.replace(/\D/g, '').slice(0, 5);
     };
 
     const numeroConta = (value) => {
-        // Remove qualquer caractere que não seja um dígito e limita a 11 caracteres
         return value.replace(/\D/g, '').slice(0, 11);
     };
 
     const digitverificator = (value) => {
-        // Remove qualquer caractere que não seja um dígito e limita a 5 caracteres
         return value.replace(/\D/g, '').slice(0, 1);
-      };
-    const handleDeleteBank = () => {
+    };
 
-        deleteBankAccount(id);
-        setOpenVerificationDelete(false)
-        setOpenDeleteBankAccount(true)
-    }
+    const handleDeleteBank = async () => {
+        try {
+            await deleteBankAccount(id);
+            setOpenVerificationDelete(false);
+            setOpenDeleteBankAccount(true);
+        } catch (error) {
+            console.error("Erro ao excluir conta:", error);
+        }
+    };
+
     const saveUpdate = () => {  
         handleUpdate();
         setOpenSave(true);
-    }
+    };
 
-    
     const buttons = [
         <SideButton key="home" text="PÁGINA INICIAL" onClick={() => navigate("/home/")} />,
         <SideButton key="filiacao" text="CADASTROS" />,
@@ -135,24 +118,29 @@ const BankAccountId = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-          try {
-            const result = await getBankAccount(id);
-            console.log(result);
-            setDataMap(result);
-            setBankAccountType(result.accountType);
-            setBankStatus(result.status)
-          } catch (error) {
-            console.error("Erro ao buscar dados:", error);
-          }
+            try {
+                const result = await getBankAccount(id);
+                console.log(result);
+                setDataMap(result);
+                setName(result.name || "");
+                setPix(result.pix || "");
+                setBank(result.bank || "");
+                setAccountType(result.accountType || "");
+                setAccountNumber(result.accountNumber || "");
+                setDv(result.dv || "");
+                setStatus(result.status || "");
+                setAgency(result.agency || "");
+            } catch (error) {
+                console.error("Erro ao buscar dados:", error);
+            }
         };
     
         if (id) {
-          fetchData();
+            fetchData();
         }
-      }, [id]);
+    }, [id]);
 
-
-      const handleUpdate = async () => {
+    const handleUpdate = async () => {
         // Construir o objeto de dados atualizados dinamicamente
         const updatedData = {
             ...(name && { name }), // Inclui name se não estiver vazio
@@ -165,20 +153,17 @@ const BankAccountId = () => {
             ...(agency && { agency }) // Inclui agency se não estiver vazio
         };
         
-        console.log('Dados enviados:', updatedData);
+        console.log('Dados atualizados:', updatedData);
     
         try {
-            // Certificar-se de que id é uma string válida e não um objeto
-            console.log('id:', id);
             const response = await updateBankAccount(id, updatedData);
             console.log('Resposta do servidor:', response);
-
             return response;
-            // Você pode redirecionar ou atualizar o estado aqui
         } catch (error) {
             console.error('Erro ao enviar dados:', error);
         }
     };
+
     return user ? (
         <section className="bank-container">
             <div>
@@ -187,18 +172,58 @@ const BankAccountId = () => {
             <div className="section">
                 <h1>Visualização de Conta Bancária</h1>
                 <div className="form">
-                    <FieldText label="Nome *" value={dataMap.name} onChange={(e) => setName(e.target.value)} />
-                    <FieldSelect  label="Tipo de conta*" value={accountType? accountType : bankAccountType} onChange={handleChangeAccountType}  options={listAccountType}/>
-                    <FieldText label="Banco *" value={bank ? bank : dataMap.bank} onChange={(e) => setBank(e.target.value)} />
-                    <FieldText label="Agência" value={agency ? agency : dataMap.agency} onChange={(e) => setAgency(agencia(e.target.value))} />
-                    <FieldText label="Número da conta" value={accountNumber ? accountNumber :dataMap.accountNumber} onChange={(e) => setAccountNumber(numeroConta(e.target.value))} />
-                    <FieldText label="DV" value={dv ? dv :dataMap.dv} onChange={(e) => setDv(digitverificator(e.target.value))} />
-                    <FieldText label="Pix" value={pix ? pix :dataMap.pix} onChange={(e) => setPix(e.target.value)} />
-                    <FieldSelect  label="Status *" value={status? status: bankStatus} onChange={(e) => setStatus(e.target.value)}  options={listStatus}/>
+                    <FieldText 
+                        label="Nome *" 
+                        value={name} 
+                        onChange={(e) => setName(e.target.value)} 
+                    />
+                    <FieldSelect  
+                        label="Tipo de conta*" 
+                        value={accountType} 
+                        onChange={handleChangeAccountType}  
+                        options={listAccountType}
+                    />
+                    <FieldText 
+                        label="Banco *" 
+                        value={bank} 
+                        onChange={(e) => setBank(e.target.value)} 
+                    />
+                    <FieldText 
+                        label="Agência" 
+                        value={agency} 
+                        onChange={(e) => setAgency(agencia(e.target.value))} 
+                    />
+                    <FieldText 
+                        label="Número da conta" 
+                        value={accountNumber} 
+                        onChange={(e) => setAccountNumber(numeroConta(e.target.value))} 
+                    />
+                    <FieldText 
+                        label="DV" 
+                        value={dv} 
+                        onChange={(e) => setDv(digitverificator(e.target.value))} 
+                    />
+                    <FieldText 
+                        label="Pix" 
+                        value={pix} 
+                        onChange={(e) => setPix(e.target.value)} 
+                    />
+                    <FieldSelect  
+                        label="Status *" 
+                        value={status} 
+                        onChange={(e) => setStatus(e.target.value)}  
+                        options={listStatus}
+                    />
                 </div>
                 <div className="edit-buttons">
-                    <SecondaryButton text="Deletar" onClick={() => { setOpenVerificationDelete(true)}} />
-                    <PrimaryButton text="Salvar" onClick= {saveUpdate}  />
+                    <SecondaryButton 
+                        text="Deletar" 
+                        onClick={() => { setOpenVerificationDelete(true)}} 
+                    />
+                    <PrimaryButton 
+                        text="Salvar" 
+                        onClick={saveUpdate}  
+                    />
                 </div>
             </div>
 
@@ -221,47 +246,40 @@ const BankAccountId = () => {
                 <SecondaryButton
                     text="ok"
                     onClick={() => navigate('/finance/')}
-                    style={"width: 250px; margin-top : 10px"}
-                    sx={{ width: "250px", "margin-top" : "10px" }}
+                    style={{ width: "250px", marginTop: "10px" }}
                 />
             </Modal>
+
             <Modal
-            show={openVerificationDelete}
-            width="400px"
-            alertTitle="Deseja deletar conta bancária do sistema?"
-            alert=""
-        >
-            <SecondaryButton
-                text="Excluir Conta bancária"
-                onClick={() => {handleDeleteBank()}}
-                
-                style={"width: 250px; margin-top : 10px"}
-                sx={{ width: "250px", "margin-top" : "10px" }}
-            />
-            <SecondaryButton
-                text="Cancelar e manter cadastro"
-                onClick={() => {setOpenVerificationDelete(false)}}
-                
-                style={"width: 250px; margin-top : 10px"}
-                sx={{ width: "250px", "margin-top" : "10px" }}
-            />
-        </Modal>
-        <Modal
-            show={openSave}
-            width="400px"
-            alertTitle="Alterações salvas"
-            alert=""
-        >
-            <SecondaryButton
-                text="ok"
-                onClick={() => navigate('/finance/listBankAccount')}
-                style={"width: 250px; margin-top : 10px"}
-                sx={{ width: "250px", "margin-top" : "10px" }}
-            />
-        </Modal>
+                show={openVerificationDelete}
+                width="400px"
+                alertTitle="Deseja deletar conta bancária do sistema?"
+                alert=""
+            >
+                <SecondaryButton
+                    text="Excluir Conta bancária"
+                    onClick={handleDeleteBank}
+                    style={{ width: "250px", marginTop: "10px" }}
+                />
+                <SecondaryButton
+                    text="Cancelar e manter cadastro"
+                    onClick={() => setOpenVerificationDelete(false)}
+                    style={{ width: "250px", marginTop: "10px" }}
+                />
+            </Modal>
 
-        
-
+            <Modal
+                show={openSave}
+                width="400px"
+                alertTitle="Alterações salvas"
+                alert=""
+            >
+                <SecondaryButton
+                    text="ok"
+                    onClick={() => navigate('/finance/listBankAccount')}
+                    style={{ width: "250px", marginTop: "10px" }}
+                />
+            </Modal>
         </section>
     ) : null;
 };
