@@ -3,37 +3,63 @@ import { useAuth } from "../../../Context/auth";
 import { getMemberShip } from "../../../Services/MemberShipService";
 import { useEffect, useState } from "react";
 import PrimaryButton from "../../../Components/PrimaryButton";
+import LabeledTextField from "../../../Components/LabeledTextField";
+import FieldText from "../../../Components/FieldText";
+import SecondaryButton from "../../../Components/SecondaryButton";
 
 export default function MembershipRequest() {
   const { user } = useAuth();
   const [members, setMembers] = useState([]);
+  const [showMembers, setShowMembers] = useState(false);
+  const [dataMap, setDataMap] = useState(null);
+  const [search, setSearch] = useState("");
+  const [isResultReadOnly, setIsResultReadOnly] = useState(false);
+
+  const handleSearch = async () => {
+    try {
+      const result = await getMemberShip();
+      if (result.message) {
+        console.log(result.message);
+        return;
+      }
+      const filteredData = result.filter(member =>
+        member.nomeCompleto.toLowerCase().includes(search.toLowerCase())
+      );
+      setDataMap(filteredData.length > 0 ? filteredData[0] : null); // Display the first matching result
+      setIsResultReadOnly(true); // Make the result field read-only after search
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const data = await getMemberShip();
-        setMembers(data);
-      } catch (error) {
-        console.error("Erro ao buscar filiados:", error);
-      }
+    if (dataMap) {
+      console.log(dataMap);
     }
-    fetchData();
-  }, []);
+  }, [dataMap]);
 
   return (
     user && (
       <section className="membership-request">
         <h1>Página de Listagem de Solicitação de Filiação</h1>
-        <PrimaryButton text="Mostrar Filiações" />
-        <div className="members-list">
-          {members.length > 0 ? (
-            <ul>
-              {members.map((member, index) => (
-                <li key={index}>{member.nomeCompleto}</li>
-              ))}
-            </ul>
+        <div className="user-info">
+          <FieldText
+            label="Pesquisar usuário"
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <SecondaryButton text="Pesquisar" onClick={handleSearch} />
+        </div>
+        <div>
+          {dataMap ? (
+            <LabeledTextField
+              label="Nome do Membro"
+              value={dataMap.nomeCompleto || ""}
+              readOnly={isResultReadOnly} // Make this field read-only if search has been performed
+            />
           ) : (
-            <p>Nenhum filiado encontrado.</p>
+            <p>Nenhum membro encontrado.</p>
           )}
         </div>
       </section>
