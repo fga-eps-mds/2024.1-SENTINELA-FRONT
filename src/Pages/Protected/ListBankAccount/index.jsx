@@ -11,6 +11,7 @@ import "./index.css"
 import { listBankAccount } from "../../../Services/bankAccountService";
 import ListComponent from "../../../Components/ListComponent";
 
+
 export default function ListBankAccount() {
     
     const [nome, setNome] = useState('');
@@ -28,12 +29,17 @@ export default function ListBankAccount() {
 
     
       const handleSearch = async () => {
+
         try {
             // Chama listBankAccount e aguarda a resposta
             const result = await listBankAccount(busca);
+            if(result.message) {
+                alert(result.message);
+                return;
+            }
             setDataMap(result);
         } catch (error) {
-            console.error("Erro ao realizar a pesquisa:", error);
+           
             alert("Ocorreu um erro ao realizar a pesquisa.");
         }
     }
@@ -96,7 +102,7 @@ export default function ListBankAccount() {
               </div>
             </div>
           ) : (
-            <div>Nenhum resultado encontrado.</div>
+            <div></div>
           )}
 
         </div>
@@ -105,4 +111,3 @@ export default function ListBankAccount() {
     </section>
 );
 };
-
