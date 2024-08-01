@@ -47,7 +47,7 @@ export default function BenefitsCreate() {
   const considerarIrList = ["Sim", "Não"];
   const descontoAutList = ["Sim", "Não"];
   const sitContratoList = ["Concluído", "Pendência", "Cancelado"];
-  
+
   const handleChangeTipoPessoa = (event) => {
     setTipoPessoa(event.target.value);
   };
@@ -73,7 +73,7 @@ export default function BenefitsCreate() {
   };
 
   const mascaraNome = (e) => {
-    const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, '');
+    const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, "");
     setNome(value);
   };
 
@@ -111,6 +111,30 @@ export default function BenefitsCreate() {
         .replace(/(\d{4})(\d{4})$/, "$1-$2");
     }
   };
+
+  const benefitsData = {
+    nome,
+    razaoSocial,
+    descricao: descricao || null,
+    tipoPessoa: tipoPessoa || null,
+    cpfCnpj: cpfCnpj || null,
+    ans: ans || null,
+    categoria: categoria || null,
+    statusConvenio,
+    dataCadastro: dataCadastro || null,
+    considerarIr,
+    descontoAut,
+    logotipo: logotipo || null,
+    site: site || null,
+    email: email || null,
+    telefCelular: telefCelular || null,
+    dataAssinatura: dataAssinatura || null,
+    dataInicio: dataInicio || null,
+    sitContrato: sitContrato || null,
+    dataFinal: dataFinal || null,
+    contratoSit: contratoSit || null,
+  };
+  //const erro = await createBenefits(benefitsData);
 
   return (
     user && (
@@ -213,8 +237,12 @@ export default function BenefitsCreate() {
           <FieldText
             label="Telefone/Celular"
             value={telefCelular}
-            onChange={(e) => setTelefCelular(mascaraTelefCelular(e.target.value))}
+            onChange={(e) =>
+              setTelefCelular(mascaraTelefCelular(e.target.value))
+            }
           />
+
+          <h3>Dados do contrato de convênio</h3>
 
           <DataSelect
             label="Data de assinatura"
