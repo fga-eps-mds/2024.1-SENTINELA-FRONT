@@ -1,68 +1,159 @@
-import { useState } from "react";
-import "../RolesCreatePage/index";
+import { useState, useEffect } from "react";
+import "../RolesCreatePage/index.css";
 import FieldText from "../../../../Components/FieldText";
 import PrimaryButton from "../../../../Components/PrimaryButton";
 import SecondaryButton from "../../../../Components/SecondaryButton";
 import Modal from "../../../../Components/Modal";
 import { Checkbox } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { getRoleById, updateRole, deleteRole } from "../../../../Services/RoleService/roleService";
 
 export default function RolesUpdatePage() {
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [profileName, setProfileName] = useState("");
 
   const [financeiro, setFinanceiro] = useState([false, false, false, false]);
   const [beneficios, setBeneficios] = useState([false, false, false, false]);
   const [usuarios, setUsuarios] = useState([false, false, false, false]);
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const { roleId } = location.state;
+
+  useEffect(() => {
+    const fetchRole = async () => {
+      try {
+        const roleData = await getRoleById(roleId);
+        
+  
+        setProfileName(roleData.name);
+  
+        const permissionsMap = {
+          finance: [false, false, false, false],
+          benefits: [false, false, false, false],
+          users: [false, false, false, false],
+        };
+  
+        const moduleNameMap = {
+          financeiro: 'finance',
+          beneficios: 'benefits',
+          usuarios: 'users',
+        };
+  
+        // Definindo o mapa de índices de acesso
+        const accessIndexMap = {
+          create: 0,
+          read: 1,
+          update: 2,
+          delete: 3,
+        };
+  
+        roleData.permissions.forEach(permission => {
+          const moduleName = moduleNameMap[permission.module.toLowerCase()] || permission.module.toLowerCase();
+          
+          if (!permissionsMap.hasOwnProperty(moduleName)) {
+            console.warn(`Module name ${moduleName} not found in permissionsMap`);
+            return; // Ignorar permissões para este moduleName
+          }
+  
+          permission.access.forEach(access => {
+            const index = accessIndexMap[access];
+            if (index !== undefined) {
+              permissionsMap[moduleName][index] = true;
+            }
+          });
+        });
+  
+        setFinanceiro(permissionsMap.finance);
+        setBeneficios(permissionsMap.benefits);
+        setUsuarios(permissionsMap.users);
+      } catch (error) {
+        console.error("Erro ao buscar o perfil:", error);
+      }
+    };
+  
+    fetchRole();
+  }, [roleId]);
+  
+  
+  
 
   const handleCheckboxChange = (setState, index) => {
-    setState((prevState) => {
+    setState(prevState => {
       const newState = [...prevState];
       newState[index] = !newState[index];
       return newState;
     });
   };
 
-  const handleSubmit = () => {
-    setShowSaveModal(true);
+  const mapPermissions = (moduleName, accessArray) => {
+    const actions = ["create", "update", "read", "delete"];
+    const grantedActions = actions.filter((_, index) => accessArray[index]);
+    return {
+      module: moduleName,
+      access: grantedActions,
+    };
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const permissions = [
+        mapPermissions("finance", financeiro),
+        mapPermissions("benefits", beneficios),
+        mapPermissions("users", usuarios),
+      ];
+
+      const updatedRole = {
+        name: profileName,
+        permissions: permissions,
+      };
+
+      await updateRole(roleId, updatedRole);
+      setShowSaveModal(true);
+    } catch (error) {
+      console.error("Erro ao atualizar o perfil:", error);
+    }
   };
 
   const handleDelete = () => {
     setShowDeleteModal(true);
   };
-  const handleSaveRole = () => {
+
+  const handleDeleteRole = async () => {
     try {
-      setShowModal(true);
+      await deleteRole(roleId);
+      setShowSuccessModal(true);
     } catch (error) {
-      console.error(error);
+      console.error("Erro ao deletar o perfil:", error);
     }
   };
-  const handleDeleteRole = () => {
-    try {
-      setShowModal(true);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  const handleCloseSaveRole = () => {
+
+  const handleCloseSaveModal = () => {
     setShowSaveModal(false);
   };
-  const handleCloseDeleteRole = () => {
+
+  const handleCloseDeleteModal = () => {
     setShowDeleteModal(false);
   };
-  const handleOK = () => {
+
+  const handleCloseSuccessModal = () => {
+    setShowSuccessModal(false);
     navigate("/perfis");
   };
+
   return (
     <section className="container">
       <div className="forms-container">
-        <h1>Cadastro de Perfil</h1>
+        <h1>Atualização de Perfil</h1>
         <h3>Informações do Perfil</h3>
 
-        <FieldText label="Nome do Perfil" />
+        <FieldText
+          label="Nome do Perfil"
+          value={profileName}
+          onChange={(e) => setProfileName(e.target.value)}
+        />
 
         <div className="select-profile">
           <div className="row-labels">
@@ -119,7 +210,7 @@ export default function RolesUpdatePage() {
             />
           </div>
           <div className="row">
-            <label>Usuarios</label>
+            <label>Usuários</label>
             <Checkbox
               name="create"
               checked={usuarios[0]}
@@ -147,19 +238,19 @@ export default function RolesUpdatePage() {
           <SecondaryButton text="DELETAR" onClick={handleDelete} />
           <Modal
             width="338px"
-            alertTitle="DESEJA EXCLUIR ESSE PERFIL? USUÁRIOS QUE OS POSSUEM PERDERÃO SUAS PERMISSÕES!"
+            alertTitle="DESEJA EXCLUIR ESSE PERFIL? USUÁRIOS QUE O POSSUEM PERDERÃO SUAS PERMISSÕES!"
             show={showDeleteModal}
           >
             <SecondaryButton
-              key={"modalButtons"}
+              key="confirmar"
               text="Confirmar"
               onClick={handleDeleteRole}
               width="338px"
             />
             <SecondaryButton
-              key={"modalButtons"}
+              key="cancelar"
               text="Cancelar"
-              onClick={handleCloseDeleteRole}
+              onClick={handleCloseDeleteModal}
               width="338px"
             />
           </Modal>
@@ -171,27 +262,27 @@ export default function RolesUpdatePage() {
             show={showSaveModal}
           >
             <SecondaryButton
-              key={"modalButtons"}
+              key="confirmar2"
               text="Confirmar"
-              onClick={handleSaveRole}
+              onClick={() => setShowSaveModal(false)}
               width="338px"
             />
             <SecondaryButton
-              key={"modalButtons"}
+              key="cancelar2"
               text="Cancelar"
-              onClick={handleCloseSaveRole}
+              onClick={handleCloseSaveModal}
               width="338px"
             />
           </Modal>
           <Modal
             width="338px"
             alertTitle="PERFIL ALTERADO COM SUCESSO"
-            show={showModal}
+            show={showSuccessModal}
           >
             <SecondaryButton
-              key={"modalButtons"}
+              key="ok"
               text="Ok"
-              onClick={handleOK}
+              onClick={handleCloseSuccessModal}
               width="338px"
             />
           </Modal>

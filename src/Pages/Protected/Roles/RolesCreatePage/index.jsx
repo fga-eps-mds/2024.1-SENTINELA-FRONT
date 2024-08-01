@@ -6,14 +6,18 @@ import SecondaryButton from "../../../../Components/SecondaryButton";
 import Modal from "../../../../Components/Modal";
 import { Checkbox } from "@mui/material";
 import { createRole } from "../../../../Services/RoleService/roleService";
+import { useNavigate } from "react-router-dom";
+
 
 export default function RolesCreatePage() {
   const [showModal, setShowModal] = useState(false);
   const [profileName, setProfileName] = useState("");
 
-  const [financeiro, setFinanceiro] = useState([]);
-  const [beneficios, setBeneficios] = useState([]);
-  const [usuarios, setUsuarios] = useState([]);
+  const [financeiro, setFinanceiro] = useState([false, false, false, false]);
+  const [beneficios, setBeneficios] = useState([false, false, false, false]);
+  const [usuarios, setUsuarios] = useState([false, false, false, false]);
+
+  const navigate = useNavigate();
 
   const handleCheckboxChange = (setState, index) => {
     setState((prevState) => {
@@ -26,32 +30,32 @@ export default function RolesCreatePage() {
   // Função para mapear permissões
   const mapPermissions = (moduleName, accessArray) => {
     const actions = ["create", "update", "read", "delete"];
-    return actions.reduce((acc, action, index) => {
-      if (accessArray[index]) {
-        acc.push({ module: moduleName, access: action });
-      }
-      return acc;
-    }, []);
+    const grantedActions = actions.filter((_, index) => accessArray[index]);
+    return {
+      module: moduleName,
+      access: grantedActions
+    };
   };
+  
 
   const handleSubmit = async () => {
     try {
       const permissions = [
-        ...mapPermissions("financeiro", financeiro),
-        ...mapPermissions("beneficios", beneficios),
-        ...mapPermissions("usuarios", usuarios),
+        mapPermissions("finance", financeiro),
+        mapPermissions("benefits", beneficios),
+        mapPermissions("users", usuarios),
       ];
-
+  
       const newRole = {
         name: profileName,
         permissions: permissions,
       };
-
+  
       console.log("Tentando criar role com os dados:", newRole);
-
+  
       const response = await createRole(newRole);
       console.log("Resposta da API:", response);
-
+  
       setShowModal(true);
     } catch (error) {
       console.error("Erro ao criar o perfil:", error);
@@ -60,6 +64,7 @@ export default function RolesCreatePage() {
 
   const handleCloseDialog = () => {
     setShowModal(false);
+    navigate("/perfis");
   };
 
   return (
