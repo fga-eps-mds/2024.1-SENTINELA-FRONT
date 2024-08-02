@@ -29,4 +29,13 @@ export const updateMemberStatus = async (memberId) => {
   }
 };
 
+export async function deleteMember(memberId) {
+  try {
+    const response = await APIUsers.delete(`membership/delete/${memberId}`);
+    return response.data;
+  } catch (error) {
+    return error.response.data.erro;
+  }
+}
+
 

@@ -21,6 +21,14 @@
   .member-list .MuiCheckbox-root {
     margin-left: auto; /* Push checkbox to the right */
   }
+  .button-group{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin:1 black 10px;
+
+
+}
   
   
 

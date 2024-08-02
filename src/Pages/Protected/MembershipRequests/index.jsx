@@ -1,10 +1,11 @@
 import "./index.css";
 import { useAuth } from "../../../Context/auth";
-import { getMemberShip, updateMemberStatus } from "../../../Services/MemberShipService";
+import { getMemberShip, updateMemberStatus,deleteMember } from "../../../Services/MemberShipService";
 import { useEffect, useState } from "react";
 import FieldText from "../../../Components/FieldText";
 import SecondaryButton from "../../../Components/SecondaryButton";
 import CheckList from "../../../Components/Checklist";
+import PrimaryButton from "../../../Components/PrimaryButton";
 
 export default function MembershipRequest() {
   const { user } = useAuth();
@@ -71,6 +72,23 @@ export default function MembershipRequest() {
       console.error("Error updating member status:", error);
     }
   };
+  const handleReject = async () => {
+    
+    try{
+      // Filter out members whose names are checked
+      const membersToDelete = filteredMembers.filter(member =>
+        checkedItems.includes(member.nomeCompleto)
+      );
+      for (const memberDelete of membersToDelete){
+        await deleteMember(memberDelete._id);
+      }
+
+
+
+    }catch (error){
+      console.error("Error deleting member status:", error);
+    }
+  }
 
   // Filter members with status = true for the checklist
   const membersForCheckList = filteredMembers.filter(member => member.status);
@@ -97,7 +115,10 @@ export default function MembershipRequest() {
                 value={checkedItems}
                 onChange={handleCheckboxChange}
               />
-              <SecondaryButton text="Confirmar" onClick={handleConfirm} />
+              <div className="button-group">
+              <PrimaryButton text="Rejeitar" onClick={handleReject} />
+              <SecondaryButton text="Aprovar" onClick={handleConfirm} />
+              </div>
             </>
           ) : (
             <p>Nenhum membro encontrado.</p>
