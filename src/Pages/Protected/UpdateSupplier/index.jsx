@@ -224,6 +224,7 @@ export default function UpdateSupplier() {
           label="Nome/Razão social"
           value={nome}
           onChange={(e) => setNome(e.target.value)}
+          disabled={true}
         />
 
         <div className="section-form">
