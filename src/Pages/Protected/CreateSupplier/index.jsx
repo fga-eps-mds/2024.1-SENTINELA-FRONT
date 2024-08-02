@@ -8,7 +8,7 @@ import SecondaryButton from "../../../Components/SecondaryButton";
 import Modal from "../../../Components/Modal";
 import { createSupplierForm } from "../../../Services/supplierService";
 import { Snackbar } from "@mui/material";
-import Alert from "@mui/material";
+import Alert from "@mui/material/Alert";
 
 export default function CreateSupplier() {
   const navigate = useNavigate();
