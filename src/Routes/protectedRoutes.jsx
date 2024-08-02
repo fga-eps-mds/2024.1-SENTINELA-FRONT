@@ -11,6 +11,7 @@ import ViewSupplier from "../Pages/Protected/UpdateSupplier";
 import Benefits from "../Pages/Protected/Benefits";
 import BenefitsList from "../Pages/Protected/BenefitsList";
 import BenefitsCreate from "../Pages/Protected/BenefitsCreate";
+import BenefitsUpdate from "../Pages/Protected/BenefitsUpdate";
 
 const ProtectedRoutes = () => {
   return (
@@ -27,6 +28,7 @@ const ProtectedRoutes = () => {
       <Route path="/beneficios" element={<Benefits />} />
       <Route path="/beneficios/lista" element={<BenefitsList />} />
       <Route path="/beneficios/criar" element={<BenefitsCreate />} />
+      <Route path="/beneficios/editar" element={<BenefitsUpdate />} />
     </Routes>
   );
 };

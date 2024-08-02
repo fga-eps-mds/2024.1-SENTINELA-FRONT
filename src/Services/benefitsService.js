@@ -60,7 +60,7 @@ export const getBenefitsForm = async () => {
 
 export const getBenefitsFormById = async (id) => {
   try {
-    const response = await APIBenefits.get(`/SupplierForm/${id}`);
+    const response = await APIBenefits.get(`/benefits/${id}`);
     return response.data;
   } catch (error) {
     console.error(`Erro ao buscar convênio com ID ${id}:`, error);
@@ -69,7 +69,7 @@ export const getBenefitsFormById = async (id) => {
 
 export const updateBenefitsFormById = async (id, benefitsData) => {
   try {
-    const response = await APIBenefits.patch(`/SupplierForm/update/${id}`, {
+    const response = await APIBenefits.patch(`/benefits/update/${id}`, {
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -83,7 +83,7 @@ export const updateBenefitsFormById = async (id, benefitsData) => {
 
 export const deleteBenefitsFormById = async (id) => {
   try {
-    await APIBenefits.delete(`/SupplierForm/delete/${id}`);
+    await APIBenefits.delete(`/benefits/delete/${id}`);
   } catch (error) {
     console.error(`Erro ao deletar convênio com ID ${id}:`, error);
   }
