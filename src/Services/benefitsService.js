@@ -18,15 +18,24 @@ export async function userLogin(email, password) {
 
 export const createBenefitsForm = async (benefitsData) => {
   try {
-    await APIBenefits.post(`/benefits/create`, {
+    const token = localStorage.getItem("@App:token");
+    if (!token) {
+      throw new Error("Token não encontrado");
+    }
+
+    const response = await APIBenefits.post(`/benefits/create/`, benefitsData, {
       headers: {
-        Authorization: `Bearer ${user.token}`,
+        Authorization: `Bearer ${token}`,
       },
-      benefitsData: benefitsData,
     });
 
+    console.log("Resposta da API:", response.data);
     return false;
   } catch (error) {
+    console.error(
+      "Erro ao cadastrar convênio:",
+      error.response ? error.response.data : error.message
+    );
     alert("Erro ao cadastrar convênio");
     return true;
   }

@@ -10,6 +10,8 @@ import Modal from "../../../Components/Modal";
 import SecondaryButton from "../../../Components/SecondaryButton";
 import { Snackbar } from "@mui/material";
 import Alert from "@mui/material/Alert";
+import { createBenefitsForm } from "../../../Services/benefitsService"; // Importando a função correta
+
 
 export default function BenefitsCreate() {
   const navigate = useNavigate();
@@ -125,13 +127,13 @@ export default function BenefitsCreate() {
       !nome ||
       !razaoSocial ||
       !statusConvenio ||
-      !statusConvenio ||
       !considerarIr ||
       !descontoAut
     ) {
       setOpenError(true);
       return;
     }
+    
     const benefitsData = {
       nome,
       razaoSocial,
@@ -154,185 +156,190 @@ export default function BenefitsCreate() {
       dataFinal,
       contratoSit,
     };
-    const erro = await createBenefitsForm(benefitsData);
-    if (!erro) {
-      setShowModal(true);
+  
+    try {
+      const erro = await createBenefitsForm(benefitsData);
+      if (!erro) {
+        setShowModal(true);
+      } else {
+        console.error("Erro ao criar convênio");
+      }
+    } catch (error) {
+      console.error("Erro ao criar convênio:", error);
     }
   };
-
+  
   return (
-    user && (
-      <div className="container">
-        <div className="forms-container">
-          <h1>Cadastro de convênios</h1>
+    <div className="container">
+      <div className="forms-container">
+        <h1>Cadastro de convênios</h1>
 
-          <h3>Dados do convênio</h3>
+        <h3>Dados do convênio</h3>
 
-          <div className="section-form">
-            <FieldText
-              label="Nome fantasia *"
-              value={nome}
-              onChange={mascaraNome}
-              required
-            />
-
-            <FieldText
-              label="Razão social *"
-              value={razaoSocial}
-              onChange={(e) => setRazaoSocial(e.target.value)}
-            />
-          </div>
+        <div className="section-form">
+          <FieldText
+            label="Nome fantasia *"
+            value={nome}
+            onChange={mascaraNome}
+            required
+          />
 
           <FieldText
-            label="Descrição"
-            value={descricao}
-            onChange={(e) => setDescricao(e.target.value)}
+            label="Razão social *"
+            value={razaoSocial}
+            onChange={(e) => setRazaoSocial(e.target.value)}
           />
-
-          <div className="section-form">
-            <FieldSelect
-              label="Classificação de pessoa"
-              value={tipoPessoa}
-              onChange={handleChangeTipoPessoa}
-              options={tipoPessoaList}
-            />
-
-            <FieldText
-              label="CPF/CNPJ"
-              value={cpfCnpj}
-              onChange={(e) => setCpfCnpj(mascaraCpfCnpj(e.target.value))}
-            />
-
-            <FieldText
-              label="ANS"
-              value={ans}
-              onChange={(e) => setAns(e.target.value)}
-            />
-
-            <FieldSelect
-              label="Categoria"
-              value={categoria}
-              onChange={handleChangeCategoria}
-              options={categoriaList}
-            />
-
-            <FieldSelect
-              label="Status *"
-              value={statusConvenio}
-              onChange={handleChangeStatusConvenio}
-              options={statusConvenioList}
-            />
-
-            <DataSelect
-              label="Data de cadastro"
-              value={dataCadastro}
-              onChange={(newValue) => setDataCadastro(newValue)}
-            />
-
-            <FieldSelect
-              label="Considerado no IR *"
-              value={considerarIr}
-              onChange={handleChangeConsiderarIr}
-              options={considerarIrList}
-            />
-
-            <FieldSelect
-              label="Desconto automático *"
-              value={descontoAut}
-              onChange={handleChangeDescontoAut}
-              options={descontoAutList}
-            />
-
-            <FieldText
-              label="Logotipo"
-              value={logotipo}
-              onChange={(e) => setLogotipo(e.target.value)}
-            />
-
-            <FieldText
-              label="Site"
-              value={site}
-              onChange={(e) => setSite(e.target.value)}
-            />
-
-            <FieldText
-              label="E-mail"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-
-            <FieldText
-              label="Telefone/Celular"
-              value={telefCelular}
-              onChange={(e) =>
-                setTelefCelular(mascaraTelefCelular(e.target.value))
-              }
-            />
-          </div>
-
-          <h3>Dados do contrato de convênio</h3>
-
-          <div className="section-form">
-            <DataSelect
-              label="Data de assinatura"
-              value={dataAssinatura}
-              onChange={(newValue) => setDataAssinatura(newValue)}
-            />
-
-            <DataSelect
-              label="Data de início"
-              value={dataInicio}
-              onChange={(newValue) => setDataInicio(newValue)}
-            />
-
-            <FieldSelect
-              label="Situação"
-              value={sitContrato}
-              onChange={handleChangeSitContrato}
-              options={sitContratoList}
-            />
-
-            <DataSelect
-              label="Data final"
-              value={dataFinal}
-              onChange={(newValue) => setDataFinal(newValue)}
-            />
-          </div>
-
-          <FieldTextCheckbox
-            label="Contrato entregue"
-            value={contratoSit}
-            onChange={(e) => setContratoSit(e.target.value)}
-            checked={isChecked}
-            onCheckboxChange={(e) => setIsChecked(e.target.checked)}
-            disabled={true}
-          />
-
-          <div id="envio">
-            <PrimaryButton text="CADASTRAR" onClick={handleCheck} />
-          </div>
-
-          <Snackbar
-            open={openError}
-            autoHideDuration={6000}
-            onClose={() => setOpenError(false)}
-          >
-            <Alert onClose={() => setOpenError(false)} severity="error">
-              Certifique-se de que todos os campos obrigatórios estão
-              preenchidos
-            </Alert>
-          </Snackbar>
-
-          <Modal width="338px" alertTitle="Cadastro concluído" show={showModal}>
-            <SecondaryButton
-              key={"modalButtons"}
-              text="OK"
-              onClick={handleCloseDialog}
-              width="338px"
-            />
-          </Modal>
         </div>
+
+        <FieldText
+          label="Descrição"
+          value={descricao}
+          onChange={(e) => setDescricao(e.target.value)}
+        />
+
+        <div className="section-form">
+          <FieldSelect
+            label="Classificação de pessoa"
+            value={tipoPessoa}
+            onChange={handleChangeTipoPessoa}
+            options={tipoPessoaList}
+          />
+
+          <FieldText
+            label="CPF/CNPJ"
+            value={cpfCnpj}
+            onChange={(e) => setCpfCnpj(mascaraCpfCnpj(e.target.value))}
+          />
+
+          <FieldText
+            label="ANS"
+            value={ans}
+            onChange={(e) => setAns(e.target.value)}
+          />
+
+          <FieldSelect
+            label="Categoria"
+            value={categoria}
+            onChange={handleChangeCategoria}
+            options={categoriaList}
+          />
+
+          <FieldSelect
+            label="Status *"
+            value={statusConvenio}
+            onChange={handleChangeStatusConvenio}
+            options={statusConvenioList}
+          />
+
+          <DataSelect
+            label="Data de cadastro"
+            value={dataCadastro}
+            onChange={(newValue) => setDataCadastro(newValue)}
+          />
+
+          <FieldSelect
+            label="Considerado no IR *"
+            value={considerarIr}
+            onChange={handleChangeConsiderarIr}
+            options={considerarIrList}
+          />
+
+          <FieldSelect
+            label="Desconto automático *"
+            value={descontoAut}
+            onChange={handleChangeDescontoAut}
+            options={descontoAutList}
+          />
+
+          <FieldText
+            label="Logotipo"
+            value={logotipo}
+            onChange={(e) => setLogotipo(e.target.value)}
+          />
+
+          <FieldText
+            label="Site"
+            value={site}
+            onChange={(e) => setSite(e.target.value)}
+          />
+
+          <FieldText
+            label="E-mail"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+
+          <FieldText
+            label="Telefone/Celular"
+            value={telefCelular}
+            onChange={(e) =>
+              setTelefCelular(mascaraTelefCelular(e.target.value))
+            }
+          />
+        </div>
+
+        <h3>Dados do contrato de convênio</h3>
+
+        <div className="section-form">
+          <DataSelect
+            label="Data de assinatura"
+            value={dataAssinatura}
+            onChange={(newValue) => setDataAssinatura(newValue)}
+          />
+
+          <DataSelect
+            label="Data de início"
+            value={dataInicio}
+            onChange={(newValue) => setDataInicio(newValue)}
+          />
+
+          <FieldSelect
+            label="Situação"
+            value={sitContrato}
+            onChange={handleChangeSitContrato}
+            options={sitContratoList}
+          />
+
+          <DataSelect
+            label="Data final"
+            value={dataFinal}
+            onChange={(newValue) => setDataFinal(newValue)}
+          />
+        </div>
+
+        <FieldTextCheckbox
+          label="Contrato entregue"
+          value={contratoSit}
+          onChange={(e) => setContratoSit(e.target.value)}
+          checked={isChecked}
+          onCheckboxChange={(e) => setIsChecked(e.target.checked)}
+          disabled={true}
+        />
+
+        <div id="envio">
+          <PrimaryButton text="CADASTRAR" onClick={handleCheck} />
+        </div>
+
+        <Snackbar
+          open={openError}
+          autoHideDuration={6000}
+          onClose={() => setOpenError(false)}
+        >
+          <Alert onClose={() => setOpenError(false)} severity="error">
+            Certifique-se de que todos os campos obrigatórios estão
+            preenchidos
+          </Alert>
+        </Snackbar>
+
+        <Modal width="338px" alertTitle="Cadastro concluído" show={showModal}>
+          <SecondaryButton
+            key={"modalButtons"}
+            text="OK"
+            onClick={handleCloseDialog}
+            width="338px"
+          />
+        </Modal>
       </div>
-    )
+    </div>
   );
 }

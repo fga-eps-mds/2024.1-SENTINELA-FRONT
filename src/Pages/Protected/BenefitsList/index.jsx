@@ -7,30 +7,34 @@ import { APIBenefits } from "../../../Services/BaseService";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/List";
+import ListItemText from "@mui/material/ListItemText"; // Corrigido
+import Divider from "@mui/material/Divider"; // Importado Divider
 
 export default function ListSupplier() {
   const [search, setSearch] = useState("");
+  const [benefits, setBenefits] = useState([]); // Estado para armazenar benefícios
   const navigate = useNavigate();
 
   const handleSubmit = () => {
     navigate("/beneficios/criar");
   };
+
   const handleItemClick = (benefits) => {
-    navigate("/beneficios/lista/${benefits.nome}", {
+    navigate(`/beneficios/lista/${benefits.nome}`, {
       state: { benefitsId: benefits._id },
     });
   };
 
-  const filteredBenefits = benefits.filter((benefits) =>
-    benefits.nome.toLowerCase().includes(search.toLowerCase())
+  const filteredBenefits = benefits.filter((benefit) =>
+    benefit.nome.toLowerCase().includes(search.toLowerCase())
   );
 
   useEffect(() => {
     const getBenefits = async () => {
       try {
-        const response = await APIBenefits.get(`benefits`);
+        const response = await APIBenefits.get("benefits");
         console.log(response.data);
+        setBenefits(response.data); // Atualiza o estado com os dados da API
       } catch (error) {
         console.log(error);
       }
@@ -53,11 +57,11 @@ export default function ListSupplier() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          <SecondaryButton text="Pesquisar" onClick={""} />
+          <SecondaryButton text="Pesquisar" onClick={() => {}} /> {/* Adicione uma função para o onClick se necessário */}
 
           <List>
-            {filteredBenefits.map((benefits, index) => (
-              <div key={benefits._id}>
+            {filteredBenefits.map((benefit, index) => (
+              <div key={benefit._id}>
                 <ListItem>
                   <ListItemButton
                     className="list-item"
@@ -71,9 +75,9 @@ export default function ListSupplier() {
                     onMouseLeave={(e) =>
                       (e.currentTarget.style.backgroundColor = "transparent")
                     }
-                    onClick={() => handleItemClick(benefits)}
+                    onClick={() => handleItemClick(benefit)}
                   >
-                    <ListItemText primary={benefits.nome} />
+                    <ListItemText primary={benefit.nome} />
                   </ListItemButton>
                 </ListItem>
 
