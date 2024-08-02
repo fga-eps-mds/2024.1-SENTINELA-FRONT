@@ -6,7 +6,6 @@ import FieldText from "../../../Components/FieldText";
 import { APIBenefits } from "../../../Services/BaseService";
 
 export default function ListSupplier() {
-  //const [suppliers, setSuppliers] = useState([]);
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
@@ -31,7 +30,7 @@ export default function ListSupplier() {
     <section className="container">
       <div className="forms-container">
         <div className="double-box">
-          <h1>Lista de convenios</h1>
+          <h1>Lista de convênios</h1>
           <PrimaryButton text="Cadastrar convenio" onClick={handleSubmit} />
         </div>
 

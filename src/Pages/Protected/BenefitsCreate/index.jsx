@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./index.css";
 import { useAuth } from "../../../Context/auth";
-//import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import FieldText from "../../../Components/FieldText";
 import FieldSelect from "../../../Components/FieldSelect";
 import DataSelect from "../../../Components/DataSelect";
@@ -13,11 +13,8 @@ import { Snackbar } from "@mui/material";
 import Alert from "@mui/material/Alert";
 
 export default function BenefitsCreate() {
-  //const context = useContext(AuthContext);
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
   const { user } = useAuth();
-  //const storagedUserString = localStorage.getItem("@App:user");
-  //const storagedUser = JSON.parse(storagedUserString);
 
   const [nome, setNome] = useState("");
   const [razaoSocial, setRazaoSocial] = useState("");
@@ -82,7 +79,7 @@ export default function BenefitsCreate() {
 
   const handleCloseDialog = () => {
     setShowModal(false);
-    //navigate("/");
+    navigate("/beneficios/lista");
   };
 
   const mascaraNome = (e) => {
@@ -125,7 +122,7 @@ export default function BenefitsCreate() {
     }
   };
 
-  const handleCheck = () => {
+  const handleCheck = async () => {
     if (
       !nome ||
       !razaoSocial ||
@@ -135,66 +132,35 @@ export default function BenefitsCreate() {
       !descontoAut
     ) {
       setOpenError(true);
-    } else {
-      /*const benefitsData = {
-        nome,
-        razaoSocial,
-        descricao,
-        tipoPessoa,
-        cpfCnpj,
-        ans,
-        categoria,
-        statusConvenio,
-        dataCadastro,
-        considerarIr,
-        descontoAut,
-        logotipo,
-        site,
-        email,
-        telefCelular,
-        dataAssinatura,
-        dataInicio,
-        sitContrato,
-        dataFinal,
-        contratoSit,
-      };*/
-
-      //handleSubmit(benefitsData);
-      setShowModal(true);
+      return;
     }
-  };
-
-  /*const handleSubmit = async () => {
     const benefitsData = {
       nome,
       razaoSocial,
-      descricao: descricao || null,
-      tipoPessoa: tipoPessoa || null,
-      cpfCnpj: cpfCnpj || null,
-      ans: ans || null,
-      categoria: categoria || null,
+      descricao,
+      tipoPessoa,
+      cpfCnpj,
+      ans,
+      categoria,
       statusConvenio,
-      dataCadastro: dataCadastro || null,
+      dataCadastro,
       considerarIr,
       descontoAut,
-      logotipo: logotipo || null,
-      site: site || null,
-      email: email || null,
-      telefCelular: telefCelular || null,
-      dataAssinatura: dataAssinatura || null,
-      dataInicio: dataInicio || null,
-      sitContrato: sitContrato || null,
-      dataFinal: dataFinal || null,
-      contratoSit: contratoSit || null,
+      logotipo,
+      site,
+      email,
+      telefCelular,
+      dataAssinatura,
+      dataInicio,
+      sitContrato,
+      dataFinal,
+      contratoSit,
     };
-    const erro = await createBenefits(benefitsData);
-
-    if (erro) {
-      setShowModal(false);
-    } else {
+    const erro = await createBenefitsForm(benefitsData);
+    if (!erro) {
       setShowModal(true);
     }
-  };*/
+  };
 
   return (
     user && (

@@ -16,9 +16,9 @@ export async function userLogin(email, password) {
   }
 }
 
-export const createBenefits = async (benefitsData) => {
+export const createBenefitsForm = async (benefitsData) => {
   try {
-    await APIBank.post(`/SupplierForm/create`, {
+    await APIBank.post(`/benefits/create`, {
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -32,33 +32,33 @@ export const createBenefits = async (benefitsData) => {
   }
 };
 
-export const getSupplierForm = async () => {
+export const getBenefitsForm = async () => {
   try {
     const token = localStorage.getItem("@App:token");
     if (!token) {
       throw new Error("No token found");
     }
-    const response = await APIBank.get("/supplier", {
+    const response = await APIBank.get("/benefits", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
     return response.data;
   } catch (error) {
-    console.error("Erro ao buscar fornecedor:", error);
+    console.error("Erro ao buscar convênio:", error);
   }
 };
 
-export const getSupplierFormById = async (id) => {
+export const getBenefitsFormById = async (id) => {
   try {
     const response = await APIBank.get(`/SupplierForm/${id}`);
     return response.data;
   } catch (error) {
-    console.error(`Erro ao buscar fornecedor com ID ${id}:`, error);
+    console.error(`Erro ao buscar convênio com ID ${id}:`, error);
   }
 };
 
-export const updateSupplierFormById = async (id, benefitsData) => {
+export const updateBenefitsFormById = async (id, benefitsData) => {
   try {
     const response = await APIBank.patch(`/SupplierForm/update/${id}`, {
       headers: {
@@ -68,14 +68,14 @@ export const updateSupplierFormById = async (id, benefitsData) => {
     });
     return response.data;
   } catch (error) {
-    console.error(`Erro ao atualizar fornecedor com ID ${id}:`, error);
+    console.error(`Erro ao atualizar convênio com ID ${id}:`, error);
   }
 };
 
-export const deleteSupplierFormById = async (id) => {
+export const deleteBenefitsFormById = async (id) => {
   try {
     await APIBank.delete(`/SupplierForm/delete/${id}`);
   } catch (error) {
-    console.error(`Erro ao deletar fornecedor com ID ${id}:`, error);
+    console.error(`Erro ao deletar convênio com ID ${id}:`, error);
   }
 };
