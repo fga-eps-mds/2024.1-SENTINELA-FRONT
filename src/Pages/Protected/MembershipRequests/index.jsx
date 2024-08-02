@@ -6,6 +6,8 @@ import FieldText from "../../../Components/FieldText";
 import SecondaryButton from "../../../Components/SecondaryButton";
 import CheckList from "../../../Components/Checklist";
 import PrimaryButton from "../../../Components/PrimaryButton";
+import Modal from "../../../Components/Modal";
+import { useNavigate } from "react-router-dom";
 
 export default function MembershipRequest() {
   const { user } = useAuth();
@@ -14,6 +16,11 @@ export default function MembershipRequest() {
   const [search, setSearch] = useState("");
   const [isResultReadOnly, setIsResultReadOnly] = useState(false);
   const [checkedItems, setCheckedItems] = useState([]);
+  const [openSucessAproval, setSucesssAproval] = useState(false); 
+  const [openSucessDelete, setSucessDelete] = useState(false);
+  const [openTryingDelete, setTryingDelete] = useState(false);
+  const navigate = useNavigate();
+
 
   // Fetch all members on component mount
   useEffect(() => {
@@ -68,6 +75,9 @@ export default function MembershipRequest() {
       setMembers(result);
       setFilteredMembers(result);
       setCheckedItems([]);
+      setSucesssAproval(true);
+      
+
     } catch (error) {
       console.error("Error updating member status:", error);
     }
@@ -84,7 +94,8 @@ export default function MembershipRequest() {
       }
 
 
-
+    setTryingDelete(false)
+    setSucessDelete(true)
     }catch (error){
       console.error("Error deleting member status:", error);
     }
@@ -116,7 +127,7 @@ export default function MembershipRequest() {
                 onChange={handleCheckboxChange}
               />
               <div className="button-group">
-              <PrimaryButton text="Rejeitar" onClick={handleReject} />
+              <PrimaryButton text="Rejeitar" onClick={() => setTryingDelete(true)} />
               <SecondaryButton text="Aprovar" onClick={handleConfirm} />
               </div>
             </>
@@ -124,6 +135,39 @@ export default function MembershipRequest() {
             <p>Nenhum membro encontrado.</p>
           )}
         </div>
+        <Modal
+          show={openSucessAproval}
+          alertTitle="Solicitações aprovadas"
+          children = {
+            <PrimaryButton text="Fechar" onClick={() => setSucesssAproval(false)} />
+          }
+          alert="Os filiados devem receber em breve um e-mail para gerar a senha de acesso"
+          width="100%"
+       
+        />
+        
+
+<Modal
+  show={openTryingDelete}
+  alertTitle="Você rejeitou as solicitações selecionadas"
+  alert="Deseja confirmar a decisão para que eles sejam excluídas?"
+  width="100%"
+>
+  <PrimaryButton text="Excluir solicitações" onClick={handleReject} />
+  <SecondaryButton text="Cancelr e manter solicitações" onClick={() => setTryingDelete(false)} />
+</Modal>
+<Modal 
+  show={openSucessDelete}
+  alertTitle="Solicitações excluídas"
+  children = {
+    <PrimaryButton text="Fechar" onClick={() => navigate("/home")} />
+  }
+  alert="Os filiados foram excluídos com sucesso"
+  width="100%"
+/>
+
+
+
       </section>
     )
   );

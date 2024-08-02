@@ -324,10 +324,14 @@ const MemberShip = () => {
     };
 
     const message = await createMemberShip(formData);
-    setErrorFields(message);
+    if (message) {
+      setErrorFields(message);
+      return; // Impede a navegação e mantém o usuário na página atual
+    }
+  
+    // Se não houver mensagem de erro, navega para /home
     navigate("/home");
   };
-
   return (
     <section className="container">
       <div className="forms-container">
