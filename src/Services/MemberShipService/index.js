@@ -20,14 +20,13 @@ export async function getMemberShip() {
   }
 }
 
-export const updateMemberStatus = async (memberId, newStatus) => {
+export const updateMemberStatus = async (memberId) => {
   try {
-    const reponse = await APIUsers.patch(`membership/updateStatus/${memberId}`, {
-      status: newStatus,
-    });
-    return reponse.data;
-  }
-  catch (error) {
-    return error.response.data.erro;
+    const response = await APIUsers.patch(`membership/updateStatus/${memberId}`);
+    return response.data;
+  } catch (error) {
+    return error.response ? error.response.data.error : 'An error occurred';
   }
 };
+
+
