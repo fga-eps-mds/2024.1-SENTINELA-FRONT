@@ -28,7 +28,7 @@ const ProtectedRoutes = () => {
       <Route path="/beneficios" element={<Benefits />} />
       <Route path="/beneficios/lista" element={<BenefitsList />} />
       <Route path="/beneficios/criar" element={<BenefitsCreate />} />
-      <Route path="/beneficios/editar" element={<BenefitsUpdate />} />
+      <Route path="/beneficios/editar/:id" element={<BenefitsUpdate />} />
     </Routes>
   );
 };

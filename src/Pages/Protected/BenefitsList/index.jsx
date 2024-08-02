@@ -20,7 +20,7 @@ export default function ListSupplier() {
   };
 
   const handleItemClick = (benefits) => {
-    navigate(`/beneficios/lista/${benefits.nome}`, {
+    navigate(`/beneficios/editar/${benefits.nome}`, {
       state: { benefitsId: benefits._id },
     });
   };
