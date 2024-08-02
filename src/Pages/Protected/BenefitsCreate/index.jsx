@@ -12,7 +12,6 @@ import { Snackbar } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import { createBenefitsForm } from "../../../Services/benefitsService"; // Importando a função correta
 
-
 export default function BenefitsCreate() {
   const navigate = useNavigate();
 
@@ -133,7 +132,7 @@ export default function BenefitsCreate() {
       setOpenError(true);
       return;
     }
-    
+
     const benefitsData = {
       nome,
       razaoSocial,
@@ -156,7 +155,7 @@ export default function BenefitsCreate() {
       dataFinal,
       contratoSit,
     };
-  
+
     try {
       const erro = await createBenefitsForm(benefitsData);
       if (!erro) {
@@ -168,7 +167,7 @@ export default function BenefitsCreate() {
       console.error("Erro ao criar convênio:", error);
     }
   };
-  
+
   return (
     <div className="container">
       <div className="forms-container">
@@ -326,8 +325,7 @@ export default function BenefitsCreate() {
           onClose={() => setOpenError(false)}
         >
           <Alert onClose={() => setOpenError(false)} severity="error">
-            Certifique-se de que todos os campos obrigatórios estão
-            preenchidos
+            Certifique-se de que todos os campos obrigatórios estão preenchidos
           </Alert>
         </Snackbar>
 

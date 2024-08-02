@@ -57,8 +57,8 @@ export default function ListSupplier() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          <SecondaryButton text="Pesquisar" onClick={() => {}} /> {/* Adicione uma função para o onClick se necessário */}
-
+          <SecondaryButton text="Pesquisar" onClick={() => {}} />{" "}
+          {/* Adicione uma função para o onClick se necessário */}
           <List>
             {filteredBenefits.map((benefit, index) => (
               <div key={benefit._id}>
