@@ -11,7 +11,7 @@
     "preview": "vite preview",
     "check-format": "prettier --check .",
     "format": "prettier --write .",
-    "postinstall": "node_modules/.bin/husky install"
+    "postinstall": "npx husky install"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
