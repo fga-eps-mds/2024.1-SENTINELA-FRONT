@@ -4,6 +4,10 @@ import PrimaryButton from "../../../Components/PrimaryButton";
 import SecondaryButton from "../../../Components/SecondaryButton";
 import FieldText from "../../../Components/FieldText";
 import { APIBenefits } from "../../../Services/BaseService";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/List";
 
 export default function ListSupplier() {
   const [search, setSearch] = useState("");
@@ -12,6 +16,15 @@ export default function ListSupplier() {
   const handleSubmit = () => {
     navigate("/beneficios/criar");
   };
+  const handleItemClick = (benefits) => {
+    navigate("/beneficios/lista/${benefits.nome}", {
+      state: { benefitsId: benefits._id },
+    });
+  };
+
+  const filteredBenefits = benefits.filter((benefits) =>
+    benefits.nome.toLowerCase().includes(search.toLowerCase())
+  );
 
   useEffect(() => {
     const getBenefits = async () => {
@@ -31,16 +44,43 @@ export default function ListSupplier() {
       <div className="forms-container">
         <div className="double-box">
           <h1>Lista de convênios</h1>
-          <PrimaryButton text="Cadastrar convenio" onClick={handleSubmit} />
+          <PrimaryButton text="Cadastrar convênio" onClick={handleSubmit} />
         </div>
 
         <div className="search-box">
           <FieldText
-            label="Pesquisar convenios"
+            label="Pesquisar convênios"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
           <SecondaryButton text="Pesquisar" onClick={""} />
+
+          <List>
+            {filteredBenefits.map((benefits, index) => (
+              <div key={benefits._id}>
+                <ListItem>
+                  <ListItemButton
+                    className="list-item"
+                    style={{
+                      transition: "background-color 0.3s ease",
+                    }}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.backgroundColor =
+                        "rgba(0, 0, 0, 0.1)")
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.backgroundColor = "transparent")
+                    }
+                    onClick={() => handleItemClick(benefits)}
+                  >
+                    <ListItemText primary={benefits.nome} />
+                  </ListItemButton>
+                </ListItem>
+
+                {index < filteredBenefits.length - 1 && <Divider />}
+              </div>
+            ))}
+          </List>
         </div>
       </div>
     </section>

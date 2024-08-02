@@ -1,4 +1,4 @@
-import { APIBank, APIUsers } from "./BaseService";
+import { APIBenefits, APIUsers } from "./BaseService";
 
 const storagedUser = localStorage.getItem("@App:user");
 const user = JSON.parse(storagedUser);
@@ -18,7 +18,7 @@ export async function userLogin(email, password) {
 
 export const createBenefitsForm = async (benefitsData) => {
   try {
-    await APIBank.post(`/benefits/create`, {
+    await APIBenefits.post(`/benefits/create`, {
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -38,7 +38,7 @@ export const getBenefitsForm = async () => {
     if (!token) {
       throw new Error("No token found");
     }
-    const response = await APIBank.get("/benefits", {
+    const response = await APIBenefits.get("/benefits", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -51,7 +51,7 @@ export const getBenefitsForm = async () => {
 
 export const getBenefitsFormById = async (id) => {
   try {
-    const response = await APIBank.get(`/SupplierForm/${id}`);
+    const response = await APIBenefits.get(`/SupplierForm/${id}`);
     return response.data;
   } catch (error) {
     console.error(`Erro ao buscar convênio com ID ${id}:`, error);
@@ -60,7 +60,7 @@ export const getBenefitsFormById = async (id) => {
 
 export const updateBenefitsFormById = async (id, benefitsData) => {
   try {
-    const response = await APIBank.patch(`/SupplierForm/update/${id}`, {
+    const response = await APIBenefits.patch(`/SupplierForm/update/${id}`, {
       headers: {
         Authorization: `Bearer ${user.token}`,
       },
@@ -74,7 +74,7 @@ export const updateBenefitsFormById = async (id, benefitsData) => {
 
 export const deleteBenefitsFormById = async (id) => {
   try {
-    await APIBank.delete(`/SupplierForm/delete/${id}`);
+    await APIBenefits.delete(`/SupplierForm/delete/${id}`);
   } catch (error) {
     console.error(`Erro ao deletar convênio com ID ${id}:`, error);
   }

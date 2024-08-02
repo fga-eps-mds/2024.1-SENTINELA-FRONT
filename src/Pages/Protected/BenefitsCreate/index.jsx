@@ -1,6 +1,5 @@
 import { useState } from "react";
 import "./index.css";
-import { useAuth } from "../../../Context/auth";
 import { useNavigate } from "react-router-dom";
 import FieldText from "../../../Components/FieldText";
 import FieldSelect from "../../../Components/FieldSelect";
@@ -14,7 +13,6 @@ import Alert from "@mui/material/Alert";
 
 export default function BenefitsCreate() {
   const navigate = useNavigate();
-  const { user } = useAuth();
 
   const [nome, setNome] = useState("");
   const [razaoSocial, setRazaoSocial] = useState("");
