@@ -106,7 +106,7 @@ export default function MembershipRequest() {
   return (
     user && (
       <section className="membership-request">
-        <h1>Página de Listagem de Solicitação de Filiação</h1>
+        <h1>Solicitações de Filiação</h1>
         <div className="user-info">
           <FieldText
             label="Pesquisar usuário"
@@ -125,11 +125,15 @@ export default function MembershipRequest() {
                 value={checkedItems}
                 onChange={handleCheckboxChange}
               />
+
               <div className="button-group">
-                <PrimaryButton
-                  text="Rejeitar"
-                  onClick={() => setTryingDelete(true)}
-                />
+                <div>
+                  <PrimaryButton
+                    text="Rejeitar"
+                    onClick={() => setTryingDelete(true)}
+                  />
+                </div>
+
                 <SecondaryButton text="Aprovar" onClick={handleConfirm} />
               </div>
             </>

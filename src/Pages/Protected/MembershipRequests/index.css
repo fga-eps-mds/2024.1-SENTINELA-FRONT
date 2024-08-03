@@ -2,9 +2,13 @@
 }
 
 @media screen and (min-width: 1081px) {
+  .membership-request {
+    margin: 3rem;
+  }
+
   .user-info {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
     align-items: center;
     padding: 10px;
   }
@@ -23,10 +27,10 @@
   .member-list .MuiCheckbox-root {
     margin-left: auto; /* Push checkbox to the right */
   }
+
   .button-group {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     align-items: center;
-    margin: 1 black 10px;
   }
 }
