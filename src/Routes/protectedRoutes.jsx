@@ -8,10 +8,10 @@ import UserUpdatePage from "../Pages/Protected/Users/userUpdatePage";
 import Supplier from "../Pages/Protected/CreateSupplier";
 import ListSupplier from "../Pages/Protected/ListSupplier";
 import ViewSupplier from "../Pages/Protected/UpdateSupplier";
-import Benefits from "../Pages/Protected/Benefits";
-import BenefitsList from "../Pages/Protected/BenefitsList";
-import BenefitsCreate from "../Pages/Protected/BenefitsCreate";
-import BenefitsUpdate from "../Pages/Protected/BenefitsUpdate";
+import Benefits from "../Pages/Protected/Benefit/Benefits";
+import BenefitsList from "../Pages/Protected/Benefit/BenefitsList";
+import BenefitsCreate from "../Pages/Protected/Benefit/BenefitsCreate";
+import BenefitsUpdate from "../Pages/Protected/Benefit/BenefitsUpdate";
 
 const ProtectedRoutes = () => {
   return (

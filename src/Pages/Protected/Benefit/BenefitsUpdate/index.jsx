@@ -1,19 +1,23 @@
-import { useState } from "react";
-import "./index.css";
-import { useNavigate } from "react-router-dom";
-import FieldText from "../../../Components/FieldText";
-import FieldSelect from "../../../Components/FieldSelect";
-import DataSelect from "../../../Components/DataSelect";
-import FieldTextCheckbox from "../../../Components/FieldTextCheckbox";
-import PrimaryButton from "../../../Components/PrimaryButton";
-import Modal from "../../../Components/Modal";
-import SecondaryButton from "../../../Components/SecondaryButton";
-import { Snackbar } from "@mui/material";
-import Alert from "@mui/material/Alert";
-import { createBenefitsForm } from "../../../Services/benefitsService"; // Importando a função correta
+import dayjs from "dayjs";
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import FieldText from "../../../../Components/FieldText";
+import FieldSelect from "../../../../Components/FieldSelect";
+import DataSelect from "../../../../Components/DataSelect";
+import FieldTextCheckbox from "../../../../Components/FieldTextCheckbox";
+import PrimaryButton from "../../../../Components/PrimaryButton";
+import SecondaryButton from "../../../../Components/SecondaryButton";
+import Modal from "../../../../Components/Modal";
+import {
+  getBenefitsFormById,
+  updateBenefitsFormById,
+  deleteBenefitsFormById,
+} from "../../../../Services/benefitsService";
 
-export default function BenefitsCreate() {
+export default function BenefitsUpdate() {
   const navigate = useNavigate();
+  const { state } = useLocation();
+  const benefitsId = state?.benefitsId;
 
   const [nome, setNome] = useState("");
   const [razaoSocial, setRazaoSocial] = useState("");
@@ -36,8 +40,9 @@ export default function BenefitsCreate() {
   const [dataFinal, setDataFinal] = useState(null);
   const [contratoSit, setContratoSit] = useState("");
   const [isChecked, setIsChecked] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const [openError, setOpenError] = useState(false);
+  const [showSaveModal, setShowSaveModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showDeletedModal, setShowDeletedModal] = useState(false);
 
   const tipoPessoaList = ["Jurídica", "Física"];
   const categoriaList = [
@@ -74,11 +79,6 @@ export default function BenefitsCreate() {
 
   const handleChangeSitContrato = (event) => {
     setSitContrato(event.target.value);
-  };
-
-  const handleCloseDialog = () => {
-    setShowModal(false);
-    navigate("/beneficios/lista");
   };
 
   const mascaraNome = (e) => {
@@ -121,18 +121,56 @@ export default function BenefitsCreate() {
     }
   };
 
-  const handleCheck = async () => {
-    if (
-      !nome ||
-      !razaoSocial ||
-      !statusConvenio ||
-      !considerarIr ||
-      !descontoAut
-    ) {
-      setOpenError(true);
-      return;
-    }
+  const handleDeleteBenefitsButton = async () => {
+    await deleteBenefitsFormById(benefitsId);
+    navigate("/beneficios/lista");
+  };
 
+  const handleSaveModal = () => {
+    setShowSaveModal(true);
+  };
+
+  const handleDeleteModal = () => {
+    setShowDeleteModal(true);
+  };
+
+  const handleDeleteCloseDialog = () => {
+    setShowDeleteModal(false);
+  };
+
+  const handleDeletedCloseDialog = () => {
+    setShowDeletedModal(false);
+    navigate("/beneficios/lista");
+  };
+
+  useEffect(() => {
+    const loadBenefits = async () => {
+      const benefits = await getBenefitsFormById(benefitsId);
+      setNome(benefits.nome);
+      setRazaoSocial(benefits.razaoSocial);
+      setDescricao(benefits.descricao);
+      setTipoPessoa(benefits.tipoPessoa);
+      setCpfCnpj(benefits.cpfCnpj);
+      setAns(benefits.ans);
+      setCategoria(benefits.categoria);
+      setStatusConvenio(benefits.statusConvenio);
+      setDataCadastro(dayjs(benefits.dataCadastro));
+      setConsiderarIr(benefits.considerarIr);
+      setDescontoAut(benefits.descontoAut);
+      setLogotipo(benefits.logotipo);
+      setSite(benefits.site);
+      setEmail(benefits.email);
+      setTelefCelular(benefits.telefCelular);
+      setDataAssinatura(dayjs(benefits.dataAssinatura));
+      setDataInicio(dayjs(benefits.dataInicio));
+      setSitContrato(benefits.sitContrato);
+      setDataFinal(dayjs(benefits.dataFinal));
+      setContratoSit(benefits.contratoSit);
+    };
+    loadBenefits();
+  }, []);
+
+  const handleUpdateBenefitsButton = async () => {
     const benefitsData = {
       nome,
       razaoSocial,
@@ -155,23 +193,14 @@ export default function BenefitsCreate() {
       dataFinal,
       contratoSit,
     };
-
-    try {
-      const erro = await createBenefitsForm(benefitsData);
-      if (!erro) {
-        setShowModal(true);
-      } else {
-        console.error("Erro ao criar convênio");
-      }
-    } catch (error) {
-      console.error("Erro ao criar convênio:", error);
-    }
+    await updateBenefitsFormById(benefitsId, benefitsData);
+    navigate("/beneficios/lista");
   };
 
   return (
     <div className="container">
       <div className="forms-container">
-        <h1>Cadastro de convênios</h1>
+        <h1>Visualização de convênios</h1>
 
         <h3>Dados do convênio</h3>
 
@@ -315,25 +344,43 @@ export default function BenefitsCreate() {
           disabled={true}
         />
 
-        <div id="envio">
-          <PrimaryButton text="CADASTRAR" onClick={handleCheck} />
+        <div className="double-buttons">
+          <SecondaryButton text="Deletar" onClick={handleDeleteModal} />
+
+          <PrimaryButton text="Salvar" onClick={handleSaveModal} />
         </div>
 
-        <Snackbar
-          open={openError}
-          autoHideDuration={6000}
-          onClose={() => setOpenError(false)}
-        >
-          <Alert onClose={() => setOpenError(false)} severity="error">
-            Certifique-se de que todos os campos obrigatórios estão preenchidos
-          </Alert>
-        </Snackbar>
+        <Modal alertTitle="Alterações Salvas" show={showSaveModal}>
+          <SecondaryButton
+            key={"saveButtons"}
+            text="OK"
+            onClick={() => handleUpdateBenefitsButton()}
+          />
+        </Modal>
 
-        <Modal width="338px" alertTitle="Cadastro concluído" show={showModal}>
+        <Modal
+          alertTitle="Deseja deletar o convênio do sistema?"
+          show={showDeleteModal}
+        >
+          <SecondaryButton
+            key={"deleteButtons"}
+            text="EXCLUIR CONVÊNIO"
+            onClick={() => handleDeleteBenefitsButton()}
+            width="338px"
+          />
+          <SecondaryButton
+            key={"modalButtons"}
+            text="CANCELAR E MANTER O CADASTRO"
+            onClick={() => handleDeleteCloseDialog()}
+            width="338px"
+          />
+        </Modal>
+
+        <Modal alertTitle="Convênio deletado" show={showDeletedModal}>
           <SecondaryButton
             key={"modalButtons"}
             text="OK"
-            onClick={handleCloseDialog}
+            onClick={() => handleDeletedCloseDialog()}
             width="338px"
           />
         </Modal>
