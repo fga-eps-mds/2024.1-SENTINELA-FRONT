@@ -1,0 +1,12 @@
+.recupera-senha {
+  display: flex;
+  max-width: 410px;
+  width: 90%;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.screen {
+  display: flex;
+  flex-direction: row;
+}

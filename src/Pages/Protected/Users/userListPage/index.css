@@ -1,0 +1,58 @@
+@media screen and (min-width: 700px) {
+  .forms-container-list {
+    margin: 5rem;
+    width: 100%;
+    display: inherit;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .container-list {
+    display: flex;
+  }
+  .double-box-list {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .double-box-list button {
+    width: 400px;
+    margin-bottom: 10px;
+    bottom: 50px;
+  }
+  .btn-logout {
+    background-color: transparent;
+    height: 40px;
+    font-family: "Noto Sans";
+    font-size: 14px;
+    font-weight: 600;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    color: #341f14;
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 1080px) {
+  .container-user {
+    display: inherit;
+    align-items: center;
+  }
+  .forms-container-list {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+  }
+  .double-box-list {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+  }
+  h1 {
+    text-align: center;
+  }
+}

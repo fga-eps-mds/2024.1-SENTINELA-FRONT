@@ -3,10 +3,12 @@ import { Button } from "@mui/material";
 
 const rgbaValue01 = `rgba(174, 136, 60, 0.1);`;
 
-export default function SideButton ({ key, text }) {
+export default function SideButton({ hidden, itemKey, text, onClick }) {
   return (
     <Button
-      key={key}
+      style={{ display: hidden }}
+      onClick={onClick}
+      key={itemKey}
       sx={{
         "&amp;:hover": {
           backgroundColor: rgbaValue01,
@@ -19,6 +21,8 @@ export default function SideButton ({ key, text }) {
 }
 
 SideButton.propTypes = {
-  key: PropTypes.string.isRequired,
+  itemKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   text: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  hidden: PropTypes.any,
 };
