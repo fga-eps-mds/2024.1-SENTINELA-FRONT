@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import FieldText from "../../../Components/FieldText";
@@ -153,17 +154,17 @@ export default function BenefitsUpdate() {
       setAns(benefits.ans);
       setCategoria(benefits.categoria);
       setStatusConvenio(benefits.statusConvenio);
-      setDataCadastro(benefits.dataCadastro);
+      setDataCadastro(dayjs(benefits.dataCadastro));
       setConsiderarIr(benefits.considerarIr);
       setDescontoAut(benefits.descontoAut);
       setLogotipo(benefits.logotipo);
       setSite(benefits.site);
       setEmail(benefits.email);
       setTelefCelular(benefits.telefCelular);
-      setDataAssinatura(benefits.dataAssinatura);
-      setDataInicio(benefits.dataInicio);
+      setDataAssinatura(dayjs(benefits.dataAssinatura));
+      setDataInicio(dayjs(benefits.dataInicio));
       setSitContrato(benefits.sitContrato);
-      setDataFinal(benefits.dataFinal);
+      setDataFinal(dayjs(benefits.dataFinal));
       setContratoSit(benefits.contratoSit);
     };
     loadBenefits();
