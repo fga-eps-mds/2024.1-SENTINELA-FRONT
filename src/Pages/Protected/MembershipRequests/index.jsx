@@ -127,14 +127,16 @@ export default function MembershipRequest() {
               />
 
               <div className="button-group">
-                <div>
+                <div className="individual">
                   <PrimaryButton
                     text="Rejeitar"
                     onClick={() => setTryingDelete(true)}
                   />
                 </div>
 
-                <SecondaryButton text="Aprovar" onClick={handleConfirm} />
+                <div className="individual">
+                  <SecondaryButton text="Aprovar" onClick={handleConfirm} />
+                </div>
               </div>
             </>
           ) : (
