@@ -39,7 +39,7 @@ export default function ListSupplier() {
     };
 
     fetchSupplierForm();
-  }, []);
+  });
 
   const handleSubmit = () => {
     navigate("/fornecedores/criar");

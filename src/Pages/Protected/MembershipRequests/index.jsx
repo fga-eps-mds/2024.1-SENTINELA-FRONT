@@ -1,6 +1,10 @@
 import "./index.css";
 import { useAuth } from "../../../Context/auth";
-import { getMemberShip, updateMemberStatus,deleteMember } from "../../../Services/MemberShipService";
+import {
+  getMemberShip,
+  updateMemberStatus,
+  deleteMember,
+} from "../../../Services/MemberShipService";
 import { useEffect, useState } from "react";
 import FieldText from "../../../Components/FieldText";
 import SecondaryButton from "../../../Components/SecondaryButton";
@@ -16,11 +20,10 @@ export default function MembershipRequest() {
   const [search, setSearch] = useState("");
   const [isResultReadOnly, setIsResultReadOnly] = useState(false);
   const [checkedItems, setCheckedItems] = useState([]);
-  const [openSucessAproval, setSucesssAproval] = useState(false); 
+  const [openSucessAproval, setSucesssAproval] = useState(false);
   const [openSucessDelete, setSucessDelete] = useState(false);
   const [openTryingDelete, setTryingDelete] = useState(false);
   const navigate = useNavigate();
-
 
   // Fetch all members on component mount
   useEffect(() => {
@@ -38,11 +41,11 @@ export default function MembershipRequest() {
       }
     }
     fetchData();
-  }, []);
+  });
 
   const handleSearch = () => {
     // Filter members based on the search query
-    const filteredData = members.filter(member =>
+    const filteredData = members.filter((member) =>
       member.nomeCompleto.toLowerCase().includes(search.toLowerCase())
     );
     setFilteredMembers(filteredData);
@@ -57,7 +60,7 @@ export default function MembershipRequest() {
   const handleConfirm = async () => {
     try {
       // Filter out members whose names are checked
-      const membersToUpdate = filteredMembers.filter(member =>
+      const membersToUpdate = filteredMembers.filter((member) =>
         checkedItems.includes(member.nomeCompleto)
       );
 
@@ -76,33 +79,29 @@ export default function MembershipRequest() {
       setFilteredMembers(result);
       setCheckedItems([]);
       setSucesssAproval(true);
-      
-
     } catch (error) {
       console.error("Error updating member status:", error);
     }
   };
   const handleReject = async () => {
-    
-    try{
+    try {
       // Filter out members whose names are checked
-      const membersToDelete = filteredMembers.filter(member =>
+      const membersToDelete = filteredMembers.filter((member) =>
         checkedItems.includes(member.nomeCompleto)
       );
-      for (const memberDelete of membersToDelete){
+      for (const memberDelete of membersToDelete) {
         await deleteMember(memberDelete._id);
       }
 
-
-    setTryingDelete(false)
-    setSucessDelete(true)
-    }catch (error){
+      setTryingDelete(false);
+      setSucessDelete(true);
+    } catch (error) {
       console.error("Error deleting member status:", error);
     }
-  }
+  };
 
   // Filter members with status = true for the checklist
-  const membersForCheckList = filteredMembers.filter(member => member.status);
+  const membersForCheckList = filteredMembers.filter((member) => member.status);
 
   return (
     user && (
@@ -122,52 +121,57 @@ export default function MembershipRequest() {
           {membersForCheckList.length > 0 ? (
             <>
               <CheckList
-                items={membersForCheckList.map(member => member.nomeCompleto)}
+                items={membersForCheckList.map((member) => member.nomeCompleto)}
                 value={checkedItems}
                 onChange={handleCheckboxChange}
               />
               <div className="button-group">
-              <PrimaryButton text="Rejeitar" onClick={() => setTryingDelete(true)} />
-              <SecondaryButton text="Aprovar" onClick={handleConfirm} />
+                <PrimaryButton
+                  text="Rejeitar"
+                  onClick={() => setTryingDelete(true)}
+                />
+                <SecondaryButton text="Aprovar" onClick={handleConfirm} />
               </div>
             </>
           ) : (
             <p>Nenhum membro encontrado.</p>
           )}
         </div>
+
         <Modal
           show={openSucessAproval}
           alertTitle="Solicitações aprovadas"
-          children = {
-            <PrimaryButton text="Fechar" onClick={() => setSucesssAproval(false)} />
-          }
           alert="Os filiados devem receber em breve um e-mail para gerar a senha de acesso"
           width="100%"
-       
-        />
-        
+        >
+          <PrimaryButton
+            text="Fechar"
+            onClick={() => setSucesssAproval(false)}
+          />
+        </Modal>
 
-<Modal
-  show={openTryingDelete}
-  alertTitle="Você rejeitou as solicitações selecionadas"
-  alert="Deseja confirmar a decisão para que eles sejam excluídas?"
-  width="100%"
->
-  <PrimaryButton text="Excluir solicitações" onClick={handleReject} />
-  <SecondaryButton text="Cancelr e manter solicitações" onClick={() => setTryingDelete(false)} />
-</Modal>
-<Modal 
-  show={openSucessDelete}
-  alertTitle="Solicitações excluídas"
-  children = {
-    <PrimaryButton text="Fechar" onClick={() => navigate("/home")} />
-  }
-  alert="Os filiados foram excluídos com sucesso"
-  width="100%"
-/>
+        <Modal
+          show={openTryingDelete}
+          alertTitle="Você rejeitou as solicitações selecionadas"
+          alert="Deseja confirmar a decisão para que eles sejam excluídas?"
+          width="100%"
+        >
+          <PrimaryButton text="Excluir solicitações" onClick={handleReject} />
 
+          <SecondaryButton
+            text="Cancelr e manter solicitações"
+            onClick={() => setTryingDelete(false)}
+          />
+        </Modal>
 
-
+        <Modal
+          show={openSucessDelete}
+          alertTitle="Solicitações excluídas"
+          alert="Os filiados foram excluídos com sucesso"
+          width="100%"
+        >
+          <PrimaryButton text="Fechar" onClick={() => navigate("/home")} />
+        </Modal>
       </section>
     )
   );

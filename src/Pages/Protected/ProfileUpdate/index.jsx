@@ -40,7 +40,7 @@ const ProfileUpdate = () => {
     };
 
     getUser();
-  }, []);
+  });
 
   useEffect(() => {
     setIsEmailValid(isValidEmail(email));

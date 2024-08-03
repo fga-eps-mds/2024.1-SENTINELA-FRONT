@@ -328,7 +328,7 @@ const MemberShip = () => {
       setErrorFields(message);
       return; // Impede a navegação e mantém o usuário na página atual
     }
-  
+
     // Se não houver mensagem de erro, navega para /home
     navigate("/home");
   };

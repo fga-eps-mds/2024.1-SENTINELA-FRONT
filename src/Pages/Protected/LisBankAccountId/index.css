@@ -1,71 +1,68 @@
 @media screen and (max-width: 1080px) {
-    .listContainer {
-        display: flex;
-    }
+  .listContainer {
+    display: flex;
+  }
 
-    .list {
-        display: block;
-        width: 100%;
-        
-        margin: 3rem;
-    }
+  .list {
+    display: block;
+    width: 100%;
 
-    .header{
-        width: 100%;
-        
-        display: grid;
-        grid-template-columns: 1fr 1fr;
+    margin: 3rem;
+  }
 
-    }
-        
-    .search{
-        margin-top: 2rem;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        align-items: center;
-    }
+  .header {
+    width: 100%;
 
-    .edit-buttons{
-        display: flex;
-        justify-content: center;
-        height: 5rem;
-        flex-direction: column;
-        align-items: center;
-        margin : 1rem;
-    }
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .search {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+  }
+
+  .edit-buttons {
+    display: flex;
+    justify-content: center;
+    height: 5rem;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem;
+  }
 }
 
+@media screen and (min-width: 1081px) {
+  .listContainer {
+    display: flex;
+  }
 
-@media screen and (min-width:1081px){
-    .listContainer {
-        display: flex;
-    }
+  .list {
+    display: block;
+    width: 100%;
 
-    .list {
-        display: block;
-        width: 100%;
-        
-        margin: 3rem;
-    }
+    margin: 3rem;
+  }
 
-    .header{
-        width: 100%;
-        
-        display: grid;
-        grid-template-columns: 1fr 1fr;
+  .header {
+    width: 100%;
 
-    }
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
 
-    .search{
-        margin-top: 2rem;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        align-items: center;
-    }
+  .search {
+    margin-top: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+  }
 
-    .edit-buttons{
-        display: flex;
-        justify-content: space-between;
-        height: 2rem;
-    }
+  .edit-buttons {
+    display: flex;
+    justify-content: space-between;
+    height: 2rem;
+  }
 }

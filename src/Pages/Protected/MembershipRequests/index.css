@@ -1,35 +1,32 @@
-.user-info{
+@media screen and (max-width: 1080px) {
+}
+
+@media screen and (min-width: 1081px) {
+  .user-info {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-   
-
-}
-/* index.css */
-/* index.css */
-.member-list .MuiListItem-root {
+  }
+  /* index.css */
+  /* index.css */
+  .member-list .MuiListItem-root {
     display: flex;
     justify-content: space-between; /* Distribute space between children */
     align-items: center;
   }
-  
+
   .member-list .MuiListItemText-root {
     flex: 1; /* Allow the text to take up available space */
   }
-  
+
   .member-list .MuiCheckbox-root {
     margin-left: auto; /* Push checkbox to the right */
   }
-  .button-group{
+  .button-group {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin:1 black 10px;
-
-
+    margin: 1 black 10px;
+  }
 }
-  
-  
-
- 
