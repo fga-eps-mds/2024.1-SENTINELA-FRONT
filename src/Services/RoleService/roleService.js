@@ -20,27 +20,27 @@ export const createRole = async (roleData) => {
 
 export const getAllRoles = async () => {
   try {
-    const token = localStorage.getItem('@App:token');
+    const token = localStorage.getItem("@App:token");
     if (!token) {
-      throw new Error('No token found');
+      throw new Error("No token found");
     }
-    const response = await APIUsers.get('/role', {
+    const response = await APIUsers.get("/role", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
     return response.data;
   } catch (error) {
-    console.error('Erro ao buscar roles:', error);
+    console.error("Erro ao buscar roles:", error);
     throw error;
   }
 };
 
 export const getRoleById = async (id) => {
   try {
-    const token = localStorage.getItem('@App:token');
+    const token = localStorage.getItem("@App:token");
     if (!token) {
-      throw new Error('No token found');
+      throw new Error("No token found");
     }
     const response = await APIUsers.get(`/role/${id}`, {
       headers: {
@@ -49,16 +49,16 @@ export const getRoleById = async (id) => {
     });
     return response.data;
   } catch (error) {
-    console.error('Erro ao buscar role:', error);
+    console.error("Erro ao buscar role:", error);
     throw error;
   }
 };
 
 export const updateRole = async (id, roleData) => {
   try {
-    const token = localStorage.getItem('@App:token');
+    const token = localStorage.getItem("@App:token");
     if (!token) {
-      throw new Error('No token found');
+      throw new Error("No token found");
     }
     const response = await APIUsers.patch(`/role/patch/${id}`, roleData, {
       headers: {
@@ -67,16 +67,16 @@ export const updateRole = async (id, roleData) => {
     });
     return response.data;
   } catch (error) {
-    console.error('Erro ao atualizar role:', error);
+    console.error("Erro ao atualizar role:", error);
     throw error;
   }
 };
 
 export const deleteRole = async (id) => {
   try {
-    const token = localStorage.getItem('@App:token');
+    const token = localStorage.getItem("@App:token");
     if (!token) {
-      throw new Error('No token found');
+      throw new Error("No token found");
     }
     const response = await APIUsers.delete(`/role/delete/${id}`, {
       headers: {
@@ -85,8 +85,7 @@ export const deleteRole = async (id) => {
     });
     return response.data;
   } catch (error) {
-    console.error('Erro ao deletar role:', error);
+    console.error("Erro ao deletar role:", error);
     throw error;
   }
 };
-

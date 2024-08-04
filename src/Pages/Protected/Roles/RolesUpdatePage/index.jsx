@@ -6,7 +6,11 @@ import SecondaryButton from "../../../../Components/SecondaryButton";
 import Modal from "../../../../Components/Modal";
 import { Checkbox } from "@mui/material";
 import { useNavigate, useLocation } from "react-router-dom";
-import { getRoleById, updateRole, deleteRole } from "../../../../Services/RoleService/roleService";
+import {
+  getRoleById,
+  updateRole,
+  deleteRole,
+} from "../../../../Services/RoleService/roleService";
 
 export default function RolesUpdatePage() {
   const [showSaveModal, setShowSaveModal] = useState(false);
@@ -26,22 +30,21 @@ export default function RolesUpdatePage() {
     const fetchRole = async () => {
       try {
         const roleData = await getRoleById(roleId);
-        
-  
+
         setProfileName(roleData.name);
-  
+
         const permissionsMap = {
           finance: [false, false, false, false],
           benefits: [false, false, false, false],
           users: [false, false, false, false],
         };
-  
+
         const moduleNameMap = {
-          financeiro: 'finance',
-          beneficios: 'benefits',
-          usuarios: 'users',
+          financeiro: "finance",
+          beneficios: "benefits",
+          usuarios: "users",
         };
-  
+
         // Definindo o mapa de índices de acesso
         const accessIndexMap = {
           create: 0,
@@ -49,23 +52,27 @@ export default function RolesUpdatePage() {
           update: 2,
           delete: 3,
         };
-  
-        roleData.permissions.forEach(permission => {
-          const moduleName = moduleNameMap[permission.module.toLowerCase()] || permission.module.toLowerCase();
-          
+
+        roleData.permissions.forEach((permission) => {
+          const moduleName =
+            moduleNameMap[permission.module.toLowerCase()] ||
+            permission.module.toLowerCase();
+
           if (!permissionsMap.hasOwnProperty(moduleName)) {
-            console.warn(`Module name ${moduleName} not found in permissionsMap`);
+            console.warn(
+              `Module name ${moduleName} not found in permissionsMap`
+            );
             return; // Ignorar permissões para este moduleName
           }
-  
-          permission.access.forEach(access => {
+
+          permission.access.forEach((access) => {
             const index = accessIndexMap[access];
             if (index !== undefined) {
               permissionsMap[moduleName][index] = true;
             }
           });
         });
-  
+
         setFinanceiro(permissionsMap.finance);
         setBeneficios(permissionsMap.benefits);
         setUsuarios(permissionsMap.users);
@@ -73,15 +80,12 @@ export default function RolesUpdatePage() {
         console.error("Erro ao buscar o perfil:", error);
       }
     };
-  
+
     fetchRole();
   }, [roleId]);
-  
-  
-  
 
   const handleCheckboxChange = (setState, index) => {
-    setState(prevState => {
+    setState((prevState) => {
       const newState = [...prevState];
       newState[index] = !newState[index];
       return newState;
