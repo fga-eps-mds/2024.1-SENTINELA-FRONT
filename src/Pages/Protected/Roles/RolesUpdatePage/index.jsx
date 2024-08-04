@@ -58,13 +58,6 @@ export default function RolesUpdatePage() {
             moduleNameMap[permission.module.toLowerCase()] ||
             permission.module.toLowerCase();
 
-          if (!permissionsMap.hasOwnProperty(moduleName)) {
-            console.warn(
-              `Module name ${moduleName} not found in permissionsMap`
-            );
-            return; // Ignorar permissões para este moduleName
-          }
-
           permission.access.forEach((access) => {
             const index = accessIndexMap[access];
             if (index !== undefined) {
