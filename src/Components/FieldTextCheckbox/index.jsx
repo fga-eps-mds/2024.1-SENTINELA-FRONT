@@ -1,30 +1,24 @@
 import PropTypes from "prop-types";
-import theme from "../../Styles/global";
 import TextField from "@mui/material/TextField";
 import Checkbox from "@mui/material/Checkbox";
-//import Box from "@mui/material/Box";
 import InputAdornment from "@mui/material/InputAdornment";
+import theme from "../../Styles/global";
 
 export default function FieldTextCheckbox({
   label,
-  value,
-  onChange,
-  disabled,
   checked,
   onCheckboxChange,
+  disabled,
 }) {
   return (
     <TextField
       id="filled-basic"
       label={label}
-      value={value}
       variant="filled"
-      onChange={onChange}
       disabled={disabled}
       sx={{
         margin: ".7rem",
         background: "#EAE3D7",
-        backgroundColor: "#EAE3D7",
         borderRadius: "5px",
         "& .MuiInput-underline:before": {
           borderBottomColor: theme.palette.main,
@@ -37,6 +31,8 @@ export default function FieldTextCheckbox({
         },
         "& .MuiInputBase-input": {
           color: theme.palette.contrastText,
+          width: 500,
+          padding: 2,
         },
         "& .MuiInputLabel-root": {
           color: theme.palette.main,
@@ -55,7 +51,7 @@ export default function FieldTextCheckbox({
             <Checkbox
               checked={checked}
               onChange={onCheckboxChange}
-              sx={{ marginLeft: 1 }} // Ajusta o espaçamento dentro do campo
+              sx={{ marginLeft: 100 }}
             />
           </InputAdornment>
         ),
@@ -66,9 +62,7 @@ export default function FieldTextCheckbox({
 
 FieldTextCheckbox.propTypes = {
   label: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  disabled: PropTypes.bool,
   checked: PropTypes.bool.isRequired,
   onCheckboxChange: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
 };

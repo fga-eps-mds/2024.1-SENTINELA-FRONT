@@ -166,6 +166,7 @@ export default function BenefitsUpdate() {
       setSitContrato(benefits.sitContrato);
       setDataFinal(dayjs(benefits.dataFinal));
       setContratoSit(benefits.contratoSit);
+      setIsChecked(benefits.contratoSit);
     };
     loadBenefits();
   }, []);
@@ -191,7 +192,7 @@ export default function BenefitsUpdate() {
       dataInicio,
       sitContrato,
       dataFinal,
-      contratoSit,
+      contratoSit: isChecked,
     };
     await updateBenefitsFormById(benefitsId, benefitsData);
     navigate("/beneficios/lista");
@@ -341,7 +342,6 @@ export default function BenefitsUpdate() {
           onChange={(e) => setContratoSit(e.target.value)}
           checked={isChecked}
           onCheckboxChange={(e) => setIsChecked(e.target.checked)}
-          disabled={true}
         />
 
         <div className="double-buttons">

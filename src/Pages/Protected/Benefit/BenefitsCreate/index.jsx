@@ -153,7 +153,7 @@ export default function BenefitsCreate() {
       dataInicio,
       sitContrato,
       dataFinal,
-      contratoSit,
+      contratoSit: isChecked,
     };
 
     try {
@@ -312,7 +312,6 @@ export default function BenefitsCreate() {
           onChange={(e) => setContratoSit(e.target.value)}
           checked={isChecked}
           onCheckboxChange={(e) => setIsChecked(e.target.checked)}
-          disabled={true}
         />
 
         <div id="envio">
