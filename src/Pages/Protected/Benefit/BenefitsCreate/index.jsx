@@ -81,6 +81,22 @@ export default function BenefitsCreate() {
     navigate("/beneficios/lista");
   };
 
+  const handleFileDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const files = e.dataTransfer.files;
+    if (files && files.length) {
+      setLogotipo(files[0]);
+    }
+  };
+
+  const handleFileSelect = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setLogotipo(file);
+    }
+  };
+
   const mascaraNome = (e) => {
     const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, "");
     setNome(value);
@@ -248,11 +264,21 @@ export default function BenefitsCreate() {
             options={descontoAutList}
           />
 
-          <FieldText
-            label="Logotipo"
-            value={logotipo}
-            onChange={(e) => setLogotipo(e.target.value)}
-          />
+          <div
+            className="file-drop-area"
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={handleFileDrop}
+            onClick={() => document.getElementById("fileInput").click()}
+          >
+            <p>Logotipo</p>
+            {logotipo && <p>{logotipo.name}</p>}
+            <input
+              type="file"
+              id="fileInput"
+              style={{ display: "none" }}
+              onChange={handleFileSelect}
+            />
+          </div>
 
           <FieldText
             label="Site"

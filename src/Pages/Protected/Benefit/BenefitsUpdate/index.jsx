@@ -143,6 +143,22 @@ export default function BenefitsUpdate() {
     navigate("/beneficios/lista");
   };
 
+  const handleFileDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const files = e.dataTransfer.files;
+    if (files && files.length) {
+      setLogotipo(files[0]);
+    }
+  };
+
+  const handleFileSelect = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setLogotipo(file);
+    }
+  };
+
   useEffect(() => {
     const loadBenefits = async () => {
       const benefits = await getBenefitsFormById(benefitsId);
@@ -281,11 +297,21 @@ export default function BenefitsUpdate() {
             options={descontoAutList}
           />
 
-          <FieldText
-            label="Logotipo"
-            value={logotipo}
-            onChange={(e) => setLogotipo(e.target.value)}
-          />
+          <div
+            className="file-drop-area"
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={handleFileDrop}
+            onClick={() => document.getElementById("fileInput").click()}
+          >
+            <p>Logotipo</p>
+            {logotipo && <p>{logotipo.name}</p>}
+            <input
+              type="file"
+              id="fileInput"
+              style={{ display: "none" }}
+              onChange={handleFileSelect}
+            />
+          </div>
 
           <FieldText
             label="Site"
