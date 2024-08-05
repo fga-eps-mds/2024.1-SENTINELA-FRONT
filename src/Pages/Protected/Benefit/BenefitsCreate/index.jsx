@@ -97,11 +97,6 @@ export default function BenefitsCreate() {
     }
   };
 
-  const mascaraNome = (e) => {
-    const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, "");
-    setNome(value);
-  };
-
   const mascaraCpfCnpj = (cpfCnpj) => {
     let formattedValue = cpfCnpj.replace(/\D/g, "");
     if (formattedValue.length > 14) {
@@ -193,7 +188,7 @@ export default function BenefitsCreate() {
           <FieldText
             label="Nome fantasia *"
             value={nome}
-            onChange={mascaraNome}
+            onChange={(e) => setNome(e.target.value)}
             required
           />
 
@@ -338,6 +333,7 @@ export default function BenefitsCreate() {
           onChange={(e) => setContratoSit(e.target.value)}
           checked={isChecked}
           onCheckboxChange={(e) => setIsChecked(e.target.checked)}
+          disabled={true}
         />
 
         <div id="envio">
