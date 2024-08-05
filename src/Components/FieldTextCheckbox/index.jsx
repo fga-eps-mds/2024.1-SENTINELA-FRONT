@@ -3,6 +3,7 @@ import TextField from "@mui/material/TextField";
 import Checkbox from "@mui/material/Checkbox";
 import InputAdornment from "@mui/material/InputAdornment";
 import theme from "../../Styles/global";
+import "./index.css";
 
 export default function FieldTextCheckbox({
   label,
@@ -31,7 +32,7 @@ export default function FieldTextCheckbox({
         },
         "& .MuiInputBase-input": {
           color: theme.palette.contrastText,
-          width: 500,
+          width: 5000,
           padding: 2,
         },
         "& .MuiInputLabel-root": {
@@ -51,7 +52,7 @@ export default function FieldTextCheckbox({
             <Checkbox
               checked={checked}
               onChange={onCheckboxChange}
-              sx={{ marginLeft: 100 }}
+              sx={{ marginLeft: 10 }}
             />
           </InputAdornment>
         ),

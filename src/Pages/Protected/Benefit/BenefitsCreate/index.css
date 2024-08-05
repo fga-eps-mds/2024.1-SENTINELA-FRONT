@@ -1,22 +1,33 @@
 @media screen and (max-width: 1080px) {
   .bar-container {
-    display: none;
+    display: flex;
   }
 
   .container {
     display: flex;
   }
 
-  label {
+  .label {
     color: #332117 !important;
   }
 
   .forms-container {
     margin: 1rem;
+    margin-top: 56rem; /*altura do inicio*/
     width: 90%;
     display: inherit;
     justify-content: center;
     flex-direction: column;
+    font-size: 12px;
+  }
+
+  .forms-container h1 {
+    margin-bottom: 1rem;
+    margin-left: -2rem;
+  }
+
+  .forms-container h3 {
+    margin-top: 0;
   }
 
   .forms-container button {
@@ -49,7 +60,7 @@
 
   .list-item {
     color: #332117 !important;
-    margin-bottom: 1rem; /* Ajusta o espaçamento entre os itens */
+    margin-bottom: 1rem;
   }
 }
 

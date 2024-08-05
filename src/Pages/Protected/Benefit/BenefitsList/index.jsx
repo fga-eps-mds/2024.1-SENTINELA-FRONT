@@ -9,6 +9,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
+import "./index.css";
 
 export default function ListSupplier() {
   const [search, setSearch] = useState("");
@@ -66,7 +67,7 @@ export default function ListSupplier() {
               <div key={benefits._id}>
                 <ListItem>
                   <ListItemButton
-                    className="list-item"
+                    className="list-item-benefits"
                     style={{
                       transition: "background-color 0.3s ease",
                     }}

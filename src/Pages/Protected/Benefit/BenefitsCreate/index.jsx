@@ -172,9 +172,7 @@ export default function BenefitsCreate() {
     <div className="container">
       <div className="forms-container">
         <h1>Cadastro de convênios</h1>
-
         <h3>Dados do convênio</h3>
-
         <div className="section-form">
           <FieldText
             label="Nome fantasia *"

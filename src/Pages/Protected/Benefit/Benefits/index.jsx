@@ -5,15 +5,11 @@ import { useNavigate } from "react-router-dom";
 import SecondaryButton from "../../../../Components/SecondaryButton";
 import sindpol_logo from "../../../../assets/sindpol-logo.png";
 import sentinela_logo from "../../../../assets/sentinela-logo.png";
-
 import "./index.css";
 
 const Benefits = () => {
-  //const context = useContext(AuthContext);
   const navigate = useNavigate();
   const { user } = useAuth();
-  //const storagedUserString = localStorage.getItem("@App:user");
-  //const storagedUser = JSON.parse(storagedUserString);
 
   const handleBenefitsList = () => {
     navigate("/beneficios/lista");

@@ -1,0 +1,26 @@
+@media screen and (max-width: 1080px) {
+  .double-box-list {
+    align-items: center;
+  }
+
+  .double-box-list h1 {
+    font-size: 20px;
+    margin-left: 0;
+    margin-right: 10rem;
+    margin-bottom: 1rem;
+  }
+
+  .search-box-benefits {
+    gap: 0.25rem;
+    align-items: center;
+  }
+
+  .search-box-benefits .MuiTextField-root,
+  .search-box-benefits .MuiButton-root {
+    width: 80%;
+  }
+
+  .list-item-benefits {
+    font-size: 0.875rem;
+  }
+}
