@@ -5,7 +5,6 @@ import UserListPage from "./index";
 import { APIUsers } from "../../../../Services/BaseService";
 import "@testing-library/jest-dom";
 
-// Mocking the APIUsers service and useNavigate hook
 vi.mock("../../../../Services/BaseService", () => ({
   APIUsers: {
     get: vi.fn(),
