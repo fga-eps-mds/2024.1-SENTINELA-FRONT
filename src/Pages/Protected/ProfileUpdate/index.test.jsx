@@ -74,8 +74,6 @@ describe("ProfileUpdate", () => {
 
     fireEvent.click(screen.getByText(/Cancelar/i));
     await waitFor(() => {
-      // Aqui você pode verificar o conteúdo esperado na página inicial
-      // Em vez de verificar o HTML diretamente, você pode verificar a navegação
       expect(window.location.pathname).toBe("/home");
     });
   });
