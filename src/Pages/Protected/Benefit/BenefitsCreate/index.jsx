@@ -270,14 +270,16 @@ export default function BenefitsCreate() {
             onDrop={handleFileDrop}
             onClick={() => document.getElementById("fileInput").click()}
           >
-            <p>Logotipo</p>
-            {logotipo && <p>{logotipo.name}</p>}
-            <input
-              type="file"
-              id="fileInput"
-              style={{ display: "none" }}
-              onChange={handleFileSelect}
-            />
+            <div className="file-upload-container">
+              <p className="change-file-logotipo">Logotipo</p>
+              {logotipo && <p className="logotipo-name">{logotipo.name}</p>}
+              <input
+                type="file"
+                id="fileInput"
+                className="file-input"
+                onChange={handleFileSelect}
+              />
+            </div>
           </div>
 
           <FieldText
