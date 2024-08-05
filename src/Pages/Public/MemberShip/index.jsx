@@ -275,7 +275,7 @@ const MemberShip = () => {
     if (!religiao) erros.religiao = 1;
     if (isValidEmail(email) === false) erros.email = 1;
     if (cpf.length < 14) erros.cpf = 1;
-    if (rg.length < 9) erros.rg = 1;
+    if (rg.length < 7) erros.rg = 1;
     if (cep.length < 9) erros.cep = 1;
     if (telefone.length < 14) erros.telefone = 1;
     if (celular.length < 15) erros.celular = 1;
