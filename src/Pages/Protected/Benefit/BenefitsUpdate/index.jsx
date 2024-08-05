@@ -217,6 +217,7 @@ export default function BenefitsUpdate() {
             label="Razão social *"
             value={razaoSocial}
             onChange={(e) => setRazaoSocial(e.target.value)}
+            disabled={true}
           />
         </div>
 
