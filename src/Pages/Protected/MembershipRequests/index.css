@@ -1,35 +1,71 @@
-.user-info{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-   
+@media screen and (max-width: 1080px) {
+  .membership-request {
+    margin: 1rem;
+  }
 
-}
-/* index.css */
-/* index.css */
-.member-list .MuiListItem-root {
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .member-list .MuiListItem-root {
     display: flex;
     justify-content: space-between; /* Distribute space between children */
     align-items: center;
   }
-  
+
   .member-list .MuiListItemText-root {
     flex: 1; /* Allow the text to take up available space */
   }
-  
+
   .member-list .MuiCheckbox-root {
     margin-left: auto; /* Push checkbox to the right */
   }
-  .button-group{
+
+  .button-group {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .individual {
+    margin-top: 10px;
+    width: 100%;
     align-items: center;
-    margin:1 black 10px;
-
-
+  }
 }
-  
-  
 
- 
+@media screen and (min-width: 1081px) {
+  .membership-request {
+    margin: 3rem;
+  }
+
+  .user-info {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    align-items: center;
+    padding: 10px;
+  }
+  /* index.css */
+  /* index.css */
+  .member-list .MuiListItem-root {
+    display: flex;
+    justify-content: space-between; /* Distribute space between children */
+    align-items: center;
+  }
+
+  .member-list .MuiListItemText-root {
+    flex: 1; /* Allow the text to take up available space */
+  }
+
+  .member-list .MuiCheckbox-root {
+    margin-left: auto; /* Push checkbox to the right */
+  }
+
+  .button-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+  }
+}

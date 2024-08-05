@@ -10,7 +10,6 @@ export async function createMemberShip(formData) {
   }
 }
 
-
 export async function getMemberShip() {
   try {
     const response = await APIUsers.get("membership/request");
@@ -22,10 +21,12 @@ export async function getMemberShip() {
 
 export const updateMemberStatus = async (memberId) => {
   try {
-    const response = await APIUsers.patch(`membership/updateStatus/${memberId}`);
+    const response = await APIUsers.patch(
+      `membership/updateStatus/${memberId}`
+    );
     return response.data;
   } catch (error) {
-    return error.response ? error.response.data.error : 'An error occurred';
+    return error.response ? error.response.data.error : "An error occurred";
   }
 };
 
@@ -37,5 +38,3 @@ export async function deleteMember(memberId) {
     return error.response.data.erro;
   }
 }
-
-

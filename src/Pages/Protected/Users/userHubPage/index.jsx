@@ -34,7 +34,7 @@ export default function UserHubPage() {
             text="Filiações pendentes"
             onClick={() => navigate("membershipRequests/")}
           />
-          
+
           <SecondaryButton
             text="CADASTRO DE USUÁRIOS"
             onClick={handleCadastroClick}

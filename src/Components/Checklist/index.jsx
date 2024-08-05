@@ -24,7 +24,11 @@ export default function CheckList({ items, value, onChange }) {
     <List>
       {items.map((item, index) => (
         <React.Fragment key={item}>
-          <ListItem className="checklist-item" button onClick={handleToggle(item)}>
+          <ListItem
+            className="checklist-item"
+            button
+            onClick={handleToggle(item)}
+          >
             <ListItemText primary={item} />
             <Checkbox
               edge="end"
