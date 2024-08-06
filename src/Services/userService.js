@@ -2,7 +2,6 @@ import { APIUsers } from "./BaseService";
 
 export async function userLogin(email, password) {
   try {
-    console.log("paseiii");
     const response = await APIUsers.post("/login", {
       email,
       password,
@@ -97,6 +96,21 @@ export const patchUserById = async (id, updatedUser) => {
   }
 };
 
+export const sendRecoveryPassword = async (email) => {
+  try {
+    console.log("tentei");
+    const message = APIUsers.post(`/users/recover-password`, {
+      data: {
+        email,
+      },
+    });
+
+    return message;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const deleteUserById = async (id) => {
   try {
     const storagedUserString = localStorage.getItem("@App:user");
@@ -109,5 +123,27 @@ export const deleteUserById = async (id) => {
     });
   } catch (error) {
     console.error(`Erro ao deletar usuário com ID ${id}:`, error);
+  }
+};
+
+export const changePasswordById = async (newPassword, id) => {
+  try {
+    await APIUsers.patch(`/users/change-password/${id}`, {
+      newPassword,
+    });
+  } catch (error) {
+    return error;
+  }
+};
+
+export const verifyToken = async (token) => {
+  try {
+    const response = await APIUsers.post(`/verify-token`, {
+      token,
+    });
+    return response.data;
+  } catch (error) {
+    console.error(`Token inválido`, error);
+    throw error;
   }
 };

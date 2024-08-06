@@ -34,7 +34,7 @@ export default function Login() {
   };
 
   const handlePasswordRecovery = () => {
-    navigate("/passwordrecovery");
+    navigate("/recuperar-senha");
   };
 
   useEffect(() => {
