@@ -44,14 +44,14 @@ export default function ListSupplier() {
   }, []);
 
   return (
-    <section className="container">
-      <div className="forms-container">
-        <div className="double-box">
+    <section className="container-list-benefits">
+      <div className="forms-container-list-benefits">
+        <div className="double-box-list-benefits">
           <h1>Lista de convênios</h1>
           <PrimaryButton text="Cadastrar convênio" onClick={handleSubmit} />
         </div>
 
-        <div className="search-box">
+        <div className="search-box-benefits">
           <FieldText
             label="Pesquisar convênios"
             value={search}

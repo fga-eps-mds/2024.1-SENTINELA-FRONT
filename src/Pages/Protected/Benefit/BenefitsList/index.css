@@ -1,26 +1,107 @@
 @media screen and (max-width: 1080px) {
-  .double-box-list {
-    align-items: center;
+  .container-list-benefits {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 100vh;
+    justify-content: flex-start;
   }
 
-  .double-box-list h1 {
-    font-size: 20px;
-    margin-left: 0;
-    margin-right: 10rem;
+  .forms-container-list-benefits {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
     margin-bottom: 1rem;
   }
 
-  .search-box-benefits {
-    gap: 0.25rem;
+  .double-box-list-benefits {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
+    width: 100%;
+  }
+
+  .double-box-list-benefits h1 {
+    font-size: 20px;
+    margin-right: 40px;
+  }
+
+  .search-box-benefits {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 1rem;
   }
 
   .search-box-benefits .MuiTextField-root,
   .search-box-benefits .MuiButton-root {
-    width: 80%;
+    margin-bottom: 0.5rem;
+    width: 100%;
   }
 
   .list-item-benefits {
-    font-size: 0.875rem;
+    padding: 0.5rem;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  label {
+    color: #332117 !important;
+  }
+
+  .container-list-benefits {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .forms-container-list-benefits {
+    margin: 3.5rem;
+    width: 80%;
+    display: inherit;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .search-box-benefits {
+    display: grid;
+    grid-template-columns: 2.3fr 0.7fr;
+  }
+
+  .search-box-benefits button {
+    width: 70%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .double-box-list-benefits {
+    display: grid;
+    grid-template-columns: 2.3fr 0.7fr;
+  }
+
+  .double-box-list-benefits button {
+    margin-top: 0px;
+    margin-bottom: 40px;
+  }
+
+  .double-box-list-benefits h1 {
+    font-size: 150%;
+    font-weight: 800;
+    margin-bottom: 3rem;
+    color: #332117 !important;
+  }
+
+  .double-box-list-benefits h3 {
+    font-weight: 400;
+    margin-left: 1rem;
+    margin-top: 3rem;
+    color: #332117 !important;
+  }
+
+  .list-item-benefits {
+    color: #332117 !important;
+    margin-bottom: 4rem; /* Ajusta o espaçamento entre os itens */
   }
 }
