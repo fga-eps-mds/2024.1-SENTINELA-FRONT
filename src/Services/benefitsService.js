@@ -87,3 +87,33 @@ export const deleteBenefitsFormById = async (id) => {
     console.error(`Erro ao deletar convênio com ID ${id}:`, error);
   }
 };
+
+export const isValidEmail = (email) => {
+  const allowedDomains = [
+    "com",
+    "net",
+    "org",
+    "com.br",
+    "org.br",
+    "edu",
+    "gov",
+  ];
+
+  const domainPattern = allowedDomains
+    .map((domain) => {
+      const escapedDomain = domain.replace(/\./g, "\\.");
+      return `(?:[a-zA-Z0-9.-]+\\.)?${escapedDomain}`;
+    })
+    .join("|");
+
+  const emailRegex = new RegExp(
+    `^[a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9.-]+\\.)?(${domainPattern})$`,
+    "i"
+  );
+
+  const isValid = emailRegex.test(email);
+
+  return isValid
+    ? { isValid: true }
+    : { isValid: false, message: "O e-mail fornecido não é válido." };
+};

@@ -11,6 +11,7 @@ import SecondaryButton from "../../../../Components/SecondaryButton";
 import { Snackbar } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import { createBenefitsForm } from "../../../../Services/benefitsService"; // Importando a função correta
+import { isValidEmail } from "../../../../Services/benefitsService";
 
 export default function BenefitsCreate() {
   const navigate = useNavigate();
@@ -145,8 +146,15 @@ export default function BenefitsCreate() {
       !statusConvenio ||
       !considerarIr ||
       !descontoAut
+      
     ) {
-      setOpenError(true);
+      setOpenError("Preencha todos os campos obrigatórios.");
+      return;
+    }
+
+    const emailValidation = isValidEmail(email);
+    if (!emailValidation.isValid) {
+      setOpenError(emailValidation.message);
       return;
     }
 
@@ -351,8 +359,8 @@ export default function BenefitsCreate() {
           autoHideDuration={6000}
           onClose={() => setOpenError(false)}
         >
-          <Alert onClose={() => setOpenError(false)} severity="error">
-            Certifique-se de que todos os campos obrigatórios estão preenchidos
+          <Alert onClose={() => setOpenError("")} severity="error">
+            {openError}
           </Alert>
         </Snackbar>
 
