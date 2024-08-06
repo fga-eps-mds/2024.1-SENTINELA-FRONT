@@ -46,7 +46,7 @@ export default function MembershipRequest() {
 
   const handleSearch = () => {
     // Filter members based on the search query
-    const filteredData = members.filter(member =>
+    const filteredData = members.filter((member) =>
       member.nomeCompleto.toLowerCase().includes(search.toLowerCase())
     );
     setFilteredMembers(filteredData);
