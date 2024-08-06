@@ -150,7 +150,13 @@ export default function BenefitsUpdate() {
   const handleFileSelect = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setLogotipo(file);
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        const base64Image = reader.result; // String base64 do arquivo
+        setLogotipo(base64Image);
+      };
+      reader.readAsDataURL(file); // Converte o arquivo para base64
     }
   };
 
