@@ -23,13 +23,12 @@ export const createBenefitsForm = async (benefitsData) => {
       throw new Error("Token não encontrado");
     }
 
-    const response = await APIBenefits.post(`/benefits/create/`, benefitsData, {
+    await APIBenefits.post(`/benefits/create/`, benefitsData, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
 
-    console.log("Resposta da API:", response.data);
     return false;
   } catch (error) {
     console.error(
