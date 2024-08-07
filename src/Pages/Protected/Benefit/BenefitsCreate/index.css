@@ -1,0 +1,194 @@
+@media screen and (max-width: 1080px) {
+  .bar-container-benefits-create {
+    display: none;
+  }
+
+  .container-benefits-create {
+    display: flex;
+    flex-direction: column;
+  }
+
+  label {
+    color: #332117 !important;
+  }
+
+  .forms-container-benefits-create {
+    margin: 1rem;
+    width: 90%;
+    display: inherit;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .forms-container-benefits-create button {
+    width: 100%;
+  }
+
+  .forms-container-benefits-create h1 {
+    font-size: 22px;
+    font-weight: 800;
+    margin-left: 8px;
+    margin-right: 50px;
+    margin-top: 1rem;
+    margin-bottom: -1rem;
+    color: #332117 !important;
+  }
+
+  .forms-container-benefits-create h3 {
+    font-size: 16px;
+    font-weight: 400;
+    margin-left: 1rem;
+    margin-top: 3rem;
+    color: #332117 !important;
+  }
+
+  .section-form-benefits-create {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+
+  .file-upload-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0.8rem;
+    border-radius: 5px;
+    background-color: #eae3d7;
+    margin-top: 0.7rem;
+    margin-right: 0.8rem;
+    margin-left: 0.8rem;
+  }
+
+  .file-input {
+    font-size: 0px;
+    margin: 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .file-input::file-selector-button {
+    cursor: pointer;
+    font-size: 11px;
+    color: #000;
+    background-color: #eae3d7;
+    padding: 0.5rem 0rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+
+  .change-file-logotipo {
+    font-size: 1rem;
+    color: #000000;
+    margin-bottom: 0.5rem;
+  }
+
+  .logotipo-preview {
+    max-width: 45px;
+    max-height: 60px;
+    margin-top: -50px;
+    margin-bottom: 10px;
+    margin-left: 130px;
+    display: flex;
+    overflow: hidden;
+  }
+
+  .logotipo-preview img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+@media screen and (min-width: 1081px) {
+  .bar-container-benefits-create {
+    display: flex;
+    height: 100%;
+    position: fixed;
+  }
+
+  .container-benefits-create {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .forms-container-benefits-create {
+    margin: 1rem;
+    width: 90%;
+    display: inherit;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .forms-container-benefits-create button {
+    width: 100%;
+  }
+
+  .section-form-benefits-create {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .forms-container-benefits-create h1 {
+    font-size: 34px;
+    font-weight: 800;
+    margin-bottom: -0.5rem;
+  }
+
+  .forms-container-benefits-create h3 {
+    font-size: 24px;
+    font-weight: 400;
+    margin-left: 1rem;
+    margin-top: 3rem;
+  }
+
+  .file-upload-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0.8rem;
+    border-radius: 5px;
+    background-color: #eae3d7;
+    margin-top: 0.7rem;
+    margin-right: 0.8rem;
+    margin-left: 0.8rem;
+  }
+
+  .change-file-logotipo {
+    font-size: 1rem;
+    color: #000000;
+    margin-bottom: 0.5rem;
+  }
+
+  .file-input {
+    font-size: 12px;
+    margin: 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .file-input::file-selector-button {
+    cursor: pointer;
+    font-size: 12px;
+    color: #000;
+    background-color: #eae3d7;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+
+  .logotipo-preview {
+    max-width: 45px;
+    max-height: 60px;
+    margin-top: -50px;
+    margin-bottom: 10px;
+    margin-left: 130px;
+    display: flex;
+    overflow: hidden;
+  }
+
+  .logotipo-preview img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}
