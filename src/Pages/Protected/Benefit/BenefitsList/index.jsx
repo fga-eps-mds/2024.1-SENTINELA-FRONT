@@ -46,8 +46,8 @@ export default function ListSupplier() {
   return (
     <section className="container-list-benefits">
       <div className="forms-container-list-benefits">
+        <h1>Lista de convênios</h1>
         <div className="double-box-list-benefits">
-          <h1>Lista de convênios</h1>
           <PrimaryButton text="Cadastrar convênio" onClick={handleSubmit} />
         </div>
 
