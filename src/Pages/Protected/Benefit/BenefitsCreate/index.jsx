@@ -139,6 +139,7 @@ export default function BenefitsCreate() {
     }
   };
 
+
   const handleCheck = async () => {
     if (
       !nome ||
@@ -155,7 +156,7 @@ export default function BenefitsCreate() {
     const emailValidation = isValidEmail(email);
     if (!emailValidation.isValid) {
       setOpenError(emailValidation.message);
-      return;
+      return; 
     }
 
     const benefitsData = {
@@ -180,6 +181,7 @@ export default function BenefitsCreate() {
       dataFinal,
       contratoSit: isChecked,
     };
+
 
     try {
       const erro = await createBenefitsForm(benefitsData);

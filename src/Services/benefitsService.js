@@ -89,6 +89,11 @@ export const deleteBenefitsFormById = async (id) => {
 };
 
 export const isValidEmail = (email) => {
+  
+  if (!email) {
+    return { isValid: true };
+  }
+
   const allowedDomains = [
     "com",
     "net",
