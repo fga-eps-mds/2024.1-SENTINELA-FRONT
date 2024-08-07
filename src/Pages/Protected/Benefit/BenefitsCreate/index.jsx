@@ -200,11 +200,11 @@ export default function BenefitsCreate() {
   };
 
   return (
-    <div className="container">
-      <div className="forms-container">
+    <div className="container-benefits-create">
+      <div className="forms-container-benefits-create">
         <h1>Cadastro de convênios</h1>
         <h3>Dados do convênio</h3>
-        <div className="section-form">
+        <div className="section-form-benefits-create">
           <FieldText
             label="Nome fantasia *"
             value={nome}
@@ -225,7 +225,7 @@ export default function BenefitsCreate() {
           onChange={(e) => setDescricao(e.target.value)}
         />
 
-        <div className="section-form">
+        <div className="section-form-benefits-create">
           <FieldSelect
             label="Classificação de pessoa"
             value={tipoPessoa}
@@ -322,7 +322,7 @@ export default function BenefitsCreate() {
 
         <h3>Dados do contrato de convênio</h3>
 
-        <div className="section-form">
+        <div className="section-form-benefits-create">
           <DataSelect
             label="Data de assinatura"
             value={dataAssinatura}

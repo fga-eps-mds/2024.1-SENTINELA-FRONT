@@ -240,13 +240,13 @@ export default function BenefitsUpdate() {
   };
 
   return (
-    <div className="container">
-      <div className="forms-container">
+    <div className="container-benefits-update">
+      <div className="forms-container-benefits-update">
         <h1>Visualização de convênios</h1>
 
         <h3>Dados do convênio</h3>
 
-        <div className="section-form">
+        <div className="section-form-benefits-update">
           <FieldText
             label="Nome fantasia *"
             value={nome}
@@ -268,7 +268,7 @@ export default function BenefitsUpdate() {
           onChange={(e) => setDescricao(e.target.value)}
         />
 
-        <div className="section-form">
+        <div className="section-form-benefits-update">
           <FieldSelect
             label="Classificação de pessoa"
             value={tipoPessoa}
@@ -365,7 +365,7 @@ export default function BenefitsUpdate() {
 
         <h3>Dados do contrato de convênio</h3>
 
-        <div className="section-form">
+        <div className="section-form-benefits-update">
           <DataSelect
             label="Data de assinatura"
             value={dataAssinatura}
