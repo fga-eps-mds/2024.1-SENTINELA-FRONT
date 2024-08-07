@@ -171,15 +171,6 @@ export default function BenefitsUpdate() {
     navigate("/beneficios/lista");
   };
 
-  const handleFileDrop = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const files = e.dataTransfer.files;
-    if (files && files.length) {
-      setLogotipo(files[0]);
-    }
-  };
-
   const handleFileSelect = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -331,12 +322,7 @@ export default function BenefitsUpdate() {
             options={descontoAutList}
           />
 
-          <div
-            className="file-drop-area"
-            onDragOver={(e) => e.preventDefault()}
-            onDrop={handleFileDrop}
-            onClick={() => document.getElementById("fileInput").click()}
-          >
+          <div>
             <div className="file-upload-container">
               <p className="change-file-logotipo">Logotipo</p>
 
@@ -348,9 +334,11 @@ export default function BenefitsUpdate() {
               />
             </div>
             {logotipo && (
-              <a href={logotipo} target="_blank" rel="noopener noreferrer">
-                Ver Logotipo
-              </a>
+              <div className="logotipo-preview">
+                <a href={logotipo} target="_blank" rel="noopener noreferrer">
+                  <img src={logotipo} alt="Logotipo" />
+                </a>
+              </div>
             )}
           </div>
 
