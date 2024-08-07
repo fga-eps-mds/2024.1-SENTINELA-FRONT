@@ -121,3 +121,32 @@ export const isValidEmail = (email) => {
     ? { isValid: true }
     : { isValid: false, message: "O e-mail fornecido não é válido." };
 };
+
+export const isValidCelular = (celular) => {
+  const cleanedNumber = celular.replace(/\D/g, ""); // Remove caracteres não numéricos
+
+  if (!cleanedNumber) {
+    return null;
+  }
+
+  if (cleanedNumber.length < 10) {
+    return "O número de telefone está invalido";
+  }
+  return null;
+};
+
+export const isValidSite = (site) => {
+  if (!site) {
+    return { isValid: true };
+  }
+
+  const urlPattern =
+    /^(https?:\/\/)?(www\.)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/.*)?$/;
+
+  // Verifica se a URL corresponde ao padrão
+  const isValid = urlPattern.test(site);
+
+  return isValid
+    ? { isValid: true }
+    : { isValid: false, message: "O site fornecido não é válido." };
+};

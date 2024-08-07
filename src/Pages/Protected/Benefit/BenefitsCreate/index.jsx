@@ -11,7 +11,11 @@ import SecondaryButton from "../../../../Components/SecondaryButton";
 import { Snackbar } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import { createBenefitsForm } from "../../../../Services/benefitsService"; // Importando a função correta
-import { isValidEmail } from "../../../../Services/benefitsService";
+import {
+  isValidEmail,
+  isValidCelular,
+  isValidSite,
+} from "../../../../Services/benefitsService";
 
 export default function BenefitsCreate() {
   const navigate = useNavigate();
@@ -154,6 +158,18 @@ export default function BenefitsCreate() {
     const emailValidation = isValidEmail(email);
     if (!emailValidation.isValid) {
       setOpenError(emailValidation.message);
+      return;
+    }
+
+    const celularValidation = isValidCelular(telefCelular);
+    if (celularValidation) {
+      setOpenError(celularValidation);
+      return;
+    }
+
+    const siteValidation = isValidSite(site);
+    if (!siteValidation.isValid) {
+      setOpenError(siteValidation.message);
       return;
     }
 
