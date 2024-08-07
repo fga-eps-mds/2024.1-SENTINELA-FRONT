@@ -14,7 +14,13 @@ import {
   updateBenefitsFormById,
   deleteBenefitsFormById,
 } from "../../../../Services/benefitsService";
-//import { isValidEmail } from "../../../../Services/benefitsService";
+import {
+  isValidEmail,
+  isValidCelular,
+  isValidSite,
+} from "../../../../Services/benefitsService";
+import { Snackbar } from "@mui/material";
+import Alert from "@mui/material/Alert";
 
 export default function BenefitsUpdate() {
   const navigate = useNavigate();
@@ -45,6 +51,7 @@ export default function BenefitsUpdate() {
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showDeletedModal, setShowDeletedModal] = useState(false);
+  const [openError, setOpenError] = useState(false);
 
   const tipoPessoaList = ["Jurídica", "Física"];
   const categoriaList = [
@@ -118,13 +125,37 @@ export default function BenefitsUpdate() {
     }
   };
 
+  const validateInputs = () => {
+    const emailValidation = isValidEmail(email);
+    if (!emailValidation.isValid) {
+      setOpenError(emailValidation.message);
+      return false;
+    }
+
+    const celularValidation = isValidCelular(telefCelular);
+    if (celularValidation) {
+      setOpenError(celularValidation);
+      return false;
+    }
+
+    const siteValidation = isValidSite(site);
+    if (!siteValidation.isValid) {
+      setOpenError(siteValidation.message);
+      return false;
+    }
+
+    return true;
+  };
+
   const handleDeleteBenefitsButton = async () => {
     await deleteBenefitsFormById(benefitsId);
     navigate("/beneficios/lista");
   };
 
   const handleSaveModal = () => {
-    setShowSaveModal(true);
+    if (validateInputs()) {
+      setShowSaveModal(true);
+    }
   };
 
   const handleDeleteModal = () => {
@@ -155,10 +186,10 @@ export default function BenefitsUpdate() {
       const reader = new FileReader();
 
       reader.onloadend = () => {
-        const base64Image = reader.result; // String base64 do arquivo
+        const base64Image = reader.result;
         setLogotipo(base64Image);
       };
-      reader.readAsDataURL(file); // Converte o arquivo para base64
+      reader.readAsDataURL(file);
     }
   };
 
@@ -186,11 +217,9 @@ export default function BenefitsUpdate() {
       setDataFinal(dayjs(benefits.dataFinal));
       setContratoSit(benefits.contratoSit);
       setIsChecked(benefits.contratoSit);
-
-      console.log(benefits); // TIRAR
     };
     loadBenefits();
-  }, []);
+  }, [benefitsId]);
 
   const handleUpdateBenefitsButton = async () => {
     const benefitsData = {
@@ -389,6 +418,16 @@ export default function BenefitsUpdate() {
 
           <PrimaryButton text="Salvar" onClick={handleSaveModal} />
         </div>
+
+        <Snackbar
+          open={openError}
+          autoHideDuration={6000}
+          onClose={() => setOpenError(false)}
+        >
+          <Alert onClose={() => setOpenError("")} severity="error">
+            {openError}
+          </Alert>
+        </Snackbar>
 
         <Modal alertTitle="Alterações Salvas" show={showSaveModal}>
           <SecondaryButton
