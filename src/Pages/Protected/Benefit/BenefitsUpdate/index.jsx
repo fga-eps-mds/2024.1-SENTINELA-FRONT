@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import "./index.css";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import FieldText from "../../../../Components/FieldText";
@@ -13,6 +14,7 @@ import {
   updateBenefitsFormById,
   deleteBenefitsFormById,
 } from "../../../../Services/benefitsService";
+//import { isValidEmail } from "../../../../Services/benefitsService";
 
 export default function BenefitsUpdate() {
   const navigate = useNavigate();
@@ -184,6 +186,8 @@ export default function BenefitsUpdate() {
       setDataFinal(dayjs(benefits.dataFinal));
       setContratoSit(benefits.contratoSit);
       setIsChecked(benefits.contratoSit);
+
+      console.log(benefits); // TIRAR
     };
     loadBenefits();
   }, []);
@@ -306,7 +310,7 @@ export default function BenefitsUpdate() {
           >
             <div className="file-upload-container">
               <p className="change-file-logotipo">Logotipo</p>
-              {logotipo && <p className="logotipo-name">{logotipo.name}</p>}
+
               <input
                 type="file"
                 id="fileInput"
@@ -314,6 +318,11 @@ export default function BenefitsUpdate() {
                 onChange={handleFileSelect}
               />
             </div>
+            {logotipo && (
+              <a href={logotipo} target="_blank" rel="noopener noreferrer">
+                Ver Logotipo
+              </a>
+            )}
           </div>
 
           <FieldText
