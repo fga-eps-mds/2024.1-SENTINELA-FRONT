@@ -68,10 +68,7 @@
     justify-content: center;
     flex-direction: column;
   }
-  .double-box {
-    display: contents;
-    grid-template-columns: 0.5fr 0.5fr;
-  }
+
   .perfil-radiogroup {
     margin: 2vw;
   }
@@ -81,7 +78,9 @@
 
   .double-box {
     display: grid;
+    justify-content: start;
     grid-template-columns: 0.5fr 0.5fr;
+    margin: 0;
   }
 
   label {

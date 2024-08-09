@@ -1,16 +1,20 @@
-import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import FieldNumber from "../../../../Components/FieldNumber";
+// import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
+import { useState } from "react";
+// import { useNavigate } from "react-router-dom";
+// import FieldNumber from "../../../../Components/FieldNumber";
 import FieldSelect from "../../../../Components/FieldSelect";
 import FieldText from "../../../../Components/FieldText";
-import Modal from "../../../../Components/Modal";
+// import Modal from "../../../../Components/Modal";
 import PrimaryButton from "../../../../Components/PrimaryButton";
-import SecondaryButton from "../../../../Components/SecondaryButton";
+// import SecondaryButton from "../../../../Components/SecondaryButton";
 import "./index.css";
+// import dayjs from "dayjs";
+// import "dayjs/locale/pt-br";
+import DataSelect from "../../../../Components/DataSelect";
+import CheckField from "../../../../Components/Checkfield";
 
 export default function FinancialCreate() {
-  const navigate = useNavigate();
+  //   const navigate = useNavigate();
   const [contaOrigem, setContaOrigem] = useState("");
   const [contaDestino, setContaDestino] = useState("");
   const [tipoDocumento, setTipoDocumento] = useState("");
@@ -24,7 +28,7 @@ export default function FinancialCreate() {
   const [dataPagamento, setdataPagamento] = useState(null);
   const [baixada, setBaixada] = useState("");
   const [descricao, setDescricao] = useState("");
-  const [showModal, setShowModal] = useState(false);
+  // const [showModal, setShowModal] = useState(false);
 
   const handleChangeContaOrigem = (event) => {
     setContaOrigem(event.target.value);
@@ -34,13 +38,23 @@ export default function FinancialCreate() {
     setContaDestino(event.target.value);
   };
 
-  const handleCloseDialog = () => {
-    setShowModal(false);
+  const handleChangePagamento = (event) => {
+    setPagamento(event.target.value);
   };
 
+  const handleChangeBaixada = (event) => {
+    setBaixada(event.target.value);
+  };
+
+  // const handleCloseDialog = () => {
+  //   setShowModal(false);
+  // };
+
+  const handleSubmit = () => {};
+
   return (
-    <section className="container-user">
-      <div className="forms-container-user">
+    <section className="container">
+      <div className="forms-container">
         <h1> Cadastro de Movimentações Financeiras </h1>
         <h3>Dados da Movimentação</h3>
 
@@ -59,27 +73,65 @@ export default function FinancialCreate() {
           />
           <FieldText
             label="Tipo documento"
-            onChange={setTipoDocumento}
+            onChange={(e) => setTipoDocumento(e.target.value)}
             value={tipoDocumento}
           />
-          <FieldText label="Cpf/Cnpj" onChange={setCpfCnpj} value={cpfCnpj} />
+          <FieldText
+            label="CPF/CNPJ"
+            onChange={(e) => setCpfCnpj(e.target.value)}
+            value={cpfCnpj}
+          />
           <FieldText
             label="Valor Bruto"
-            onChange={setValorBruto}
+            onChange={(e) => setValorBruto(e.target.value)}
             value={valorBruto}
           />
           <FieldText
             label="Valor Liquído"
-            onChange={setValorLiquido}
+            onChange={(e) => setValorLiquido(e.target.value)}
             value={valorLiquido}
           />
           <FieldText
             label="Acrescimo"
-            onChange={setAcrescimo}
+            onChange={(e) => setAcrescimo(e.target.value)}
             value={acrescimo}
           />
-          <FieldText label="Desconto" onChange={setDesconto} value={desconto} />
+          <FieldText
+            label="Desconto"
+            value={desconto}
+            onChange={(e) => setDesconto(e.target.value)}
+          />
+
+          <FieldSelect
+            label="Forma de Pagamento *"
+            value={pagamento}
+            onChange={handleChangePagamento}
+            options={["pix", "débito", "crédito", "boleto"]}
+          />
+          <DataSelect
+            label="Data de vencimento"
+            value={dataVencimento}
+            onChange={(newValue) => setDataVencimento(newValue)}
+          />
+          <DataSelect
+            label="Data de pagamento"
+            value={dataPagamento}
+            onChange={(newValue) => setdataPagamento(newValue)}
+          />
+          <CheckField
+            label="Baixada"
+            value={baixada}
+            checked={false}
+            onChange={handleChangeBaixada}
+          />
         </div>
+
+        <FieldText
+          label="Descrição"
+          onChange={(e) => setDescricao(e.target.value)}
+          value={descricao}
+        />
+        <PrimaryButton text="Cadastrar" onClick={handleSubmit} />
       </div>
     </section>
   );
