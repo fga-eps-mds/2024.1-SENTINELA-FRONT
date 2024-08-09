@@ -8,6 +8,7 @@ import DataSelect from "../../../../Components/DataSelect";
 import FieldTextCheckbox from "../../../../Components/FieldTextCheckbox";
 import PrimaryButton from "../../../../Components/PrimaryButton";
 import SecondaryButton from "../../../../Components/SecondaryButton";
+import FieldFile from "../../../../Components/FieldFile";
 import Modal from "../../../../Components/Modal";
 import {
   getBenefitsFormById,
@@ -171,17 +172,12 @@ export default function BenefitsUpdate() {
     navigate("/beneficios/lista");
   };
 
-  const handleFileSelect = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-
-      reader.onloadend = () => {
-        const base64Image = reader.result;
-        setLogotipo(base64Image);
-      };
-      reader.readAsDataURL(file);
-    }
+  const handleFileChange = (file) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setLogotipo(reader.result); // Atualiza o estado com o URL base64
+    };
+    reader.readAsDataURL(file); // Converte o arquivo para base64
   };
 
   useEffect(() => {
@@ -240,13 +236,13 @@ export default function BenefitsUpdate() {
   };
 
   return (
-    <div className="container-benefits-update">
-      <div className="forms-container-benefits-update">
+    <div className="container-benefits">
+      <div className="forms-container-benefits">
         <h1>Visualização de convênios</h1>
 
         <h3>Dados do convênio</h3>
 
-        <div className="section-form-benefits-update">
+        <div className="section-form-benefits">
           <FieldText
             label="Nome fantasia *"
             value={nome}
@@ -268,7 +264,7 @@ export default function BenefitsUpdate() {
           onChange={(e) => setDescricao(e.target.value)}
         />
 
-        <div className="section-form-benefits-update">
+        <div className="section-form-benefits">
           <FieldSelect
             label="Classificação de pessoa"
             value={tipoPessoa}
@@ -322,25 +318,11 @@ export default function BenefitsUpdate() {
             options={descontoAutList}
           />
 
-          <div>
-            <div className="file-upload-container">
-              <p className="change-file-logotipo">Logotipo</p>
-
-              <input
-                type="file"
-                id="fileInput"
-                className="file-input"
-                onChange={handleFileSelect}
-              />
-            </div>
-            {logotipo && (
-              <div className="logotipo-preview">
-                <a href={logotipo} target="_blank" rel="noopener noreferrer">
-                  <img src={logotipo} alt="Logotipo" />
-                </a>
-              </div>
-            )}
-          </div>
+          <FieldFile
+            label="Logotipo"
+            value={logotipo}
+            onChange={handleFileChange}
+          />
 
           <FieldText
             label="Site"
@@ -365,7 +347,7 @@ export default function BenefitsUpdate() {
 
         <h3>Dados do contrato de convênio</h3>
 
-        <div className="section-form-benefits-update">
+        <div className="section-form-benefits">
           <DataSelect
             label="Data de assinatura"
             value={dataAssinatura}

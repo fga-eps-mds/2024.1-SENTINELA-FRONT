@@ -1,9 +1,9 @@
 @media screen and (max-width: 1080px) {
-  .bar-container-benefits-create {
-    display: none;
+  .bar-container-benefits {
+    display: grid;
   }
 
-  .container-benefits-create {
+  .container-benefits {
     display: flex;
     flex-direction: column;
   }
@@ -12,7 +12,7 @@
     color: #332117 !important;
   }
 
-  .forms-container-benefits-create {
+  .forms-container-benefits {
     margin: 1rem;
     width: 90%;
     display: inherit;
@@ -20,11 +20,11 @@
     flex-direction: column;
   }
 
-  .forms-container-benefits-create button {
+  .forms-container-benefits button {
     width: 100%;
   }
 
-  .forms-container-benefits-create h1 {
+  .forms-container-benefits h1 {
     font-size: 22px;
     font-weight: 800;
     margin-left: 8px;
@@ -32,19 +32,15 @@
     margin-top: 1rem;
     margin-bottom: -1rem;
     color: #332117 !important;
+    white-space: nowrap;
   }
 
-  .forms-container-benefits-create h3 {
+  .forms-container-benefits h3 {
     font-size: 16px;
     font-weight: 400;
     margin-left: 1rem;
     margin-top: 3rem;
     color: #332117 !important;
-  }
-
-  .section-form-benefits-create {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   }
 
   .file-upload-container {
@@ -99,19 +95,19 @@
   }
 }
 
-@media screen and (min-width: 1081px) {
-  .bar-container-benefits-create {
+@media screen and (min-width: 1080px) {
+  .bar-container-benefits {
     display: flex;
     height: 100%;
     position: fixed;
   }
 
-  .container-benefits-create {
+  .container-benefits {
     display: flex;
     flex-direction: row;
   }
 
-  .forms-container-benefits-create {
+  .forms-container-benefits {
     margin: 1rem;
     width: 90%;
     display: inherit;
@@ -119,22 +115,17 @@
     flex-direction: column;
   }
 
-  .forms-container-benefits-create button {
+  .forms-container-benefits button {
     width: 100%;
   }
 
-  .section-form-benefits-create {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .forms-container-benefits-create h1 {
+  .forms-container-benefits h1 {
     font-size: 34px;
     font-weight: 800;
     margin-bottom: -0.5rem;
   }
 
-  .forms-container-benefits-create h3 {
+  .forms-container-benefits h3 {
     font-size: 24px;
     font-weight: 400;
     margin-left: 1rem;
@@ -142,15 +133,7 @@
   }
 
   .file-upload-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 0.8rem;
-    border-radius: 5px;
-    background-color: #eae3d7;
-    margin-top: 0.7rem;
-    margin-right: 0.8rem;
-    margin-left: 0.8rem;
+    display: grid;
   }
 
   .change-file-logotipo {

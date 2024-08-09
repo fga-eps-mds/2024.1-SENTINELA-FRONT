@@ -8,6 +8,7 @@ import FieldTextCheckbox from "../../../../Components/FieldTextCheckbox";
 import PrimaryButton from "../../../../Components/PrimaryButton";
 import Modal from "../../../../Components/Modal";
 import SecondaryButton from "../../../../Components/SecondaryButton";
+import FieldFile from "../../../../Components/FieldFile";
 import { Snackbar } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import { createBenefitsForm } from "../../../../Services/benefitsService";
@@ -86,17 +87,12 @@ export default function BenefitsCreate() {
     navigate("/beneficios/lista");
   };
 
-  const handleFileSelect = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-
-      reader.onloadend = () => {
-        const base64Image = reader.result; // String base64 do arquivo
-        setLogotipo(base64Image);
-      };
-      reader.readAsDataURL(file); // Converte o arquivo para base64
-    }
+  const handleFileChange = (file) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setLogotipo(reader.result); // Atualiza o estado com o URL base64
+    };
+    reader.readAsDataURL(file); // Converte o arquivo para base64
   };
 
   const mascaraCpfCnpj = (cpfCnpj) => {
@@ -200,11 +196,11 @@ export default function BenefitsCreate() {
   };
 
   return (
-    <div className="container-benefits-create">
-      <div className="forms-container-benefits-create">
+    <div className="container-benefits">
+      <div className="forms-container-benefits">
         <h1>Cadastro de convênios</h1>
         <h3>Dados do convênio</h3>
-        <div className="section-form-benefits-create">
+        <div className="section-form-benefits">
           <FieldText
             label="Nome fantasia *"
             value={nome}
@@ -225,7 +221,7 @@ export default function BenefitsCreate() {
           onChange={(e) => setDescricao(e.target.value)}
         />
 
-        <div className="section-form-benefits-create">
+        <div className="section-form-benefits">
           <FieldSelect
             label="Classificação de pessoa"
             value={tipoPessoa}
@@ -279,25 +275,7 @@ export default function BenefitsCreate() {
             options={descontoAutList}
           />
 
-          <div>
-            <div className="file-upload-container">
-              <p className="change-file-logotipo">Logotipo</p>
-
-              <input
-                type="file"
-                id="fileInput"
-                className="file-input"
-                onChange={handleFileSelect}
-              />
-            </div>
-            {logotipo && (
-              <div className="logotipo-preview">
-                <a href={logotipo} target="_blank" rel="noopener noreferrer">
-                  <img src={logotipo} alt="Logotipo" />
-                </a>
-              </div>
-            )}
-          </div>
+          <FieldFile label="Logotipo" onChange={handleFileChange} />
 
           <FieldText
             label="Site"
@@ -322,7 +300,7 @@ export default function BenefitsCreate() {
 
         <h3>Dados do contrato de convênio</h3>
 
-        <div className="section-form-benefits-create">
+        <div className="section-form-benefits">
           <DataSelect
             label="Data de assinatura"
             value={dataAssinatura}
