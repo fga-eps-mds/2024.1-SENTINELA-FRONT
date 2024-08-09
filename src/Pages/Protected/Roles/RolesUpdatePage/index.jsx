@@ -142,9 +142,8 @@ export default function RolesUpdatePage() {
           onChange={(e) => setProfileName(e.target.value)}
         />
         {!(profileName.length > 0) && (
-          <label className = "invalid">Nome é um campo obrigatório!</label>
-        )
-        }
+          <label className="invalid">Nome é um campo obrigatório!</label>
+        )}
         <div className="select-profile">
           <div className="row-labels">
             <label></label>
@@ -225,7 +224,10 @@ export default function RolesUpdatePage() {
         </div>
 
         <div className="double-buttons-roles">
-          <SecondaryButton text="DELETAR" onClick={()=>setShowDeleteModal(true)} />
+          <SecondaryButton
+            text="DELETAR"
+            onClick={() => setShowDeleteModal(true)}
+          />
           <Modal
             width="338px"
             alert="Deseja excluir este perfil? Usuários que os possuem perderão suas permissões!"
@@ -240,7 +242,7 @@ export default function RolesUpdatePage() {
             <SecondaryButton
               key="cancelar"
               text="Cancelar"
-              onClick={()=> setShowDeleteModal(false)}
+              onClick={() => setShowDeleteModal(false)}
               width="338px"
             />
           </Modal>
@@ -260,7 +262,7 @@ export default function RolesUpdatePage() {
             <SecondaryButton
               key="cancelar2"
               text="Cancelar"
-              onClick={()=> setShowSaveModal(false)}
+              onClick={() => setShowSaveModal(false)}
               width="338px"
             />
           </Modal>

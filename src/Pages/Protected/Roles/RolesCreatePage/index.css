@@ -2,11 +2,11 @@
   display: flex;
 }
 
-.forms-container { 
+.forms-container {
   display: flex;
-  justify-content: start; 
-  flex-direction: row; 
-} 
+  justify-content: start;
+  flex-direction: row;
+}
 
 .select-profile {
   display: flex;
@@ -47,7 +47,6 @@
 }
 
 @media screen and (max-width: 1080px) {
-  
   .container {
     display: flex;
     flex-direction: row;
@@ -81,7 +80,7 @@
     margin-top: 3rem;
     color: #332117 !important;
   }
-  
+
   #addDependentBttn {
     cursor: pointer;
   }
@@ -105,11 +104,12 @@
     margin-top: 12rem;
   }
 
-  .forms-container { display: flex;
-    margin: 1vw; 
-    justify-content: center; 
-    flex-direction: column; 
-  } 
+  .forms-container {
+    display: flex;
+    margin: 1vw;
+    justify-content: center;
+    flex-direction: column;
+  }
 
   .double-box {
     display: contents;
@@ -185,8 +185,6 @@
     margin-top: 3rem;
     color: #332117 !important;
   }
-
-  
 
   #addDependentBttn {
     cursor: pointer;

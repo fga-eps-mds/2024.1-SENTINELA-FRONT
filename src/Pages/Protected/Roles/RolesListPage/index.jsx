@@ -64,11 +64,11 @@ export default function RolesListPage() {
           <PrimaryButton text="Cadastrar perfil" onClick={handleSubmit} />
         </div>
 
-          <FieldText
-            label="Pesquisar perfil"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
+        <FieldText
+          label="Pesquisar perfil"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
 
         <List>
           {filteredRoles.map((role, index) => (
