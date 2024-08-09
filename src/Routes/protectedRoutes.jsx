@@ -9,6 +9,7 @@ import Supplier from "../Pages/Protected/CreateSupplier";
 import ListSupplier from "../Pages/Protected/ListSupplier";
 import ViewSupplier from "../Pages/Protected/UpdateSupplier";
 import FinancialMovements from "../Pages/Protected/FinancialMovements/FinancialCreate";
+import FinancialList from "../Pages/Protected/FinancialMovements/FinancialList";
 
 const ProtectedRoutes = () => {
   return (
@@ -23,6 +24,7 @@ const ProtectedRoutes = () => {
       <Route path="/usuarios/hub" element={<UserHubPage />} />
       <Route path="/perfil" element={<ProfileUpdate />} />
       <Route path="/movimentacoes/criar" element={<FinancialMovements />} />
+      <Route path="/movimentacoes/lista" element={<FinancialList />} />
     </Routes>
   );
 };
