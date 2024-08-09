@@ -18,25 +18,23 @@ export default function MembershipRequest() {
   const [members, setMembers] = useState([]);
   const [filteredMembers, setFilteredMembers] = useState([]);
   const [search, setSearch] = useState("");
-  const [isResultReadOnly, setIsResultReadOnly] = useState(false);
   const [checkedItems, setCheckedItems] = useState([]);
   const [openSuccessApproval, setSuccessApproval] = useState(false);
   const [openSuccessDelete, setSuccessDelete] = useState(false);
   const [openTryingDelete, setTryingDelete] = useState(false);
-  const [noResultsFound, setNoResultsFound] = useState(false);
   const navigate = useNavigate();
 
   // Fetch all members on component mount
   useEffect(() => {
     async function fetchData() {
       try {
-        const result = await getMemberShip();
+        const result = await getMemberShip(false);
         if (result.message) {
           console.log(result.message);
           return;
         }
         setMembers(result);
-        setFilteredMembers(result); // Show all members initially
+        setFilteredMembers(result);
       } catch (error) {
         console.log(error);
       }
@@ -44,40 +42,26 @@ export default function MembershipRequest() {
     fetchData();
   }, []);
 
-  const handleSearch = () => {
-    // Filter members based on the search query
-    const filteredData = members.filter((member) =>
-      member.nomeCompleto.toLowerCase().includes(search.toLowerCase())
-    );
-    setFilteredMembers(filteredData);
-    setNoResultsFound(filteredData.length === 0); // Update state based on results
-    setIsResultReadOnly(true); // Make this field read-only after search
-  };
+  console.log(checkedItems);
 
-  const handleCheckboxChange = (newChecked) => {
-    setCheckedItems(newChecked);
-  };
+  useEffect(() => {
+    const filter = members.filter((member) =>
+      member.name.toLowerCase().includes(search.toLowerCase())
+    );
+    setFilteredMembers(filter);
+  }, [search]);
 
   const handleConfirm = async () => {
     try {
-      const membersToUpdate = filteredMembers.filter((member) =>
-        checkedItems.includes(member.nomeCompleto)
-      );
+      checkedItems.forEach(async (checkedItem) => {
+        console.log(checkedItem);
+        await updateMemberStatus(checkedItem);
+      });
 
-      for (const member of membersToUpdate) {
-        await updateMemberStatus(member._id);
-      }
-
-      const result = await getMemberShip();
-      if (result.message) {
-        console.log(result.message);
-        return;
-      }
+      const result = await getMemberShip(false);
       setMembers(result);
       setFilteredMembers(result);
       setCheckedItems([]);
-      setNoResultsFound(false);
-      setSuccessApproval(true);
     } catch (error) {
       console.error("Error updating member status:", error);
     }
@@ -86,7 +70,7 @@ export default function MembershipRequest() {
   const handleReject = async () => {
     try {
       const membersToDelete = filteredMembers.filter((member) =>
-        checkedItems.includes(member.nomeCompleto)
+        checkedItems.includes(member.name)
       );
       for (const memberDelete of membersToDelete) {
         await deleteMember(memberDelete._id);
@@ -99,8 +83,6 @@ export default function MembershipRequest() {
     }
   };
 
-  const membersForCheckList = filteredMembers.filter((member) => member.status);
-
   return (
     user && (
       <section className="membership-request">
@@ -111,19 +93,17 @@ export default function MembershipRequest() {
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            readOnly={isResultReadOnly}
           />
-          <SecondaryButton text="Pesquisar" onClick={handleSearch} />
         </div>
         <div className="member-list">
-          {noResultsFound ? (
-            <p>Nenhum membro encontrado.</p>
-          ) : membersForCheckList.length > 0 ? (
+          {filteredMembers.length > 0 ? (
             <>
               <CheckList
-                items={membersForCheckList.map((member) => member.nomeCompleto)}
+                items={filteredMembers}
                 value={checkedItems}
-                onChange={handleCheckboxChange}
+                onChange={(value) => {
+                  setCheckedItems(value);
+                }}
               />
 
               <div className="button-group">

@@ -8,7 +8,6 @@
   }
 
   .forms-container {
-    margin: 1rem;
     width: 100%;
 
     display: inherit;
@@ -18,11 +17,12 @@
 
   .section-form {
     display: grid;
-    grid-template-columns: 1fr;
+    flex-wrap: wrap;
   }
 
   .double-box {
-    display: inherit;
+    display: flex;
+    flex-direction: row;
   }
 
   h1 {
@@ -32,7 +32,6 @@
 
   h3 {
     font-weight: 400;
-    margin-left: 1rem;
     margin-top: 3rem;
   }
 
@@ -105,13 +104,13 @@
   }
 
   .section-form {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-wrap: wrap;
   }
 
   .double-box {
-    display: grid;
-    grid-template-columns: 2.3fr 0.7fr;
+    display: flex;
+    flex-direction: row;
   }
 
   h1 {

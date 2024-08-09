@@ -2,7 +2,6 @@ import { useState } from "react";
 import "./index.css";
 import "../../../index.css";
 import dayjs from "dayjs";
-import "dayjs/locale/pt-br";
 import FieldText from "../../../Components/FieldText";
 import DataSelect from "../../../Components/DataSelect";
 import FieldSelect from "../../../Components/FieldSelect";
@@ -289,38 +288,37 @@ const MemberShip = () => {
 
   const submitForm = async () => {
     const formData = {
+      name: nomeCompleto,
       email,
-      sexo,
-      estadoCivil,
-      tipoSanguineo,
+      phone: celular,
+      bloodType: tipoSanguineo,
+      registration: matricula,
+      birthDate: dataDeNascimento,
+      sex: sexo,
+      naturalness: naturalidade,
       uf_naturalidade,
       uf_orgao,
-      uf_endereco,
-      escolaridade,
-      dataContratacao,
-      dataDeNascimento,
-      dataExpedicao,
-      cargo,
-      lotacao,
-      matricula,
-      nomeCompleto,
-      naturalidade,
+      uf_address: uf_endereco,
+      marialStatus: estadoCivil,
+      education: escolaridade,
       rg,
       orgao,
       cpf,
-      nomeDaMae,
-      nomeDoPai,
+      hiringDate: dataContratacao,
+      expeditionDate: dataExpedicao,
+      position: cargo,
+      lotacao,
       cep,
-      cidade,
-      logradouro,
-      complemento,
-      telefone,
-      celular,
-      postoDeTrabalho,
-      orgaoExpedidor,
-      situacaoAtual,
-      religiao,
-      dependentes,
+      motherName: nomeDaMae,
+      fatherName: nomeDoPai,
+      city: cidade,
+      street: logradouro,
+      complement: complemento,
+      landline: telefone,
+      workPlace: postoDeTrabalho,
+      shipperOrganization: orgaoExpedidor,
+      religion: religiao,
+      dependents: dependentes,
     };
 
     const message = await createMemberShip(formData);
