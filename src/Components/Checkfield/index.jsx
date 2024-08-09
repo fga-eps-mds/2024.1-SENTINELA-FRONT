@@ -26,7 +26,7 @@ const CustomContainer = styled(Box)(({ theme }) => ({
     borderColor: theme.palette.primary.main, // Cor da borda ao focar
   },
   "&:active": {
-    backgroundColor: "#d4c7b4", // Animação de clique, muda a cor do fundo
+    backgroundColor: "#d4c7b4", // Animação ao clique, muda a cor do fundo
   },
 }));
 
