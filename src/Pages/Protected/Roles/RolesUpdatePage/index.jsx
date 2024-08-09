@@ -16,6 +16,7 @@ export default function RolesUpdatePage() {
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showSuccessDelModal, setShowSuccessDelModal] = useState(false);
   const [profileName, setProfileName] = useState("");
 
   const [financeiro, setFinanceiro] = useState([false, false, false, false]);
@@ -108,35 +109,24 @@ export default function RolesUpdatePage() {
       };
 
       await updateRole(roleId, updatedRole);
-      setShowSaveModal(true);
+      setShowSuccessModal(true);
     } catch (error) {
       console.error("Erro ao atualizar o perfil:", error);
     }
   };
 
-  const handleDelete = () => {
-    setShowDeleteModal(true);
-  };
-
   const handleDeleteRole = async () => {
     try {
       await deleteRole(roleId);
-      setShowSuccessModal(true);
+      setShowSuccessDelModal(true);
     } catch (error) {
       console.error("Erro ao deletar o perfil:", error);
     }
   };
 
-  const handleCloseSaveModal = () => {
-    setShowSaveModal(false);
-  };
-
-  const handleCloseDeleteModal = () => {
-    setShowDeleteModal(false);
-  };
-
   const handleCloseSuccessModal = () => {
     setShowSuccessModal(false);
+    setShowSuccessDelModal(false);
     navigate("/perfis");
   };
 
@@ -151,7 +141,10 @@ export default function RolesUpdatePage() {
           value={profileName}
           onChange={(e) => setProfileName(e.target.value)}
         />
-
+        {!(profileName.length > 0) && (
+          <label className = "invalid">Nome é um campo obrigatório!</label>
+        )
+        }
         <div className="select-profile">
           <div className="row-labels">
             <label></label>
@@ -232,10 +225,10 @@ export default function RolesUpdatePage() {
         </div>
 
         <div className="double-buttons-roles">
-          <SecondaryButton text="DELETAR" onClick={handleDelete} />
+          <SecondaryButton text="DELETAR" onClick={()=>setShowDeleteModal(true)} />
           <Modal
             width="338px"
-            alertTitle="DESEJA EXCLUIR ESSE PERFIL? USUÁRIOS QUE O POSSUEM PERDERÃO SUAS PERMISSÕES!"
+            alert="Deseja excluir este perfil? Usuários que os possuem perderão suas permissões!"
             show={showDeleteModal}
           >
             <SecondaryButton
@@ -247,34 +240,46 @@ export default function RolesUpdatePage() {
             <SecondaryButton
               key="cancelar"
               text="Cancelar"
-              onClick={handleCloseDeleteModal}
+              onClick={()=> setShowDeleteModal(false)}
               width="338px"
             />
           </Modal>
 
-          <PrimaryButton text="SALVAR" onClick={handleSubmit} />
+          <PrimaryButton text="SALVAR" onClick={() => setShowSaveModal(true)} />
           <Modal
             width="338px"
-            alertTitle="DESEJA CONTINUAR COM AS ALTERAÇÕES FEITAS NO PERFIL?"
+            alert="DESEJA CONTINUAR COM AS ALTERAÇÕES FEITAS NO PERFIL?"
             show={showSaveModal}
           >
             <SecondaryButton
               key="confirmar2"
               text="Confirmar"
-              onClick={() => setShowSaveModal(false)}
+              onClick={handleSubmit}
               width="338px"
             />
             <SecondaryButton
               key="cancelar2"
               text="Cancelar"
-              onClick={handleCloseSaveModal}
+              onClick={()=> setShowSaveModal(false)}
               width="338px"
             />
           </Modal>
           <Modal
             width="338px"
-            alertTitle="PERFIL ALTERADO COM SUCESSO"
+            alert="PERFIL ALTERADO COM SUCESSO"
             show={showSuccessModal}
+          >
+            <SecondaryButton
+              key="ok"
+              text="Ok"
+              onClick={handleCloseSuccessModal}
+              width="338px"
+            />
+          </Modal>
+          <Modal
+            width="338px"
+            alert="PERFIL DELETADO COM SUCESSO"
+            show={showSuccessDelModal}
           >
             <SecondaryButton
               key="ok"

@@ -19,10 +19,6 @@
     flex-direction: column;
   }
 
-  .forms-container button {
-    width: 100%;
-  }
-
   .double-box {
     display: contents;
     grid-template-columns: 0.5fr 0.5fr;
@@ -74,12 +70,6 @@
     display: flex;
     grid-template-columns: 1fr;
   }
-
-  .search-box {
-    display: grid;
-    grid-template-columns: 2.3fr 0.7fr;
-  }
-
   .search-box button {
     margin-top: 0px;
     margin-bottom: 40px;
@@ -87,6 +77,7 @@
 
   .double-box {
     display: grid;
+    align-content: start;
     grid-template-columns: 2.3fr 0.7fr;
   }
 

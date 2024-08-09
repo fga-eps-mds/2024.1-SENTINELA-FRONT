@@ -70,13 +70,16 @@ export default function RolesCreatePage() {
       <div className="forms-container">
         <h1>Cadastro de Perfil</h1>
         <h3>Informações do Perfil</h3>
-
+        
         <FieldText
-          label="Nome do Perfil"
+          label="Nome do Perfil*"
           value={profileName}
           onChange={(e) => setProfileName(e.target.value)}
         />
-
+        {!(profileName.length > 0) && (
+          <label className = "invalid">Nome é um campo obrigatório!</label>
+        )
+        }
         <div className="select-profile">
           <div className="row-labels">
             <label></label>
@@ -159,7 +162,7 @@ export default function RolesCreatePage() {
         <PrimaryButton text="Cadastrar" onClick={handleSubmit} />
         <Modal
           width="338px"
-          alertTitle="Cadastro de usuário concluído"
+          alert="Cadastro de usuário concluído"
           show={showModal}
         >
           <SecondaryButton

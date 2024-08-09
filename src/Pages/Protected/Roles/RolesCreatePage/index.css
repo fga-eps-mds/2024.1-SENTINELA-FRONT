@@ -2,12 +2,11 @@
   display: flex;
 }
 
-.forms-container {
+.forms-container { 
   display: flex;
-  flex-direction: column;
-  margin: 1vw;
-  justify-content: center;
-}
+  justify-content: start; 
+  flex-direction: row; 
+} 
 
 .select-profile {
   display: flex;
@@ -39,18 +38,19 @@
   display: flex;
   justify-content: center;
 }
+.invalid {
+  font-size: small;
+  font-weight: 400;
+  margin-left: 1rem;
+  margin-top: 10px;
+  color: red !important;
+}
 
 @media screen and (max-width: 1080px) {
+  
   .container {
     display: flex;
     flex-direction: row;
-  }
-
-  .forms-container {
-    display: grid;
-    margin: 1vw;
-    justify-content: center;
-    flex-direction: column;
   }
 
   .double-box {
@@ -70,6 +70,7 @@
 
   h1 {
     font-weight: 800;
+    text-align: left;
     margin-bottom: 3rem;
     color: #332117 !important;
   }
@@ -80,7 +81,7 @@
     margin-top: 3rem;
     color: #332117 !important;
   }
-
+  
   #addDependentBttn {
     cursor: pointer;
   }
@@ -104,13 +105,11 @@
     margin-top: 12rem;
   }
 
-  .forms-container {
-    margin: 5rem;
-    width: 90%;
-    display: inherit;
-    justify-content: center;
-    flex-direction: column;
-  }
+  .forms-container { display: flex;
+    margin: 1vw; 
+    justify-content: center; 
+    flex-direction: column; 
+  } 
 
   .double-box {
     display: contents;
@@ -187,12 +186,7 @@
     color: #332117 !important;
   }
 
-  .isEmailValid {
-    font-weight: 400;
-    margin-left: 1rem;
-    margin-top: 10px;
-    color: red !important;
-  }
+  
 
   #addDependentBttn {
     cursor: pointer;

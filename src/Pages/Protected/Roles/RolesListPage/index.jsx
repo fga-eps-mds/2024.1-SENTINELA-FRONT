@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "../../Users/userListPage/index.css";
+import "./index.css";
+//import "../../Users/userListPage/index.css";
 import PrimaryButton from "../../../../Components/PrimaryButton";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -60,16 +61,14 @@ export default function RolesListPage() {
       <div className="forms-container">
         <div className="double-box">
           <h1>Lista de perfis</h1>
+          <PrimaryButton text="Cadastrar perfil" onClick={handleSubmit} />
         </div>
 
-        <div className="search-box">
           <FieldText
             label="Pesquisar perfil"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          <PrimaryButton text="Cadastrar perfil" onClick={handleSubmit} />
-        </div>
 
         <List>
           {filteredRoles.map((role, index) => (

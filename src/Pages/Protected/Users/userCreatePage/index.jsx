@@ -116,7 +116,7 @@ export default function UserCreatePage() {
           onChange={(e) => setEmail(e.target.value)}
         />
         {!isEmailValid && (
-          <label className="isEmailValid">*Insira um email válido</label>
+          <label className="invalid">*Insira um email válido</label>
         )}
         <h3>Perfil</h3>
         <RadioGroup
