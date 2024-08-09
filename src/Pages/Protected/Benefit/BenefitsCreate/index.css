@@ -6,6 +6,7 @@
   .container-benefits {
     display: flex;
     flex-direction: column;
+    margin-bottom: 40px;
   }
 
   label {
@@ -105,6 +106,7 @@
   .container-benefits {
     display: flex;
     flex-direction: row;
+    padding-bottom: 40px;
   }
 
   .forms-container-benefits {

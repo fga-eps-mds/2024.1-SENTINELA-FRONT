@@ -188,18 +188,18 @@ export default function BenefitsCreate() {
       if (!erro) {
         setShowModal(true);
       } else {
-        console.error("Erro ao criar convênio");
+        console.error("Erro ao criar benefício");
       }
     } catch (error) {
-      console.error("Erro ao criar convênio:", error);
+      console.error("Erro ao criar benefício:", error);
     }
   };
 
   return (
     <div className="container-benefits">
       <div className="forms-container-benefits">
-        <h1>Cadastro de convênios</h1>
-        <h3>Dados do convênio</h3>
+        <h1>Cadastro de benefícios</h1>
+        <h3>Dados do benefício</h3>
         <div className="section-form-benefits">
           <FieldText
             label="Nome fantasia *"
@@ -298,7 +298,7 @@ export default function BenefitsCreate() {
           />
         </div>
 
-        <h3>Dados do contrato de convênio</h3>
+        <h3>Dados do contrato de benefício</h3>
 
         <div className="section-form-benefits">
           <DataSelect

@@ -32,11 +32,11 @@ const Benefits = () => {
             />
             <div className="hub-btn">
               <SecondaryButton
-                text="CADASTRO DE CONVÊNIOS"
+                text="CADASTRO DE Benefícios"
                 onClick={handleBenefitsCreate}
               />
               <SecondaryButton
-                text="LISTA DE CONVÊNIOS"
+                text="LISTA DE BENEFÍCIOS"
                 onClick={handleBenefitsList}
               />
             </div>

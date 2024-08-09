@@ -238,9 +238,9 @@ export default function BenefitsUpdate() {
   return (
     <div className="container-benefits">
       <div className="forms-container-benefits">
-        <h1>Visualização de convênios</h1>
+        <h1>Visualização de benefícios</h1>
 
-        <h3>Dados do convênio</h3>
+        <h3>Dados do benefício</h3>
 
         <div className="section-form-benefits">
           <FieldText
@@ -345,7 +345,7 @@ export default function BenefitsUpdate() {
           />
         </div>
 
-        <h3>Dados do contrato de convênio</h3>
+        <h3>Dados do contrato de benefício</h3>
 
         <div className="section-form-benefits">
           <DataSelect
@@ -408,12 +408,12 @@ export default function BenefitsUpdate() {
         </Modal>
 
         <Modal
-          alertTitle="Deseja deletar o convênio do sistema?"
+          alertTitle="Deseja deletar o benefício do sistema?"
           show={showDeleteModal}
         >
           <SecondaryButton
             key={"deleteButtons"}
-            text="EXCLUIR CONVÊNIO"
+            text="EXCLUIR benefício"
             onClick={() => handleDeleteBenefitsButton()}
             width="338px"
           />
@@ -425,7 +425,7 @@ export default function BenefitsUpdate() {
           />
         </Modal>
 
-        <Modal alertTitle="Convênio deletado" show={showDeletedModal}>
+        <Modal alertTitle="benefício deletado" show={showDeletedModal}>
           <SecondaryButton
             key={"modalButtons"}
             text="OK"

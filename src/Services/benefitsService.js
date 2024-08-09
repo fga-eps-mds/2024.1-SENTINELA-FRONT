@@ -32,10 +32,10 @@ export const createBenefitsForm = async (benefitsData) => {
     return false;
   } catch (error) {
     console.error(
-      "Erro ao cadastrar convênio:",
+      "Erro ao cadastrar benefício:",
       error.response ? error.response.data : error.message
     );
-    alert("Erro ao cadastrar convênio");
+    alert("Erro ao cadastrar benefício");
     return true;
   }
 };
@@ -53,7 +53,7 @@ export const getBenefitsForm = async () => {
     });
     return response.data;
   } catch (error) {
-    console.error("Erro ao buscar convênio:", error);
+    console.error("Erro ao buscar benefício:", error);
   }
 };
 
@@ -62,7 +62,7 @@ export const getBenefitsFormById = async (id) => {
     const response = await APIBenefits.get(`/benefits/${id}`);
     return response.data;
   } catch (error) {
-    console.error(`Erro ao buscar convênio com ID ${id}:`, error);
+    console.error(`Erro ao buscar benefício com ID ${id}:`, error);
   }
 };
 
@@ -76,7 +76,7 @@ export const updateBenefitsFormById = async (id, benefitsData) => {
     });
     return response.data;
   } catch (error) {
-    console.error(`Erro ao atualizar convênio com ID ${id}:`, error);
+    console.error(`Erro ao atualizar benefício com ID ${id}:`, error);
   }
 };
 
@@ -84,7 +84,7 @@ export const deleteBenefitsFormById = async (id) => {
   try {
     await APIBenefits.delete(`/benefits/delete/${id}`);
   } catch (error) {
-    console.error(`Erro ao deletar convênio com ID ${id}:`, error);
+    console.error(`Erro ao deletar benefício com ID ${id}:`, error);
   }
 };
 

@@ -46,12 +46,12 @@ export default function ListSupplier() {
     <section className="container-list-benefits">
       <div className="forms-container-list-benefits">
         <div className="double-box-list-benefits">
-          <h1> Lista de convênios</h1>
-          <PrimaryButton text="Cadastrar convênio" onClick={handleSubmit} />
+          <h1> Lista de benefícios</h1>
+          <PrimaryButton text="Cadastrar benefício" onClick={handleSubmit} />
         </div>
         <div className="search-box-benefits">
           <FieldText
-            label="Pesquisar convênios"
+            label="Pesquisar benefícios"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
