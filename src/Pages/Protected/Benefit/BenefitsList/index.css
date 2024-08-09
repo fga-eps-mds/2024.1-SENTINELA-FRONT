@@ -1,36 +1,8 @@
 @media screen and (max-width: 1080px) {
   .container-list-benefits {
     display: grid;
-    width: 80%;
+    width: 90%;
     position: relative;
-  }
-
-  .forms-container-list-benefits h1 {
-    font-size: 20px;
-    margin-bottom: 0.5rem;
-    margin-top: 2rem;
-    margin-right: 120px;
-    white-space: nowrap;
-    color: #332117 !important;
-  }
-
-  .double-box-list-benefits {
-    display: grid;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 0.5rem;
-  }
-
-  .double-box-list-benefits .MuiButton-root {
-    margin-left: 2rem;
-    margin-bottom: 0.5rem;
-    width: 100%;
-  }
-
-  .double-box-list-benefits {
-    font-size: 20px;
-    margin-right: 120px;
   }
 
   .search-box-benefits {
@@ -40,9 +12,18 @@
     position: relative;
   }
 
-  .search-box-benefits .MuiButton-root {
-    margin-bottom: 0.8rem;
-    width: 100%;
+  .double-box-list-benefits {
+    display: contents;
+    font-size: 20px;
+    color: #332117 !important;
+    margin-left: 1.2rem;
+    white-space: nowrap;
+  }
+
+  .double-box-list-benefits .MuiButton-root {
+    margin-left: 1.2rem;
+    margin-bottom: 0.5rem;
+    width: 90%;
   }
 
   .list-item-benefits {
@@ -50,7 +31,7 @@
   }
 }
 
-@media screen and (min-width: 700px) {
+@media screen and (min-width: 1080px) {
   label {
     color: #332117 !important;
   }
@@ -68,47 +49,26 @@
     flex-direction: column;
   }
 
-  .double-box-list-benefits .MuiButton-root {
-    margin-top: 6rem;
-    margin-left: 50rem;
-    margin-bottom: 0.5rem;
-    width: 30%;
-  }
-
   .search-box-benefits {
     display: grid;
-    grid-template-columns: 2.3fr 0.7fr;
-  }
-
-  .search-box-benefits button {
-    width: 50%;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    background-color: #eae3d7;
+    width: 85%;
+    margin-top: 1rem;
+    position: relative;
   }
 
   .double-box-list-benefits {
     display: grid;
-    grid-template-columns: 2.3fr 0.7fr;
+    grid-template-columns: 2.3fr 2fr;
+    font-size: 24px;
   }
 
   .double-box-list-benefits button {
-    margin-top: 100px;
-    margin-bottom: -1rem;
-  }
-
-  .forms-container-list-benefits h1 {
-    font-size: 34px;
-    font-weight: 800;
-    margin-bottom: -8rem;
-    color: #332117 !important;
-  }
-
-  .double-box-list-benefits h3 {
-    font-weight: 400;
-    margin-left: 1rem;
-    margin-top: 3rem;
-    color: #332117 !important;
+    display: grid;
+    margin-top: 0px;
+    margin-bottom: 40px;
+    width: 334px;
+    height: 44px;
+    position: relative;
   }
 
   .list-item-benefits {

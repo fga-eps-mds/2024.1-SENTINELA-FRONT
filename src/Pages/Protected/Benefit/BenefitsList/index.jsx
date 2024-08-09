@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import PrimaryButton from "../../../../Components/PrimaryButton";
-import SecondaryButton from "../../../../Components/SecondaryButton";
 import FieldText from "../../../../Components/FieldText";
 import { APIBenefits } from "../../../../Services/BaseService";
 import List from "@mui/material/List";
@@ -46,20 +45,15 @@ export default function ListSupplier() {
   return (
     <section className="container-list-benefits">
       <div className="forms-container-list-benefits">
-        <h1>Lista de convênios</h1>
         <div className="double-box-list-benefits">
+          <h1> Lista de convênios</h1>
           <PrimaryButton text="Cadastrar convênio" onClick={handleSubmit} />
         </div>
-
         <div className="search-box-benefits">
           <FieldText
             label="Pesquisar convênios"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-          />
-          <SecondaryButton
-            text="Pesquisar"
-            onClick={() => filteredBenefits(search)}
           />
           <List>
             {filteredBenefits.map((benefits, index) => (
