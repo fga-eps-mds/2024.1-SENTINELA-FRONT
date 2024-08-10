@@ -1,28 +1,43 @@
-import React from 'react';
-import { createBrowserRouter, RouterProvider, BrowserRouter, Route, Routes } from "react-router-dom";
-import Login from '../Pages/Public/Login';
-import Home from '../Pages/Protected/Home';
-import BankAccount from '../Pages/Protected/BankAccount';
-import Finance from '../Pages/Protected/Finance';
-import ListBankAccount from '../Pages/Protected/ListBankAccount';
-import BankAccountId from '../Pages/Protected/LisBankAccountId';
+import { Route, Routes } from "react-router-dom";
+import Home from "../Pages/Protected/Home";
+import ProfileUpdate from "../Pages/Protected/ProfileUpdate";
+import UserCreatePage from "../Pages/Protected/Users/userCreatePage";
+import UserListPage from "../Pages/Protected/Users/userListPage";
+import UserHubPage from "../Pages/Protected/Users/userHubPage";
+import UserUpdatePage from "../Pages/Protected/Users/userUpdatePage";
+import Supplier from "../Pages/Protected/CreateSupplier";
+import ListSupplier from "../Pages/Protected/ListSupplier";
+import ViewSupplier from "../Pages/Protected/UpdateSupplier";
+import Benefits from "../Pages/Protected/Benefit/Benefits";
+import BenefitsList from "../Pages/Protected/Benefit/BenefitsList";
+import BenefitsCreate from "../Pages/Protected/Benefit/BenefitsCreate";
+import BenefitsUpdate from "../Pages/Protected/Benefit/BenefitsUpdate";
+import BankAccount from "../Pages/Protected/BankAccount";
+import Finance from "../Pages/Protected/Finance";
+import ListBankAccount from "../Pages/Protected/ListBankAccount";
+import BankAccountId from "../Pages/Protected/LisBankAccountId";
 
 const ProtectedRoutes = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/finance" element={<Finance />} />
-        <Route path="/finance/bankAccount" element={<BankAccount />} />
-        <Route path="/finance/listBankAccount" element={<ListBankAccount />} />
-        <Route path="/finance/listBankAccount/:id" element={<BankAccountId/>} />
-       
-
-
-        
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/home" element={<Home />} />
+      <Route path="/fornecedores/criar" element={<Supplier />} />
+      <Route path="/fornecedores" element={<ListSupplier />} />
+      <Route path="/fornecedores/:nome" element={<ViewSupplier />} />
+      <Route path="/usuarios/criar" element={<UserCreatePage />} />
+      <Route path="/usuarios/editar/:id" element={<UserUpdatePage />} />
+      <Route path="/usuarios" element={<UserListPage />} />
+      <Route path="/usuarios/hub" element={<UserHubPage />} />
+      <Route path="/perfil" element={<ProfileUpdate />} />
+      <Route path="/beneficios" element={<Benefits />} />
+      <Route path="/beneficios/lista" element={<BenefitsList />} />
+      <Route path="/beneficios/criar" element={<BenefitsCreate />} />
+      <Route path="/beneficios/editar/:id" element={<BenefitsUpdate />} />
+      <Route path="/finance" element={<Finance />} />
+      <Route path="/finance/bankAccount" element={<BankAccount />} />
+      <Route path="/finance/listBankAccount" element={<ListBankAccount />} />
+      <Route path="/finance/listBankAccount/:id" element={<BankAccountId />} />
+    </Routes>
   );
 };
 

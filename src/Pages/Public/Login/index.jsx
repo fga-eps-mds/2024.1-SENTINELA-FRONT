@@ -1,70 +1,86 @@
-import SideBar from "../../../Components/SideBar";
 import "./index.css";
 import LabeledTextField from "../../../Components/LabeledTextField";
 import PrimaryButton from "../../../Components/PrimaryButton";
 import SecondaryButton from "../../../Components/SecondaryButton";
 import UnderlinedTextButton from "../../../Components/UnderlinedTextButton";
-import SideButton from "../../../Components/SideButton";
-import React, { useState, useContext } from "react";
-import AuthContext from "../../../Context/auth";
+import { useState, useContext, useEffect } from "react";
+import AuthContext, { useAuth } from "../../../Context/auth";
 import { useNavigate } from "react-router-dom";
+import Card from "../../../Components/Card";
 
 export default function Login() {
-
   const context = useContext(AuthContext);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [error, setError] = useState(""); // Adiciona um estado para mensagens de erro
 
-  const [email, setEmail] = useState('');
-  const [senha, setSenha] = useState('');
+  const handleLogin = async () => {
+    if (!email || !senha) {
+      setError("Por favor, preencha todos os campos.");
+      return;
+    }
 
-  const handleLogin = () => {
-    context.Login(email, senha);
-    navigate("/home")
+    setError("");
+
+    const message = await context.Login(email, senha);
+
+    if (message) {
+      alert("erro de login. Senha ou email incorretos.");
+    } else {
+      navigate("/home");
+    }
   };
 
-  const buttons = [
-    <SideButton key="login" text="Login" />,
-    <SideButton key="filiacao" text="Filiação" />,
-    <SideButton key="sobre" text="Sobre" />,
-  ];
+  const handlePasswordRecovery = () => {
+    navigate("/passwordrecovery");
+  };
 
+  useEffect(() => {
+    if (user) {
+      navigate("/home");
+      window.location.reload();
+    }
+  }, [user, navigate]);
 
   return (
     <div className="screen">
-      <SideBar buttons={buttons} />
-      <div className="area-card">
-        <div className="card">
-          <img
-            className="logo"
-            src="src/assets/sindpol-logo.png"
-            alt="Sindpol Logo"
+      <Card>
+        <LabeledTextField
+          label="EMAIL"
+          placeholder="Digite seu email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <LabeledTextField
+          label="SENHA"
+          placeholder="Digite sua senha"
+          type="password"
+          value={senha}
+          onChange={(e) => setSenha(e.target.value)}
+        />
+        {error && <div className="error-message">{error}</div>}{" "}
+        {/* Exibe a mensagem de erro */}
+        <div className="recupera-senha">
+          <UnderlinedTextButton
+            key="recupera-senha"
+            text="Esqueci a senha"
+            onClick={() => handlePasswordRecovery()}
           />
-          <img
-            className="sentinela"
-            src="src/assets/sentinela-logo.png"
-            alt="Sentinela Logo"
-          />
-          <LabeledTextField
-            label="EMAIL"
-            placeholder="Digite seu email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <LabeledTextField
-            label="SENHA"
-            placeholder="Digite sua senha"
-            type="password"
-            value={senha}
-            onChange={(e) => setSenha(e.target.value)}
-            />
-          <div className="recupera-senha">
-            <UnderlinedTextButton key="recupera-senha" text="Esqueci a senha" />
-          </div>
-          <SecondaryButton text="Filiar-me ao sindicato" />
-
-          <PrimaryButton text="Entrar" onClick={handleLogin} />
         </div>
-      </div>
+        <SecondaryButton
+          text="Filiar-me ao sindicato"
+          maxWidth="400px"
+          onClick={() => navigate("/filiacao")}
+        />
+        <PrimaryButton
+          text="Entrar"
+          onClick={() => handleLogin()}
+          maxWidth="400px"
+        />
+      </Card>
     </div>
   );
 }

@@ -1,0 +1,78 @@
+@media screen and (max-width: 1080px) {
+  .container-list-benefits {
+    display: grid;
+    width: 90%;
+    position: relative;
+  }
+
+  .search-box-benefits {
+    display: grid;
+    width: 100%;
+    margin-top: 1rem;
+    position: relative;
+  }
+
+  .double-box-list-benefits {
+    display: contents;
+    font-size: 16px;
+    color: #332117 !important;
+    margin-left: 1.2rem;
+    white-space: nowrap;
+  }
+
+  .double-box-list-benefits .MuiButton-root {
+    margin-left: 1.2rem;
+    margin-bottom: 0.5rem;
+    width: 90%;
+  }
+
+  .list-item-benefits {
+    padding: 0.5rem;
+  }
+}
+
+@media screen and (min-width: 1080px) {
+  label {
+    color: #332117 !important;
+  }
+
+  .container-list-benefits {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .forms-container-list-benefits {
+    margin: 3.5rem;
+    width: 80%;
+    display: inherit;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .search-box-benefits {
+    display: grid;
+    width: 85%;
+    margin-top: 1rem;
+    position: relative;
+  }
+
+  .double-box-list-benefits {
+    display: grid;
+    grid-template-columns: 2.3fr 2fr;
+    font-size: 24px;
+  }
+
+  .double-box-list-benefits button {
+    display: grid;
+    margin-top: 0px;
+    margin-bottom: 40px;
+    width: 334px;
+    height: 44px;
+    position: relative;
+  }
+
+  .list-item-benefits {
+    color: #332117 !important;
+    margin-bottom: 4rem;
+  }
+}

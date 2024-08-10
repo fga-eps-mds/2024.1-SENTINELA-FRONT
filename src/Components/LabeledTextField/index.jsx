@@ -1,9 +1,14 @@
 import PropTypes from "prop-types";
-import { theme } from "../../Styles/global";
+import theme from "../../Styles/global";
 import TextField from "@mui/material/TextField";
 
-
-export default function LabeledTextField ({ label, placeholder, type, value, onChange }) {
+export default function LabeledTextField({
+  label,
+  placeholder,
+  type,
+  value,
+  onChange,
+}) {
   return (
     <TextField
       label={label}
@@ -14,30 +19,31 @@ export default function LabeledTextField ({ label, placeholder, type, value, onC
       value={value}
       onChange={onChange}
       sx={{
-        width: "400px",
-        fontFamily: "Noto Sans",
+        maxWidth: "400px",
+        width: "90%",
+        fontFamily: theme.typography.fontFamilyPrimary,
         marginTop: "33px",
         "& .MuiInput-underline:before": {
-          borderBottomColor: theme.palette.custom.main, // Cor da borda inferior antes do foco
+          borderBottomColor: theme.palette.main, // Cor da borda inferior antes do foco
         },
         "& .MuiInput-underline:hover:before": {
-          borderBottomColor: theme.palette.custom.main, // Cor da borda inferior ao passar o mouse
+          borderBottomColor: theme.palette.main, // Cor da borda inferior ao passar o mouse
         },
         "& .MuiInput-underline:after": {
-          borderBottomColor: theme.palette.custom.main, // Cor da borda inferior após o foco
+          borderBottomColor: theme.palette.main, // Cor da borda inferior após o foco
         },
         "& .MuiInputBase-input": {
-          color: theme.palette.custom.contrastText, // Cor do texto
+          color: theme.palette.contrastText, // Cor do texto
         },
         "& .MuiInputLabel-root": {
-          color: theme.palette.custom.main,
-          fontFamily: '"Noto Sans", sans-serif',
+          color: theme.palette.main,
+          fontFamily: theme.typography.fontFamilyPrimary,
         },
         "& .MuiInputLabel-root.Mui-focused": {
-          color: theme.palette.custom.main, // Cor do rótulo quando focado
+          color: theme.palette.main, // Cor do rótulo quando focado
         },
         "& .MuiInputBase-input::placeholder": {
-          fontFamily: '"Overpass", sans-serif', // Fonte do placeholder
+          fontFamily: theme.typography.fontFamilySecondary, // Fonte do placeholder
         },
       }}
     />
@@ -47,4 +53,7 @@ export default function LabeledTextField ({ label, placeholder, type, value, onC
 LabeledTextField.propTypes = {
   label: PropTypes.string.isRequired,
   placeholder: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
 };

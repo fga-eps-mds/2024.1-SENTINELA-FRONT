@@ -1,16 +1,15 @@
-import React from 'react';
-import { createBrowserRouter, RouterProvider, BrowserRouter, Route, Routes } from "react-router-dom";
-import Login from '../Pages/Public/Login';
-import Home from '../Pages/Protected/Home';
+import { Route, Routes } from "react-router-dom";
+import Login from "../Pages/Public/Login";
+import MemberShip from "../Pages/Public/MemberShip";
+import PasswordRecovery from "../Pages/Public/PasswordRecovery";
 
 const PublicRoutes = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/home" element={<Home />} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Login />} />
+      <Route path="/filiacao" element={<MemberShip />} />
+      <Route path="/passwordrecovery" element={<PasswordRecovery />} />
+    </Routes>
   );
 };
 

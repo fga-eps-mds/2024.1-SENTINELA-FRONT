@@ -1,13 +1,28 @@
 :root {
   font-family: "Noto Sans", "Overpass", sans-serif;
-  background-color: #F9F6F3;
+  background-color: #f9f6f3;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
 * {
   margin: 0;
   padding: 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  width: 100%;
+}
+
+.routes {
+  flex-grow: 1;
+  overflow-y: auto;
+  height: 100vh;
 }

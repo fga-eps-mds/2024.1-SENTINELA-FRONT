@@ -1,0 +1,13 @@
+@media screen and (max-width: 1080px) {
+  .MuiInputBase-input {
+    width: calc(100% - 2rem);
+  }
+
+  .MuiInputAdornment-root {
+    margin-left: 2rem;
+  }
+
+  .MuiInputLabel-root {
+    font-size: 0.875rem;
+  }
+}

@@ -1,7 +1,7 @@
 import "./index.css";
 import PropTypes from "prop-types";
 import { Alert, AlertTitle } from "@mui/material";
-import {theme} from "../../Styles/global";
+import theme from "../../Styles/global";
 
 export default function Modal({
   show,
