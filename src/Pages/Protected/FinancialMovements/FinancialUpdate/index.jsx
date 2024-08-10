@@ -1,21 +1,15 @@
-// import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import { useState } from "react";
 // import React from "react";
-// import { useNavigate } from "react-router-dom";
-// import FieldNumber from "../../../../Components/FieldNumber";
 import FieldSelect from "../../../../Components/FieldSelect";
 import FieldText from "../../../../Components/FieldText";
 import Modal from "../../../../Components/Modal";
 import PrimaryButton from "../../../../Components/PrimaryButton";
 import SecondaryButton from "../../../../Components/SecondaryButton";
 import "./index.css";
-// import dayjs from "dayjs";
-// import "dayjs/locale/pt-br";
 import DataSelect from "../../../../Components/DataSelect";
 import CheckField from "../../../../Components/Checkfield";
 
-export default function FinancialCreate() {
-  //   const navigate = useNavigate();
+export default function FinancialUpdate() {
   const [contaOrigem, setContaOrigem] = useState("");
   const [contaDestino, setContaDestino] = useState("");
   const [tipoDocumento, setTipoDocumento] = useState("");
@@ -29,7 +23,9 @@ export default function FinancialCreate() {
   const [dataPagamento, setdataPagamento] = useState(null);
   const [baixada, setBaixada] = useState(false);
   const [descricao, setDescricao] = useState("");
-  const [showModal, setShowModal] = useState(false);
+  const [showSaveModal, setShowSaveModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showDeletedModal, setShowDeletedModal] = useState(false);
 
   const handleChangeContaOrigem = (event) => {
     setContaOrigem(event.target.value);
@@ -48,35 +44,57 @@ export default function FinancialCreate() {
     console.log(newChecked);
   };
 
-  const handleCloseDialog = () => {
-    setShowModal(false);
+  const handleSaveModal = () => {
+    setShowSaveModal(true);
   };
 
-  const handleSubmit = () => {
-    setShowModal(true);
+  const handleDeleteModal = () => {
+    setShowDeleteModal(true);
+  };
+
+  const handleSave = () => {
+    setShowSaveModal(false);
+    console.log("Salvando alterações...");
+    // Aqui você pode adicionar a lógica de salvar as alterações
+  };
+
+  const handleDelete = () => {
+    setShowDeletedModal(true);
+    setShowDeleteModal(false);
+    console.log("Deletando usuário...");
+    // Aqui você pode adicionar a lógica de deletar o usuário
+  };
+
+  const handleDeleteCloseDialog = () => {
+    setShowDeleteModal(false);
+  };
+
+  const handleDeletedCloseDialog = () => {
+    setShowDeletedModal(false);
+    console.log("Usuário deletado");
   };
 
   return (
     <section className="container">
       <div className="forms-container">
-        <h1> Cadastro de Movimentações Financeiras </h1>
-        <h3>Dados da Movimentação</h3>
+        <h1> Visualização de Movimentações Financeiras </h1>
+        <h3>Dados da movimentação financeira</h3>
 
         <div className="double-box-fin">
           <FieldSelect
-            label="Conta origem"
+            label="Conta Origem *"
             value={contaOrigem}
             onChange={handleChangeContaOrigem}
             options={["teste", "teste2"]}
           />
           <FieldSelect
-            label="Conta destino"
+            label="Conta Destino *"
             value={contaDestino}
             onChange={handleChangeContaDestino}
             options={["teste", "teste-X"]}
           />
           <FieldText
-            label="Tipo documento"
+            label="Tipo Documento "
             onChange={(e) => setTipoDocumento(e.target.value)}
             value={tipoDocumento}
           />
@@ -86,12 +104,12 @@ export default function FinancialCreate() {
             value={cpfCnpj}
           />
           <FieldText
-            label="Valor Bruto"
+            label="Valor Bruto *"
             onChange={(e) => setValorBruto(e.target.value)}
             value={valorBruto}
           />
           <FieldText
-            label="Valor Liquído"
+            label="Valor Líquido"
             onChange={(e) => setValorLiquido(e.target.value)}
             value={valorLiquido}
           />
@@ -118,7 +136,7 @@ export default function FinancialCreate() {
             onChange={(newValue) => setDataVencimento(newValue)}
           />
           <DataSelect
-            label="Data de pagamento"
+            label="Data de pagamento *"
             value={dataPagamento}
             onChange={(newValue) => setdataPagamento(newValue)}
           />
@@ -134,16 +152,44 @@ export default function FinancialCreate() {
           onChange={(e) => setDescricao(e.target.value)}
           value={descricao}
         />
-        <PrimaryButton text="Cadastrar" onClick={handleSubmit} />
+
+        <div className="double-buttons-mov">
+          <SecondaryButton text="Deletar" onClick={handleDeleteModal} />
+          <PrimaryButton text="Salvar" onClick={handleSaveModal} />
+        </div>
+
+        <Modal alertTitle="Alterações Salvas" show={showSaveModal}>
+          <SecondaryButton
+            key={"saveButtons"}
+            text="OK"
+            onClick={handleSave}
+            width="338px"
+          />
+        </Modal>
+
         <Modal
-          width="338px"
-          alertTitle="Cadastro de movimentação concluído"
-          show={showModal}
+          alertTitle="Deseja deletar movimentação do sistema?"
+          show={showDeleteModal}
         >
           <SecondaryButton
+            key={"deleteButtons"}
+            text="EXCLUIR MOVIMENTAÇÃO"
+            onClick={handleDelete}
+            width="338px"
+          />
+          <SecondaryButton
             key={"modalButtons"}
+            text="CANCELAR E MANTER MOVIMENTAÇÃO"
+            onClick={handleDeleteCloseDialog}
+            width="338px"
+          />
+        </Modal>
+
+        <Modal alertTitle="Movimentação Deletada" show={showDeletedModal}>
+          <SecondaryButton
+            key={"okButtons"}
             text="OK"
-            onClick={handleCloseDialog}
+            onClick={handleDeletedCloseDialog}
             width="338px"
           />
         </Modal>

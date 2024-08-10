@@ -110,4 +110,17 @@
   #addDependentBttn {
     cursor: pointer;
   }
+  .double-buttons-mov {
+    display: flex;
+    justify-content: space-between; /* Distribui os botões igualmente no espaço disponível */
+    align-items: end; /* Alinha os botões verticalmente */
+    gap: 20px;
+  }
+
+  .double-buttons-mov button {
+    flex: 1; /* Faz com que os botões ocupem o espaço disponível igualmente */
+    margin-top: 0;
+    margin-bottom: 0;
+    height: 40px;
+  }
 }

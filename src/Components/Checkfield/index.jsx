@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Checkbox from "@mui/material/Checkbox";
 import { Box } from "@mui/material";
 import { styled } from "@mui/system";
@@ -39,8 +39,12 @@ const CustomCheckbox = styled(Checkbox)(() => ({
   },
 }));
 
-const CheckField = ({ label, checked, onChange }) => {
-  const [isChecked, setIsChecked] = useState(checked || false);
+const CheckField = ({ label, checked = false, onChange }) => {
+  const [isChecked, setIsChecked] = useState(checked);
+
+  useEffect(() => {
+    setIsChecked(checked);
+  }, [checked]);
 
   const handleClick = () => {
     const newChecked = !isChecked;
@@ -56,7 +60,7 @@ const CheckField = ({ label, checked, onChange }) => {
       onClick={handleClick}
     >
       <span>{label}</span>
-      <CustomCheckbox checked={isChecked} onChange={handleClick} />
+      <CustomCheckbox checked={isChecked} />
     </CustomContainer>
   );
 };

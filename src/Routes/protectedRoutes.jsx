@@ -10,6 +10,7 @@ import ListSupplier from "../Pages/Protected/ListSupplier";
 import ViewSupplier from "../Pages/Protected/UpdateSupplier";
 import FinancialMovements from "../Pages/Protected/FinancialMovements/FinancialCreate";
 import FinancialList from "../Pages/Protected/FinancialMovements/FinancialList";
+import FinancialUpdate from "../Pages/Protected/FinancialMovements/FinancialUpdate";
 
 const ProtectedRoutes = () => {
   return (
@@ -25,6 +26,7 @@ const ProtectedRoutes = () => {
       <Route path="/perfil" element={<ProfileUpdate />} />
       <Route path="/movimentacoes/criar" element={<FinancialMovements />} />
       <Route path="/movimentacoes/lista" element={<FinancialList />} />
+      <Route path="/movimentacoes/visualizar" element={<FinancialUpdate />} />
     </Routes>
   );
 };

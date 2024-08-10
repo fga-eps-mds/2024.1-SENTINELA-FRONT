@@ -12,7 +12,7 @@ import DataSelect from "../../../../Components/DataSelect";
 import FieldText from "../../../../Components/FieldText";
 import "dayjs/locale/pt-br";
 import { APIBank } from "../../../../Services/BaseService";
-import dayjs from "dayjs";
+// import dayjs from "dayjs";
 
 export default function FinancialList() {
   const [movements, setMovements] = useState([]);
@@ -80,20 +80,18 @@ export default function FinancialList() {
           />
         </div>
 
-      
         <div className="date-box">
           <DataSelect
-          label="Data Inicial" 
-          value={dataInicio}
-          onChange={(e) => setDataInicio(e.target.value)}
+            label="Data Inicial"
+            value={dataInicio}
+            onChange={(e) => setDataInicio(e.target.value)}
           />
           <DataSelect
-          label="Data Final" 
-          value={dataFinal}
-          onChange={(e) => setDataFinal(e.target.value)}
+            label="Data Final"
+            value={dataFinal}
+            onChange={(e) => setDataFinal(e.target.value)}
           />
         </div>
-      
 
         <List>
           {filteredMovements.map((movement, index) => (
