@@ -4,15 +4,13 @@ import "./index.css";
 import PrimaryButton from "../../../../Components/PrimaryButton";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemText";
+import ListItemButton from "@mui/material/ListItemButton";
 import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
 import SecondaryButton from "../../../../Components/SecondaryButton";
 import DataSelect from "../../../../Components/DataSelect";
 import FieldText from "../../../../Components/FieldText";
-import "dayjs/locale/pt-br";
 import { APIBank } from "../../../../Services/BaseService";
-// import dayjs from "dayjs";
 
 export default function FinancialList() {
   const [movements, setMovements] = useState([]);
@@ -21,43 +19,47 @@ export default function FinancialList() {
   const [dataInicio, setDataInicio] = useState(null);
   const [dataFinal, setDataFinal] = useState(null);
 
-  const storagedUser = localStorage.getItem("@App:user");
+  const storagedUser = JSON.parse(localStorage.getItem("@App:user"));
 
   useEffect(() => {
-    const fetchMovementsForm = async () => {
+    const fetchMovements = async () => {
       try {
-        const response = await APIBank.get(`/SupplierForm`, {
+        console.log("Fetching movements...");
+        const response = await APIBank.get(`/financialMovements`, {
           headers: {
             Authorization: `Bearer ${storagedUser.token}`,
           },
         });
 
         const data = response.data;
+        console.log("Movements fetched:", data);
         if (Array.isArray(data)) {
           setMovements(data);
         } else {
           console.error("Os dados recebidos não são um array.");
         }
       } catch (error) {
-        console.error("Erro ao buscar fornecedores:", error);
+        console.error("Erro ao buscar movimentos financeiros:", error);
       }
     };
 
-    fetchMovementsForm();
+    fetchMovements();
   }, []);
 
   const handleSubmit = () => {
-    navigate("/movimentacao/criar");
+    console.log("Navigating to create page");
+    navigate("/movimentacoes/criar");
   };
 
   const handleItemClick = (movement) => {
-    navigate("/movimentacao/${movement.name}", {
+    console.log("Item clicked:", movement);
+    navigate(`/movimentacoes/visualizar/${movement._id}`, {
       state: { movementId: movement._id },
     });
   };
 
   const filteredMovements = movements.filter((movement) =>
-    movement.name.toLowerCase().includes(search.toLowerCase())
+    movement.descricao.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
@@ -76,7 +78,7 @@ export default function FinancialList() {
           />
           <SecondaryButton
             text="Pesquisar"
-            onClick={() => filteredMovements(search)}
+            onClick={() => console.log("Search term:", search)}
           />
         </div>
 
@@ -111,7 +113,12 @@ export default function FinancialList() {
                   }
                   onClick={() => handleItemClick(movement)}
                 >
-                  <ListItemText primary={movement.name} />
+                  <ListItemText
+                    primary={movement.descricao}
+                    secondary={`Data de pagamento: ${new Date(
+                      movement.datadePagamento
+                    ).toLocaleDateString()}`}
+                  />
                 </ListItemButton>
               </ListItem>
 

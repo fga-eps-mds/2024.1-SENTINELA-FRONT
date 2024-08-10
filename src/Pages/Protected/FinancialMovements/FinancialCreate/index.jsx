@@ -7,6 +7,7 @@ import SecondaryButton from "../../../../Components/SecondaryButton";
 import "./index.css";
 import DataSelect from "../../../../Components/DataSelect";
 import CheckField from "../../../../Components/Checkfield";
+import { createFinancialMovements } from "../../../../Services/FinancialMovementsService";
 
 export default function FinancialCreate() {
   const [contaOrigem, setContaOrigem] = useState("");
@@ -24,17 +25,11 @@ export default function FinancialCreate() {
   const [descricao, setDescricao] = useState("");
   const [showModal, setShowModal] = useState(false);
 
-  // // Funções para remover letras e formatar valores numéricos
-  // const handleNumberInput = (value) => {
-  //   return value.replace(/\D/g, "");
-  // };
-
   const handleCurrencyInput = (value) => {
     const numericValue = value.replace(/\D/g, "");
     return numericValue ? (parseFloat(numericValue) / 100).toFixed(2) : ""; // Converte para valor monetário
   };
 
-  // Função para formatar CPF ou CNPJ
   const handleCpfCnpjInput = (value) => {
     const numericValue = value.replace(/\D/g, "");
     if (numericValue.length <= 11) {
@@ -54,28 +49,67 @@ export default function FinancialCreate() {
   };
 
   const handleChangeContaOrigem = (event) => {
+    console.log("Conta Origem:", event.target.value);
     setContaOrigem(event.target.value);
   };
 
   const handleChangeContaDestino = (event) => {
+    console.log("Conta Destino:", event.target.value);
     setContaDestino(event.target.value);
   };
 
   const handleChangePagamento = (event) => {
+    console.log("Forma de Pagamento:", event.target.value);
     setPagamento(event.target.value);
   };
 
   const handleChangeBaixada = (newChecked) => {
+    console.log("Baixada:", newChecked);
     setBaixada(newChecked);
-    console.log(newChecked);
   };
 
   const handleCloseDialog = () => {
     setShowModal(false);
   };
 
-  const handleSubmit = () => {
-    setShowModal(true);
+  const handleSubmit = async () => {
+    console.log("Valor Bruto antes do parse:", valorBruto);
+    console.log("Valor Líquido antes do parse:", valorLiquido);
+    console.log("Acréscimo antes do parse:", acrescimo);
+    console.log("Desconto antes do parse:", desconto);
+    const formattedDataVencimento = dataVencimento
+      ? dataVencimento.format("YYYY-MM-DD")
+      : null;
+    const formattedDataPagamento = dataPagamento
+      ? dataPagamento.format("YYYY-MM-DD")
+      : null;
+
+    const financialData = {
+      contaOrigem,
+      contaDestino,
+      tipoDocumento,
+      cpfCnpj,
+      valorBruto: parseFloat(valorBruto),
+      valorLiquido: parseFloat(valorLiquido),
+      acrescimo: parseFloat(acrescimo),
+      desconto: parseFloat(desconto),
+      formadePagamento: pagamento,
+      datadeVencimento: formattedDataVencimento,
+      datadePagamento: formattedDataPagamento,
+      baixada,
+      descricao,
+    };
+
+    console.log("Dados enviados ao backend:", financialData);
+
+    const error = await createFinancialMovements(financialData);
+
+    if (!error) {
+      console.log("Cadastro realizado com sucesso.");
+      setShowModal(true);
+    } else {
+      console.error("Erro ao cadastrar movimentação financeira:", error);
+    }
   };
 
   return (
@@ -89,13 +123,23 @@ export default function FinancialCreate() {
             label="Conta origem"
             value={contaOrigem}
             onChange={handleChangeContaOrigem}
-            options={["teste", "teste2"]}
+            options={[
+              "Fornecedor",
+              "Sindicalizado",
+              "Conta BRB",
+              "Conta Mercado Pago",
+            ]}
           />
           <FieldSelect
             label="Conta destino"
             value={contaDestino}
             onChange={handleChangeContaDestino}
-            options={["teste", "teste-X"]}
+            options={[
+              "Fornecedor",
+              "Sindicalizado",
+              "Conta BRB",
+              "Conta Mercado Pago",
+            ]}
           />
           <FieldText
             label="Tipo documento"
@@ -134,7 +178,15 @@ export default function FinancialCreate() {
             label="Forma de Pagamento *"
             value={pagamento}
             onChange={handleChangePagamento}
-            options={["pix", "débito", "crédito", "boleto"]}
+            options={[
+              "Crédito",
+              "Débito",
+              "PIX",
+              "Dinheiro",
+              "Boleto",
+              "Cheque",
+              "Depósito",
+            ]}
           />
           <DataSelect
             label="Data de vencimento"

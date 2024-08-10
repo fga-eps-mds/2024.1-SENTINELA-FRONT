@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import FieldSelect from "../../../../Components/FieldSelect";
 import FieldText from "../../../../Components/FieldText";
 import Modal from "../../../../Components/Modal";
@@ -7,6 +8,11 @@ import SecondaryButton from "../../../../Components/SecondaryButton";
 import "./index.css";
 import DataSelect from "../../../../Components/DataSelect";
 import CheckField from "../../../../Components/Checkfield";
+import {
+  getFinancialMovementsById,
+  updateFinancialMovementsById,
+  deleteFinancialMovementsById,
+} from "../../../../Services/FinancialMovementsService";
 
 export default function FinancialUpdate() {
   const [contaOrigem, setContaOrigem] = useState("");
@@ -19,71 +25,83 @@ export default function FinancialUpdate() {
   const [desconto, setDesconto] = useState("");
   const [pagamento, setPagamento] = useState("");
   const [dataVencimento, setDataVencimento] = useState(null);
-  const [dataPagamento, setdataPagamento] = useState(null);
+  const [dataPagamento, setDataPagamento] = useState(null);
   const [baixada, setBaixada] = useState(false);
   const [descricao, setDescricao] = useState("");
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showDeletedModal, setShowDeletedModal] = useState(false);
 
-  const handleChangeContaOrigem = (event) => {
-    setContaOrigem(event.target.value);
-  };
+  const navigate = useNavigate();
+  const location = useLocation();
+  const movementId = location.state?.movementId;
 
-  const handleChangeContaDestino = (event) => {
-    setContaDestino(event.target.value);
-  };
+  useEffect(() => {
+    const fetchMovement = async () => {
+      if (movementId) {
+        try {
+          const data = await getFinancialMovementsById(movementId);
+          setContaOrigem(data.contaOrigem || "");
+          setContaDestino(data.contaDestino || "");
+          setTipoDocumento(data.tipoDocumento || "");
+          setCpfCnpj(data.cpfCnpj || "");
+          setValorBruto(data.valorBruto || "");
+          setValorLiquido(data.valorLiquido || "");
+          setAcrescimo(data.acrescimo || "");
+          setDesconto(data.desconto || "");
+          setPagamento(data.formadePagamento || "");
+          setDataVencimento(data.dataVencimento || null);
+          setDataPagamento(data.dataPagamento || null);
+          setBaixada(data.baixada || false);
+          setDescricao(data.descricao || "");
+        } catch (error) {
+          console.error("Erro ao buscar dados da movimentação:", error);
+        }
+      }
+    };
 
-  const handleChangePagamento = (event) => {
-    setPagamento(event.target.value);
-  };
+    fetchMovement();
+  }, [movementId]);
 
-  const handleChangeBaixada = (newChecked) => {
-    setBaixada(newChecked);
-    console.log(newChecked);
-  };
-
-  const handleSaveModal = () => {
-    setShowSaveModal(true);
-  };
-
-  const handleDeleteModal = () => {
-    setShowDeleteModal(true);
-  };
-
-  const handleSave = () => {
+  const handleSave = async () => {
     setShowSaveModal(false);
-    console.log("Salvando alterações...");
-    // Aqui você pode adicionar a lógica de salvar as alterações
+    try {
+      const updatedData = {
+        contaOrigem,
+        contaDestino,
+        tipoDocumento,
+        cpfCnpj,
+        valorBruto,
+        valorLiquido,
+        acrescimo,
+        desconto,
+        pagamento,
+        dataVencimento,
+        dataPagamento,
+        baixada,
+        descricao,
+      };
+      await updateFinancialMovementsById(movementId, updatedData);
+      setShowSaveModal(true);
+    } catch (error) {
+      console.error("Erro ao salvar alterações:", error);
+    }
   };
 
-  const handleDelete = () => {
-    setShowDeletedModal(true);
-    setShowDeleteModal(false);
-    console.log("Deletando usuário...");
-    // Aqui você pode adicionar a lógica de deletar o usuário
+  const handleDelete = async () => {
+    try {
+      await deleteFinancialMovementsById(movementId);
+      setShowDeletedModal(true);
+    } catch (error) {
+      console.error("Erro ao deletar movimentação:", error);
+    }
   };
-
-  const handleDeleteCloseDialog = () => {
-    setShowDeleteModal(false);
-  };
-
-  const handleDeletedCloseDialog = () => {
-    setShowDeletedModal(false);
-    console.log("Usuário deletado");
-  };
-
-  // // Funções para remover letras e formatar valores numéricos
-  // const handleNumberInput = (value) => {
-  //   return value.replace(/\D/g, "");
-  // };
 
   const handleCurrencyInput = (value) => {
     const numericValue = value.replace(/\D/g, "");
     return numericValue ? (parseFloat(numericValue) / 100).toFixed(2) : ""; // Converte para valor monetário
   };
 
-  // Função para formatar CPF ou CNPJ
   const handleCpfCnpjInput = (value) => {
     const numericValue = value.replace(/\D/g, "");
     if (numericValue.length <= 11) {
@@ -102,6 +120,26 @@ export default function FinancialUpdate() {
     }
   };
 
+  const handleChangeContaOrigem = (event) => {
+    console.log("Conta Origem:", event.target.value);
+    setContaOrigem(event.target.value);
+  };
+
+  const handleChangeContaDestino = (event) => {
+    console.log("Conta Destino:", event.target.value);
+    setContaDestino(event.target.value);
+  };
+
+  const handleChangePagamento = (event) => {
+    console.log("Forma de Pagamento:", event.target.value);
+    setPagamento(event.target.value);
+  };
+
+  const handleChangeBaixada = (newChecked) => {
+    console.log("Baixada:", newChecked);
+    setBaixada(newChecked);
+  };
+
   return (
     <section className="container">
       <div className="forms-container">
@@ -110,56 +148,72 @@ export default function FinancialUpdate() {
 
         <div className="double-box-fin">
           <FieldSelect
-            label="Conta Origem *"
+            label="Conta origem"
             value={contaOrigem}
             onChange={handleChangeContaOrigem}
-            options={["teste", "teste2"]}
+            options={[
+              "Fornecedor",
+              "Sindicalizado",
+              "Conta BRB",
+              "Conta Mercado Pago",
+            ]}
           />
           <FieldSelect
-            label="Conta Destino *"
+            label="Conta destino"
             value={contaDestino}
             onChange={handleChangeContaDestino}
-            options={["teste", "teste-X"]}
+            options={[
+              "Fornecedor",
+              "Sindicalizado",
+              "Conta BRB",
+              "Conta Mercado Pago",
+            ]}
           />
           <FieldText
-            label="Tipo Documento "
-            onChange={(e) => setTipoDocumento(e.target.value)}
+            label="Tipo Documento"
             value={tipoDocumento}
+            onChange={(e) => setTipoDocumento(e.target.value)}
           />
           <FieldText
             label="CPF/CNPJ"
-            onChange={(e) => setCpfCnpj(handleCpfCnpjInput(e.target.value))}
             value={cpfCnpj}
+            onChange={(e) => setCpfCnpj(handleCpfCnpjInput(e.target.value))}
           />
-
           <FieldText
             label="Valor Bruto"
-            onChange={(e) => setValorBruto(handleCurrencyInput(e.target.value))}
             value={valorBruto}
+            onChange={(e) => setValorBruto(handleCurrencyInput(e.target.value))}
           />
           <FieldText
             label="Valor Liquído"
+            value={valorLiquido}
             onChange={(e) =>
               setValorLiquido(handleCurrencyInput(e.target.value))
             }
-            value={valorLiquido}
           />
           <FieldText
             label="Acréscimo"
-            onChange={(e) => setAcrescimo(handleCurrencyInput(e.target.value))}
             value={acrescimo}
+            onChange={(e) => setAcrescimo(handleCurrencyInput(e.target.value))}
           />
           <FieldText
             label="Desconto"
             value={desconto}
             onChange={(e) => setDesconto(handleCurrencyInput(e.target.value))}
           />
-
           <FieldSelect
             label="Forma de Pagamento *"
             value={pagamento}
             onChange={handleChangePagamento}
-            options={["pix", "débito", "crédito", "boleto"]}
+            options={[
+              "Crédito",
+              "Débito",
+              "PIX",
+              "Dinheiro",
+              "Boleto",
+              "Cheque",
+              "Depósito",
+            ]}
           />
           <DataSelect
             label="Data de vencimento"
@@ -169,7 +223,7 @@ export default function FinancialUpdate() {
           <DataSelect
             label="Data de pagamento *"
             value={dataPagamento}
-            onChange={(newValue) => setdataPagamento(newValue)}
+            onChange={(newValue) => setDataPagamento(newValue)}
           />
           <CheckField
             label="Baixada"
@@ -180,20 +234,26 @@ export default function FinancialUpdate() {
 
         <FieldText
           label="Descrição"
-          onChange={(e) => setDescricao(e.target.value)}
           value={descricao}
+          onChange={(e) => setDescricao(e.target.value)}
         />
 
         <div className="double-buttons-mov">
-          <SecondaryButton text="Deletar" onClick={handleDeleteModal} />
-          <PrimaryButton text="Salvar" onClick={handleSaveModal} />
+          <SecondaryButton
+            text="Deletar"
+            onClick={() => setShowDeleteModal(true)}
+          />
+          <PrimaryButton text="Salvar" onClick={handleSave} />
         </div>
 
         <Modal alertTitle="Alterações Salvas" show={showSaveModal}>
           <SecondaryButton
             key={"saveButtons"}
             text="OK"
-            onClick={handleSave}
+            onClick={() => {
+              setShowSaveModal(false);
+              navigate("/movimentacoes/lista");
+            }}
             width="338px"
           />
         </Modal>
@@ -211,7 +271,7 @@ export default function FinancialUpdate() {
           <SecondaryButton
             key={"modalButtons"}
             text="CANCELAR E MANTER MOVIMENTAÇÃO"
-            onClick={handleDeleteCloseDialog}
+            onClick={() => setShowDeleteModal(false)}
             width="338px"
           />
         </Modal>
@@ -220,7 +280,10 @@ export default function FinancialUpdate() {
           <SecondaryButton
             key={"okButtons"}
             text="OK"
-            onClick={handleDeletedCloseDialog}
+            onClick={() => {
+              setShowDeletedModal(false);
+              navigate("/movimentacoes/lista");
+            }}
             width="338px"
           />
         </Modal>

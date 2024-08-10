@@ -26,7 +26,10 @@ const ProtectedRoutes = () => {
       <Route path="/perfil" element={<ProfileUpdate />} />
       <Route path="/movimentacoes/criar" element={<FinancialMovements />} />
       <Route path="/movimentacoes/lista" element={<FinancialList />} />
-      <Route path="/movimentacoes/visualizar" element={<FinancialUpdate />} />
+      <Route
+        path="/movimentacoes/visualizar/:id"
+        element={<FinancialUpdate />}
+      />
     </Routes>
   );
 };
