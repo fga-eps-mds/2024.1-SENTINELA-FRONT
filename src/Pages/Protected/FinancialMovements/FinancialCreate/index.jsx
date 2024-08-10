@@ -8,6 +8,7 @@ import "./index.css";
 import DataSelect from "../../../../Components/DataSelect";
 import CheckField from "../../../../Components/Checkfield";
 import { createFinancialMovements } from "../../../../Services/FinancialMovementsService";
+import { useNavigate } from "react-router-dom";
 
 export default function FinancialCreate() {
   const [contaOrigem, setContaOrigem] = useState("");
@@ -68,7 +69,10 @@ export default function FinancialCreate() {
     setBaixada(newChecked);
   };
 
+  const navigate = useNavigate();
+
   const handleCloseDialog = () => {
+    navigate("/movimentacoes/lista");
     setShowModal(false);
   };
 
@@ -189,12 +193,12 @@ export default function FinancialCreate() {
             ]}
           />
           <DataSelect
-            label="Data de vencimento"
+            label="Data de vencimento *"
             value={dataVencimento}
             onChange={(newValue) => setDataVencimento(newValue)}
           />
           <DataSelect
-            label="Data de pagamento"
+            label="Data de pagamento *"
             value={dataPagamento}
             onChange={(newValue) => setDataPagamento(newValue)}
           />
@@ -206,7 +210,7 @@ export default function FinancialCreate() {
         </div>
 
         <FieldText
-          label="Descrição"
+          label="Descrição *"
           onChange={(e) => setDescricao(e.target.value)}
           value={descricao}
         />

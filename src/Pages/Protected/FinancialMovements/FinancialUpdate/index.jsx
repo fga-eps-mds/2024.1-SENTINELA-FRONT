@@ -76,7 +76,7 @@ export default function FinancialUpdate() {
         valorLiquido,
         acrescimo,
         desconto,
-        pagamento,
+        formadePagamento: pagamento,
         datadeVencimento: dataVencimento,
         datadePagamento: dataPagamento,
         baixada,
@@ -181,7 +181,7 @@ export default function FinancialUpdate() {
             onChange={(e) => setcpFCnpj(handleCpfCnpjInput(e.target.value))}
           />
           <FieldText
-            label="Valor Bruto"
+            label="Valor Bruto *"
             value={valorBruto}
             onChange={(e) => setValorBruto(handleCurrencyInput(e.target.value))}
           />
@@ -217,7 +217,7 @@ export default function FinancialUpdate() {
             ]}
           />
           <DataSelect
-            label="Data de vencimento"
+            label="Data de vencimento *"
             value={dataVencimento}
             onChange={(newValue) => setDataVencimento(newValue)}
           />
@@ -234,7 +234,7 @@ export default function FinancialUpdate() {
         </div>
 
         <FieldText
-          label="Descrição"
+          label="Descrição *"
           value={descricao}
           onChange={(e) => setDescricao(e.target.value)}
         />
