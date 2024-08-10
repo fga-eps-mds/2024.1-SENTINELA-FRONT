@@ -1,5 +1,4 @@
 import { useState } from "react";
-// import React from "react";
 import FieldSelect from "../../../../Components/FieldSelect";
 import FieldText from "../../../../Components/FieldText";
 import Modal from "../../../../Components/Modal";
@@ -74,6 +73,35 @@ export default function FinancialUpdate() {
     console.log("Usuário deletado");
   };
 
+  // // Funções para remover letras e formatar valores numéricos
+  // const handleNumberInput = (value) => {
+  //   return value.replace(/\D/g, "");
+  // };
+
+  const handleCurrencyInput = (value) => {
+    const numericValue = value.replace(/\D/g, "");
+    return numericValue ? (parseFloat(numericValue) / 100).toFixed(2) : ""; // Converte para valor monetário
+  };
+
+  // Função para formatar CPF ou CNPJ
+  const handleCpfCnpjInput = (value) => {
+    const numericValue = value.replace(/\D/g, "");
+    if (numericValue.length <= 11) {
+      return numericValue
+        .replace(/(\d{3})(\d)/, "$1.$2")
+        .replace(/(\d{3})(\d)/, "$1.$2")
+        .replace(/(\d{3})(\d{1,2})$/, "$1-$2")
+        .slice(0, 14); // CPF formatado
+    } else {
+      return numericValue
+        .replace(/^(\d{2})(\d)/, "$1.$2")
+        .replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3")
+        .replace(/\.(\d{3})(\d)/, ".$1/$2")
+        .replace(/(\d{4})(\d{1,2})$/, "$1-$2")
+        .slice(0, 18); // CNPJ formatado
+    }
+  };
+
   return (
     <section className="container">
       <div className="forms-container">
@@ -100,28 +128,31 @@ export default function FinancialUpdate() {
           />
           <FieldText
             label="CPF/CNPJ"
-            onChange={(e) => setCpfCnpj(e.target.value)}
+            onChange={(e) => setCpfCnpj(handleCpfCnpjInput(e.target.value))}
             value={cpfCnpj}
           />
+
           <FieldText
-            label="Valor Bruto *"
-            onChange={(e) => setValorBruto(e.target.value)}
+            label="Valor Bruto"
+            onChange={(e) => setValorBruto(handleCurrencyInput(e.target.value))}
             value={valorBruto}
           />
           <FieldText
-            label="Valor Líquido"
-            onChange={(e) => setValorLiquido(e.target.value)}
+            label="Valor Liquído"
+            onChange={(e) =>
+              setValorLiquido(handleCurrencyInput(e.target.value))
+            }
             value={valorLiquido}
           />
           <FieldText
             label="Acréscimo"
-            onChange={(e) => setAcrescimo(e.target.value)}
+            onChange={(e) => setAcrescimo(handleCurrencyInput(e.target.value))}
             value={acrescimo}
           />
           <FieldText
             label="Desconto"
             value={desconto}
-            onChange={(e) => setDesconto(e.target.value)}
+            onChange={(e) => setDesconto(handleCurrencyInput(e.target.value))}
           />
 
           <FieldSelect
