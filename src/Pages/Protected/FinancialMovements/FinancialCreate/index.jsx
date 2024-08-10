@@ -13,7 +13,7 @@ export default function FinancialCreate() {
   const [contaOrigem, setContaOrigem] = useState("");
   const [contaDestino, setContaDestino] = useState("");
   const [tipoDocumento, setTipoDocumento] = useState("");
-  const [cpfCnpj, setCpfCnpj] = useState("");
+  const [cpFCnpj, setCpFCnpj] = useState("");
   const [valorBruto, setValorBruto] = useState("");
   const [valorLiquido, setValorLiquido] = useState("");
   const [acrescimo, setAcrescimo] = useState("");
@@ -77,25 +77,25 @@ export default function FinancialCreate() {
     console.log("Valor Líquido antes do parse:", valorLiquido);
     console.log("Acréscimo antes do parse:", acrescimo);
     console.log("Desconto antes do parse:", desconto);
-    const formattedDataVencimento = dataVencimento
-      ? dataVencimento.format("YYYY-MM-DD")
-      : null;
-    const formattedDataPagamento = dataPagamento
-      ? dataPagamento.format("YYYY-MM-DD")
-      : null;
+    // const formattedDataVencimento = dataVencimento
+    //   ? dataVencimento.format("YYYY-MM-DD")
+    //   : null;
+    // const formattedDataPagamento = dataPagamento
+    //   ? dataPagamento.format("YYYY-MM-DD")
+    //   : null;
 
     const financialData = {
       contaOrigem,
       contaDestino,
       tipoDocumento,
-      cpfCnpj,
+      cpFCnpj,
       valorBruto: parseFloat(valorBruto),
       valorLiquido: parseFloat(valorLiquido),
       acrescimo: parseFloat(acrescimo),
       desconto: parseFloat(desconto),
       formadePagamento: pagamento,
-      datadeVencimento: formattedDataVencimento,
-      datadePagamento: formattedDataPagamento,
+      datadeVencimento: dataVencimento,
+      datadePagamento: dataPagamento,
       baixada,
       descricao,
     };
@@ -148,8 +148,8 @@ export default function FinancialCreate() {
           />
           <FieldText
             label="CPF/CNPJ"
-            onChange={(e) => setCpfCnpj(handleCpfCnpjInput(e.target.value))}
-            value={cpfCnpj}
+            onChange={(e) => setCpFCnpj(handleCpfCnpjInput(e.target.value))}
+            value={cpFCnpj}
           />
           <FieldText
             label="Valor Bruto"

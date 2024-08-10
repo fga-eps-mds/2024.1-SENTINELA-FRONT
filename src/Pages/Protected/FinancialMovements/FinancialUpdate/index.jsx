@@ -13,12 +13,13 @@ import {
   updateFinancialMovementsById,
   deleteFinancialMovementsById,
 } from "../../../../Services/FinancialMovementsService";
+import dayjs from "dayjs";
 
 export default function FinancialUpdate() {
   const [contaOrigem, setContaOrigem] = useState("");
   const [contaDestino, setContaDestino] = useState("");
   const [tipoDocumento, setTipoDocumento] = useState("");
-  const [cpfCnpj, setCpfCnpj] = useState("");
+  const [cpFCnpj, setcpFCnpj] = useState("");
   const [valorBruto, setValorBruto] = useState("");
   const [valorLiquido, setValorLiquido] = useState("");
   const [acrescimo, setAcrescimo] = useState("");
@@ -44,14 +45,14 @@ export default function FinancialUpdate() {
           setContaOrigem(data.contaOrigem || "");
           setContaDestino(data.contaDestino || "");
           setTipoDocumento(data.tipoDocumento || "");
-          setCpfCnpj(data.cpfCnpj || "");
+          setcpFCnpj(data.cpFCnpj || "");
           setValorBruto(data.valorBruto || "");
           setValorLiquido(data.valorLiquido || "");
           setAcrescimo(data.acrescimo || "");
           setDesconto(data.desconto || "");
           setPagamento(data.formadePagamento || "");
-          setDataVencimento(data.dataVencimento || null);
-          setDataPagamento(data.dataPagamento || null);
+          setDataVencimento(dayjs(data.datadeVencimento || null));
+          setDataPagamento(dayjs(data.datadePagamento || null));
           setBaixada(data.baixada || false);
           setDescricao(data.descricao || "");
         } catch (error) {
@@ -70,14 +71,14 @@ export default function FinancialUpdate() {
         contaOrigem,
         contaDestino,
         tipoDocumento,
-        cpfCnpj,
+        cpFCnpj,
         valorBruto,
         valorLiquido,
         acrescimo,
         desconto,
         pagamento,
-        dataVencimento,
-        dataPagamento,
+        datadeVencimento: dataVencimento,
+        datadePagamento: dataPagamento,
         baixada,
         descricao,
       };
@@ -176,8 +177,8 @@ export default function FinancialUpdate() {
           />
           <FieldText
             label="CPF/CNPJ"
-            value={cpfCnpj}
-            onChange={(e) => setCpfCnpj(handleCpfCnpjInput(e.target.value))}
+            value={cpFCnpj}
+            onChange={(e) => setcpFCnpj(handleCpfCnpjInput(e.target.value))}
           />
           <FieldText
             label="Valor Bruto"
