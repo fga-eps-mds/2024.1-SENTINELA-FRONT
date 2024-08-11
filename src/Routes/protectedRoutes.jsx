@@ -8,6 +8,10 @@ import UserUpdatePage from "../Pages/Protected/Users/userUpdatePage";
 import Supplier from "../Pages/Protected/CreateSupplier";
 import ListSupplier from "../Pages/Protected/ListSupplier";
 import ViewSupplier from "../Pages/Protected/UpdateSupplier";
+import Benefits from "../Pages/Protected/Benefit/Benefits";
+import BenefitsList from "../Pages/Protected/Benefit/BenefitsList";
+import BenefitsCreate from "../Pages/Protected/Benefit/BenefitsCreate";
+import BenefitsUpdate from "../Pages/Protected/Benefit/BenefitsUpdate";
 
 const ProtectedRoutes = () => {
   return (
@@ -21,6 +25,10 @@ const ProtectedRoutes = () => {
       <Route path="/usuarios" element={<UserListPage />} />
       <Route path="/usuarios/hub" element={<UserHubPage />} />
       <Route path="/perfil" element={<ProfileUpdate />} />
+      <Route path="/beneficios" element={<Benefits />} />
+      <Route path="/beneficios/lista" element={<BenefitsList />} />
+      <Route path="/beneficios/criar" element={<BenefitsCreate />} />
+      <Route path="/beneficios/editar/:id" element={<BenefitsUpdate />} />
     </Routes>
   );
 };
