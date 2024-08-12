@@ -7,7 +7,6 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
-import SecondaryButton from "../../../../Components/SecondaryButton";
 import DataSelect from "../../../../Components/DataSelect";
 import FieldText from "../../../../Components/FieldText";
 import { APIBank } from "../../../../Services/BaseService";
@@ -59,10 +58,14 @@ export default function FinancialList() {
   };
 
   const filteredMovements = movements.filter((movement) => {
-    const isDescriptionMatch = movement.descricao.toLowerCase().includes(search.toLowerCase());
+    const isDescriptionMatch = movement.descricao
+      .toLowerCase()
+      .includes(search.toLowerCase());
 
     const movementDate = new Date(movement.datadePagamento);
-    const isDateInRange = (!dataInicio || movementDate >= new Date(dataInicio)) && (!dataFinal || movementDate <= new Date(dataFinal));
+    const isDateInRange =
+      (!dataInicio || movementDate >= new Date(dataInicio)) && (!dataInicio || movementDate <= new Date(dataFinal));
+      console.log(dataInicio, dataFinal, movementDate, isDateInRange); 
 
     return isDescriptionMatch && isDateInRange;
   });
@@ -87,12 +90,12 @@ export default function FinancialList() {
           <DataSelect
             label="Data Inicial"
             value={dataInicio}
-            onChange={(e) => setDataInicio(e.target.value)}
+            onChange={(newValue) => setDataInicio(newValue)}
           />
           <DataSelect
             label="Data Final"
             value={dataFinal}
-            onChange={(e) => setDataFinal(e.target.value)}
+            onChange={(newValue) => setDataFinal(newValue)}
           />
         </div>
 
