@@ -29,6 +29,8 @@ export default function UserUpdatePage() {
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showDeletedModal, setShowDeletedModal] = useState(false);
+  const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isCelularValid, setIsCelularValid] = useState(true);
 
   const handleNomeCompletoChange = (e) => {
     const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, "");
@@ -80,6 +82,8 @@ export default function UserUpdatePage() {
     return emailRegex.test(email);
   };
 
+  const removeMask = (celular) => celular.replace(/\D/g, "");
+
   const handleDelete = async () => {
     setShowDeleteModal(false);
     if (userId) {
@@ -93,8 +97,16 @@ export default function UserUpdatePage() {
   };
 
   const handleSave = async () => {
+    const trimmedCelular = removeMask(celular);
+    const isValidNumber =
+      /^\d+$/.test(trimmedCelular) && trimmedCelular.length > 10;
+    const isValidEmailAddress = isValidEmail(email);
+
+    setIsCelularValid(isValidNumber);
+    setIsEmailValid(isValidEmailAddress);
+
     // Verifica se o email é válido antes de salvar
-    if (userId && isValidEmail(email)) {
+    if (userId && isValidEmailAddress && isValidNumber) {
       const updatedUser = {
         name: nomeCompleto,
         email: email,
@@ -177,14 +189,18 @@ export default function UserUpdatePage() {
             options={loginOptions}
           />
         </div>
-
+        {!isCelularValid && (
+          <label className="isValid">
+            *Verifique se o número de celular inserido está completo
+          </label>
+        )}
         <FieldText
           label="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        {!isValidEmail(email) && (
-          <label className="isEmailValid">*Insira um email válido</label>
+        {!isEmailValid && (
+          <label className="isValid">*Insira um email válido</label>
         )}
 
         <h3>Perfil</h3>

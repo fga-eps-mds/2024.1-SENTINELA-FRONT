@@ -38,6 +38,13 @@
     margin-top: 3rem;
     color: #332117 !important;
   }
+  .isValid {
+    font-weight: 400;
+    font-size: small;
+    margin-left: 1rem;
+    margin-top: 10px;
+    color: red !important;
+  }
 
   #addDependentBttn {
     cursor: pointer;
@@ -100,8 +107,9 @@
     margin-top: 3rem;
     color: #332117 !important;
   }
-  .isEmailValid {
+  .isValid {
     font-weight: 400;
+    font-size: small;
     margin-left: 1rem;
     margin-top: 10px;
     color: red !important;
