@@ -19,10 +19,14 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
+  width: 600,
+  bgcolor: "#f5f1e6", // Cor de fundo bege
   boxShadow: 24,
   p: 4,
+  border: "2px solid #d4af37", // Borda dourada
+  borderRadius: "10px", // Arredondamento dos cantos
+  color: "#4e4e4e", // Cor do texto
+  fontFamily: "'Roboto', sans-serif",
 };
 
 BigModal.propTypes = {

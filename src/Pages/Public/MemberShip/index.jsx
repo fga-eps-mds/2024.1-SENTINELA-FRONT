@@ -45,7 +45,7 @@ const MemberShip = () => {
   const [celular, setCelular] = useState("");
   const [postoDeTrabalho, setpostoDeTrabalho] = useState("");
   const [orgaoExpedidor, setOrgaoExpedidor] = useState("");
-  const [situacaoAtual, setSituacaoAtual] = useState("");
+  //const [situacaoAtual, setSituacaoAtual] = useState("");
   const [openError, setOpenError] = useState(false);
   const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
   const [errorFields, setErrorFields] = useState(false);
@@ -93,7 +93,7 @@ const MemberShip = () => {
     "Mestrado",
     "Doutorado",
   ];
-  const situacaoAtualList = ["Ativo", "Inativo"];
+  //const situacaoAtualList = ["Ativo", "Inativo"];
   const [dependentes, setDependentes] = useState([]);
   const [showDependentForm, setShowDependentForm] = useState(false);
   const [currentDependent, setCurrentDependent] = useState({
@@ -117,7 +117,6 @@ const MemberShip = () => {
 
   const mascaraRg = (rg) => {
     let formattedRG = rg.replace(/\D/g, "");
-    if (formattedRG.length > 9) formattedRG = formattedRG.slice(0, 9);
     return formattedRG;
   };
 
@@ -205,9 +204,9 @@ const MemberShip = () => {
     setEscolaridade(event.target.value);
   };
 
-  const handleChangeSituacaoAtual = (event) => {
-    setSituacaoAtual(event.target.value);
-  };
+  //const handleChangeSituacaoAtual = (event) => {
+  //  setSituacaoAtual(event.target.value);
+  //};
 
   const handleCloseSuccessDialog = () => {
     setOpenSuccessDialog(false);
@@ -270,7 +269,7 @@ const MemberShip = () => {
     if (!celular) erros.celular = 1;
     if (!postoDeTrabalho) erros.postoDeTrabalho = 1;
     if (!orgaoExpedidor) erros.orgaoExpedidor = 1;
-    if (!situacaoAtual) erros.situacaoAtual = 1;
+    //if (!situacaoAtual) erros.situacaoAtual = 1;
     if (!religiao) erros.religiao = 1;
     if (isValidEmail(email) === false) erros.email = 1;
     if (cpf.length < 14) erros.cpf = 1;
@@ -328,7 +327,7 @@ const MemberShip = () => {
     }
 
     // Se não houver mensagem de erro, navega para /home
-    navigate("/home");
+    navigate("/");
   };
   return (
     <section className="container">
@@ -537,12 +536,12 @@ const MemberShip = () => {
             onChange={(e) => setpostoDeTrabalho(e.target.value)}
           />
 
-          <FieldSelect
+          {/*<FieldSelect
             label="Situação Atual"
             value={situacaoAtual}
             onChange={handleChangeSituacaoAtual}
             options={situacaoAtualList}
-          />
+          />*/}
         </div>
         <div>
           <div>

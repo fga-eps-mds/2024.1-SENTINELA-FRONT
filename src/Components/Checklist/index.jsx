@@ -59,6 +59,7 @@ export default function CheckList({ items, value, onChange }) {
               <strong>Nome:</strong> {user?.name}
             </Typography>
           </Grid>
+
           <Grid item xs={12} sm={6}>
             <Typography variant="body1">
               <strong>Email:</strong> {user?.email}
@@ -67,9 +68,16 @@ export default function CheckList({ items, value, onChange }) {
 
           <Grid item xs={12} sm={6}>
             <Typography variant="body1">
+              <strong>Religião:</strong> {user?.religion}
+            </Typography>
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body1">
               <strong>Telefone:</strong> {user?.phone}
             </Typography>
           </Grid>
+
           <Grid item xs={12} sm={6}>
             <Typography variant="body1">
               <strong>CPF:</strong> {user?.cpf}
@@ -82,6 +90,7 @@ export default function CheckList({ items, value, onChange }) {
               {new Date(user?.birthDate).toLocaleDateString("pt-BR")}{" "}
             </Typography>
           </Grid>
+
           <Grid item xs={12} sm={6}>
             <Typography variant="body1">
               <strong>Sexo:</strong> {user?.sex}
@@ -99,6 +108,7 @@ export default function CheckList({ items, value, onChange }) {
               <strong>Naturalidade:</strong> {user?.naturalness}
             </Typography>
           </Grid>
+
           <Grid item xs={12} sm={6}>
             <Typography variant="body1">
               <strong>UF Naturalidade:</strong> {user?.uf_naturalidade}
@@ -110,6 +120,7 @@ export default function CheckList({ items, value, onChange }) {
               <strong>Estado Civil:</strong> {user?.marialStatus}
             </Typography>
           </Grid>
+
           <Grid item xs={12} sm={6}>
             <Typography variant="body1">
               <strong>Escolaridade:</strong> {user?.education}
@@ -121,6 +132,7 @@ export default function CheckList({ items, value, onChange }) {
               <strong>Lotação:</strong> {user?.lotacao}
             </Typography>
           </Grid>
+
           <Grid item xs={12} sm={6}>
             <Typography variant="body1">
               <strong>Cargo:</strong> {user?.position}
@@ -132,34 +144,12 @@ export default function CheckList({ items, value, onChange }) {
               <strong>Organização Emissora:</strong> {user?.shipperOrganization}
             </Typography>
           </Grid>
+
           <Grid item xs={12} sm={6}>
             <Typography variant="body1">
               <strong>Data de Contratação:</strong>{" "}
               {new Date(user?.hiringDate).toLocaleDateString("pt-BR")}{" "}
             </Typography>
-          </Grid>
-
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body1">
-              <strong>Religião:</strong> {user?.religion}
-            </Typography>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body1">
-              <strong>Dependentes</strong>
-            </Typography>
-            {user?.dependents && user.dependents.length > 0 ? (
-              user.dependents.map((dependent) => (
-                <div key={dependent._id}>
-                  <strong>Nome:</strong> {dependent.nomeCompletoDependente} <br/>
-                  <strong>Parentesco:</strong> {dependent.parentesco} <br/>
-                  <strong>Data de Nascimento:</strong> {new Date(dependent.dataNasc).toLocaleDateString("pt-BR")} <br/>
-                  <strong>CPF:</strong> {dependent.cpfDependente} <br/>
-                </div>
-              ))
-            ) : (
-              <Typography variant="body2">Nenhum dependente cadastrado</Typography>
-            )}
-          </Grid>
           </Grid>
         </Grid>
       </BigModal>
