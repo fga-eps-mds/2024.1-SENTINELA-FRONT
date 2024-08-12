@@ -4,7 +4,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import TextField from "@mui/material/TextField";
 import PropTypes from "prop-types";
 
-export default function DataSelect({ label, value, onChange }) {
+export default function DataSelect({ label, value, onChange,onBlur, erro }) {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DatePicker
@@ -12,6 +12,8 @@ export default function DataSelect({ label, value, onChange }) {
         value={value}
         onChange={onChange}
         format="DD/MM/YYYY"
+        onBlur={onBlur}
+        error={erro}
         renderInput={{
           textField: (params) => <TextField {...params} variant="filled" />,
         }}
