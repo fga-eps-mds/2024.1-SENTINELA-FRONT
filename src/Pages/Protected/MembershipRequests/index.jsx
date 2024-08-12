@@ -131,10 +131,7 @@ export default function MembershipRequest() {
           alert="Os filiados devem receber em breve um e-mail para gerar a senha de acesso"
           width="100%"
         >
-          <PrimaryButton
-            text="ok"
-            onClick={() => navigate("/usuarios/hub")}
-          />
+          <PrimaryButton text="ok" onClick={() => navigate("/usuarios/hub")} />
         </Modal>
 
         <Modal
@@ -158,7 +155,6 @@ export default function MembershipRequest() {
         >
           <PrimaryButton text="Fechar" onClick={() => navigate("/home")} />
         </Modal>
-
       </section>
     )
   );
