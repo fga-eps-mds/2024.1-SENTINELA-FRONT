@@ -546,7 +546,7 @@ const MemberShip = () => {
         <div>
           <div>
             <h3>
-              Adicionar participantes{" "}
+              Adicionar Dependente{" "}
               <AddCircleOutlineIcon
                 id="addDependentBttn"
                 onClick={handleAddDependent}
@@ -607,7 +607,7 @@ const MemberShip = () => {
                   />
                 </div>
                 <PrimaryButton
-                  text="Adicionar Dependente"
+                  text="Confirmar Dependente"
                   onClick={handleSaveDependent}
                 />
               </div>
