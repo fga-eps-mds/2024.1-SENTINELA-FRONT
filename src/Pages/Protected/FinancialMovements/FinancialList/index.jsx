@@ -64,8 +64,9 @@ export default function FinancialList() {
 
     const movementDate = new Date(movement.datadePagamento);
     const isDateInRange =
-      (!dataInicio || movementDate >= new Date(dataInicio)) && (!dataInicio || movementDate <= new Date(dataFinal));
-      console.log(dataInicio, dataFinal, movementDate, isDateInRange); 
+      (!dataInicio || movementDate >= new Date(dataInicio)) &&
+      (!dataInicio || movementDate <= new Date(dataFinal));
+    console.log(dataInicio, dataFinal, movementDate, isDateInRange);
 
     return isDescriptionMatch && isDateInRange;
   });

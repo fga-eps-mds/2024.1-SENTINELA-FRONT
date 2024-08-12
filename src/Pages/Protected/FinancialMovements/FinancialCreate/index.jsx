@@ -77,16 +77,6 @@ export default function FinancialCreate() {
   };
 
   const handleSubmit = async () => {
-    console.log("Valor Bruto antes do parse:", valorBruto);
-    console.log("Valor Líquido antes do parse:", valorLiquido);
-    console.log("Acréscimo antes do parse:", acrescimo);
-    console.log("Desconto antes do parse:", desconto);
-    // const formattedDataVencimento = dataVencimento
-    //   ? dataVencimento.format("YYYY-MM-DD")
-    //   : null;
-    // const formattedDataPagamento = dataPagamento
-    //   ? dataPagamento.format("YYYY-MM-DD")
-    //   : null;
 
     const financialData = {
       contaOrigem,
@@ -108,6 +98,11 @@ export default function FinancialCreate() {
 
     const error = await createFinancialMovements(financialData);
 
+    if (!contaOrigem || !contaDestino || !dataVencimento || !dataPagamento || !descricao || !valorBruto || !valorLiquido || !datadePagamento || !dataVencimento) {
+      alert("Preencha todos os campos obrigatórios!");
+      return;
+    }
+
     if (!error) {
       console.log("Cadastro realizado com sucesso.");
       setShowModal(true);
@@ -124,7 +119,7 @@ export default function FinancialCreate() {
 
         <div className="double-box-fin">
           <FieldSelect
-            label="Conta origem"
+            label="Conta origem *"
             value={contaOrigem}
             onChange={handleChangeContaOrigem}
             options={[
@@ -135,7 +130,7 @@ export default function FinancialCreate() {
             ]}
           />
           <FieldSelect
-            label="Conta destino"
+            label="Conta destino *"
             value={contaDestino}
             onChange={handleChangeContaDestino}
             options={[
@@ -156,12 +151,12 @@ export default function FinancialCreate() {
             value={cpFCnpj}
           />
           <FieldText
-            label="Valor Bruto"
+            label="Valor Bruto *"
             onChange={(e) => setValorBruto(handleCurrencyInput(e.target.value))}
             value={valorBruto}
           />
           <FieldText
-            label="Valor Liquído"
+            label="Valor Liquído *"
             onChange={(e) =>
               setValorLiquido(handleCurrencyInput(e.target.value))
             }
