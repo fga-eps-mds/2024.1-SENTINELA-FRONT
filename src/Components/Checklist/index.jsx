@@ -143,6 +143,23 @@ export default function CheckList({ items, value, onChange }) {
             <Typography variant="body1">
               <strong>Religião:</strong> {user?.religion}
             </Typography>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body1">
+              <strong>Dependentes</strong>
+            </Typography>
+            {user?.dependents && user.dependents.length > 0 ? (
+              user.dependents.map((dependent) => (
+                <div key={dependent._id}>
+                  <strong>Nome:</strong> {dependent.nomeCompletoDependente} <br/>
+                  <strong>Parentesco:</strong> {dependent.parentesco} <br/>
+                  <strong>Data de Nascimento:</strong> {new Date(dependent.dataNasc).toLocaleDateString("pt-BR")} <br/>
+                  <strong>CPF:</strong> {dependent.cpfDependente} <br/>
+                </div>
+              ))
+            ) : (
+              <Typography variant="body2">Nenhum dependente cadastrado</Typography>
+            )}
+          </Grid>
           </Grid>
         </Grid>
       </BigModal>

@@ -62,6 +62,7 @@ export default function MembershipRequest() {
       setMembers(result);
       setFilteredMembers(result);
       setCheckedItems([]);
+      setSuccessApproval(true);
     } catch (error) {
       console.error("Error updating member status:", error);
     }
