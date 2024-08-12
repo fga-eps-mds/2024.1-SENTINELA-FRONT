@@ -9,6 +9,10 @@ import Supplier from "../Pages/Protected/CreateSupplier";
 import ListSupplier from "../Pages/Protected/ListSupplier";
 import ViewSupplier from "../Pages/Protected/UpdateSupplier";
 import MembershipRequest from "../Pages/Protected/MembershipRequests";
+import Benefits from "../Pages/Protected/Benefit/Benefits";
+import BenefitsList from "../Pages/Protected/Benefit/BenefitsList";
+import BenefitsCreate from "../Pages/Protected/Benefit/BenefitsCreate";
+import BenefitsUpdate from "../Pages/Protected/Benefit/BenefitsUpdate";
 
 const ProtectedRoutes = () => {
   return (
@@ -18,7 +22,7 @@ const ProtectedRoutes = () => {
       <Route path="/fornecedores" element={<ListSupplier />} />
       <Route path="/fornecedores/:nome" element={<ViewSupplier />} />
       <Route path="/usuarios/criar" element={<UserCreatePage />} />
-      <Route path="/usuarios/editar/:id" element={<UserUpdatePage />} />
+      <Route path="/usuarios/editar/:nome" element={<UserUpdatePage />} />
       <Route path="/usuarios" element={<UserListPage />} />
       <Route path="/usuarios/hub" element={<UserHubPage />} />
       <Route path="/perfil" element={<ProfileUpdate />} />
@@ -26,6 +30,10 @@ const ProtectedRoutes = () => {
         path="usuarios/hub/membershipRequests"
         element={<MembershipRequest />}
       />
+      <Route path="/beneficios" element={<Benefits />} />
+      <Route path="/beneficios/lista" element={<BenefitsList />} />
+      <Route path="/beneficios/criar" element={<BenefitsCreate />} />
+      <Route path="/beneficios/editar/:id" element={<BenefitsUpdate />} />
     </Routes>
   );
 };
