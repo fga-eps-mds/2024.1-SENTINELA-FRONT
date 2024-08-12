@@ -58,9 +58,14 @@ export default function FinancialList() {
     });
   };
 
-  const filteredMovements = movements.filter((movement) =>
-    movement.descricao.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredMovements = movements.filter((movement) => {
+    const isDescriptionMatch = movement.descricao.toLowerCase().includes(search.toLowerCase());
+
+    const movementDate = new Date(movement.datadePagamento);
+    const isDateInRange = (!dataInicio || movementDate >= new Date(dataInicio)) && (!dataFinal || movementDate <= new Date(dataFinal));
+
+    return isDescriptionMatch && isDateInRange;
+  });
 
   return (
     <section className="container">
@@ -75,10 +80,6 @@ export default function FinancialList() {
             label="Pesquisar movimentação"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-          />
-          <SecondaryButton
-            text="Pesquisar"
-            onClick={() => console.log("Search term:", search)}
           />
         </div>
 

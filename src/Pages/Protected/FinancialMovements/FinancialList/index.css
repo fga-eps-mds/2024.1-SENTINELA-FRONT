@@ -77,7 +77,7 @@
 
   .search-box {
     display: grid;
-    grid-template-columns: 2.3fr 0.7fr;
+    grid-template-columns: 3fr 0fr;
   }
 
   .search-box button {
@@ -88,12 +88,13 @@
 
   .double-box {
     display: grid;
-    grid-template-columns: 2.3fr 0.7fr;
+    grid-template-columns: 2.1fr 0.9fr;
   }
 
   .double-box button {
-    margin-top: 0px;
-    margin-bottom: 40px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    width: 200px; 
   }
 
   .date-box {
