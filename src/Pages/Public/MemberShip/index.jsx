@@ -374,7 +374,7 @@ const MemberShip = () => {
             options={sexoList}
           />
 
-          <div className="double-box">
+          <div className="double-box" style={{ marginLeft: "0px" }}>
             <FieldText
               label="Naturalidade"
               value={naturalidade}
@@ -409,7 +409,7 @@ const MemberShip = () => {
             onChange={(e) => setRg(mascaraRg(e.target.value))}
           />
 
-          <div className="double-box">
+          <div className="double-box" style={{ marginLeft: "0px" }}>
             <FieldText
               label="Órgão Expeditor"
               value={orgaoExpedidor}
@@ -478,7 +478,7 @@ const MemberShip = () => {
             value={cep}
             onChange={(e) => setCep(mascaraCEP(e.target.value))}
           />
-          <div className="double-box">
+          <div className="double-box" style={{ marginLeft: "0px" }}>
             <FieldText
               label="Cidade"
               value={cidade}
@@ -692,6 +692,7 @@ const MemberShip = () => {
             width="608px"
           />
         </Modal>
+        <footer style={{ height: "100px" }} />
       </div>
     </section>
   );
