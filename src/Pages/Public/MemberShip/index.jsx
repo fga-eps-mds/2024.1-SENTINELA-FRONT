@@ -50,6 +50,7 @@ const MemberShip = () => {
   const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
   const [errorFields, setErrorFields] = useState(false);
   const [religiao, setReligiao] = useState("");
+  const [missingList, setMissingList] = useState([]);
   const navigate = useNavigate();
 
   //listas dos selects
@@ -93,6 +94,40 @@ const MemberShip = () => {
     "Mestrado",
     "Doutorado",
   ];
+
+  const fieldNames = {
+    email: "Email",
+    sexo: "Sexo",
+    estadoCivil: "Estado Civil",
+    tipoSanguineo: "Tipo Sanguíneo",
+    uf_naturalidade: "UF de Naturalidade",
+    uf_orgao: "UF do Órgão",
+    uf_endereco: "UF do Endereço",
+    escolaridade: "Escolaridade",
+    dataContratacao: "Data de Contratação",
+    dataDeNascimento: "Data de Nascimento",
+    dataExpedicao: "Data de Expedição",
+    cargo: "Cargo",
+    lotacao: "Lotação",
+    matricula: "Matrícula",
+    nomeCompleto: "Nome Completo",
+    naturalidade: "Naturalidade",
+    rg: "RG",
+    orgao: "Órgão",
+    cpf: "CPF",
+    nomeDaMae: "Nome da Mãe",
+    nomeDoPai: "Nome do Pai",
+    cep: "CEP",
+    cidade: "Cidade",
+    logradouro: "Logradouro",
+    complemento: "Complemento",
+    telefone: "Telefone",
+    celular: "Celular",
+    postoDeTrabalho: "Posto de Trabalho",
+    orgaoExpedidor: "Órgão Expedidor",
+    religiao: "Religião",
+  };
+
   //const situacaoAtualList = ["Ativo", "Inativo"];
   const [dependentes, setDependentes] = useState([]);
   const [showDependentForm, setShowDependentForm] = useState(false);
@@ -279,6 +314,7 @@ const MemberShip = () => {
     if (celular.length < 15) erros.celular = 1;
 
     if (Object.keys(erros).length > 0) {
+      setMissingList(Object.keys(erros));
       setOpenError(true);
     } else {
       setOpenSuccessDialog(true);
@@ -615,7 +651,11 @@ const MemberShip = () => {
               {dependentes.map((dependent, index) => (
                 <div key={index}>
                   <h3 id="dependentTitle">Dependente {index + 1}</h3>
-                  <div className="dependentBox" key={index}>
+                  <div
+                    className="dependentBox"
+                    key={index}
+                    style={{ marginBottom: "50px" }}
+                  >
                     <div className="section-dependent-form">
                       <FieldText
                         label="Nome Completo"
@@ -661,7 +701,9 @@ const MemberShip = () => {
           onClose={() => setOpenError(false)}
         >
           <Alert onClose={() => setOpenError(false)} severity="error">
-            Certifique-se de que todos os campos estão preenchidos
+            {missingList.length <= 5
+              ? `Os seguintes campos estão faltando: ${missingList.map((key) => fieldNames[key]).join(", ")}`
+              : "Certifique-se de que todos os campos estão preenchidos"}
           </Alert>
         </Snackbar>
         <Snackbar
