@@ -132,8 +132,8 @@ export default function MembershipRequest() {
           width="100%"
         >
           <PrimaryButton
-            text="Fechar"
-            onClick={() => setSuccessApproval(false)}
+            text="ok"
+            onClick={() => navigate("/usuarios/hub")}
           />
         </Modal>
 
@@ -158,6 +158,7 @@ export default function MembershipRequest() {
         >
           <PrimaryButton text="Fechar" onClick={() => navigate("/home")} />
         </Modal>
+
       </section>
     )
   );
