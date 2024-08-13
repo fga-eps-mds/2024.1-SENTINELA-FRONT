@@ -77,7 +77,6 @@ export default function FinancialCreate() {
   };
 
   const handleSubmit = async () => {
-
     const financialData = {
       contaOrigem,
       contaDestino,
@@ -98,7 +97,17 @@ export default function FinancialCreate() {
 
     const error = await createFinancialMovements(financialData);
 
-    if (!contaOrigem || !contaDestino || !dataVencimento || !dataPagamento || !descricao || !valorBruto || !valorLiquido || !datadePagamento || !dataVencimento) {
+    if (
+      !contaOrigem ||
+      !contaDestino ||
+      !dataVencimento ||
+      !dataPagamento ||
+      !descricao ||
+      !valorBruto ||
+      !valorLiquido ||
+      !dataPagamento ||
+      !dataVencimento
+    ) {
       alert("Preencha todos os campos obrigatórios!");
       return;
     }

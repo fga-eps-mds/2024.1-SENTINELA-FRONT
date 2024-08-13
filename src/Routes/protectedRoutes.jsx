@@ -11,6 +11,10 @@ import ViewSupplier from "../Pages/Protected/UpdateSupplier";
 import FinancialMovements from "../Pages/Protected/FinancialMovements/FinancialCreate";
 import FinancialList from "../Pages/Protected/FinancialMovements/FinancialList";
 import FinancialUpdate from "../Pages/Protected/FinancialMovements/FinancialUpdate";
+import Benefits from "../Pages/Protected/Benefit/Benefits";
+import BenefitsList from "../Pages/Protected/Benefit/BenefitsList";
+import BenefitsCreate from "../Pages/Protected/Benefit/BenefitsCreate";
+import BenefitsUpdate from "../Pages/Protected/Benefit/BenefitsUpdate";
 
 const ProtectedRoutes = () => {
   return (
@@ -20,10 +24,14 @@ const ProtectedRoutes = () => {
       <Route path="/fornecedores" element={<ListSupplier />} />
       <Route path="/fornecedores/:nome" element={<ViewSupplier />} />
       <Route path="/usuarios/criar" element={<UserCreatePage />} />
-      <Route path="/usuarios/editar/:id" element={<UserUpdatePage />} />
+      <Route path="/usuarios/editar/:nome" element={<UserUpdatePage />} />
       <Route path="/usuarios" element={<UserListPage />} />
       <Route path="/usuarios/hub" element={<UserHubPage />} />
       <Route path="/perfil" element={<ProfileUpdate />} />
+      <Route path="/beneficios" element={<Benefits />} />
+      <Route path="/beneficios/lista" element={<BenefitsList />} />
+      <Route path="/beneficios/criar" element={<BenefitsCreate />} />
+      <Route path="/beneficios/editar/:id" element={<BenefitsUpdate />} />
       <Route path="/movimentacoes/criar" element={<FinancialMovements />} />
       <Route path="/movimentacoes/lista" element={<FinancialList />} />
       <Route
