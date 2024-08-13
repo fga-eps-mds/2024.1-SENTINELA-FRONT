@@ -55,27 +55,24 @@ const MemberShip = () => {
   const [touchedFields, setTouchedFields] = useState({});
 
   const navigate = useNavigate();
-// Function to validate a field
-const validateField = (fieldName, value) => {
-  let error = '';
-  if (!value.trim()) { // Checks if the field is empty or just whitespace
-    error = 'Campo obrigatório';
-  }
-  setErrors(prev => ({ ...prev, [fieldName]: error }));
-};
+  // Function to validate a field
+  const validateField = (fieldName, value) => {
+    let error = "";
+    if (!value.trim()) {
+      // Checks if the field is empty or just whitespace
+      error = "Campo obrigatório";
+    }
+    setErrors((prev) => ({ ...prev, [fieldName]: error }));
+  };
 
-// Handler for field changes
+  // Handler for field changes
 
-
-// Handler for field blur event
-const handleBlur = (e, fieldName) => {
-  const { value } = e.target;
-  validateField(fieldName, value);
-  setTouchedFields(prev => ({ ...prev, [fieldName]: true }));
-};
-
-
-
+  // Handler for field blur event
+  const handleBlur = (e, fieldName) => {
+    const { value } = e.target;
+    validateField(fieldName, value);
+    setTouchedFields((prev) => ({ ...prev, [fieldName]: true }));
+  };
 
   //listas dos selects
   const tipoSanguineoList = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
@@ -267,10 +264,7 @@ const handleBlur = (e, fieldName) => {
     return touchedFields[campo] && errors[campo] ? (
       <span className="error-message">{errors[campo]}</span>
     ) : null;
-  }
-  
-
-
+  };
 
   const handleCloseSuccessDialog = () => {
     setOpenSuccessDialog(false);
@@ -352,47 +346,48 @@ const handleBlur = (e, fieldName) => {
 
   const submitForm = async () => {
     const formData = {
-      name: nomeCompleto,
-      email,
-      phone: celular,
-      bloodType: tipoSanguineo,
-      registration: matricula,
-      birthDate: dataDeNascimento,
-      sex: sexo,
-      naturalness: naturalidade,
-      uf_naturalidade,
-      uf_orgao,
-      uf_address: uf_endereco,
-      marialStatus: estadoCivil,
-      education: escolaridade,
-      rg,
-      orgao,
-      cpf,
-      hiringDate: dataContratacao,
-      expeditionDate: dataExpedicao,
-      position: cargo,
-      lotacao,
-      cep,
-      motherName: nomeDaMae,
-      fatherName: nomeDoPai,
-      city: cidade,
-      street: logradouro,
-      complement: complemento,
-      landline: telefone,
-      workPlace: postoDeTrabalho,
-      shipperOrganization: orgaoExpedidor,
-      religion: religiao,
-      dependents: dependentes,
+      nomeCompleto: nomeCompleto,
+      email: email,
+      celular: celular,
+      tipoSanguineo: tipoSanguineo,
+      matricula: matricula,
+      dataDeNascimento: dataDeNascimento,
+      sexo: sexo,
+      naturalidade: naturalidade,
+      uf_naturalidade: uf_naturalidade,
+      uf_orgao: uf_orgao,
+      uf_endereco: uf_endereco,
+      estadoCivil: estadoCivil,
+      escolaridade: escolaridade,
+      rg: rg,
+      orgao: orgao,
+      cpf: cpf,
+      dataContratacao: dataContratacao,
+      dataExpedicao: dataExpedicao,
+      cargo: cargo,
+      lotacao: lotacao,
+      cep: cep,
+      nomeDaMae: nomeDaMae,
+      nomeDoPai: nomeDoPai,
+      cidade: cidade,
+      logradouro: logradouro,
+      complemento: complemento,
+      telefone: telefone,
+      postoDeTrabalho: postoDeTrabalho,
+      orgaoExpedidor: orgaoExpedidor,
+      religiao: religiao,
+      dependentes: dependentes,
     };
 
     const message = await createMemberShip(formData);
-    if (message) {
+    if (message != 201) {
       setErrorFields(message);
       return; // Impede a navegação e mantém o usuário na página atual
+    } else {
+      // Se não houver mensagem de erro, navega para /home
+      console.log(message);
+      navigate("/");
     }
-
-    // Se não houver mensagem de erro, navega para /home
-    navigate("/");
   };
   return (
     <section className="container">
@@ -405,53 +400,51 @@ const handleBlur = (e, fieldName) => {
           label="Nome Completo *"
           value={nomeCompleto}
           onChange={(e) => setnomeCompleto(e.target.value)}
-          onBlur={(e) => handleBlur(e, 'nomeCompleto')} 
-          erro= {erro('nomeCompleto')}
+          onBlur={(e) => handleBlur(e, "nomeCompleto")}
+          erro={erro("nomeCompleto")}
         />
-        
+
         <div className="section-form">
-       
-        <FieldText
-          label="Religião *"
-          value={religiao}
-          onChange={(e) => setReligiao(e.target.value)}
-          onBlur={(e) => handleBlur(e, 'religiao')}
-          erro = {erro('religiao')}
-        />
-    
-        <FieldSelect
-          label="Tipo Sanguíneo *"
-          value={tipoSanguineo}
-          onChange={handleChangeTipoSanguineo}
-          options={tipoSanguineoList}
-          onBlur={(e) => handleBlur(e, 'tipoSanguineo')} 
-          erro = {erro('tipoSanguineo')}
-        />
-      
+          <FieldText
+            label="Religião *"
+            value={religiao}
+            onChange={(e) => setReligiao(e.target.value)}
+            onBlur={(e) => handleBlur(e, "religiao")}
+            erro={erro("religiao")}
+          />
 
-        <FieldText
-          label="Matrícula *"
-          value={matricula}
-          onChange={(e) => setMatricula(e.target.value)}
-          onBlur={(e) => handleBlur(e, 'matricula')} 
-          erro = {erro('matricula')}
-        />
+          <FieldSelect
+            label="Tipo Sanguíneo *"
+            value={tipoSanguineo}
+            onChange={handleChangeTipoSanguineo}
+            options={tipoSanguineoList}
+            onBlur={(e) => handleBlur(e, "tipoSanguineo")}
+            erro={erro("tipoSanguineo")}
+          />
 
-        <DataSelect
-          label="Data de Nascimento *"
-          value={dataDeNascimento} 
-          onChange={(newValue) => setdataDeNascimento(newValue)}
-          onBlur={(e) => handleBlur(e, 'dataDeNascimento')}
-          erro = {erro('dataDeNascimento')}
-        />
-         
+          <FieldText
+            label="Matrícula *"
+            value={matricula}
+            onChange={(e) => setMatricula(e.target.value)}
+            onBlur={(e) => handleBlur(e, "matricula")}
+            erro={erro("matricula")}
+          />
+
+          <DataSelect
+            label="Data de Nascimento *"
+            value={dataDeNascimento}
+            onChange={(newValue) => setdataDeNascimento(newValue)}
+            onBlur={(e) => handleBlur(e, "dataDeNascimento")}
+            erro={erro("dataDeNascimento")}
+          />
+
           <FieldSelect
             label="Sexo *"
             value={sexo}
             onChange={handleChangeSexo}
             options={sexoList}
-            onBlur={(e) => handleBlur(e, 'sexo')}
-            erro = {erro('sexo')}
+            onBlur={(e) => handleBlur(e, "sexo")}
+            erro={erro("sexo")}
           />
 
           <div className="double-box" style={{ marginLeft: "0px" }}>
@@ -459,8 +452,8 @@ const handleBlur = (e, fieldName) => {
               label="Naturalidade *"
               value={naturalidade}
               onChange={(e) => setNaturalidade(e.target.value)}
-              onBlur={(e) => handleBlur(e, 'naturalidade')}
-              erro = {erro('naturalidade')}
+              onBlur={(e) => handleBlur(e, "naturalidade")}
+              erro={erro("naturalidade")}
             />
 
             <FieldSelect
@@ -468,8 +461,8 @@ const handleBlur = (e, fieldName) => {
               value={uf_naturalidade}
               onChange={handleChangeUf}
               options={ufList}
-              onBlur={(e) => handleBlur(e, 'uf_naturalidade')}
-              erro = {erro('uf_naturalidade')}
+              onBlur={(e) => handleBlur(e, "uf_naturalidade")}
+              erro={erro("uf_naturalidade")}
             />
           </div>
 
@@ -478,8 +471,8 @@ const handleBlur = (e, fieldName) => {
             value={estadoCivil}
             onChange={handleChangeEstadoCivil}
             options={estadoCivilList}
-            onBlur={(e) => handleBlur(e, 'estadoCivil')}
-            erro = {erro('estadoCivil')}
+            onBlur={(e) => handleBlur(e, "estadoCivil")}
+            erro={erro("estadoCivil")}
           />
 
           <FieldSelect
@@ -487,16 +480,16 @@ const handleBlur = (e, fieldName) => {
             value={escolaridade}
             onChange={handleChangeEscolaridade}
             options={escolaridadeList}
-            onBlur={(e) => handleBlur(e, 'escolaridade')}
-            erro = {erro('escolaridade')}
+            onBlur={(e) => handleBlur(e, "escolaridade")}
+            erro={erro("escolaridade")}
           />
 
           <FieldText
             label="RG *"
             value={rg}
             onChange={(e) => setRg(mascaraRg(e.target.value))}
-            onBlur={(e) => handleBlur(e, 'rg')}
-            erro = {erro('rg')}
+            onBlur={(e) => handleBlur(e, "rg")}
+            erro={erro("rg")}
           />
 
           <div className="double-box" style={{ marginLeft: "0px" }}>
@@ -504,8 +497,8 @@ const handleBlur = (e, fieldName) => {
               label="Órgão Expeditor *"
               value={orgaoExpedidor}
               onChange={(e) => setOrgaoExpedidor(e.target.value)}
-              onBlur={(e) => handleBlur(e, 'orgaoExpedidor')}
-              erro = {erro('orgaoExpedidor')}
+              onBlur={(e) => handleBlur(e, "orgaoExpedidor")}
+              erro={erro("orgaoExpedidor")}
             />
 
             <FieldSelect
@@ -513,8 +506,8 @@ const handleBlur = (e, fieldName) => {
               value={uf_orgao}
               onChange={handleChangeUfOrgao}
               options={ufList}
-              onBlur={(e) => handleBlur(e, 'uf_orgao')}
-              erro = {erro('uf_orgao')}
+              onBlur={(e) => handleBlur(e, "uf_orgao")}
+              erro={erro("uf_orgao")}
             />
           </div>
 
@@ -522,32 +515,32 @@ const handleBlur = (e, fieldName) => {
             label="CPF *"
             value={cpf}
             onChange={(e) => setCpf(mascaraCPF(e.target.value))}
-            onBlur={(e) => handleBlur(e, 'cpf')}
-            erro = {erro('cpf')}
+            onBlur={(e) => handleBlur(e, "cpf")}
+            erro={erro("cpf")}
           />
 
           <DataSelect
             label="Data de Expedição *"
             value={dataExpedicao}
             onChange={(newValue) => setDataExpedicao(newValue)}
-            onBlur={(e) => handleBlur(e, 'dataExpedicao')}
-            erro = {erro('dataExpedicao')}
+            onBlur={(e) => handleBlur(e, "dataExpedicao")}
+            erro={erro("dataExpedicao")}
           />
 
           <FieldText
             label="Nome do Pai *"
             value={nomeDoPai}
             onChange={(e) => setnomeDoPai(e.target.value)}
-            onBlur={(e) => handleBlur(e, 'nomeDoPai')}
-            erro = {erro('nomeDoPai')}
+            onBlur={(e) => handleBlur(e, "nomeDoPai")}
+            erro={erro("nomeDoPai")}
           />
 
           <FieldText
             label="Nome da Mãe *"
             value={nomeDaMae}
             onChange={(e) => setnomeDaMae(e.target.value)}
-            onBlur={(e) => handleBlur(e, 'nomeDaMae')}
-            erro = {erro('nomeDaMae')}
+            onBlur={(e) => handleBlur(e, "nomeDaMae")}
+            erro={erro("nomeDaMae")}
           />
         </div>
 
@@ -557,8 +550,8 @@ const handleBlur = (e, fieldName) => {
           label="E-mail *"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          onBlur={(e) => handleBlur(e, 'email')}
-          erro = {erro('email')}
+          onBlur={(e) => handleBlur(e, "email")}
+          erro={erro("email")}
         />
 
         <div className="section-form">
@@ -566,16 +559,16 @@ const handleBlur = (e, fieldName) => {
             label="Celular *"
             value={celular}
             onChange={(e) => setCelular(mascaraTelefone(e.target.value))}
-            onBlur={(e) => handleBlur(e, 'celular')}
-            erro = {erro('celular')}
+            onBlur={(e) => handleBlur(e, "celular")}
+            erro={erro("celular")}
           />
 
           <FieldText
             label="Telefone *"
             value={telefone}
             onChange={(e) => setTelefone(mascaraTelefone(e.target.value))}
-            onBlur={(e) => handleBlur(e, 'telefone')}
-            erro = {erro('telefone')}
+            onBlur={(e) => handleBlur(e, "telefone")}
+            erro={erro("telefone")}
           />
         </div>
 
@@ -585,16 +578,16 @@ const handleBlur = (e, fieldName) => {
             label="CEP *"
             value={cep}
             onChange={(e) => setCep(mascaraCEP(e.target.value))}
-            onBlur={(e) => handleBlur(e, 'cep')}
-            erro = {erro('cep')}
+            onBlur={(e) => handleBlur(e, "cep")}
+            erro={erro("cep")}
           />
           <div className="double-box" style={{ marginLeft: "0px" }}>
             <FieldText
               label="Cidade *"
               value={cidade}
               onChange={(e) => setCidade(e.target.value)}
-              onBlur={(e) => handleBlur(e, 'cidade')}
-              erro = {erro('cidade')}
+              onBlur={(e) => handleBlur(e, "cidade")}
+              erro={erro("cidade")}
             />
 
             <FieldSelect
@@ -602,8 +595,8 @@ const handleBlur = (e, fieldName) => {
               value={uf_endereco}
               onChange={handleChangeUfEndereco}
               options={ufList}
-              onBlur={(e) => handleBlur(e, 'uf_endereco')}
-              erro = {erro('uf_endereco')}
+              onBlur={(e) => handleBlur(e, "uf_endereco")}
+              erro={erro("uf_endereco")}
             />
           </div>
 
@@ -611,16 +604,16 @@ const handleBlur = (e, fieldName) => {
             label="Logradouro *"
             value={logradouro}
             onChange={(e) => setLogradouro(e.target.value)}
-            onBlur={(e) => handleBlur(e, 'logradouro')}
-            erro = {erro('logradouro')} 
+            onBlur={(e) => handleBlur(e, "logradouro")}
+            erro={erro("logradouro")}
           />
 
           <FieldText
             label="Complemento *"
             value={complemento}
             onChange={(e) => setComplemento(e.target.value)}
-            onBlur={(e) => handleBlur(e, 'complemento')}
-            erro = {erro('complemento')}
+            onBlur={(e) => handleBlur(e, "complemento")}
+            erro={erro("complemento")}
           />
         </div>
 
@@ -630,38 +623,38 @@ const handleBlur = (e, fieldName) => {
             label="Cargo *"
             value={cargo}
             onChange={(e) => setCargo(e.target.value)}
-            onBlur={(e) => handleBlur(e, 'cargo')}
-            erro = {erro('cargo')}
+            onBlur={(e) => handleBlur(e, "cargo")}
+            erro={erro("cargo")}
           />
 
           <DataSelect
             label="Data de Contratação *"
             value={dataContratacao}
             onChange={(newValue) => setDataContratacao(newValue)}
-            onBlur={(e) => handleBlur(e, 'dataContratacao')}
-            erro = {erro('dataContratacao')}
+            onBlur={(e) => handleBlur(e, "dataContratacao")}
+            erro={erro("dataContratacao")}
           />
           <FieldText
             label="Lotação *"
             value={lotacao}
             onChange={(e) => setlotacao(e.target.value)}
-            onBlur={(e) => handleBlur(e, 'lotacao')}
-            erro = {erro('lotacao')}
+            onBlur={(e) => handleBlur(e, "lotacao")}
+            erro={erro("lotacao")}
           />
 
           <FieldText
             label="Órgão *"
             value={orgao}
             onChange={(e) => setOrgao(e.target.value)}
-            onBlur={(e) => handleBlur(e, 'orgao')}
-            erro = {erro('orgao')}
+            onBlur={(e) => handleBlur(e, "orgao")}
+            erro={erro("orgao")}
           />
           <FieldText
             label="Posto de Trabalho *"
             value={postoDeTrabalho}
             onChange={(e) => setpostoDeTrabalho(e.target.value)}
-            onBlur={(e) => handleBlur(e, 'postoDeTrabalho')}
-            erro = {erro('postoDeTrabalho')}
+            onBlur={(e) => handleBlur(e, "postoDeTrabalho")}
+            erro={erro("postoDeTrabalho")}
           />
         </div>
         <div>

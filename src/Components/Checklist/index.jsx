@@ -48,13 +48,11 @@ export default function CheckList({ items, value, onChange }) {
               onClick={handleToggle(item?._id)}
               disableRipple
               sx={{
-                color: '#3D160D', // Cor para o estado desmarcado
-                '&.Mui-checked': {
-                  color: '#AE883C',
+                color: "#3D160D", // Cor para o estado desmarcado
+                "&.Mui-checked": {
+                  color: "#AE883C",
                 },
               }}
-              
-              
             />
           </ListItem>
           <Divider />

@@ -19,12 +19,12 @@
     display: grid;
     flex-wrap: wrap;
   }
-.error-message {
-  color: red; /* Define a cor da mensagem de erro como vermelha */
-  font-size: 0.875rem; /* Ajusta o tamanho da fonte, se necessário */
-  margin-top: 0.25rem; /* Adiciona um pequeno espaço acima da mensagem de erro */
-  display: block; /* Garante que a mensagem de erro ocupe uma linha inteira */
-}
+  .error-message {
+    color: red; /* Define a cor da mensagem de erro como vermelha */
+    font-size: 0.875rem; /* Ajusta o tamanho da fonte, se necessário */
+    margin-top: 0.25rem; /* Adiciona um pequeno espaço acima da mensagem de erro */
+    display: block; /* Garante que a mensagem de erro ocupe uma linha inteira */
+  }
 
   .double-box {
     display: flex;
@@ -113,12 +113,12 @@
     display: flex;
     flex-wrap: wrap;
   }
-.error-message {
-  color: red; /* Define a cor da mensagem de erro como vermelha */
-  font-size: 0.875rem; /* Ajusta o tamanho da fonte, se necessário */
-  margin-top: 0.25rem; /* Adiciona um pequeno espaço acima da mensagem de erro */
-  display: block; /* Garante que a mensagem de erro ocupe uma linha inteira */
-}
+  .error-message {
+    color: red; /* Define a cor da mensagem de erro como vermelha */
+    font-size: 0.875rem; /* Ajusta o tamanho da fonte, se necessário */
+    margin-top: 0.25rem; /* Adiciona um pequeno espaço acima da mensagem de erro */
+    display: block; /* Garante que a mensagem de erro ocupe uma linha inteira */
+  }
 
   .double-box {
     display: flex;

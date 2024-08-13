@@ -2,9 +2,10 @@ import { APIUsers } from "../BaseService";
 
 export async function createMemberShip(formData) {
   try {
-    await APIUsers.post("membership/create", {
+    const response = await APIUsers.post("membership/create", {
       formData,
     });
+    return response.status;
   } catch (error) {
     return error.response.data.erro;
   }

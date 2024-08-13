@@ -4,7 +4,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import TextField from "@mui/material/TextField";
 import PropTypes from "prop-types";
 
-export default function DataSelect({ label, value, onChange,onBlur, erro }) {
+export default function DataSelect({ label, value, onChange, onBlur, erro }) {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DatePicker
@@ -38,4 +38,6 @@ DataSelect.propTypes = {
   label: PropTypes.string.isRequired,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   onChange: PropTypes.func.isRequired,
+  onBlur: PropTypes.func, // Added prop type for onBlur
+  erro: PropTypes.bool, // Added prop type for erro
 };
