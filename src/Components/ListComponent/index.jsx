@@ -11,7 +11,8 @@ export default function ListComponent({
 }) {
     return(
         <Box
-            sx={{ width: '100%', bgcolor: theme.palette.custom.content}}
+            sx={{ width: '100%', bgcolor: theme.palette.custom.content, margin:'10px' }}
+            
         >
             <List component="nav" aria-label="secondary mailbox folder">
                 <ListItemButton

@@ -30,6 +30,14 @@ export async function listBankAccount(name) {
       return error.response.data;
   }
 }
+export async function getAll(){
+    try{
+        const response = await APIBank.get("/finance/getBankAccount");
+        return response.data;
+    }catch(error){
+        return error.response.data;
+    }
+}
 
 export async function getBankAccount(id) {
   try {
