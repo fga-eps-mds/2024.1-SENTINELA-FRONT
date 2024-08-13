@@ -47,6 +47,14 @@ export default function CheckList({ items, value, onChange }) {
               tabIndex={-1}
               onClick={handleToggle(item?._id)}
               disableRipple
+              sx={{
+                color: '#3D160D', // Cor para o estado desmarcado
+                '&.Mui-checked': {
+                  color: '#AE883C',
+                },
+              }}
+              
+              
             />
           </ListItem>
           <Divider />
@@ -149,6 +157,11 @@ export default function CheckList({ items, value, onChange }) {
             <Typography variant="body1">
               <strong>Data de Contratação:</strong>{" "}
               {new Date(user?.hiringDate).toLocaleDateString("pt-BR")}{" "}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body1">
+              <strong>Dependentes:</strong> {user?.dependents?.length || 0}
             </Typography>
           </Grid>
         </Grid>

@@ -7,6 +7,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
   }
 
   .member-list .MuiListItem-root {
@@ -43,12 +44,9 @@
 
   .user-info {
     display: grid;
-    grid-template-columns: 3fr 1fr;
+    flex-direction: column;
     align-items: center;
-    padding: 10px;
   }
-  /* index.css */
-  /* index.css */
   .member-list .MuiListItem-root {
     display: flex;
     justify-content: space-between; /* Distribute space between children */
