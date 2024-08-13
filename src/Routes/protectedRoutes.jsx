@@ -8,13 +8,13 @@ import UserUpdatePage from "../Pages/Protected/Users/userUpdatePage";
 import Supplier from "../Pages/Protected/CreateSupplier";
 import ListSupplier from "../Pages/Protected/ListSupplier";
 import ViewSupplier from "../Pages/Protected/UpdateSupplier";
-import FinancialMovements from "../Pages/Protected/FinancialMovements/FinancialCreate";
-import FinancialList from "../Pages/Protected/FinancialMovements/FinancialList";
-import FinancialUpdate from "../Pages/Protected/FinancialMovements/FinancialUpdate";
 import Benefits from "../Pages/Protected/Benefit/Benefits";
 import BenefitsList from "../Pages/Protected/Benefit/BenefitsList";
 import BenefitsCreate from "../Pages/Protected/Benefit/BenefitsCreate";
 import BenefitsUpdate from "../Pages/Protected/Benefit/BenefitsUpdate";
+import FinancialMovements from "../Pages/Protected/FinancialMovements/FinancialCreate";
+import FinancialList from "../Pages/Protected/FinancialMovements/FinancialList";
+import FinancialUpdate from "../Pages/Protected/FinancialMovements/FinancialUpdate";
 
 const ProtectedRoutes = () => {
   return (
