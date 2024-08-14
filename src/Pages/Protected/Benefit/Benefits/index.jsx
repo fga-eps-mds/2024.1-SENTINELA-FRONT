@@ -1,7 +1,5 @@
-//import { useEffect, useState } from "react";
 import { useAuth } from "../../../../Context/auth";
 import { useNavigate } from "react-router-dom";
-//import { APIUsers } from "../../../Services/BaseService";
 import SecondaryButton from "../../../../Components/SecondaryButton";
 import sindpol_logo from "../../../../assets/sindpol-logo.png";
 import sentinela_logo from "../../../../assets/sentinela-logo.png";
