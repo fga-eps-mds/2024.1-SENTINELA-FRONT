@@ -16,7 +16,7 @@ import {
   isValidEmail,
   isValidCelular,
   isValidSite,
-} from "../../../../Services/benefitsService";
+} from "../../../../Utils/validators";
 
 export default function BenefitsCreate() {
   const navigate = useNavigate();

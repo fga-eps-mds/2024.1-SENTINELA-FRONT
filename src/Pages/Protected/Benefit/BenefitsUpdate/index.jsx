@@ -19,7 +19,7 @@ import {
   isValidEmail,
   isValidCelular,
   isValidSite,
-} from "../../../../Services/benefitsService";
+} from "../../../../Utils/validators";
 import { Snackbar } from "@mui/material";
 import Alert from "@mui/material/Alert";
 

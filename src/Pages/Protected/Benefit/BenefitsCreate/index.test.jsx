@@ -35,6 +35,35 @@ async function fillUpRequiredFields() {
   });
 }
 
+function mockValidators() {
+  // mocka funções de validação do service
+  vi.mock("../../../../Utils/validators", () => {
+    return {
+      isValidEmail: (email) =>
+        !email || email === "valid@email.com"
+          ? { isValid: true }
+          : {
+              isValid: false,
+              message: "O e-mail fornecido não é válido.",
+            },
+      isValidCelular: (celular) =>
+        !celular || celular === "(61) 91234-1234"
+          ? { isValid: true }
+          : {
+              isValid: false,
+              message: "O telefone fornecido não é válido.",
+            },
+      isValidSite: (site) =>
+        !site || site === "https://valid.com"
+          ? { isValid: true }
+          : {
+              isValid: false,
+              message: "O site fornecido não é válido.",
+            },
+    };
+  });
+}
+
 describe("BenefitsCreate", () => {
   beforeEach(() => {
     // mocka o arquivo de services, hoje isso é utilizado apenas
@@ -90,34 +119,7 @@ describe("BenefitsCreate", () => {
   });
 
   it("validates form correctly before submiting with non required fields", async () => {
-    // mocka funções de validação do service
-    vi.mock("../../../../Services/benefitsService", () => {
-      return {
-        createBenefitsForm: vi.fn(),
-        isValidEmail: (email) =>
-          !email || email === "valid@email.com"
-            ? { isValid: true }
-            : {
-                isValid: false,
-                message: "O e-mail fornecido não é válido.",
-              },
-        isValidCelular: (celular) =>
-          !celular || celular === "(61) 91234-1234"
-            ? { isValid: true }
-            : {
-                isValid: false,
-                message: "O telefone fornecido não é válido.",
-              },
-        isValidSite: (site) =>
-          !site || site === "https://valid.com"
-            ? { isValid: true }
-            : {
-                isValid: false,
-                message: "O site fornecido não é válido.",
-              },
-      };
-    });
-
+    mockValidators();
     render(
       <Router>
         <BenefitsCreate />
