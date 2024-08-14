@@ -149,8 +149,8 @@ export default function BenefitsCreate() {
     }
 
     const celularValidation = isValidCelular(telefCelular);
-    if (celularValidation) {
-      setOpenError(celularValidation);
+    if (!celularValidation.isValid) {
+      setOpenError(celularValidation.message);
       return;
     }
 
@@ -212,6 +212,7 @@ export default function BenefitsCreate() {
             label="Razão social *"
             value={razaoSocial}
             onChange={(e) => setRazaoSocial(e.target.value)}
+            required
           />
         </div>
 

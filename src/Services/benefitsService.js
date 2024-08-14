@@ -126,13 +126,14 @@ export const isValidCelular = (celular) => {
   const cleanedNumber = celular.replace(/\D/g, ""); // Remove caracteres não numéricos
 
   if (!cleanedNumber) {
-    return null;
+    return { isValid: true };
   }
 
-  if (cleanedNumber.length < 10) {
-    return "O número de telefone está invalido";
+  if (cleanedNumber.length < 10 || cleanedNumber.length > 11) {
+    return { isValid: false, message: "O telefone fornecido não é válido." };
   }
-  return null;
+
+  return { isValid: true };
 };
 
 export const isValidSite = (site) => {
