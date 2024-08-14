@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import FieldText from "../../../Components/FieldText";
 import DataSelect from "../../../Components/DataSelect";
 import FieldSelect from "../../../Components/FieldSelect";
-import { createMemberShip } from "../../../Services/MemberShipService";
+import { createMemberShip } from "../../../Services/memberShipService";
 import PrimaryButton from "../../../Components/PrimaryButton";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { Snackbar } from "@mui/material";
@@ -382,10 +382,8 @@ const MemberShip = () => {
     const message = await createMemberShip(formData);
     if (message != 201) {
       setErrorFields(message);
-      return; // Impede a navegação e mantém o usuário na página atual
+      return;
     } else {
-      // Se não houver mensagem de erro, navega para /home
-      console.log(message);
       navigate("/");
     }
   };

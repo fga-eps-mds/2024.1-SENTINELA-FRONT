@@ -14,8 +14,6 @@ export default function ChangePasswordPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  console.log(userId);
-
   useEffect(() => {
     const loadUserId = async () => {
       if (token) {
@@ -46,10 +44,10 @@ export default function ChangePasswordPage() {
       const result = await changePasswordById(password, userId);
       if (!result) {
         alert("Senha alterada com sucesso");
+        navigate("/");
       } else {
         alert("Erro ao trocar senha");
       }
-      navigate("/");
     } catch (error) {
       console.error("Erro ao trocar senha", error);
     }

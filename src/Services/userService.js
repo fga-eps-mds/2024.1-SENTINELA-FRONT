@@ -1,5 +1,8 @@
 import { APIUsers } from "./BaseService";
 
+const storagedToken = localStorage.getItem("@App:token");
+const token = JSON.parse(storagedToken);
+
 export async function userLogin(email, password) {
   try {
     const response = await APIUsers.post("/login", {
@@ -15,7 +18,7 @@ export async function userLogin(email, password) {
 
 export const getUsers = async () => {
   try {
-    const token = localStorage.getItem("@App:token");
+    console.log(token);
     if (!token) {
       throw new Error("No token found");
     }
@@ -30,7 +33,7 @@ export const getUsers = async () => {
   }
 };
 
-export const getUserById = async (id, token) => {
+export const getUserById = async (id) => {
   try {
     const response = await APIUsers.get(`/users/${id}`, {
       headers: {
@@ -51,6 +54,9 @@ export const createUser = async (userData) => {
       phone: userData.phone,
       status: userData.status,
       role: userData.role,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
   } catch (error) {
     console.error("Erro ao criar usuário:", error);
@@ -77,14 +83,12 @@ export const loginUser = async (credentials) => {
 
 export const patchUserById = async (id, updatedUser) => {
   try {
-    const storagedUserString = localStorage.getItem("@App:user");
-    const user = JSON.parse(storagedUserString);
     const response = await APIUsers.patch(
       `/users/patch/${id}`,
       { updatedUser },
       {
         headers: {
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${token}`,
         },
       }
     );
@@ -98,7 +102,6 @@ export const patchUserById = async (id, updatedUser) => {
 
 export const sendRecoveryPassword = async (email) => {
   try {
-    console.log("tentei");
     const message = APIUsers.post(`/users/recover-password`, {
       data: {
         email,
@@ -107,18 +110,15 @@ export const sendRecoveryPassword = async (email) => {
 
     return message;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
 export const deleteUserById = async (id) => {
   try {
-    const storagedUserString = localStorage.getItem("@App:user");
-    const user = JSON.parse(storagedUserString);
-
     await APIUsers.delete(`/users/delete/${id}`, {
       headers: {
-        Authorization: `Bearer ${user.token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
   } catch (error) {

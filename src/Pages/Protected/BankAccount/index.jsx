@@ -61,19 +61,6 @@ const BankAccount = () => {
   };
 
   const handleSubmit = async (formData) => {
-    //const formData = {
-    //    name,
-    //    pix,
-    //    bank,
-    //    accountType,
-    //    accountNumber,
-    //    dv,
-    //    status,
-    //    agency
-    //};
-
-    console.log("Dados enviados:", formData);
-
     try {
       const response = await createBankAccount(formData);
 
@@ -95,8 +82,6 @@ const BankAccount = () => {
           response.data.error || "Erro inesperado"
         );
       }
-
-      console.log("Resposta do servidor:", response);
     } catch (error) {
       console.error("Erro ao enviar dados:", error.response || error.message);
     }

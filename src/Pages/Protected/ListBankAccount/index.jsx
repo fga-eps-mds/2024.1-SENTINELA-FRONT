@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../Context/auth";
 import SideBar from "../../../Components/SideBar";
@@ -36,12 +36,6 @@ export default function ListBankAccount() {
       alert("Ocorreu um erro ao realizar a pesquisa.");
     }
   };
-
-  useEffect(() => {
-    if (dataMap) {
-      console.log(dataMap);
-    }
-  }, [dataMap]);
 
   const handleNavigateWithId = (id) => {
     navigate(`/finance/listBankAccount/${id}`);

@@ -4,7 +4,7 @@ import {
   getMemberShip,
   updateMemberStatus,
   deleteMember,
-} from "../../../Services/MemberShipService";
+} from "../../../Services/memberShipService";
 import { useEffect, useState } from "react";
 import FieldText from "../../../Components/FieldText";
 import SecondaryButton from "../../../Components/SecondaryButton";
@@ -27,22 +27,15 @@ export default function MembershipRequest() {
   // Fetch all members on component mount
   useEffect(() => {
     async function fetchData() {
-      try {
-        const result = await getMemberShip(false);
-        if (result.message) {
-          console.log(result.message);
-          return;
-        }
-        setMembers(result);
-        setFilteredMembers(result);
-      } catch (error) {
-        console.log(error);
+      const result = await getMemberShip(false);
+      if (result.message) {
+        return;
       }
+      setMembers(result);
+      setFilteredMembers(result);
     }
     fetchData();
   }, []);
-
-  console.log(checkedItems);
 
   useEffect(() => {
     const filter = members.filter((member) =>
@@ -54,7 +47,6 @@ export default function MembershipRequest() {
   const handleConfirm = async () => {
     try {
       checkedItems.forEach(async (checkedItem) => {
-        console.log(checkedItem);
         await updateMemberStatus(checkedItem);
       });
 

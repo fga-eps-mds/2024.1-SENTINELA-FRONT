@@ -95,7 +95,6 @@ const BankAccountId = () => {
     const fetchData = async () => {
       try {
         const result = await getBankAccount(id);
-        console.log(result);
         setName(result.name || "");
         setPix(result.pix || "");
         setBank(result.bank || "");
@@ -127,11 +126,8 @@ const BankAccountId = () => {
       ...(agency && { agency }), // Inclui agency se não estiver vazio
     };
 
-    console.log("Dados atualizados:", updatedData);
-
     try {
       const response = await updateBankAccount(id, updatedData);
-      console.log("Resposta do servidor:", response);
       return response;
     } catch (error) {
       console.error("Erro ao enviar dados:", error);

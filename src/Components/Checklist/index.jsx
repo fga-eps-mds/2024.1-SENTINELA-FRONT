@@ -13,8 +13,6 @@ export default function CheckList({ items, value, onChange }) {
   const [show, setShow] = useState(false);
   const [user, setUser] = useState();
 
-  console.log(user);
-
   const handleToggle = (e) => () => {
     const currentIndex = value.indexOf(e);
     const newChecked = [...value];

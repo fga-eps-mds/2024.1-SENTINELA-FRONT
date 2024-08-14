@@ -10,7 +10,7 @@ import { describe, it, expect, vi } from "vitest";
 import MemberShip from "./";
 import { BrowserRouter } from "react-router-dom";
 
-vi.mock("../../../Services/MemberShipService", () => ({
+vi.mock("../../../Services/memberShipService", () => ({
   createMemberShip: vi.fn().mockResolvedValue("Success"),
 }));
 
