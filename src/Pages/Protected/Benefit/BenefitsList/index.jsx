@@ -25,7 +25,7 @@ export default function ListSupplier() {
     });
   };
 
-  const filteredBenefits = benefits.filter((benefits) =>
+  const filteredBenefits = benefits?.filter((benefits) =>
     benefits.nome.toLowerCase().includes(search.toLowerCase())
   );
 
@@ -52,7 +52,7 @@ export default function ListSupplier() {
             onChange={(e) => setSearch(e.target.value)}
           />
           <List>
-            {filteredBenefits.map((benefits, index) => (
+            {filteredBenefits?.map((benefits, index) => (
               <div key={benefits._id}>
                 <ListItem>
                   <ListItemButton

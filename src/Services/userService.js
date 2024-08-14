@@ -1,7 +1,15 @@
 import { APIUsers } from "./BaseService";
 
 const storagedToken = localStorage.getItem("@App:token");
-const token = JSON.parse(storagedToken);
+let token = null;
+
+if (storagedToken) {
+  try {
+    token = JSON.parse(storagedToken);
+  } catch (error) {
+    console.error("O token armazenado não é um JSON válido:", error);
+  }
+}
 
 export async function userLogin(email, password) {
   try {

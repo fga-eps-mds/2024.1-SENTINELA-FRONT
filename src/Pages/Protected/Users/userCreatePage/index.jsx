@@ -124,7 +124,7 @@ export default function UserCreatePage() {
           value={perfilSelecionado}
           onChange={handlePerfilChange}
         >
-          {roles.map((perfil) => (
+          {roles?.map((perfil) => (
             <FormControlLabel
               key={perfil?.name}
               value={perfil?._id}

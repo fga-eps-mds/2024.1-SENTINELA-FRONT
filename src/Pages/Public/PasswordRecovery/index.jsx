@@ -32,7 +32,7 @@ export default function PasswordRecovery() {
       <Card className={"customcard"}>
         <LabeledTextField
           type="text"
-          label="EMAIl"
+          label="EMAIL"
           placeholder="Digite seu email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
