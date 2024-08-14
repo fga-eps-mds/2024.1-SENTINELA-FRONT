@@ -13,6 +13,7 @@ import Benefits from "../Pages/Protected/Benefit/Benefits";
 import BenefitsList from "../Pages/Protected/Benefit/BenefitsList";
 import BenefitsCreate from "../Pages/Protected/Benefit/BenefitsCreate";
 import BenefitsUpdate from "../Pages/Protected/Benefit/BenefitsUpdate";
+import AccessUnion from "../Pages/Protected/AccessUnionFinances/AccessHub";
 
 const ProtectedRoutes = () => {
   return (
@@ -34,6 +35,7 @@ const ProtectedRoutes = () => {
       <Route path="/beneficios/lista" element={<BenefitsList />} />
       <Route path="/beneficios/criar" element={<BenefitsCreate />} />
       <Route path="/beneficios/editar/:id" element={<BenefitsUpdate />} />
+      <Route path="/financeiro" element={<AccessUnion />} />
     </Routes>
   );
 };
