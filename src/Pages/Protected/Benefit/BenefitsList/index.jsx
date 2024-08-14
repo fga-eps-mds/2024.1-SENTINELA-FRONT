@@ -10,7 +10,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import "./index.css";
 
-export default function ListSupplier() {
+export default function BenefitsList() {
   const [search, setSearch] = useState("");
   const [benefits, setBenefits] = useState([]);
   const navigate = useNavigate();
