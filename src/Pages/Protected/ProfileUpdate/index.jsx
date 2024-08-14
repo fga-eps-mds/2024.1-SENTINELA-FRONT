@@ -27,10 +27,10 @@ const ProfileUpdate = () => {
   useEffect(() => {
     const getUser = async () => {
       const response = await getUserById(storagedUser._id);
-      setNome(response.data.name);
-      setCelular(response.data.phone);
-      setLogin(response.data.status ? "Ativo" : "Inativo");
-      setEmail(response.data.email);
+      setNome(response.name);
+      setCelular(response.phone);
+      setLogin(response.status ? "Ativo" : "Inativo");
+      setEmail(response.email);
     };
 
     getUser();
