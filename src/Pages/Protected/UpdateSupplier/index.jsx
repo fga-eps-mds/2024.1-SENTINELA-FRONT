@@ -164,7 +164,7 @@ export default function UpdateSupplier() {
       setChavePix(supplier.chavePix);
     };
     loadSupplier();
-  }, []);
+  });
 
   const handleUpdateSupplierButton = async () => {
     const supplierData = {

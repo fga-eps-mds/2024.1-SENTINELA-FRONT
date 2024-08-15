@@ -2,13 +2,11 @@ import { describe, it, expect, beforeEach, vi, afterEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import UserListPage from "./index";
-import { APIUsers } from "../../../../Services/BaseService";
+import { getUsers } from "../../../../Services/userService";
 import "@testing-library/jest-dom";
 
-vi.mock("../../../../Services/BaseService", () => ({
-  APIUsers: {
-    get: vi.fn(),
-  },
+vi.mock("../../../../Services/userService", () => ({
+  getUsers: vi.fn(),
 }));
 
 describe("UserListPage", () => {
@@ -21,9 +19,7 @@ describe("UserListPage", () => {
     localStorage.clear();
   });
 
-  it("renders correctly", async () => {
-    APIUsers.get.mockResolvedValueOnce({ data: [] });
-
+  it("renders correctly", () => {
     render(
       <Router>
         <UserListPage />
@@ -33,8 +29,6 @@ describe("UserListPage", () => {
     expect(screen.getByText("Lista de Usuários")).toBeInTheDocument();
     expect(screen.getByText("Cadastrar Usuário")).toBeInTheDocument();
     expect(screen.getByLabelText("Pesquisar Usuário")).toBeInTheDocument();
-
-    await waitFor(() => expect(APIUsers.get).toHaveBeenCalledTimes(1));
   });
 
   it("fetches and displays users", async () => {
@@ -42,7 +36,7 @@ describe("UserListPage", () => {
       { _id: "1", name: "John Doe" },
       { _id: "2", name: "Jane Smith" },
     ];
-    APIUsers.get.mockResolvedValueOnce({ data: users });
+    getUsers.mockResolvedValueOnce(users);
 
     render(
       <Router>
@@ -50,9 +44,10 @@ describe("UserListPage", () => {
       </Router>
     );
 
-    await waitFor(() => expect(APIUsers.get).toHaveBeenCalledTimes(1));
-    expect(screen.getByText("John Doe")).toBeInTheDocument();
-    expect(screen.getByText("Jane Smith")).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText("John Doe")).toBeInTheDocument();
+      expect(screen.getByText("Jane Smith")).toBeInTheDocument();
+    });
   });
 
   it("filters users based on search input", async () => {
@@ -60,7 +55,7 @@ describe("UserListPage", () => {
       { _id: "1", name: "John Doe" },
       { _id: "2", name: "Jane Smith" },
     ];
-    APIUsers.get.mockResolvedValueOnce({ data: users });
+    getUsers.mockResolvedValueOnce(users);
 
     render(
       <Router>
@@ -68,26 +63,26 @@ describe("UserListPage", () => {
       </Router>
     );
 
-    await waitFor(() => expect(APIUsers.get).toHaveBeenCalledTimes(1));
+    await waitFor(() => {
+      fireEvent.change(screen.getByLabelText("Pesquisar Usuário"), {
+        target: { value: "John" },
+      });
 
-    const searchInput = screen.getByLabelText("Pesquisar Usuário");
-    fireEvent.change(searchInput, { target: { value: "John" } });
-
-    expect(screen.getByText("John Doe")).toBeInTheDocument();
-    expect(screen.queryByText("Jane Smith")).not.toBeInTheDocument();
+      expect(screen.getByText("John Doe")).toBeInTheDocument();
+      expect(screen.queryByText("Jane Smith")).not.toBeInTheDocument();
+    });
   });
 
-  it("navigates to user creation page on button click", async () => {
+  it("navigates to user creation page on button click", () => {
     render(
       <Router>
         <UserListPage />
       </Router>
     );
 
-    fireEvent.click(screen.getByText(/CADASTRAR USUÁRIO/i));
-    await waitFor(() => {
-      expect(window.location.pathname).toBe("/usuarios/criar");
-    });
+    fireEvent.click(screen.getByText(/Cadastrar Usuário/i));
+
+    expect(window.location.pathname).toBe("/usuarios/criar");
   });
 
   it("navigates to user edit page on list item click", async () => {
@@ -95,13 +90,13 @@ describe("UserListPage", () => {
       { _id: "1", name: "John" },
       { _id: "2", name: "Jane" },
     ];
-    APIUsers.get.mockResolvedValueOnce({ data: users });
+    getUsers.mockResolvedValueOnce(users);
+
     render(
       <Router>
         <UserListPage />
       </Router>
     );
-    expect(APIUsers.get).toHaveBeenCalledTimes(1);
 
     await waitFor(() => {
       fireEvent.click(screen.getByText("John"));

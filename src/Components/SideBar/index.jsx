@@ -120,7 +120,7 @@ export default function SideBar({ fullHeight = true }) {
               textAlign: "center",
             }}
           >
-            Você está logado como {user?.user?.name}
+            Você está logado como {user?.name}
           </h2>
           <ButtonGroup>
             <button

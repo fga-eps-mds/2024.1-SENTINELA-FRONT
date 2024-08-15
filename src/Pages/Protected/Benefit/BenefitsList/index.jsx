@@ -2,13 +2,13 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import PrimaryButton from "../../../../Components/PrimaryButton";
 import FieldText from "../../../../Components/FieldText";
-import { APIBenefits } from "../../../../Services/BaseService";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import "./index.css";
+import { getBenefitsForm } from "../../../../Services/benefitsService";
 
 export default function BenefitsList() {
   const [search, setSearch] = useState("");
@@ -25,18 +25,14 @@ export default function BenefitsList() {
     });
   };
 
-  const filteredBenefits = benefits.filter((benefits) =>
+  const filteredBenefits = benefits?.filter((benefits) =>
     benefits.nome.toLowerCase().includes(search.toLowerCase())
   );
 
   useEffect(() => {
     const getBenefits = async () => {
-      try {
-        const response = await APIBenefits.get("/benefits");
-        setBenefits(response.data); // Atualiza o estado com os dados da API
-      } catch (error) {
-        console.log(error);
-      }
+      const response = await getBenefitsForm();
+      setBenefits(response);
     };
 
     getBenefits();
@@ -56,7 +52,7 @@ export default function BenefitsList() {
             onChange={(e) => setSearch(e.target.value)}
           />
           <List>
-            {filteredBenefits.map((benefits, index) => (
+            {filteredBenefits?.map((benefits, index) => (
               <div key={benefits._id}>
                 <ListItem>
                   <ListItemButton

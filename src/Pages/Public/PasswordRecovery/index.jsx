@@ -6,18 +6,21 @@ import PrimaryButton from "../../../Components/PrimaryButton";
 import SecondaryButton from "../../../Components/SecondaryButton";
 import Card from "../../../Components/Card";
 import Modal from "../../../Components/Modal";
+import { sendRecoveryPassword } from "../../../Services/userService";
 
 export default function PasswordRecovery() {
   const navigate = useNavigate();
-  const handleLoginPage = () => {
-    navigate("/");
-  };
 
   const [email, setEmail] = useState("");
   const [showModal, setShowModal] = useState(false);
 
-  const openModal = () => {
-    setShowModal(true);
+  const handleRecoverypassword = async () => {
+    const message = await sendRecoveryPassword(email);
+    if (message) {
+      setShowModal(true);
+    } else {
+      alert("erro");
+    }
   };
 
   const closeModal = () => {
@@ -29,19 +32,21 @@ export default function PasswordRecovery() {
       <Card className={"customcard"}>
         <LabeledTextField
           type="text"
-          label="EMAIl"
+          label="EMAIL"
           placeholder="Digite seu email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <SecondaryButton
           text="Voltar"
-          onClick={() => handleLoginPage()}
+          onClick={() => {
+            navigate("/");
+          }}
           maxWidth="400px"
         />
         <PrimaryButton
           text="Recuperar senha"
-          onClick={() => openModal()}
+          onClick={() => handleRecoverypassword()}
           maxWidth="400px"
         />
       </Card>
