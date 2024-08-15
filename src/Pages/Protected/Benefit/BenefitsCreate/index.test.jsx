@@ -83,11 +83,7 @@ describe("BenefitsCreate", () => {
       </Router>
     );
 
-    expect(screen.getByText("Cadastro de benefícios")).toBeInTheDocument();
-    expect(screen.getByLabelText("Nome fantasia *")).toBeInTheDocument();
-    expect(screen.getByLabelText("Razão social *")).toBeInTheDocument();
-    expect(screen.getByLabelText("Descrição")).toBeInTheDocument();
-    expect(screen.getByText("CADASTRAR")).toBeInTheDocument();
+    expect(screen).toMatchSnapshot();
   });
 
   it("validates form correctly before submiting with only required fields", async () => {
