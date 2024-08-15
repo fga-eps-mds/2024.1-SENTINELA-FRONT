@@ -92,20 +92,20 @@ export default function UserCreatePage() {
         <h1>Cadastro de usuário</h1>
         <h3>Dados Pessoais</h3>
         <FieldText
-          label="Nome Completo"
+          label="Nome Completo*"
           value={nomeCompleto}
           onChange={handleNomeCompletoChange}
         />
 
         <div className="double-box-user">
           <FieldNumber
-            label="Celular"
+            label="Celular*"
             value={celular}
             onChange={(e) => setCelular(e.target.value)}
             format="(##) ##### ####"
           />
           <FieldSelect
-            label="Status"
+            label="Status*"
             value={login}
             onChange={handleChangeLogin}
             options={login_options}
@@ -117,7 +117,7 @@ export default function UserCreatePage() {
           </label>
         )}
         <FieldText
-          label="Email"
+          label="Email*"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
