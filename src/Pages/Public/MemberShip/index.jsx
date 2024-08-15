@@ -53,6 +53,7 @@ const MemberShip = () => {
   const [missingList, setMissingList] = useState([]);
   const [errors, setErrors] = useState({});
   const [touchedFields, setTouchedFields] = useState({});
+  const [unfilledDependent, setUnfilledDependent] = useState(false);
 
   const navigate = useNavigate();
   // Function to validate a field
@@ -225,8 +226,10 @@ const MemberShip = () => {
       currentDependent.cpfDependente.length < 14 ||
       currentDependent.celularDependente.length < 15
     ) {
+      setUnfilledDependent(true);
       setOpenError(true);
     } else {
+      setUnfilledDependent(false);
       setDependentes([...dependentes, currentDependent]);
       setCurrentDependent({
         nomeCompletoDependente: "",
@@ -777,9 +780,15 @@ const MemberShip = () => {
           onClose={() => setOpenError(false)}
         >
           <Alert onClose={() => setOpenError(false)} severity="error">
-            {missingList.length <= 5
+            {missingList.length <= 5 && missingList.length != 0
               ? `Os seguintes campos estão faltando: ${missingList.map((key) => fieldNames[key]).join(", ")}`
               : "Certifique-se de que todos os campos estão preenchidos"}
+            {unfilledDependent && (
+              <>
+                <br />
+                Existem campos de dependentes não preenchidos
+              </>
+            )}
           </Alert>
         </Snackbar>
         <Snackbar
