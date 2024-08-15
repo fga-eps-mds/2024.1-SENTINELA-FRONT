@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FieldSelect from "../../../../Components/FieldSelect";
 import FieldText from "../../../../Components/FieldText";
 import Modal from "../../../../Components/Modal";
@@ -9,10 +9,13 @@ import DataSelect from "../../../../Components/DataSelect";
 import CheckField from "../../../../Components/Checkfield";
 import { createFinancialMovements } from "../../../../Services/FinancialMovementsService";
 import { useNavigate } from "react-router-dom";
+import { APIBank, APIUsers } from "../../../../Services/BaseService";
 
 export default function FinancialCreate() {
   const [contaOrigem, setContaOrigem] = useState("");
   const [contaDestino, setContaDestino] = useState("");
+  const [nomeOrigem, setNomeOrigem] = useState("");
+  const [nomeDestino, setNomeDestino] = useState("");
   const [tipoDocumento, setTipoDocumento] = useState("");
   const [cpFCnpj, setCpFCnpj] = useState("");
   const [valorBruto, setValorBruto] = useState("");
@@ -25,6 +28,130 @@ export default function FinancialCreate() {
   const [baixada, setBaixada] = useState(false);
   const [descricao, setDescricao] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [nomesOrigem, setNomesOrigem] = useState([]);
+  const [nomesDestino, setNomesDestino] = useState([]);
+
+  useEffect(() => {
+    const fetchNomesOrigem = async () => {
+      try {
+        const storagedUserString = localStorage.getItem("@App:user");
+        const storagedUser = storagedUserString
+          ? JSON.parse(storagedUserString)
+          : null;
+
+        if (!storagedUser || !storagedUser.token) {
+          console.error("Token de autorização não encontrado.");
+          return;
+        }
+
+        switch (contaOrigem) {
+          case "Sindicalizado": {
+            const response = await APIUsers.get("users", {
+              headers: {
+                Authorization: `Bearer ${storagedUser.token}`,
+              },
+            });
+
+            const data = response.data;
+            if (Array.isArray(data)) {
+              const nomes = data.map((user) => user.name);
+              setNomesOrigem(nomes);
+            } else {
+              console.error("Os dados recebidos não são um array.");
+            }
+            break;
+          }
+          case "Sindicato": {
+            setNomesOrigem(["Conta BRB", "Conta Mercado Pago"]);
+            break;
+          }
+          case "Fornecedor": {
+            const response = await APIBank.get("/SupplierForm", {
+              headers: {
+                Authorization: `Bearer ${storagedUser.token}`,
+              },
+            });
+
+            const data = response.data;
+            if (Array.isArray(data)) {
+              const nomes = data.map((supplier) => supplier.nome);
+              setNomesOrigem(nomes);
+            } else {
+              console.error("Os dados recebidos não são um array.");
+            }
+            break;
+          }
+          default:
+            console.error("Tipo de conta desconhecido.");
+        }
+      } catch (error) {
+        console.error("Erro ao buscar lista de nomes:", error);
+      }
+    };
+
+    fetchNomesOrigem();
+  }, [contaOrigem]);
+
+  useEffect(() => {
+    const fetchNomesDestino = async () => {
+      try {
+        const storagedUserString = localStorage.getItem("@App:user");
+        const storagedUser = storagedUserString
+          ? JSON.parse(storagedUserString)
+          : null;
+
+        if (!storagedUser || !storagedUser.token) {
+          console.error("Token de autorização não encontrado.");
+          return;
+        }
+
+        switch (contaDestino) {
+          case "Sindicalizado": {
+            const response = await APIUsers.get("users", {
+              headers: {
+                Authorization: `Bearer ${storagedUser.token}`,
+              },
+            });
+
+            const data = response.data;
+            if (Array.isArray(data)) {
+              const nomes = data.map((user) => user.name);
+              setNomesDestino(nomes);
+            } else {
+              console.error("Os dados recebidos não são um array.");
+            }
+            break;
+          }
+          case "Sindicato": {
+            setNomesDestino(["Conta BRB", "Conta Mercado Pago"]);
+            break;
+          }
+          case "Fornecedor": {
+            const response = await APIBank.get("/SupplierForm", {
+              headers: {
+                Authorization: `Bearer ${storagedUser.token}`,
+              },
+            });
+
+            const data = response.data;
+            if (Array.isArray(data)) {
+              const nomes = data.map((supplier) => supplier.nome);
+              setNomesDestino(nomes);
+            } else {
+              console.error("Os dados recebidos não são um array.");
+            }
+            break;
+          }
+          default:
+            console.error("Tipo de conta desconhecido.");
+        }
+      } catch (error) {
+        console.error("Erro ao buscar lista de nomes:", error);
+      }
+    };
+
+    fetchNomesDestino();
+  }, [contaDestino]);
 
   const handleCurrencyInput = (value) => {
     const numericValue = value.replace(/\D/g, "");
@@ -59,6 +186,21 @@ export default function FinancialCreate() {
     setContaDestino(event.target.value);
   };
 
+  const handleChangeNomeOrigem = (event) => {
+    console.log("Nome Origem:", event.target.value);
+    setNomeOrigem(event.target.value);
+  };
+
+  const handleChangeNomeDestino = (event) => {
+    console.log("Nome Destino:", event.target.value);
+    setNomeDestino(event.target.value);
+  };
+
+  const handleChangeTipoDocumento = (event) => {
+    console.log("Tipo Documento:", event.target.value);
+    setTipoDocumento(event.target.value);
+  };
+
   const handleChangePagamento = (event) => {
     console.log("Forma de Pagamento:", event.target.value);
     setPagamento(event.target.value);
@@ -80,6 +222,8 @@ export default function FinancialCreate() {
     const financialData = {
       contaOrigem,
       contaDestino,
+      nomeOrigem,
+      nomeDestino,
       tipoDocumento,
       cpFCnpj,
       valorBruto: parseFloat(valorBruto),
@@ -100,13 +244,11 @@ export default function FinancialCreate() {
     if (
       !contaOrigem ||
       !contaDestino ||
+      !nomeOrigem ||
+      !nomeDestino ||
       !dataVencimento ||
-      !dataPagamento ||
-      !descricao ||
-      !valorBruto ||
-      !valorLiquido ||
-      !dataPagamento ||
-      !dataVencimento
+      !tipoDocumento ||
+      !valorBruto
     ) {
       alert("Preencha todos os campos obrigatórios!");
       return;
@@ -131,28 +273,75 @@ export default function FinancialCreate() {
             label="Conta origem *"
             value={contaOrigem}
             onChange={handleChangeContaOrigem}
-            options={[
-              "Fornecedor",
-              "Sindicalizado",
-              "Conta BRB",
-              "Conta Mercado Pago",
-            ]}
+            options={["Fornecedor", "Sindicalizado", "Sindicato"]}
           />
           <FieldSelect
             label="Conta destino *"
             value={contaDestino}
             onChange={handleChangeContaDestino}
-            options={[
-              "Fornecedor",
-              "Sindicalizado",
-              "Conta BRB",
-              "Conta Mercado Pago",
-            ]}
+            options={["Fornecedor", "Sindicalizado", "Sindicato"]}
           />
-          <FieldText
-            label="Tipo documento"
-            onChange={(e) => setTipoDocumento(e.target.value)}
+          <FieldSelect
+            label="Nome origem *"
+            value={nomeOrigem}
+            onChange={handleChangeNomeOrigem}
+            options={nomesOrigem}
+          />
+          <FieldSelect
+            label="Nome Destino *"
+            value={nomeDestino}
+            onChange={handleChangeNomeDestino}
+            options={nomesDestino}
+          />
+          <FieldSelect
+            label="Tipo documento *"
+            onChange={handleChangeTipoDocumento}
             value={tipoDocumento}
+            options={[
+              "",
+              "AÇÃO JUDICIAL",
+              "ACORDO EXTRAJUDICIAL",
+              "ADVOGADO",
+              "ALUGUEL",
+              "APLICAÇÃO FINANCEIRA",
+              "ASSEMBLEIA",
+              "ASSESSORIA COMUNICAÇÃO",
+              "CARTÓRIO",
+              "CELULAR",
+              "COMBUSTÍVEL",
+              "CONDOMÍNO",
+              "CONTABILIDADE",
+              "CONVÊNIO",
+              "CUSTAS JUDICIAIS",
+              "DARF",
+              "DAR-GDF",
+              "DIVERSOS",
+              "DOAÇÕES",
+              "DPVAT",
+              "ENERGIA",
+              "ESTÁGIO",
+              "EVENTOS",
+              "EXPEDIENTE",
+              "FGTS",
+              "FIXO/INTERNET",
+              "FUNCIONÁRIO",
+              "GPS (INSS)",
+              "IMÓVEL - SEDE SINDPEN",
+              "INDENIZAÇÃO",
+              "IPTU",
+              "IPVA",
+              "LAZER",
+              "LICENCIAMENTO",
+              "MULTA",
+              "PAPELARIA",
+              "PATROCÍNIO",
+              "REEMBOLSO",
+              "RESCISÃO CONTRATO TRAB.",
+              "RESTAURANTE",
+              "SEGURO VIDA",
+              "TARIFAS BANCÁRIAS",
+              "PUBLICIDADE",
+            ]}
           />
           <FieldText
             label="CPF/CNPJ"
@@ -165,7 +354,7 @@ export default function FinancialCreate() {
             value={valorBruto}
           />
           <FieldText
-            label="Valor Liquído *"
+            label="Valor Liquído"
             onChange={(e) =>
               setValorLiquido(handleCurrencyInput(e.target.value))
             }
@@ -214,7 +403,7 @@ export default function FinancialCreate() {
         </div>
 
         <FieldText
-          label="Descrição *"
+          label="Descrição"
           onChange={(e) => setDescricao(e.target.value)}
           value={descricao}
         />
