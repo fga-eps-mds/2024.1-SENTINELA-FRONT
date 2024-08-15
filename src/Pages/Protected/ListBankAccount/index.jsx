@@ -2,26 +2,23 @@ import React, { useContext, useState, useEffect } from "react";
 import AuthContext from "../../../Context/auth";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../../Context/auth";
-import SideBar from "../../../Components/SideBar";
-import SideButton from "../../../Components/SideButton";
-import PrimaryButtom from "../../../Components/PrimaryButton";
-import SecondaryButton from "../../../Components/SecondaryButton";
+import PrimaryButton from "../../../Components/PrimaryButton";
 import "./index.css";
 import { listBankAccount, getAll } from "../../../Services/bankAccountService";
 import FieldText from "../../../Components/FieldText";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
 import { Snackbar } from "@mui/material";
 import Alert from "@mui/material/Alert";
 
 export default function ListBankAccount() {
-    const [nome, setNome] = useState('');
     const [busca, setBusca] = useState('');
     const [dataMap, setDataMap] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
-    const { id } = useParams();
     const [messageAlert, setMessageAlert] = useState('');
     const [openModal, setOpenModal] = useState(false);
-
-    const context = useContext(AuthContext);
     const navigate = useNavigate();
     const { user } = useAuth();
 
@@ -41,20 +38,6 @@ export default function ListBankAccount() {
             setFilteredData(result); // Initialize filtered data with all accounts
         } catch (error) {
             alert("Ocorreu um erro ao buscar as contas.");
-        }
-    };
-
-    const handleSearch = async () => {
-        try {
-            const result = await listBankAccount(busca);
-            if (result.message) {
-                setMessageAlert(result.message);
-                setOpenModal(true);
-                return;
-            }
-            setFilteredData(result);
-        } catch (error) {
-            alert("Ocorreu um erro ao realizar a pesquisa.");
         }
     };
 
@@ -78,49 +61,38 @@ export default function ListBankAccount() {
         navigate(`/finance/listBankAccount/${id}`);
     };
 
-    const buttons = [
-        <SideButton key="home" text="PÁGINA INICIAL" onClick={handleHome} />,
-        <SideButton key="filiacao" text="CADASTROS" />,
-        <SideButton key="financeiro" text="FINANCEIRO" onClick={() => navigate("/finance/")} />,
-        <SideButton key="beneficios" text="BENEFÍCIOS" />,
-    ];
-
     return user && (
         <section className="listContainer">
-            <div>
-                <SideBar className="side-menu" buttons={buttons} nome={user.nome} />
-            </div>
-
-            <div className="listContainer list">
+            <div className="list">
                 <div className="header">
                     <h1>Lista de Contas Bancárias</h1>
-                    <PrimaryButtom text="Cadastrar contas bancárias" onClick={() => navigate("/finance/bankAccount")} />
+                    <PrimaryButton 
+                        className="primary-button" 
+                        text="Cadastrar contas bancárias" 
+                        onClick={() => navigate("/finance/bankAccount")} 
+                    />
                 </div>
-
                 <div className="search">
                     <FieldText
                         label="Pesquisar Conta"
                         value={busca}
                         onChange={(e) => setBusca(e.target.value)}
                     />
-
-                    <div>
-                        <SecondaryButton
-                            text="Pesquisar"
-                            onClick={handleSearch}
-                        />
-                    </div>
                 </div>
                 {filteredData && filteredData.length > 0 ? (
-                    <div className="result">
+                    <List>
                         {filteredData.map(account => (
-                            <FieldText
-                                key={account._id}
-                                label={account.name}
-                                onClick={() => handleNavigateWithId(account._id)}
-                            />
+                            <div className="result" key={account._id}>
+                                <ListItem>
+                                    <ListItemButton
+                                        onClick={() => handleNavigateWithId(account._id)}
+                                    >
+                                        <ListItemText primary={account.name} />
+                                    </ListItemButton>
+                                </ListItem>
+                            </div>
                         ))}
-                    </div>
+                    </List>
                 ) : (
                     <div>Nenhuma conta encontrada</div>
                 )}

@@ -13,7 +13,7 @@ export default function PrimaryButton ({ text, onClick }) {
         fontFamily: "Noto Sans, sans-serif", // Definindo a fonte para Noto Sans Display Medium
         color: theme.palette.custom.content, // Cor do texto do botão
         backgroundColor: theme.palette.custom.button, // Fundo transparente
-        width: "400px", // Largura do botão
+        width: '100%', // Largura do botão
         marginTop: "inherit",
         "&amp;:hover": {
           transform: "scale(1.03)",

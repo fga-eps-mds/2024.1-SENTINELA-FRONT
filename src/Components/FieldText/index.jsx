@@ -14,6 +14,7 @@ export default function FieldText({ label, value, onChange }) {
         margin: ".7rem",
         backgroundColor: "#EAE3D7",
         borderRadius: "5px",
+        width: "100%",
         "& .MuiInput-underline:before": {
           borderBottomColor: theme.palette.custom.main, // Cor da borda inferior antes do foco
         },
