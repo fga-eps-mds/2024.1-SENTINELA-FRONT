@@ -30,6 +30,7 @@ export default function FinancialCreate() {
   const [showModal, setShowModal] = useState(false);
   const [nomesOrigem, setNomesOrigem] = useState([]);
   const [nomesDestino, setNomesDestino] = useState([]);
+  const maxDescricaoLength = 130;
 
   useEffect(() => {
     const fetchNomesOrigem = async () => {
@@ -211,6 +212,13 @@ export default function FinancialCreate() {
     setBaixada(newChecked);
   };
 
+  const handleChangeDescricao = (event) => {
+    const { value } = event.target;
+    if (value.length <= maxDescricaoLength) {
+      setDescricao(value);
+    }
+  };
+
   const navigate = useNavigate();
 
   const handleCloseDialog = () => {
@@ -251,6 +259,11 @@ export default function FinancialCreate() {
       !valorBruto
     ) {
       alert("Preencha todos os campos obrigatórios!");
+      return;
+    }
+
+    if (descricao.length > 130) {
+      alert("limite de caracteres excedido!");
       return;
     }
 
@@ -404,9 +417,14 @@ export default function FinancialCreate() {
 
         <FieldText
           label="Descrição"
-          onChange={(e) => setDescricao(e.target.value)}
+          onChange={handleChangeDescricao}
           value={descricao}
         />
+        <div>
+          <small>
+            {descricao.length}/{maxDescricaoLength} caracteres
+          </small>
+        </div>
         <PrimaryButton text="Cadastrar" onClick={handleSubmit} />
         <Modal
           width="338px"

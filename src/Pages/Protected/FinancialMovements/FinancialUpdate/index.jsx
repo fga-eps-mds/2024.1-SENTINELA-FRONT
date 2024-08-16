@@ -14,10 +14,13 @@ import {
   deleteFinancialMovementsById,
 } from "../../../../Services/FinancialMovementsService";
 import dayjs from "dayjs";
+import { APIBank, APIUsers } from "../../../../Services/BaseService";
 
 export default function FinancialUpdate() {
   const [contaOrigem, setContaOrigem] = useState("");
   const [contaDestino, setContaDestino] = useState("");
+  const [nomeOrigem, setNomeOrigem] = useState("");
+  const [nomeDestino, setNomeDestino] = useState("");
   const [tipoDocumento, setTipoDocumento] = useState("");
   const [cpFCnpj, setcpFCnpj] = useState("");
   const [valorBruto, setValorBruto] = useState("");
@@ -32,6 +35,9 @@ export default function FinancialUpdate() {
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showDeletedModal, setShowDeletedModal] = useState(false);
+  const [nomesOrigem, setNomesOrigem] = useState([]);
+  const [nomesDestino, setNomesDestino] = useState([]);
+  const maxDescricaoLength = 130;
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -44,6 +50,8 @@ export default function FinancialUpdate() {
           const data = await getFinancialMovementsById(movementId);
           setContaOrigem(data.contaOrigem || "");
           setContaDestino(data.contaDestino || "");
+          setNomeOrigem(data.nomeOrigem || "");
+          setNomeDestino(data.nomeDestino || "");
           setTipoDocumento(data.tipoDocumento || "");
           setcpFCnpj(data.cpFCnpj || "");
           setValorBruto(data.valorBruto || "");
@@ -64,12 +72,136 @@ export default function FinancialUpdate() {
     fetchMovement();
   }, [movementId]);
 
+  useEffect(() => {
+    const fetchNomesOrigem = async () => {
+      try {
+        const storagedUserString = localStorage.getItem("@App:user");
+        const storagedUser = storagedUserString
+          ? JSON.parse(storagedUserString)
+          : null;
+
+        if (!storagedUser || !storagedUser.token) {
+          console.error("Token de autorização não encontrado.");
+          return;
+        }
+
+        switch (contaOrigem) {
+          case "Sindicalizado": {
+            const response = await APIUsers.get("users", {
+              headers: {
+                Authorization: `Bearer ${storagedUser.token}`,
+              },
+            });
+
+            const data = response.data;
+            if (Array.isArray(data)) {
+              const nomes = data.map((user) => user.name);
+              setNomesOrigem(nomes);
+            } else {
+              console.error("Os dados recebidos não são um array.");
+            }
+            break;
+          }
+          case "Sindicato": {
+            setNomesOrigem(["Conta BRB", "Conta Mercado Pago"]);
+            break;
+          }
+          case "Fornecedor": {
+            const response = await APIBank.get("/SupplierForm", {
+              headers: {
+                Authorization: `Bearer ${storagedUser.token}`,
+              },
+            });
+
+            const data = response.data;
+            if (Array.isArray(data)) {
+              const nomes = data.map((supplier) => supplier.nome);
+              setNomesOrigem(nomes);
+            } else {
+              console.error("Os dados recebidos não são um array.");
+            }
+            break;
+          }
+          default:
+            console.error("Tipo de conta desconhecido.");
+        }
+      } catch (error) {
+        console.error("Erro ao buscar lista de nomes:", error);
+      }
+    };
+
+    fetchNomesOrigem();
+  }, [contaOrigem]);
+
+  useEffect(() => {
+    const fetchNomesDestino = async () => {
+      try {
+        const storagedUserString = localStorage.getItem("@App:user");
+        const storagedUser = storagedUserString
+          ? JSON.parse(storagedUserString)
+          : null;
+
+        if (!storagedUser || !storagedUser.token) {
+          console.error("Token de autorização não encontrado.");
+          return;
+        }
+
+        switch (contaDestino) {
+          case "Sindicalizado": {
+            const response = await APIUsers.get("users", {
+              headers: {
+                Authorization: `Bearer ${storagedUser.token}`,
+              },
+            });
+
+            const data = response.data;
+            if (Array.isArray(data)) {
+              const nomes = data.map((user) => user.name);
+              setNomesDestino(nomes);
+            } else {
+              console.error("Os dados recebidos não são um array.");
+            }
+            break;
+          }
+          case "Sindicato": {
+            setNomesDestino(["Conta BRB", "Conta Mercado Pago"]);
+            break;
+          }
+          case "Fornecedor": {
+            const response = await APIBank.get("/SupplierForm", {
+              headers: {
+                Authorization: `Bearer ${storagedUser.token}`,
+              },
+            });
+
+            const data = response.data;
+            if (Array.isArray(data)) {
+              const nomes = data.map((supplier) => supplier.nome);
+              setNomesDestino(nomes);
+            } else {
+              console.error("Os dados recebidos não são um array.");
+            }
+            break;
+          }
+          default:
+            console.error("Tipo de conta desconhecido.");
+        }
+      } catch (error) {
+        console.error("Erro ao buscar lista de nomes:", error);
+      }
+    };
+
+    fetchNomesDestino();
+  }, [contaDestino]);
+
   const handleSave = async () => {
     setShowSaveModal(false);
     try {
       const updatedData = {
         contaOrigem,
         contaDestino,
+        nomeOrigem,
+        nomeDestino,
         tipoDocumento,
         cpFCnpj,
         valorBruto,
@@ -121,6 +253,16 @@ export default function FinancialUpdate() {
     }
   };
 
+  const handleChangeNomeOrigem = (event) => {
+    console.log("Nome Origem:", event.target.value);
+    setNomeOrigem(event.target.value);
+  };
+
+  const handleChangeNomeDestino = (event) => {
+    console.log("Nome Destino:", event.target.value);
+    setNomeDestino(event.target.value);
+  };
+
   const handleChangeContaOrigem = (event) => {
     console.log("Conta Origem:", event.target.value);
     setContaOrigem(event.target.value);
@@ -141,6 +283,13 @@ export default function FinancialUpdate() {
     setBaixada(newChecked);
   };
 
+  const handleChangeDescricao = (event) => {
+    const { value } = event.target;
+    if (value.length <= maxDescricaoLength) {
+      setDescricao(value);
+    }
+  };
+
   return (
     <section className="container">
       <div className="forms-container">
@@ -152,23 +301,25 @@ export default function FinancialUpdate() {
             label="Conta origem"
             value={contaOrigem}
             onChange={handleChangeContaOrigem}
-            options={[
-              "Fornecedor",
-              "Sindicalizado",
-              "Conta BRB",
-              "Conta Mercado Pago",
-            ]}
+            options={["Fornecedor", "Sindicalizado", "Sindicato"]}
           />
           <FieldSelect
             label="Conta destino"
             value={contaDestino}
             onChange={handleChangeContaDestino}
-            options={[
-              "Fornecedor",
-              "Sindicalizado",
-              "Conta BRB",
-              "Conta Mercado Pago",
-            ]}
+            options={["Fornecedor", "Sindicalizado", "Sindicato"]}
+          />
+          <FieldSelect
+            label="Nome origem *"
+            value={nomeOrigem}
+            onChange={handleChangeNomeOrigem}
+            options={nomesOrigem}
+          />
+          <FieldSelect
+            label="Nome Destino *"
+            value={nomeDestino}
+            onChange={handleChangeNomeDestino}
+            options={nomesDestino}
           />
           <FieldText
             label="Tipo Documento"
@@ -236,9 +387,13 @@ export default function FinancialUpdate() {
         <FieldText
           label="Descrição *"
           value={descricao}
-          onChange={(e) => setDescricao(e.target.value)}
+          onChange={handleChangeDescricao}
         />
-
+        <div>
+          <small>
+            {descricao.length}/{maxDescricaoLength} caracteres
+          </small>
+        </div>
         <div className="double-buttons-mov">
           <SecondaryButton
             text="Deletar"

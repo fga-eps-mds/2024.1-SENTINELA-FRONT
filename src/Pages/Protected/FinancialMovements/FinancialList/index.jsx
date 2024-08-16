@@ -58,7 +58,7 @@ export default function FinancialList() {
   };
 
   const filteredMovements = movements.filter((movement) => {
-    const isDescriptionMatch = movement.descricao
+    const isDocumentTypeMatch = movement.tipoDocumento
       .toLowerCase()
       .includes(search.toLowerCase());
 
@@ -68,7 +68,7 @@ export default function FinancialList() {
       (!dataInicio || movementDate <= new Date(dataFinal));
     console.log(dataInicio, dataFinal, movementDate, isDateInRange);
 
-    return isDescriptionMatch && isDateInRange;
+    return isDocumentTypeMatch && isDateInRange;
   });
 
   return (
@@ -119,11 +119,12 @@ export default function FinancialList() {
                   onClick={() => handleItemClick(movement)}
                 >
                   <ListItemText
-                    primary={movement.descricao}
+                    primary={movement.tipoDocumento}
                     secondary={`Data de pagamento: ${new Date(
                       movement.datadePagamento
                     ).toLocaleDateString()}`}
                   />
+                  <ListItemText secondary={movement.descricao} />
                 </ListItemButton>
               </ListItem>
 
