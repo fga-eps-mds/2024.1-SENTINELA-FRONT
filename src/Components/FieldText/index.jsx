@@ -2,15 +2,24 @@ import PropTypes from "prop-types";
 import theme from "../../Styles/global";
 import TextField from "@mui/material/TextField";
 
-export default function FieldText({ label, value, onChange, disabled }) {
+export default function FieldText({
+  label,
+  value,
+  onChange,
+  disabled,
+  onBlur,
+  erro,
+}) {
   return (
     <TextField
-      id="filled-basic"
+      id={`input-${label}`}
       label={label}
       value={value}
       variant="filled"
       onChange={onChange}
       disabled={disabled}
+      onBlur={onBlur}
+      error={erro}
       sx={{
         margin: ".7rem",
         background: "#EAE3D7",
@@ -48,4 +57,6 @@ FieldText.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
+  onBlur: PropTypes.func, // Added prop type for onBlur
+  erro: PropTypes.bool, // Added prop type for erro
 };

@@ -46,8 +46,10 @@ export default function SideBar({ fullHeight = true }) {
     <SideButton
       hidden={user ? "flex" : "none"}
       key="beneficios"
-      text="BENEFÍCIOS (em obras)"
-      onClick={() => {}}
+      text="BENEFÍCIOS"
+      onClick={() => {
+        navigate("/beneficios");
+      }}
     />,
     <SideButton
       hidden={user ? "none" : "flex"}
@@ -118,7 +120,7 @@ export default function SideBar({ fullHeight = true }) {
               textAlign: "center",
             }}
           >
-            Você está logado como {user?.user?.name}
+            Você está logado como {user?.name}
           </h2>
           <ButtonGroup>
             <button

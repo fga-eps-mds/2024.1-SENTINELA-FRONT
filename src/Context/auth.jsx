@@ -13,7 +13,6 @@ export const AuthProvider = ({ children }) => {
 
     if (storagedToken && storagedUser) {
       setUser(JSON.parse(storagedUser));
-      // api.defaults.headers.Authorization = `Bearer ${storagedToken}`;
     }
   }, []);
 
@@ -21,9 +20,8 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await userLogin(email, password);
       setUser(response.data);
-      localStorage.setItem("@App:user", JSON.stringify(response.data));
-      localStorage.setItem("@App:token", "TOKEN");
-      // api.defaults.headers.Authorization = `Bearer ${response.data.token}`;
+      localStorage.setItem("@App:user", JSON.stringify(response.data.user));
+      localStorage.setItem("@App:token", JSON.stringify(response.data.token));
       return false;
     } catch (err) {
       return true;

@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const baseBenefitsURL =
+  import.meta.env.VITE_BENEFIT_DB_URL || "http://localhost:3003/";
 const baseBankURL = "http://localhost:3002/";
 const baseUserURL =
   import.meta.env.VITE_USER_DB_URL || "http://localhost:3001/";
@@ -12,4 +14,8 @@ const APIBank = axios.create({
   baseURL: baseBankURL,
 });
 
-export { APIUsers, APIBank };
+const APIBenefits = axios.create({
+  baseURL: baseBenefitsURL,
+});
+
+export { APIUsers, APIBank, APIBenefits };

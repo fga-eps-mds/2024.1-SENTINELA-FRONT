@@ -9,37 +9,24 @@ import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
 import SecondaryButton from "../../../Components/SecondaryButton";
 import FieldText from "../../../Components/FieldText";
-import { APIBank } from "../../../Services/BaseService";
+import { getSupplierForm } from "../../../Services/supplierService";
 
 export default function ListSupplier() {
   const [suppliers, setSuppliers] = useState([]);
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
-  const storagedUser = localStorage.getItem("@App:user");
-
   useEffect(() => {
     const fetchSupplierForm = async () => {
-      try {
-        const response = await APIBank.get(`/SupplierForm`, {
-          headers: {
-            Authorization: `Bearer ${storagedUser.token}`,
-          },
-        });
-
-        const data = response.data;
-        if (Array.isArray(data)) {
-          setSuppliers(data);
-        } else {
-          console.error("Os dados recebidos não são um array.");
-        }
-      } catch (error) {
-        console.error("Erro ao buscar fornecedores:", error);
+      const response = await getSupplierForm();
+      const data = response;
+      if (Array.isArray(data)) {
+        setSuppliers(data);
       }
     };
 
     fetchSupplierForm();
-  }, []);
+  });
 
   const handleSubmit = () => {
     navigate("/fornecedores/criar");

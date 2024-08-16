@@ -7,9 +7,9 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FieldText from "../../../../Components/FieldText";
 import PrimaryButton from "../../../../Components/PrimaryButton";
-import { APIUsers } from "../../../../Services/BaseService";
 import "../userHubPage/index.css";
 import "./index.css";
+import { getUsers } from "../../../../Services/userService";
 
 export default function UserListPage() {
   const [users, setUsers] = useState([]);
@@ -19,18 +19,9 @@ export default function UserListPage() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const storagedUserString = localStorage.getItem("@App:user");
-        const storagedUser = JSON.parse(storagedUserString);
-
-        const response = await APIUsers.get("users", {
-          headers: {
-            Authorization: `Bearer ${storagedUser.token}`,
-          },
-        });
-
-        const data = response.data;
-        if (Array.isArray(data)) {
-          setUsers(data);
+        const response = await getUsers();
+        if (Array.isArray(response)) {
+          setUsers(response);
         } else {
           console.error("Os dados recebidos não são um array.");
         }

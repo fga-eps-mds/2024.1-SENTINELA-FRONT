@@ -17,5 +17,5 @@ export default function Card({ children, className }) {
 
 Card.propTypes = {
   children: PropTypes.node,
-  className: PropTypes.string,
+  className: PropTypes.any,
 };

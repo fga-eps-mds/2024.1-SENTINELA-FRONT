@@ -26,14 +26,11 @@ describe("ProfileUpdate", () => {
     localStorage.setItem(
       "@App:user",
       JSON.stringify({
-        user: {
-          _id: "123",
-          name: "John Doe",
-          phone: "1234567890",
-          email: "john@example.com",
-          status: true,
-        },
-        token: "fake-token",
+        _id: "123",
+        name: "John Doe",
+        phone: "1234567890",
+        email: "john@example.com",
+        status: true,
       })
     );
   });
@@ -74,8 +71,6 @@ describe("ProfileUpdate", () => {
 
     fireEvent.click(screen.getByText(/Cancelar/i));
     await waitFor(() => {
-      // Aqui você pode verificar o conteúdo esperado na página inicial
-      // Em vez de verificar o HTML diretamente, você pode verificar a navegação
       expect(window.location.pathname).toBe("/home");
     });
   });
