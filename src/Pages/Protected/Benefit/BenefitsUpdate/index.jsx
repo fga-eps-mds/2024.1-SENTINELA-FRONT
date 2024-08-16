@@ -19,7 +19,7 @@ import {
   isValidEmail,
   isValidCelular,
   isValidSite,
-} from "../../../../Services/benefitsService";
+} from "../../../../Utils/validators";
 import { Snackbar } from "@mui/material";
 import Alert from "@mui/material/Alert";
 
@@ -134,8 +134,8 @@ export default function BenefitsUpdate() {
     }
 
     const celularValidation = isValidCelular(telefCelular);
-    if (celularValidation) {
-      setOpenError(celularValidation);
+    if (!celularValidation.isValid) {
+      setOpenError(celularValidation.message);
       return false;
     }
 
@@ -154,9 +154,8 @@ export default function BenefitsUpdate() {
   };
 
   const handleSaveModal = () => {
-    if (validateInputs()) {
-      setShowSaveModal(true);
-    }
+    setShowSaveModal(false);
+    navigate("/beneficios/lista");
   };
 
   const handleDeleteModal = () => {
@@ -209,30 +208,39 @@ export default function BenefitsUpdate() {
   }, [benefitsId]);
 
   const handleUpdateBenefitsButton = async () => {
-    const benefitsData = {
-      nome,
-      razaoSocial,
-      descricao,
-      tipoPessoa,
-      cpfCnpj,
-      ans,
-      categoria,
-      statusConvenio,
-      dataCadastro,
-      considerarIr,
-      descontoAut,
-      logotipo,
-      site,
-      email,
-      telefCelular,
-      dataAssinatura,
-      dataInicio,
-      sitContrato,
-      dataFinal,
-      contratoSit: isChecked,
-    };
-    await updateBenefitsFormById(benefitsId, benefitsData);
-    navigate("/beneficios/lista");
+    if (validateInputs()) {
+      const benefitsData = {
+        nome,
+        razaoSocial,
+        descricao,
+        tipoPessoa,
+        cpfCnpj,
+        ans,
+        categoria,
+        statusConvenio,
+        dataCadastro,
+        considerarIr,
+        descontoAut,
+        logotipo,
+        site,
+        email,
+        telefCelular,
+        dataAssinatura,
+        dataInicio,
+        sitContrato,
+        dataFinal,
+        contratoSit: isChecked,
+      };
+      try {
+        await updateBenefitsFormById(benefitsId, benefitsData);
+        setShowSaveModal(true);
+      } catch (error) {
+        console.error(
+          `Erro ao atualizar benefício com ID ${benefitsId}:`,
+          error
+        );
+      }
+    }
   };
 
   return (
@@ -386,7 +394,10 @@ export default function BenefitsUpdate() {
         <div className="double-buttons">
           <SecondaryButton text="Deletar" onClick={handleDeleteModal} />
 
-          <PrimaryButton text="Salvar" onClick={handleSaveModal} />
+          <PrimaryButton
+            text="Salvar"
+            onClick={() => handleUpdateBenefitsButton()}
+          />
         </div>
 
         <Snackbar
@@ -403,7 +414,7 @@ export default function BenefitsUpdate() {
           <SecondaryButton
             key={"saveButtons"}
             text="OK"
-            onClick={() => handleUpdateBenefitsButton()}
+            onClick={() => handleSaveModal()}
           />
         </Modal>
 
