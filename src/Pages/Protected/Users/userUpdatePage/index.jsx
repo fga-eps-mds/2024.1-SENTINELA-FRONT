@@ -53,14 +53,7 @@ export default function UserUpdatePage() {
     const fetchUser = async () => {
       if (userId) {
         try {
-          const tokenString = localStorage.getItem("@App:user");
-          if (!tokenString) {
-            console.error("Token não encontrado no localStorage");
-            return;
-          }
-          const token = JSON.parse(tokenString).token;
-          const user = await getUserById(userId, token);
-
+          const user = await getUserById(userId);
           if (user) {
             setNomeCompleto(user.name || "");
             setCelular(user.phone || "");
@@ -114,16 +107,8 @@ export default function UserUpdatePage() {
         status: login === "Ativo",
         role: perfilSelecionado,
       };
-
-      const tokenString = localStorage.getItem("@App:user");
-      if (!tokenString) {
-        console.error("Token não encontrado no localStorage");
-        return;
-      }
-      const token = JSON.parse(tokenString).token;
-
       try {
-        await patchUserById(userId, updatedUser, token);
+        await patchUserById(userId, updatedUser);
         handleSaveModal();
       } catch (error) {
         console.error(`Erro ao atualizar usuário com ID ${userId}:`, error);

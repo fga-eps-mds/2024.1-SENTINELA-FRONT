@@ -26,14 +26,11 @@ describe("ProfileUpdate", () => {
     localStorage.setItem(
       "@App:user",
       JSON.stringify({
-        user: {
-          _id: "123",
-          name: "John Doe",
-          phone: "1234567890",
-          email: "john@example.com",
-          status: true,
-        },
-        token: "fake-token",
+        _id: "123",
+        name: "John Doe",
+        phone: "1234567890",
+        email: "john@example.com",
+        status: true,
       })
     );
   });

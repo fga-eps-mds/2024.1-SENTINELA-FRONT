@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import theme from "../../Styles/global";
 import { Button } from "@mui/material";
 
-export default function PrimaryButton({ text, onClick, maxWidth }) {
+export default function PrimaryButton({ text, onClick, maxWidth, marginTop }) {
   const rgbaValue09 = `rgba(174, 136, 60, 0.9);`;
 
   return (
@@ -15,7 +15,7 @@ export default function PrimaryButton({ text, onClick, maxWidth }) {
         backgroundColor: theme.palette.button, // Fundo transparente
         maxWidth: { maxWidth }, // Largura do botão
         width: "90%",
-        marginTop: "15px",
+        marginTop: { marginTop },
         "&amp;:hover": {
           backgroundColor: rgbaValue09,
           transform: "scale(1.03)",
@@ -29,6 +29,7 @@ export default function PrimaryButton({ text, onClick, maxWidth }) {
 
 PrimaryButton.propTypes = {
   maxWidth: PropTypes.string,
+  marginTop: PropTypes.string,
   text: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
 };

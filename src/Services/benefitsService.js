@@ -1,7 +1,7 @@
 import { APIBenefits, APIUsers } from "./BaseService";
 
-const storagedUser = localStorage.getItem("@App:user");
-const user = JSON.parse(storagedUser);
+const storagedToken = localStorage.getItem("@App:token");
+const token = JSON.parse(storagedToken);
 
 export async function userLogin(email, password) {
   try {
@@ -18,7 +18,6 @@ export async function userLogin(email, password) {
 
 export const createBenefitsForm = async (benefitsData) => {
   try {
-    const token = localStorage.getItem("@App:token");
     if (!token) {
       throw new Error("Token não encontrado");
     }
@@ -42,7 +41,6 @@ export const createBenefitsForm = async (benefitsData) => {
 
 export const getBenefitsForm = async () => {
   try {
-    const token = localStorage.getItem("@App:token");
     if (!token) {
       throw new Error("No token found");
     }
@@ -70,7 +68,7 @@ export const updateBenefitsFormById = async (id, benefitsData) => {
   try {
     const response = await APIBenefits.patch(`/benefits/update/${id}`, {
       headers: {
-        Authorization: `Bearer ${user.token}`,
+        Authorization: `Bearer ${token}`,
       },
       benefitsData: benefitsData,
     });
