@@ -57,7 +57,7 @@
   }
 }
 
-@media screen and (min-width: 700px) {
+@media screen and (min-width: 1080px) {
   .container-user {
     display: flex;
   }
@@ -67,6 +67,8 @@
     font-size: medium;
     margin-left: 8rem;
     margin-top: 12rem;
+    overflow: hidden;
+    white-space: nowrap;
   }
   .forms-container-user {
     margin: 5rem;
