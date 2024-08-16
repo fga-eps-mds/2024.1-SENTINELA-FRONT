@@ -1,6 +1,6 @@
 /* Telas até 768px */
 @media screen and (max-width: 768px) {
-  .container {
+  .section {
     display: flex;
     flex-direction: column;
   }
@@ -81,7 +81,7 @@
     display: none;
   }
 
-  .container {
+  .section {
     display: flex;
   }
 
@@ -162,7 +162,7 @@
 
 /* Telas maiores que 1080px */
 @media screen and (min-width: 1081px) {
-  .container {
+  .section {
     display: flex;
   }
 

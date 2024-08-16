@@ -391,7 +391,7 @@ const MemberShip = () => {
     }
   };
   return (
-    <section className="container">
+    <section className="section">
       <div className="forms-container">
         <h1>Formulário de Filiação</h1>
 
