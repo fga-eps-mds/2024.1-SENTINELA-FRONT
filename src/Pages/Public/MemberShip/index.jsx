@@ -819,7 +819,6 @@ const MemberShip = () => {
             width="608px"
           />
         </Modal>
-        <footer style={{ height: "100px" }} />
       </div>
     </section>
   );
