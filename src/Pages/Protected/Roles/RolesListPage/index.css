@@ -48,7 +48,7 @@
   }
 }
 
-@media screen and (min-width: 700px) {
+@media screen and (min-width: 1080px) {
   label {
     color: #332117 !important;
   }
@@ -77,8 +77,8 @@
 
   .double-box {
     display: grid;
-    align-content: start;
-    grid-template-columns: 2.3fr 0.7fr;
+    grid-template-columns: 2.3fr 2fr;
+    padding-right: 1%;
   }
 
   .double-box button {
