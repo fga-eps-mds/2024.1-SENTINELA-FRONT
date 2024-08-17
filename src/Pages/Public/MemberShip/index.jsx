@@ -209,7 +209,7 @@ const MemberShip = () => {
   };
 
   const handleAddDependent = () => {
-    setShowDependentForm((prevState) => !prevState);
+    setShowDependentForm(true);
   };
 
   const handleDependentChange = (field, value) => {
@@ -314,10 +314,10 @@ const MemberShip = () => {
     //if (!dataExpedicao) erros.dataExpedicao = 1;
     //if (!cargo) erros.cargo = 1;
     //if (!lotacao) erros.lotacao = 1;
-    //if (!matricula) erros.matricula = 1;
+    if (!matricula) erros.matricula = 1;
     if (!nomeCompleto) erros.nomeCompleto = 1;
     //if (!naturalidade) erros.naturalidade = 1;
-    //if (!rg) erros.rg = 1;
+    if (!rg) erros.rg = 1;
     //if (!orgao) erros.orgao = 1;
     if (!cpf) erros.cpf = 1;
     //if (!nomeDaMae) erros.nomeDaMae = 1;
@@ -330,11 +330,10 @@ const MemberShip = () => {
     if (!celular) erros.celular = 1;
     //if (!postoDeTrabalho) erros.postoDeTrabalho = 1;
     //if (!orgaoExpedidor) erros.orgaoExpedidor = 1;
-    //if (!situacaoAtual) erros.situacaoAtual = 1;
     //if (!religiao) erros.religiao = 1;
     if (isValidEmail(email) === false) erros.email = 1;
     if (cpf.length < 14) erros.cpf = 1;
-    //if (rg.length < 7) erros.rg = 1;
+    if (rg.length < 7) erros.rg = 1;
     //if (cep.length < 9) erros.cep = 1;
     //if (telefone.length < 14) erros.telefone = 1;
     if (celular.length < 15) erros.celular = 1;
@@ -382,6 +381,8 @@ const MemberShip = () => {
       dependents: dependentes,
     };
 
+    console.log(formData);
+
     const message = await createMemberShip(formData);
     if (message != 201) {
       setErrorFields(message);
@@ -424,7 +425,7 @@ const MemberShip = () => {
           />
 
           <FieldText
-            label="Matrícula"
+            label="Matrícula *"
             value={matricula}
             onChange={(e) => setMatricula(e.target.value)}
             onBlur={(e) => handleBlur(e, "matricula")}
@@ -486,7 +487,7 @@ const MemberShip = () => {
           />
 
           <FieldText
-            label="RG"
+            label="RG *"
             value={rg}
             onChange={(e) => setRg(mascaraRg(e.target.value))}
             onBlur={(e) => handleBlur(e, "rg")}
@@ -805,7 +806,15 @@ const MemberShip = () => {
           show={openSuccessDialog}
           width="608px"
           alertTitle="Ao confirmar essa solicitação, você estará concordando com a declaração a seguir:"
-          alert="Declaro que, ao filiar-me nesta data ao SINDPOL-DF, concordo e ratifico com todas as minhas obrigações previstas no Estatuto Social, regime interno e deliberação das assembleias gerais do Sindicato dos Policiais Penais do Distrito Federal. Ao tempo que comprometo-me em contribuir mensalmente com o valor de 1,5% vencimento básico, conforme Art. 105 do Estatuto APROVADO pela assembleia geral, o qual AUTORIZO que consignado em folha de pagamento junto ao órgão competente em favor do SINDPOL-DF, bem como outras contribuições de caráter extraordinário - desde que aprovadas em assembleia específica - Reconheço ainda que tais contribuições têm o condão de manter a entidade de representação sindical forte e independente no intuito de garantir melhores condições de trabalho para toda a categoria. Fico ciente que, ao desejar afastar-me do quadro social do sindicato, devo manifestar-me por escrito, em formulário específico, com antecedência de 60 (sessenta) dias. Pela presente, solicito minha admissão no quadro de filiados do SINDICATO DOS POLICIAIS PENAIS DO DISTRITO FEDERAL."
+          alert="Por meio desta, declaro que, ao filiar-me na presente data ao Sindicato dos Policiais Penais do Distrito Federal (SINDPOL-DF), estou plenamente ciente e de acordo com todas as obrigações previstas no Estatuto Social, no regime interno e nas deliberações das assembleias gerais do sindicato.
+
+                Comprometo-me a contribuir mensalmente com o valor equivalente a 1% do subsídio para os policiais penais ativos e 0,50% para aposentados e pensionistas, calculado com base no Padrão I da Terceira Classe da tabela de subsídio, conforme estabelece o Art. 105 do Estatuto, aprovado em assembleia geral. Autorizo que essa contribuição seja descontada em folha de pagamento junto ao órgão competente, em favor do SINDPOL-DF. Concordo também com a possibilidade de contribuições extraordinárias, desde que aprovadas em assembleia específica.
+
+                Reconheço que essas contribuições são fundamentais para manter a força e independência do sindicato, garantindo melhores condições de trabalho para toda a categoria.
+
+                Estou ciente de que, caso deseje solicitar meu desligamento do quadro de filiados do sindicato, devo fazê-lo por escrito, utilizando o formulário específico, com antecedência mínima de 60 (sessenta) dias.
+
+                Por meio desta, solicito formalmente minha admissão no quadro de filiados do SINDPOL-DF. Declaro, ainda, que todas as informações fornecidas nesta ficha estão protegidas pela Lei nº 13.709, de 14 de agosto de 2018 (Lei Geral de Proteção de Dados - LGPD)."
         >
           {" "}
           <SecondaryButton
