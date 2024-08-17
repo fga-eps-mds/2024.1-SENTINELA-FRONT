@@ -79,4 +79,37 @@ describe("RolesListPage", () => {
     expect(screen.getByText("Perfil 1")).toBeInTheDocument();
     expect(screen.queryByText("Perfil 2")).not.toBeInTheDocument();
   });
+
+  it("navigates to role creation page on button click", async () => {
+    render(
+      <Router>
+        <RolesListPage />
+      </Router>
+    );
+
+    fireEvent.click(screen.getByText(/Cadastrar perfil/i));
+    await waitFor(() => {
+      expect(window.location.pathname).toBe("/perfis/criar");
+    });
+  });
+
+  it("navigates to role edit page on list item click", async () => {
+    const roles = [
+      { _id: "1", name: "Perfil1" },
+      { _id: "2", name: "Perfil2" },
+    ];
+    APIUsers.get.mockResolvedValue({ data: roles });
+
+    render(
+      <Router>
+        <RolesListPage />
+      </Router>
+    );
+
+    await waitFor(() => {
+      fireEvent.click(screen.getByText("Perfil1"));
+    });
+
+    expect(window.location.pathname).toBe(`/perfis/editar/${roles[0].name}`);
+  });
 });
