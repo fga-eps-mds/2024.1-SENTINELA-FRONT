@@ -39,4 +39,22 @@ describe("RolesListPage", () => {
 
     await waitFor(() => expect(APIUsers.get).toHaveBeenCalledTimes(1));
   });
+
+  it("fetches and displays roles", async () => {
+    const roles = [
+      { _id: "1", name: "Perfil 1" },
+      { _id: "2", name: "Perfil 2" },
+    ];
+    APIUsers.get.mockResolvedValue({ data: roles });
+
+    render(
+      <Router>
+        <RolesListPage />
+      </Router>
+    );
+
+    await waitFor(() => expect(APIUsers.get).toHaveBeenCalledTimes(1));
+    expect(screen.getByText("Perfil 1")).toBeInTheDocument();
+    expect(screen.getByText("Perfil 2")).toBeInTheDocument();
+  });
 });
