@@ -209,7 +209,7 @@ const MemberShip = () => {
   };
 
   const handleAddDependent = () => {
-    setShowDependentForm(true);
+    setShowDependentForm((prevState) => !prevState);
   };
 
   const handleDependentChange = (field, value) => {
@@ -661,12 +661,8 @@ const MemberShip = () => {
         </div>
         <div>
           <div>
-            <h3>
-              Adicionar Dependente{" "}
-              <AddCircleOutlineIcon
-                id="addDependentBttn"
-                onClick={handleAddDependent}
-              />
+            <h3 id="addDependentBttn" onClick={handleAddDependent}>
+              Adicionar Dependente <AddCircleOutlineIcon />
             </h3>
           </div>
           {showDependentForm && (
@@ -783,7 +779,7 @@ const MemberShip = () => {
           <Alert onClose={() => setOpenError(false)} severity="error">
             {missingList.length <= 5 && missingList.length != 0
               ? `Os seguintes campos estão faltando: ${missingList.map((key) => fieldNames[key]).join(", ")}`
-              : "Certifique-se de que todos os campos estão preenchidos"}
+              : "Certifique-se de que todos os campos obrigatórios estão preenchidos"}
             {unfilledDependent && (
               <>
                 <br />
