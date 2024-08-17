@@ -28,8 +28,10 @@ export async function getMemberShip(status) {
 export async function getMemberShipById(id) {
   try {
     const response = await APIUsers.get(`membership/${id}`);
+    console.log(response);
     return response.data;
   } catch (error) {
+    console.log(error);
     return error.response.data.erro;
   }
 }
