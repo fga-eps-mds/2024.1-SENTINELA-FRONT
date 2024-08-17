@@ -1,17 +1,15 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../../Context/auth";
-import SideBar from "../../../Components/SideBar";
-import SideButton from "../../../Components/SideButton";
-import PrimaryButton from "../../../Components/PrimaryButton";
-import SecondaryButton from "../../../Components/SecondaryButton";
-import FieldSelect from "../../../Components/FieldSelect";
-import FieldText from "../../../Components/FieldText";
+import { useAuth } from "../../../../Context/auth";
+import PrimaryButton from "../../../../Components/PrimaryButton";
+import SecondaryButton from "../../../../Components/SecondaryButton";
+import FieldSelect from "../../../../Components/FieldSelect";
+import FieldText from "../../../../Components/FieldText";
 import "./index.css";
 import { Snackbar } from "@mui/material";
 import Alert from "@mui/material/Alert";
-import { createBankAccount } from "../../../Services/bankAccountService";
-import Modal from "../../../Components/Moldal";
+import { createBankAccount } from "../../../../Services/bankAccountService";
+import Modal from "../../../../Components/Modal";
 
 const BankAccount = () => {
   const [name, setName] = useState("");
@@ -103,26 +101,8 @@ const BankAccount = () => {
     return value.replace(/\D/g, "").slice(0, 1);
   };
 
-  const buttons = [
-    <SideButton
-      key="home"
-      text="PÁGINA INICIAL"
-      onClick={() => navigate("/home/")}
-    />,
-    <SideButton key="filiacao" text="CADASTROS" />,
-    <SideButton
-      key="financeiro"
-      text="FINANCEIRO"
-      onClick={() => navigate("/finance/")}
-    />,
-    <SideButton key="beneficios" text="BENEFÍCIOS" />,
-  ];
-
   return user ? (
     <section className="bank-container">
-      <div>
-        <SideBar className="side-menu" buttons={buttons} />
-      </div>
       <div className="section">
         <h1>Cadastro de Conta Bancária</h1>
         <div className="form">
@@ -169,9 +149,7 @@ const BankAccount = () => {
             options={listStatus}
           />
         </div>
-        <div className="Botao-submit">
-          <PrimaryButton text="Cadastrar Conta" onClick={handleCheck} />
-        </div>
+        <PrimaryButton text="Cadastrar Conta" onClick={handleCheck} />
       </div>
 
       <Snackbar
@@ -201,7 +179,7 @@ const BankAccount = () => {
       >
         <SecondaryButton
           text="ok"
-          onClick={() => navigate("/finance/")}
+          onClick={() => navigate("/finance/list")}
           style={"width: 250px; margin-top : 10px"}
           sx={{ width: "250px", "margin-top": "10px" }}
         />

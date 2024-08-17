@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useAuth } from "../../../Context/auth";
-import SideBar from "../../../Components/SideBar";
-import SideButton from "../../../Components/SideButton";
-import PrimaryButton from "../../../Components/PrimaryButton";
-import SecondaryButton from "../../../Components/SecondaryButton";
-import FieldSelect from "../../../Components/FieldSelect";
-import FieldText from "../../../Components/FieldText";
+import { useAuth } from "../../../../Context/auth";
+import SideBar from "../../../../Components/SideBar";
+import SideButton from "../../../../Components/SideButton";
+import PrimaryButton from "../../../../Components/PrimaryButton";
+import SecondaryButton from "../../../../Components/SecondaryButton";
+import FieldSelect from "../../../../Components/FieldSelect";
+import FieldText from "../../../../Components/FieldText";
 import "./index.css";
 import { Snackbar } from "@mui/material";
 import Alert from "@mui/material/Alert";
@@ -14,8 +14,8 @@ import {
   getBankAccount,
   deleteBankAccount,
   updateBankAccount,
-} from "../../../Services/bankAccountService";
-import Modal from "../../../Components/Moldal";
+} from "../../../../Services/bankAccountService";
+import Modal from "../../../../Components/Modal";
 
 const BankAccountId = () => {
   const [name, setName] = useState("");
