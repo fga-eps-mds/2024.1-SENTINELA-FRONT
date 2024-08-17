@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./index.css";
-import PrimaryButton from "../../../Components/PrimaryButton";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemText";
@@ -41,10 +40,6 @@ export default function ListSupplier() {
     fetchSupplierForm();
   }, []);
 
-  const handleSubmit = () => {
-    navigate("/fornecedores/criar");
-  };
-
   const handleItemClick = (supplier) => {
     navigate("/fornecedores/${supplier.nome}", {
       state: { supplierId: supplier._id },
@@ -60,7 +55,6 @@ export default function ListSupplier() {
       <div className="forms-container">
         <div className="double-box">
           <h1>Lista de fornecedores</h1>
-          <PrimaryButton text="Cadastrar fornecedor" onClick={handleSubmit} />
         </div>
 
         <div className="search-box">
