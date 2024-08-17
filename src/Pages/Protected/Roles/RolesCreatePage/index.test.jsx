@@ -53,5 +53,34 @@ describe("RolesCreatePage", () => {
         <RolesCreatePage />
       </Router>
     );
+
+    // Captura a linha correspondente ao módulo "Financeiro"
+    const financeRow = screen.getByText("Financeiro").closest("div");
+
+    // Captura as checkboxes dentro dessa linha
+    const checkboxes = financeRow.querySelectorAll('input[type="checkbox"]');
+
+    const checkboxCriarFinanceiro = checkboxes[0]; // Primeira checkbox (Criar)
+    const checkboxVisualizarFinanceiro = checkboxes[1]; // Segunda checkbox (Visualizar)
+
+    // Inicialmente desmarcadas
+    expect(checkboxCriarFinanceiro).not.toBeChecked();
+    expect(checkboxVisualizarFinanceiro).not.toBeChecked();
+
+    // Clicar nas checkboxes
+    fireEvent.click(checkboxCriarFinanceiro);
+    fireEvent.click(checkboxVisualizarFinanceiro);
+
+    // Espera que estejam marcadas
+    expect(checkboxCriarFinanceiro).toBeChecked();
+    expect(checkboxVisualizarFinanceiro).toBeChecked();
+
+    // Clicar novamente para desmarcar
+    fireEvent.click(checkboxCriarFinanceiro);
+    fireEvent.click(checkboxVisualizarFinanceiro);
+
+    // Espera que estejam desmarcadas
+    expect(checkboxCriarFinanceiro).not.toBeChecked();
+    expect(checkboxVisualizarFinanceiro).not.toBeChecked();
   });
 });
