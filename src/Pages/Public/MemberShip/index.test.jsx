@@ -45,8 +45,17 @@ describe("MemberShip Component", () => {
 
     expect(
       screen.getByText(
-        /Certifique-se de que todos os campos estão preenchidos/i
+        /Certifique-se de que todos os campos obrigatórios estão preenchidos/i
       )
+    ).toBeInTheDocument();
+
+    const nameInput = screen.getByLabelText(/Nome Completo/i);
+    fireEvent.change(nameInput, { target: { value: "John Doe" } });
+
+    fireEvent.click(screen.getByText(/ENVIAR SOLICITAÇÃO/i));
+
+    expect(
+      screen.getByText(/Os seguintes campos estão faltando: /i)
     ).toBeInTheDocument();
   });
 
