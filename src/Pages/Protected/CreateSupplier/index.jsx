@@ -9,6 +9,7 @@ import Modal from "../../../Components/Modal";
 import { createSupplierForm } from "../../../Services/supplierService";
 import { Snackbar } from "@mui/material";
 import Alert from "@mui/material/Alert";
+import { isValidEmail } from "../../../Utils/validators";
 
 export default function CreateSupplier() {
   const navigate = useNavigate();
@@ -133,9 +134,57 @@ export default function CreateSupplier() {
     setUfEndereco(event.target.value);
   };
 
+  const isValidTelefone = (telefone) => {
+    const cleanedNumber = telefone.replace(/\D/g, ""); // Remove caracteres não numéricos
+
+    if (!cleanedNumber) {
+      return { isValid: true };
+    }
+
+    if (cleanedNumber.length != 10) {
+      return { isValid: false, message: "O telefone fornecido não é válido." };
+    }
+
+    return { isValid: true };
+  };
+
+  const isValidCelular = (celular) => {
+    const cleanedNumber = celular.replace(/\D/g, ""); // Remove caracteres não numéricos
+
+    if (!cleanedNumber) {
+      return { isValid: true };
+    }
+
+    if (cleanedNumber.length != 11) {
+      return { isValid: false, message: "O celular fornecido não é válido." };
+    }
+
+    return { isValid: true };
+  };
+
   const handleCheck = async () => {
     if (!nome) {
-      setOpenError(true);
+      setOpenError(
+        "Certifique-se de que todos os campos obrigatórios estão preenchidos"
+      );
+      return;
+    }
+
+    const emailValidation = isValidEmail(email);
+    if (!emailValidation.isValid) {
+      setOpenError(emailValidation.message);
+      return;
+    }
+
+    const telefoneValidation = isValidTelefone(telefone);
+    if (!telefoneValidation.isValid) {
+      setOpenError(telefoneValidation.message);
+      return;
+    }
+
+    const celularValidation = isValidCelular(celular);
+    if (!celularValidation.isValid) {
+      setOpenError(celularValidation.message);
       return;
     }
 
@@ -322,8 +371,8 @@ export default function CreateSupplier() {
           autoHideDuration={6000}
           onClose={() => setOpenError(false)}
         >
-          <Alert onClose={() => setOpenError(false)} severity="error">
-            Certifique-se de que todos os campos obrigatórios estão preenchidos
+          <Alert onClose={() => setOpenError("")} severity="error">
+            {openError}
           </Alert>
         </Snackbar>
 

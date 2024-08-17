@@ -23,13 +23,6 @@ function mockValidators() {
               isValid: false,
               message: "O e-mail fornecido não é válido.",
             },
-      isValidCelular: (celular) =>
-        !celular || celular === "(61) 91234-1234"
-          ? { isValid: true }
-          : {
-              isValid: false,
-              message: "O telefone fornecido não é válido.",
-            },
     };
   });
 }
@@ -100,9 +93,7 @@ describe("CreateSupplier", () => {
 
     await userEvent.click(screen.getByText("CADASTRAR"));
     expect(
-      screen.getByText(
-        "Certifique-se de que todos os campos obrigatórios estão preenchidos"
-      )
+      screen.getByText("O e-mail fornecido não é válido.")
     ).toBeInTheDocument();
     expect(createSupplierForm).not.toHaveBeenCalled();
 
@@ -116,7 +107,16 @@ describe("CreateSupplier", () => {
 
     await userEvent.click(screen.getByText("CADASTRAR"));
     expect(
-      screen.getByText("O telefone fornecido não é válido.")
+      screen.getByText("O celular fornecido não é válido.")
+    ).toBeInTheDocument();
+    expect(createSupplierForm).not.toHaveBeenCalled();
+
+    const telefoneInput = screen.getAllByLabelText("Telefone");
+    await fireEvent.change(telefoneInput, { target: { value: "123" } });
+
+    await userEvent.click(screen.getByText("CADASTRAR"));
+    expect(
+      screen.getByText("O telefone fornecido não e válido.")
     ).toBeInTheDocument();
     expect(createSupplierForm).not.toHaveBeenCalled();
   });
