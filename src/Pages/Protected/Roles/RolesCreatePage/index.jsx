@@ -28,7 +28,7 @@ export default function RolesCreatePage() {
 
   // Função para mapear permissões
   const mapPermissions = (moduleName, accessArray) => {
-    const actions = ["create", "update", "read", "delete"];
+    const actions = ["create", "read", "update", "delete"];
     const grantedActions = actions.filter((_, index) => accessArray[index]);
     return {
       module: moduleName,
@@ -83,8 +83,8 @@ export default function RolesCreatePage() {
           <div className="row-labels">
             <label></label>
             <label>Criar</label>
-            <label>Editar</label>
             <label>Visualizar</label>
+            <label>Editar</label>
             <label>Deletar</label>
           </div>
           <div className="row">
@@ -95,12 +95,12 @@ export default function RolesCreatePage() {
               onChange={() => handleCheckboxChange(setFinanceiro, 0)}
             />
             <Checkbox
-              name="editar"
+              name="visualizar"
               checked={financeiro[1]}
               onChange={() => handleCheckboxChange(setFinanceiro, 1)}
             />
             <Checkbox
-              name="visualizar"
+              name="editar"
               checked={financeiro[2]}
               onChange={() => handleCheckboxChange(setFinanceiro, 2)}
             />
@@ -123,7 +123,7 @@ export default function RolesCreatePage() {
               onChange={() => handleCheckboxChange(setBeneficios, 1)}
             />
             <Checkbox
-              name="visualizar"
+              name="editar"
               checked={beneficios[2]}
               onChange={() => handleCheckboxChange(setBeneficios, 2)}
             />
@@ -141,12 +141,12 @@ export default function RolesCreatePage() {
               onChange={() => handleCheckboxChange(setUsuarios, 0)}
             />
             <Checkbox
-              name="editar"
+              name="visualizar"
               checked={usuarios[1]}
               onChange={() => handleCheckboxChange(setUsuarios, 1)}
             />
             <Checkbox
-              name="visualizar"
+              name="editar"
               checked={usuarios[2]}
               onChange={() => handleCheckboxChange(setUsuarios, 2)}
             />
