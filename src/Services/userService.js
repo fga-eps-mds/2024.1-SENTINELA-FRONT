@@ -26,7 +26,6 @@ export async function userLogin(email, password) {
 
 export const getUsers = async () => {
   try {
-    console.log(token);
     if (!token) {
       throw new Error("No token found");
     }
