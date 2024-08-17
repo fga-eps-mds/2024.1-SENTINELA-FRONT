@@ -82,10 +82,14 @@ describe("UserUpdatePage", () => {
     const emailInput = screen.getByLabelText("Email");
     fireEvent.change(emailInput, { target: { value: "invalid-email" } });
 
-    expect(screen.getByText("*Insira um email válido")).toBeInTheDocument();
+    fireEvent.click(screen.getByText("Salvar"));
+
+    await waitFor(() => {
+      expect(screen.getByText("*Insira um email válido")).toBeInTheDocument();
+    });
   });
 
-  it("shows an error message for invalid phone number", async () => {
+  it("validates phone number input", async () => {
     getRoles.mockResolvedValueOnce([]);
     getUserById.mockResolvedValueOnce({
       name: "",
@@ -103,7 +107,11 @@ describe("UserUpdatePage", () => {
     fireEvent.click(screen.getByText("Salvar"));
 
     await waitFor(() => {
-      expect(patchUserById).not.toHaveBeenCalled();
+      expect(
+        screen.getByText(
+          "*Verifique se o número de celular inserido está completo"
+        )
+      ).toBeInTheDocument();
     });
   });
 
