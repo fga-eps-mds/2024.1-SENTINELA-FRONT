@@ -1,36 +1,12 @@
 import { useState } from "react";
-import PropTypes from "prop-types"; // Importando o PropTypes
 import "./index.css";
 import FieldText from "../../../../Components/FieldText";
 import PrimaryButton from "../../../../Components/PrimaryButton";
 import SecondaryButton from "../../../../Components/SecondaryButton";
 import Modal from "../../../../Components/Modal";
-import { Checkbox } from "@mui/material";
 import { createRole } from "../../../../Services/RoleService/roleService";
 import { useNavigate } from "react-router-dom";
-
-// Componente reutilizável para linhas de checkboxes
-const CheckboxRow = ({ label, state, setState }) => (
-  <div className="row">
-    <label>{label}</label>
-    {state.map((checked, index) => (
-      <Checkbox
-        key={index}
-        checked={checked}
-        onChange={() =>
-          setState((prev) => prev.map((v, i) => (i === index ? !v : v)))
-        }
-      />
-    ))}
-  </div>
-);
-
-// Definindo as prop-types para o componente CheckboxRow
-CheckboxRow.propTypes = {
-  label: PropTypes.string.isRequired,
-  state: PropTypes.arrayOf(PropTypes.bool).isRequired,
-  setState: PropTypes.func.isRequired,
-};
+import CheckboxRow from "../../../../Components/CheckboxRow";
 
 export default function RolesCreatePage() {
   const [showModal, setShowModal] = useState(false);
