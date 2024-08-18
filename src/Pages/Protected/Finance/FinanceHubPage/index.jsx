@@ -26,14 +26,14 @@ export default function Finance() {
               src={sentinelaLogo}
               alt="Sentinela Logo"
             />
-            <SecondaryButton text="Cadastrar de Fornecedor" onClick="#" />
-            <SecondaryButton text="Listar forncedores" onClick="#" />
+            <SecondaryButton text="Cadastro de Fornecedores" onClick="#" />
+            <SecondaryButton text="Lista de forncedores" onClick="#" />
             <SecondaryButton
-              text="cadastrar conta bancaria"
+              text="cadastro de conta bancária"
               onClick={handleCadastroClick}
             />
             <SecondaryButton
-              text="Lista contas bancarias"
+              text="Lista de contas bancárias"
               onClick={handleListaClick}
             />
           </div>
