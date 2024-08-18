@@ -1,5 +1,11 @@
 import { describe, it, expect, vi, afterEach, beforeEach } from "vitest";
-import { render, screen, fireEvent, cleanup } from "@testing-library/react";
+import {
+  render,
+  screen,
+  fireEvent,
+  cleanup,
+  waitFor,
+} from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import CreateSupplier from "./index";
 import { createSupplierForm } from "../../../Services/supplierService";
@@ -7,31 +13,15 @@ import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
 
 async function fillUpRequiredFields() {
-  const nomeInput = screen.getByLabelText("Nome/Razão Social *");
+  const nomeInput = await screen.findByLabelText("Nome/Razão Social *");
   await fireEvent.change(nomeInput, {
-    target: { value: "Fornecedor Teste" },
-  });
-}
-
-function mockValidators() {
-  vi.mock("../../../Utils/validators", () => {
-    return {
-      isValidEmail: (email) =>
-        !email || email === "valid@email.com"
-          ? { isValid: true }
-          : {
-              isValid: false,
-              message: "O e-mail fornecido não é válido.",
-            },
-    };
+    target: { value: "Test Supplier" },
   });
 }
 
 describe("CreateSupplier", () => {
   beforeEach(() => {
-    vi.mock("../../../Services/supplierService", () => ({
-      createSupplierForm: vi.fn().mockResolvedValue(null), // Mock que resolve sem erro
-    }));
+    vi.mock("../../../Services/supplierService");
   });
 
   afterEach(() => {
@@ -68,6 +58,8 @@ describe("CreateSupplier", () => {
     // Verifica se a função de criação não foi chamada
     expect(createSupplierForm).not.toHaveBeenCalled();
 
+    await userEvent.click(screen.getByRole("button", { name: /close/i })); // fecha o alert
+
     // Preenche os campos obrigatórios
     await fillUpRequiredFields();
 
@@ -78,7 +70,6 @@ describe("CreateSupplier", () => {
   });
 
   it("validates form correctly with non-required fields", async () => {
-    mockValidators();
     render(
       <Router>
         <CreateSupplier />
@@ -88,36 +79,74 @@ describe("CreateSupplier", () => {
     await fillUpRequiredFields();
 
     // Testando a validação de e-mail
-    const emailInput = screen.getByLabelText("E-mail");
-    await fireEvent.change(emailInput, { target: { value: "invalid-email!" } });
+    const emailInput = await screen.findByLabelText(/e-mail/i);
 
+    await fireEvent.change(emailInput, {
+      // este endereço, como mockado no inicio do arquivo deve retornar um erro
+      target: { value: "invalid-email!" },
+    });
     await userEvent.click(screen.getByText("CADASTRAR"));
     expect(
-      screen.getByText("O e-mail fornecido não é válido.")
+      await screen.findByText("O e-mail fornecido não é válido.")
     ).toBeInTheDocument();
     expect(createSupplierForm).not.toHaveBeenCalled();
+
+    await userEvent.click(screen.getByRole("button", { name: /close/i }));
 
     await fireEvent.change(emailInput, {
       target: { value: "valid@email.com" },
     });
 
+    await waitFor(() => {
+      expect(
+        screen.queryByRole("button", { name: /close/i })
+      ).not.toBeInTheDocument();
+    });
+
     // Testando a validação de telefone
-    const celularInput = screen.getByLabelText("Celular");
+    const celularInput = await screen.findByLabelText(/Celular/i);
     await fireEvent.change(celularInput, { target: { value: "123" } });
 
     await userEvent.click(screen.getByText("CADASTRAR"));
     expect(
-      screen.getByText("O celular fornecido não é válido.")
+      await screen.findByText("O celular fornecido não é válido.")
     ).toBeInTheDocument();
     expect(createSupplierForm).not.toHaveBeenCalled();
 
-    const telefoneInput = screen.getAllByLabelText("Telefone");
+    await userEvent.click(screen.getByRole("button", { name: /close/i })); // fecha o alert
+    await waitFor(() => {
+      expect(
+        screen.queryByRole("button", { name: /close/i })
+      ).not.toBeInTheDocument();
+    });
+
+    await fireEvent.change(celularInput, { target: { value: "61984814046" } });
+
+    await waitFor(() => {
+      expect(
+        screen.queryByRole("button", { name: /close/i })
+      ).not.toBeInTheDocument();
+    });
+
+    const telefoneInput = await screen.findByLabelText(/Telefone/i);
     await fireEvent.change(telefoneInput, { target: { value: "123" } });
 
     await userEvent.click(screen.getByText("CADASTRAR"));
     expect(
-      screen.getByText("O telefone fornecido não e válido.")
+      await screen.findByText("O telefone fornecido não é válido.")
     ).toBeInTheDocument();
     expect(createSupplierForm).not.toHaveBeenCalled();
+
+    await userEvent.click(screen.getByRole("button", { name: /close/i })); // fecha o alert
+    await waitFor(() => {
+      expect(
+        screen.queryByRole("button", { name: /close/i })
+      ).not.toBeInTheDocument();
+    });
+
+    await fireEvent.change(telefoneInput, { target: { value: "6133338824" } });
+
+    await userEvent.click(screen.getByText("CADASTRAR"));
+    expect(createSupplierForm).toHaveBeenCalledTimes(1);
   });
 });

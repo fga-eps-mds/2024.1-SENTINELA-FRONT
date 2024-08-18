@@ -270,6 +270,7 @@ export default function CreateSupplier() {
             label="E-mail"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            name="email"
           />
 
           <FieldText

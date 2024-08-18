@@ -5,7 +5,7 @@ import TextField from "@mui/material/TextField";
 export default function FieldText({ label, value, onChange, disabled }) {
   return (
     <TextField
-      id="filled-basic"
+      id={`field-${label.replace(/\s+/g, "-").toLowerCase()}`} // Gera um id único baseado no label
       label={label}
       value={value}
       variant="filled"
