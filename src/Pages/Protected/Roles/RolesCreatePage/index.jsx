@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PropTypes from "prop-types"; // Importando o PropTypes
 import "./index.css";
 import FieldText from "../../../../Components/FieldText";
 import PrimaryButton from "../../../../Components/PrimaryButton";
@@ -8,31 +9,44 @@ import { Checkbox } from "@mui/material";
 import { createRole } from "../../../../Services/RoleService/roleService";
 import { useNavigate } from "react-router-dom";
 
+// Componente reutilizável para linhas de checkboxes
+const CheckboxRow = ({ label, state, setState }) => (
+  <div className="row">
+    <label>{label}</label>
+    {state.map((checked, index) => (
+      <Checkbox
+        key={index}
+        checked={checked}
+        onChange={() =>
+          setState((prev) => prev.map((v, i) => (i === index ? !v : v)))
+        }
+      />
+    ))}
+  </div>
+);
+
+// Definindo as prop-types para o componente CheckboxRow
+CheckboxRow.propTypes = {
+  label: PropTypes.string.isRequired,
+  state: PropTypes.arrayOf(PropTypes.bool).isRequired,
+  setState: PropTypes.func.isRequired,
+};
+
 export default function RolesCreatePage() {
   const [showModal, setShowModal] = useState(false);
   const [profileName, setProfileName] = useState("");
-
   const [financeiro, setFinanceiro] = useState([false, false, false, false]);
   const [beneficios, setBeneficios] = useState([false, false, false, false]);
   const [usuarios, setUsuarios] = useState([false, false, false, false]);
 
   const navigate = useNavigate();
 
-  const handleCheckboxChange = (setState, index) => {
-    setState((prevState) => {
-      const newState = [...prevState];
-      newState[index] = !newState[index];
-      return newState;
-    });
-  };
-
   // Função para mapear permissões
   const mapPermissions = (moduleName, accessArray) => {
     const actions = ["create", "read", "update", "delete"];
-    const grantedActions = actions.filter((_, index) => accessArray[index]);
     return {
       module: moduleName,
-      access: grantedActions,
+      access: actions.filter((_, index) => accessArray[index]),
     };
   };
 
@@ -44,10 +58,7 @@ export default function RolesCreatePage() {
         mapPermissions("users", usuarios),
       ];
 
-      const newRole = {
-        name: profileName,
-        permissions: permissions,
-      };
+      const newRole = { name: profileName, permissions };
 
       console.log("Tentando criar role com os dados:", newRole);
 
@@ -76,9 +87,10 @@ export default function RolesCreatePage() {
           value={profileName}
           onChange={(e) => setProfileName(e.target.value)}
         />
-        {!(profileName.length > 0) && (
+        {!profileName && (
           <label className="invalid">Nome é um campo obrigatório!</label>
         )}
+
         <div className="select-profile">
           <div className="row-labels">
             <label></label>
@@ -87,75 +99,21 @@ export default function RolesCreatePage() {
             <label>Editar</label>
             <label>Deletar</label>
           </div>
-          <div className="row">
-            <label>Financeiro</label>
-            <Checkbox
-              name="create"
-              checked={financeiro[0]}
-              onChange={() => handleCheckboxChange(setFinanceiro, 0)}
-            />
-            <Checkbox
-              name="visualizar"
-              checked={financeiro[1]}
-              onChange={() => handleCheckboxChange(setFinanceiro, 1)}
-            />
-            <Checkbox
-              name="editar"
-              checked={financeiro[2]}
-              onChange={() => handleCheckboxChange(setFinanceiro, 2)}
-            />
-            <Checkbox
-              name="deletar"
-              checked={financeiro[3]}
-              onChange={() => handleCheckboxChange(setFinanceiro, 3)}
-            />
-          </div>
-          <div className="row">
-            <label>Benefícios</label>
-            <Checkbox
-              name="create"
-              checked={beneficios[0]}
-              onChange={() => handleCheckboxChange(setBeneficios, 0)}
-            />
-            <Checkbox
-              name="editar"
-              checked={beneficios[1]}
-              onChange={() => handleCheckboxChange(setBeneficios, 1)}
-            />
-            <Checkbox
-              name="editar"
-              checked={beneficios[2]}
-              onChange={() => handleCheckboxChange(setBeneficios, 2)}
-            />
-            <Checkbox
-              name="deletar"
-              checked={beneficios[3]}
-              onChange={() => handleCheckboxChange(setBeneficios, 3)}
-            />
-          </div>
-          <div className="row">
-            <label>Usuarios</label>
-            <Checkbox
-              name="create"
-              checked={usuarios[0]}
-              onChange={() => handleCheckboxChange(setUsuarios, 0)}
-            />
-            <Checkbox
-              name="visualizar"
-              checked={usuarios[1]}
-              onChange={() => handleCheckboxChange(setUsuarios, 1)}
-            />
-            <Checkbox
-              name="editar"
-              checked={usuarios[2]}
-              onChange={() => handleCheckboxChange(setUsuarios, 2)}
-            />
-            <Checkbox
-              name="deletar"
-              checked={usuarios[3]}
-              onChange={() => handleCheckboxChange(setUsuarios, 3)}
-            />
-          </div>
+          <CheckboxRow
+            label="Financeiro"
+            state={financeiro}
+            setState={setFinanceiro}
+          />
+          <CheckboxRow
+            label="Benefícios"
+            state={beneficios}
+            setState={setBeneficios}
+          />
+          <CheckboxRow
+            label="Usuarios"
+            state={usuarios}
+            setState={setUsuarios}
+          />
         </div>
 
         <PrimaryButton text="Cadastrar" onClick={handleSubmit} />
