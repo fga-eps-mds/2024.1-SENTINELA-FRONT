@@ -1,26 +1,18 @@
 @media screen and (max-width: 1080px) {
   .bank-container {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
+    display: grid;
   }
 
   .bank-container .section {
-    display: grid;
-    width: 100%;
-    margin-top: 2rem;
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin: 3rem;
   }
 
   .bank-container .section .form {
-    font-size: 22px;
-    font-weight: 800;
-    margin-left: 8px;
-    margin-right: 50px;
-    margin-top: 1rem;
-    margin-bottom: -1rem;
-    color: #332117 !important;
-    white-space: nowrap;
+    width: 90%;
+    display: grid;
+    align-items: end;
   }
 
   .Botao-submit-bankAccount .MuiButton-root {
@@ -28,27 +20,41 @@
     position: relative;
     display: flex;
   }
+
+  .edit-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 1rem;
+  }
 }
 
-@media screen and (min-width: 1080px) {
+@media screen and (min-width: 1081px) {
   .bank-container {
     display: flex;
-    flex-direction: flex-end;
+    height: 100%;
   }
 
   .bank-container .section {
-    display: grid;
+    display: block;
     width: 100%;
-    margin: 2rem;
+    flex-direction: row;
+    margin: 3rem;
   }
 
   .bank-container .section .form {
     width: 100%;
-    display: inherit;
+    display: grid;
     grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    flex-direction: column;
   }
 
   .Botao-submit-bankAccount {
-    margin: auto;
+    display: flex;
+    align-items: end;
+    margin-top: 1rem;
   }
 }

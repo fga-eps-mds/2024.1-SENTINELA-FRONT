@@ -33,8 +33,8 @@ export default function ListBankAccount() {
   };
 
   const handleItemClick = (bankAccount) => {
-    navigate(`/finance/BankAccountUpdate/${bankAccount.name}`, {
-      state: { userId: bankAccount._id },
+    navigate(`/finance/update/${bankAccount._id}`, {
+      state: { bankAccountId: bankAccount._id },
     });
   };
 

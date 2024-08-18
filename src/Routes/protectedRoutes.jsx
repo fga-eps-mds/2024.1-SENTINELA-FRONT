@@ -40,7 +40,7 @@ const ProtectedRoutes = () => {
       <Route path="/beneficios/editar/:id" element={<BenefitsUpdate />} />
       <Route path="/finance/hub" element={<FinanceHubPage />} />
       <Route path="/finance/criar" element={<FinanceBankAccount />} />
-      <Route path="/finance/update" element={<FinanceUpdate />} />
+      <Route path="/finance/update/:id" element={<FinanceUpdate />} />
       <Route path="/finance/list" element={<FinanceList />} />
     </Routes>
   );

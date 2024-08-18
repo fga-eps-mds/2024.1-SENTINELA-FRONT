@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../../../Context/auth";
-import SideBar from "../../../../Components/SideBar";
-import SideButton from "../../../../Components/SideButton";
 import PrimaryButton from "../../../../Components/PrimaryButton";
 import SecondaryButton from "../../../../Components/SecondaryButton";
 import FieldSelect from "../../../../Components/FieldSelect";
@@ -76,25 +74,11 @@ const BankAccountId = () => {
     setOpenSave(true);
   };
 
-  const buttons = [
-    <SideButton
-      key="home"
-      text="PÁGINA INICIAL"
-      onClick={() => navigate("/home/")}
-    />,
-    <SideButton key="filiacao" text="CADASTROS" />,
-    <SideButton
-      key="financeiro"
-      text="FINANCEIRO"
-      onClick={() => navigate("/finance/")}
-    />,
-    <SideButton key="beneficios" text="BENEFÍCIOS" />,
-  ];
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         const result = await getBankAccount(id);
+        console.log(result);
         setName(result.name || "");
         setPix(result.pix || "");
         setBank(result.bank || "");
@@ -126,8 +110,11 @@ const BankAccountId = () => {
       ...(agency && { agency }), // Inclui agency se não estiver vazio
     };
 
+    console.log("Dados atualizados:", updatedData);
+
     try {
       const response = await updateBankAccount(id, updatedData);
+      console.log("Resposta do servidor:", response);
       return response;
     } catch (error) {
       console.error("Erro ao enviar dados:", error);
@@ -135,13 +122,10 @@ const BankAccountId = () => {
   };
 
   return user ? (
-    <section className="bank-container">
-      <div>
-        <SideBar className="side-menu" buttons={buttons} />
-      </div>
-      <div className="section">
+    <section className="listContainer">
+      <div className="list">
         <h1>Visualização de Conta Bancária</h1>
-        <div className="form">
+        <div className="header">
           <FieldText
             label="Nome *"
             value={name}
@@ -245,7 +229,7 @@ const BankAccountId = () => {
       >
         <SecondaryButton
           text="ok"
-          onClick={() => navigate("/finance/listBankAccount")}
+          onClick={() => navigate("/finance/list")}
           style={{ width: "250px", marginTop: "10px" }}
         />
       </Modal>
