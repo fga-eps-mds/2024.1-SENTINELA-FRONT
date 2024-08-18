@@ -4,13 +4,13 @@ import FieldText from "../../../../Components/FieldText";
 import PrimaryButton from "../../../../Components/PrimaryButton";
 import SecondaryButton from "../../../../Components/SecondaryButton";
 import Modal from "../../../../Components/Modal";
-import { Checkbox } from "@mui/material";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
   getRoleById,
   updateRole,
   deleteRole,
 } from "../../../../Services/RoleService/roleService";
+import CheckboxRow from "../../../../Components/CheckboxRow";
 
 export default function RolesUpdatePage() {
   const [showSaveModal, setShowSaveModal] = useState(false);
@@ -46,7 +46,6 @@ export default function RolesUpdatePage() {
           usuarios: "users",
         };
 
-        // Definindo o mapa de índices de acesso
         const accessIndexMap = {
           create: 0,
           read: 1,
@@ -78,20 +77,11 @@ export default function RolesUpdatePage() {
     fetchRole();
   }, [roleId]);
 
-  const handleCheckboxChange = (setState, index) => {
-    setState((prevState) => {
-      const newState = [...prevState];
-      newState[index] = !newState[index];
-      return newState;
-    });
-  };
-
   const mapPermissions = (moduleName, accessArray) => {
     const actions = ["create", "read", "update", "delete"];
-    const grantedActions = actions.filter((_, index) => accessArray[index]);
     return {
       module: moduleName,
-      access: grantedActions,
+      access: actions.filter((_, index) => accessArray[index]),
     };
   };
 
@@ -152,75 +142,22 @@ export default function RolesUpdatePage() {
             <label>Editar</label>
             <label>Deletar</label>
           </div>
-          <div className="row">
-            <label>Financeiro</label>
-            <Checkbox
-              name="create"
-              checked={financeiro[0]}
-              onChange={() => handleCheckboxChange(setFinanceiro, 0)}
-            />
-            <Checkbox
-              name="visualizar"
-              checked={financeiro[1]}
-              onChange={() => handleCheckboxChange(setFinanceiro, 1)}
-            />
-            <Checkbox
-              name="editar"
-              checked={financeiro[2]}
-              onChange={() => handleCheckboxChange(setFinanceiro, 2)}
-            />
-            <Checkbox
-              name="deletar"
-              checked={financeiro[3]}
-              onChange={() => handleCheckboxChange(setFinanceiro, 3)}
-            />
-          </div>
-          <div className="row">
-            <label>Benefícios</label>
-            <Checkbox
-              name="create"
-              checked={beneficios[0]}
-              onChange={() => handleCheckboxChange(setBeneficios, 0)}
-            />
-            <Checkbox
-              name="visualizar"
-              checked={beneficios[1]}
-              onChange={() => handleCheckboxChange(setBeneficios, 1)}
-            />
-            <Checkbox
-              name="editar"
-              checked={beneficios[2]}
-              onChange={() => handleCheckboxChange(setBeneficios, 2)}
-            />
-            <Checkbox
-              name="deletar"
-              checked={beneficios[3]}
-              onChange={() => handleCheckboxChange(setBeneficios, 3)}
-            />
-          </div>
-          <div className="row">
-            <label>Usuários</label>
-            <Checkbox
-              name="create"
-              checked={usuarios[0]}
-              onChange={() => handleCheckboxChange(setUsuarios, 0)}
-            />
-            <Checkbox
-              name="visualizar"
-              checked={usuarios[1]}
-              onChange={() => handleCheckboxChange(setUsuarios, 1)}
-            />
-            <Checkbox
-              name="editar"
-              checked={usuarios[2]}
-              onChange={() => handleCheckboxChange(setUsuarios, 2)}
-            />
-            <Checkbox
-              name="deletar"
-              checked={usuarios[3]}
-              onChange={() => handleCheckboxChange(setUsuarios, 3)}
-            />
-          </div>
+
+          <CheckboxRow
+            label="Financeiro"
+            state={financeiro}
+            setState={setFinanceiro}
+          />
+          <CheckboxRow
+            label="Benefícios"
+            state={beneficios}
+            setState={setBeneficios}
+          />
+          <CheckboxRow
+            label="Usuários"
+            state={usuarios}
+            setState={setUsuarios}
+          />
         </div>
 
         <div className="double-buttons-roles">
