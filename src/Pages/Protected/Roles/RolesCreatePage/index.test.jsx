@@ -1,9 +1,8 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import RolesCreatePage from "./index";
 import { createRole } from "../../../../Services/RoleService/roleService";
-
 import "@testing-library/jest-dom";
 
 // Mockando o serviço createRole
@@ -137,5 +136,12 @@ describe("RolesCreatePage", () => {
     expect(
       await screen.findByText("Cadastro de usuário concluído")
     ).toBeInTheDocument();
+
+    fireEvent.click(screen.getByText("OK"));
+
+    // Verifica se a navegação para "/perfis" ocorre
+    await waitFor(() => {
+      expect(window.location.pathname).toBe("/perfis");
+    });
   });
 });

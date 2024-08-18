@@ -178,7 +178,7 @@ describe("RolesUpdatePage", () => {
     );
 
     // Mock da resposta da função deleteRole
-    deleteRole.mockResolvedValue({ status: 200 });
+    deleteRole.mockResolvedValue({ status: 204 });
 
     // Clicar no botão DELETAR para abrir o modal de confirmação
     fireEvent.click(screen.getByText("DELETAR"));
