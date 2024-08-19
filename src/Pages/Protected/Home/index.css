@@ -22,7 +22,33 @@
     justify-content: center;
     align-items: center;
   }
+  .lotation {
+    display: flex;
+    flex-direction: row;
 
+    justify-content: space-between;
+    align-items: center;
+  }
+  .lotation-box {
+    display: inherit;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .filiacoes {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-between;
+    align-items: center;
+  }
+  .filiacoes-box {
+    display: inherit;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
   #box {
     display: flex;
     justify-content: center;
@@ -64,6 +90,35 @@
     align-items: center;
   }
 
+  .lotation {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .lotation-box {
+    display: inherit;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .filiacoes {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .filiacoes-box {
+    display: inherit;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
   #box {
     display: flex;
     justify-content: center;

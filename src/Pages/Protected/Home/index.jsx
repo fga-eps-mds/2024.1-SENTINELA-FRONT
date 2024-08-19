@@ -3,19 +3,37 @@ import { useAuth } from "../../../Context/auth";
 import { getUsers } from "../../../Services/userService";
 import FieldSelect from "../../../Components/FieldSelect";
 import "./index.css";
-import { Doughnut } from "react-chartjs-2";
-import { Chart, ArcElement } from "chart.js";
+import { Doughnut, Line } from "react-chartjs-2";
+import {
+  Chart,
+  ArcElement,
+  LineElement,
+  PointElement,
+  LinearScale,
+  Title,
+  CategoryScale,
+} from "chart.js";
+import DataSelect from "../../../Components/DataSelect";
 
-// Registrar o ArcElement no Chart.js
-Chart.register(ArcElement);
+// Registrar os elementos necessários no Chart.js
+Chart.register(
+  ArcElement,
+  LineElement,
+  PointElement,
+  LinearScale,
+  Title,
+  CategoryScale
+);
 
 const Home = () => {
   const { user } = useAuth();
   const [data, setData] = useState([]);
   const [isSind, setIsSind] = useState("Sindicalizado");
   const [lotacao, setLotacao] = useState("");
+  const [initialDate, setInitialDate] = useState(null);
+  const [finalDate, setFinalDate] = useState(null);
 
-  // Filter options
+  // Opções de filtro
   const filiadosOptions = ["Sindicalizado", "Não Sindicalizado"];
 
   useEffect(() => {
@@ -86,6 +104,20 @@ const Home = () => {
     responsive: true,
   };
 
+  // Dados e opções para o gráfico de linhas
+  const filiacoesData = {
+    labels: ["January", "February", "March", "April", "May", "June", "July"], // Exemplo de labels
+    datasets: [
+      {
+        label: "Filiações e Desfiliações",
+        data: [65, 59, 80, 81, 56, 55, 40], // Exemplo de dados
+        fill: false,
+        borderColor: "rgb(75, 192, 192)",
+        tension: 0.1,
+      },
+    ],
+  };
+
   return (
     user && (
       <section className="dash-section">
@@ -118,9 +150,9 @@ const Home = () => {
           </div>
         </div>
 
-        <div>
-          <h1>Divisão de sexo por lotação</h1>
-          <div>
+        <div className="lotation">
+          <div className="lotation-box">
+            <h1>Divisão de sexo por lotação</h1>
             <Doughnut data={dataLotacao} options={optionsLotacao} />
           </div>
 
@@ -134,8 +166,21 @@ const Home = () => {
           />
         </div>
 
-        <div>
-          <h1>Filiações e Desfiliações</h1>
+        <div className="filiacoes">
+          <div className="filicacoes-box">
+            <h1>Filiações e Desfiliações</h1>
+            <Line data={filiacoesData} />
+          </div>
+          <DataSelect
+            label="Data Inicial"
+            value={initialDate}
+            onChange={(newValue) => setInitialDate(newValue)}
+          />
+          <DataSelect
+            label="Data Final"
+            value={finalDate}
+            onChange={(newValue) => setFinalDate(newValue)}
+          />
         </div>
       </section>
     )
