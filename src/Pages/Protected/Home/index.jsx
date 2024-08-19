@@ -37,27 +37,28 @@ const Home = () => {
 
           <div className="filiados">
             <div className="filiados-box">
-              <h1>Total</h1>
-              <h1>{Object.keys(data).length}</h1>
+              <h2>Total</h2>
+              <h1 id="box">{Object.keys(data).length}</h1>
             </div>
 
             <div className="filiados-box">
-              <h1>{isSind}</h1>
-              <h1>
+              <h2>{isSind}</h2>
+              <h1 id="box">
                 {isSind == "Sindicalizado"
                   ? data.filter((item) => item.status === true).length
                   : data.filter((item) => item.status === false).length}
               </h1>
             </div>
+
+            <FieldSelect
+              label="Filtro"
+              onChange={(e) => {
+                setIsSind(e.target.value);
+              }}
+              options={filiadosOptions}
+              value={isSind}
+            />
           </div>
-          <FieldSelect
-            label="Filtro"
-            onChange={(e) => {
-              setIsSind(e.target.value);
-            }}
-            options={filiadosOptions}
-            value={isSind}
-          />
         </div>
 
         <div>
