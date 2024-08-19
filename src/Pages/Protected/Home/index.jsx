@@ -3,14 +3,19 @@ import { useAuth } from "../../../Context/auth";
 import { getUsers } from "../../../Services/userService";
 import FieldSelect from "../../../Components/FieldSelect";
 import "./index.css";
+import { Doughnut } from "react-chartjs-2";
+import { Chart, ArcElement } from "chart.js";
+
+// Registrar o ArcElement no Chart.js
+Chart.register(ArcElement);
 
 const Home = () => {
   const { user } = useAuth();
   const [data, setData] = useState([]);
-  const [isSind, setIsSind] = useState("");
+  const [isSind, setIsSind] = useState("Sindicalizado");
   const [lotacao, setLotacao] = useState("");
 
-  // filter options
+  // Filter options
   const filiadosOptions = ["Sindicalizado", "Não Sindicalizado"];
 
   useEffect(() => {
@@ -29,10 +34,10 @@ const Home = () => {
     };
 
     fetchUsers();
-  }, []); // Adicionei a lista de dependências vazia para evitar chamadas infinitas
+  }, []);
 
   function normalizeUserData(users) {
-    return users.map(user => {
+    return users.map((user) => {
       if (user.lotacao) {
         user.lotacao = user.lotacao.toLowerCase().trim();
       }
@@ -42,17 +47,44 @@ const Home = () => {
 
   const uniqueLotacoes = (users) => {
     const lotacoesSet = new Set();
-  
-    users.forEach(user => {
+
+    users.forEach((user) => {
       if (user.lotacao) {
         lotacoesSet.add(user.lotacao.toLowerCase().trim());
       }
     });
-  
+
     return Array.from(lotacoesSet);
   };
 
-  const lotacoesOptions = uniqueLotacoes(data); // Chame a função e armazene o resultado
+  const lotacoesOptions = uniqueLotacoes(data);
+
+  const filteredData = data.filter((user) => {
+    return user.status === true && (lotacao === "" || user.lotacao === lotacao);
+  });
+
+  const genderCounts = {
+    Male: filteredData.filter((user) => user.sex === "Masculino").length,
+    Female: filteredData.filter((user) => user.sex === "Feminino").length,
+    Empty: filteredData.filter((user) => user.sex === "").length,
+  };
+
+  const dataLotacao = {
+    labels: ["Masculino", "Feminino", "Outro"],
+    datasets: [
+      {
+        label: "Divisão de sexo por lotação",
+        data: [genderCounts.Male, genderCounts.Female, genderCounts.Empty],
+        backgroundColor: ["blue", "red", "grey"],
+        borderColor: ["blue", "red", "grey"],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const optionsLotacao = {
+    responsive: true,
+  };
 
   return (
     user && (
@@ -80,7 +112,7 @@ const Home = () => {
               onChange={(e) => {
                 setIsSind(e.target.value);
               }}
-              options={filiadosOptions} // Aqui estava correto, só corrigindo o caso abaixo
+              options={filiadosOptions}
               value={isSind}
             />
           </div>
@@ -89,7 +121,7 @@ const Home = () => {
         <div>
           <h1>Divisão de sexo por lotação</h1>
           <div>
-            DASH
+            <Doughnut data={dataLotacao} options={optionsLotacao} />
           </div>
 
           <FieldSelect
@@ -97,13 +129,9 @@ const Home = () => {
             onChange={(e) => {
               setLotacao(e.target.value);
             }}
-            options={lotacoesOptions} // Use as lotações únicas como options
+            options={lotacoesOptions}
             value={lotacao}
           />
-        </div>
-
-        <div>
-          <h1>Filiações e Desfiliações</h1>
         </div>
 
         <div>
