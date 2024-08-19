@@ -8,46 +8,30 @@ import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
 import SecondaryButton from "../../../Components/SecondaryButton";
 import FieldText from "../../../Components/FieldText";
-import { APIBank } from "../../../Services/BaseService";
+
+import { getSupplierForm } from "../../../Services/supplierService";
 
 export default function ListSupplier() {
   const [suppliers, setSuppliers] = useState([]);
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
-  const storagedUser = localStorage.getItem("@App:user");
-
   useEffect(() => {
-    const fetchSupplierForm = async () => {
-      try {
-        const response = await APIBank.get(`/SupplierForm`, {
-          headers: {
-            Authorization: `Bearer ${storagedUser.token}`,
-          },
-        });
-
-        const data = response.data;
-        if (Array.isArray(data)) {
-          setSuppliers(data);
-        } else {
-          console.error("Os dados recebidos não são um array.");
-        }
-      } catch (error) {
-        console.error("Erro ao buscar fornecedores:", error);
-      }
+    const getSuppliers = async () => {
+      const response = await getSupplierForm();
+      setSuppliers(response);
     };
-
-    fetchSupplierForm();
+    getSuppliers();
   }, []);
 
-  const handleItemClick = (supplier) => {
-    navigate("/fornecedores/${supplier.nome}", {
-      state: { supplierId: supplier._id },
+  const handleItemClick = (suppliers) => {
+    navigate(`/fornecedores/${suppliers.nome}`, {
+      state: { supplierId: suppliers._id },
     });
   };
 
-  const filteredSuppliers = suppliers.filter((supplier) =>
-    supplier.nome.toLowerCase().includes(search.toLowerCase())
+  const filteredSuppliers = suppliers?.filter((suppliers) =>
+    suppliers.nome.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
@@ -70,8 +54,8 @@ export default function ListSupplier() {
         </div>
 
         <List>
-          {filteredSuppliers.map((supplier, index) => (
-            <div key={supplier._id}>
+          {filteredSuppliers?.map((suppliers, index) => (
+            <div key={suppliers._id}>
               <ListItem>
                 <ListItemButton
                   className="list-item"
@@ -85,9 +69,9 @@ export default function ListSupplier() {
                   onMouseLeave={(e) =>
                     (e.currentTarget.style.backgroundColor = "transparent")
                   }
-                  onClick={() => handleItemClick(supplier)}
+                  onClick={() => handleItemClick(suppliers)}
                 >
-                  <ListItemText primary={supplier.nome} />
+                  <ListItemText primary={suppliers.nome} />
                 </ListItemButton>
               </ListItem>
 
