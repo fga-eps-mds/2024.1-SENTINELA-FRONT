@@ -8,8 +8,9 @@ const Home = () => {
   const { user } = useAuth();
   const [data, setData] = useState([]);
   const [isSind, setIsSind] = useState("");
+  const [lotacao, setLotacao] = useState("");
 
-  //filter options
+  // filter options
   const filiadosOptions = ["Sindicalizado", "Não Sindicalizado"];
 
   useEffect(() => {
@@ -17,7 +18,8 @@ const Home = () => {
       try {
         const response = await getUsers();
         if (Array.isArray(response)) {
-          setData(response);
+          const normalizedUsers = normalizeUserData(response);
+          setData(normalizedUsers);
         } else {
           console.error("Os dados recebidos não são um array.");
         }
@@ -27,7 +29,30 @@ const Home = () => {
     };
 
     fetchUsers();
-  });
+  }, []); // Adicionei a lista de dependências vazia para evitar chamadas infinitas
+
+  function normalizeUserData(users) {
+    return users.map(user => {
+      if (user.lotacao) {
+        user.lotacao = user.lotacao.toLowerCase().trim();
+      }
+      return user;
+    });
+  }
+
+  const uniqueLotacoes = (users) => {
+    const lotacoesSet = new Set();
+  
+    users.forEach(user => {
+      if (user.lotacao) {
+        lotacoesSet.add(user.lotacao.toLowerCase().trim());
+      }
+    });
+  
+    return Array.from(lotacoesSet);
+  };
+
+  const lotacoesOptions = uniqueLotacoes(data); // Chame a função e armazene o resultado
 
   return (
     user && (
@@ -38,13 +63,13 @@ const Home = () => {
           <div className="filiados">
             <div className="filiados-box">
               <h2>Total</h2>
-              <h1 id="box">{Object.keys(data).length}</h1>
+              <h1 id="box">{data.length}</h1>
             </div>
 
             <div className="filiados-box">
               <h2>{isSind}</h2>
               <h1 id="box">
-                {isSind == "Sindicalizado"
+                {isSind === "Sindicalizado"
                   ? data.filter((item) => item.status === true).length
                   : data.filter((item) => item.status === false).length}
               </h1>
@@ -55,7 +80,7 @@ const Home = () => {
               onChange={(e) => {
                 setIsSind(e.target.value);
               }}
-              options={filiadosOptions}
+              options={filiadosOptions} // Aqui estava correto, só corrigindo o caso abaixo
               value={isSind}
             />
           </div>
@@ -63,6 +88,18 @@ const Home = () => {
 
         <div>
           <h1>Divisão de sexo por lotação</h1>
+          <div>
+            DASH
+          </div>
+
+          <FieldSelect
+            label="Filtro"
+            onChange={(e) => {
+              setLotacao(e.target.value);
+            }}
+            options={lotacoesOptions} // Use as lotações únicas como options
+            value={lotacao}
+          />
         </div>
 
         <div>
