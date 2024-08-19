@@ -9,6 +9,9 @@ const Home = () => {
   const [data, setData] = useState([]);
   const [isSind, setIsSind] = useState("");
 
+  //filter options
+  const filiadosOptions = ["Sindicalizado", "Não Sindicalizado"];
+
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -29,23 +32,30 @@ const Home = () => {
   return (
     user && (
       <section className="dash-section">
-        <div>
+        <div className="filiados-section">
           <h1>Filiados</h1>
+
           <div className="filiados">
-            <h1>Total {Object.keys(data).length}</h1>
-            <h1>
-              {isSind}{" "}
-              {isSind == "Sindicalizado"
-                ? data.filter((item) => item.status === true).length
-                : data.filter((item) => item.status === false).length}
-            </h1>
+            <div className="filiados-box">
+              <h1>Total</h1>
+              <h1>{Object.keys(data).length}</h1>
+            </div>
+
+            <div className="filiados-box">
+              <h1>{isSind}</h1>
+              <h1>
+                {isSind == "Sindicalizado"
+                  ? data.filter((item) => item.status === true).length
+                  : data.filter((item) => item.status === false).length}
+              </h1>
+            </div>
           </div>
           <FieldSelect
             label="Filtro"
             onChange={(e) => {
               setIsSind(e.target.value);
             }}
-            options={["Sindicalizado", "Não Sindicalizado"]}
+            options={filiadosOptions}
             value={isSind}
           />
         </div>
