@@ -12,6 +12,7 @@ import {
   LinearScale,
   Title,
   CategoryScale,
+  Tooltip, // Importar Tooltip
 } from "chart.js";
 import DataSelect from "../../../Components/DataSelect";
 
@@ -22,7 +23,8 @@ Chart.register(
   PointElement,
   LinearScale,
   Title,
-  CategoryScale
+  CategoryScale,
+  Tooltip
 );
 
 const Home = () => {
@@ -84,24 +86,33 @@ const Home = () => {
   const genderCounts = {
     Male: filteredData.filter((user) => user.sex === "Masculino").length,
     Female: filteredData.filter((user) => user.sex === "Feminino").length,
-    Empty: filteredData.filter((user) => user.sex === "").length,
   };
 
   const dataLotacao = {
-    labels: ["Masculino", "Feminino", "Outro"],
+    labels: ["Masculino", "Feminino"],
     datasets: [
       {
         label: "Divisão de sexo por lotação",
-        data: [genderCounts.Male, genderCounts.Female, genderCounts.Empty],
-        backgroundColor: ["blue", "red", "grey"],
-        borderColor: ["blue", "red", "grey"],
-        borderWidth: 1,
+        data: [genderCounts.Male, genderCounts.Female],
+        backgroundColor: ["lightblue", "pink"],
+        borderWidth: 4,
       },
     ],
   };
 
   const optionsLotacao = {
     responsive: true,
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: function (tooltipItem) {
+            const label = tooltipItem.label || "";
+            const value = tooltipItem.raw;
+            return `${label}: ${value}`;
+          },
+        },
+      },
+    },
   };
 
   // Dados e opções para o gráfico de linhas
