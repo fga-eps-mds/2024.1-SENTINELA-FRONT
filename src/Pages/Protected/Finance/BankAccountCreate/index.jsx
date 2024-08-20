@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../../../Context/auth";
 import PrimaryButton from "../../../../Components/PrimaryButton";
 import SecondaryButton from "../../../../Components/SecondaryButton";
 import FieldSelect from "../../../../Components/FieldSelect";
@@ -23,7 +22,7 @@ const BankAccount = () => {
   const [openError, setOpenError] = useState(false);
   const [openErrorUnique, setOpenErrorUnique] = useState(false);
 
-  const { user } = useAuth();
+  //const { user } = useAuth();
   const navigate = useNavigate();
   const [successCreate, setSuccessCreate] = useState(false);
 
@@ -101,11 +100,12 @@ const BankAccount = () => {
     return value.replace(/\D/g, "").slice(0, 1);
   };
 
-  return user ? (
-    <section className="bank-container">
-      <div className="section">
-        <h1>Cadastro de Conta Bancária</h1>
-        <div className="form">
+  return (
+    <div className="container-benefits">
+      <div className="forms-container-benefits">
+        <h1>Cadastro de contas bancárias</h1>
+        <h3>Dados da Conta Bancária </h3>
+        <div className="section-form-benefits">
           <FieldText
             label="Nome *"
             value={name}
@@ -149,43 +149,45 @@ const BankAccount = () => {
             options={listStatus}
           />
         </div>
-        <PrimaryButton text="Cadastrar Conta" onClick={handleCheck} />
+
+        <div id="envio">
+          <PrimaryButton text="CADASTRAR" onClick={handleCheck} />
+        </div>
+
+        <Snackbar
+          open={openError}
+          autoHideDuration={6000}
+          onClose={() => setOpenError(false)}
+        >
+          <Alert onClose={() => setOpenError(false)} severity="error">
+            Certifique-se de que todos os campos obrigatórios estão preenchidos
+          </Alert>
+        </Snackbar>
+        <Snackbar
+          open={openErrorUnique}
+          autoHideDuration={6000}
+          onClose={() => setOpenErrorUnique(false)}
+        >
+          <Alert onClose={() => setOpenErrorUnique(false)} severity="error">
+            Nome já cadastrado
+          </Alert>
+        </Snackbar>
+
+        <Modal
+          width="338px"
+          alertTitle="Cadastro concluído"
+          show={successCreate}
+        >
+          <SecondaryButton
+            key={"modalButtons"}
+            text="OK"
+            onClick={() => navigate("/finance/list")}
+            width="338px"
+          />
+        </Modal>
       </div>
-
-      <Snackbar
-        open={openError}
-        autoHideDuration={6000}
-        onClose={() => setOpenError(false)}
-      >
-        <Alert onClose={() => setOpenError(false)} severity="error">
-          Certifique-se de que todos os campos obrigatórios estão preenchidos
-        </Alert>
-      </Snackbar>
-      <Snackbar
-        open={openErrorUnique}
-        autoHideDuration={6000}
-        onClose={() => setOpenErrorUnique(false)}
-      >
-        <Alert onClose={() => setOpenErrorUnique(false)} severity="error">
-          Nome já cadastrado
-        </Alert>
-      </Snackbar>
-
-      <Modal
-        show={successCreate}
-        width="400px"
-        alertTitle="Cadastro concluído"
-        alert=""
-      >
-        <SecondaryButton
-          text="ok"
-          onClick={() => navigate("/finance/list")}
-          style={"width: 250px; margin-top : 10px"}
-          sx={{ width: "250px", "margin-top": "10px" }}
-        />
-      </Modal>
-    </section>
-  ) : null;
+    </div>
+  );
 };
 
 export default BankAccount;

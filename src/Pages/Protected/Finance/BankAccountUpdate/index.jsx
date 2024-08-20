@@ -122,10 +122,13 @@ const BankAccountId = () => {
   };
 
   return user ? (
-    <section className="listContainer">
-      <div className="list">
-        <h1>Visualização de Conta Bancária</h1>
-        <div className="header">
+    <div className="container-benefits">
+      <div className="forms-container-benefits">
+        <h1>Visualização de benefícios</h1>
+
+        <h3>Dados do benefício</h3>
+
+        <div className="section-form-benefits">
           <FieldText
             label="Nome *"
             value={name}
@@ -169,6 +172,7 @@ const BankAccountId = () => {
             options={listStatus}
           />
         </div>
+
         <div className="edit-buttons">
           <SecondaryButton
             text="Deletar"
@@ -198,7 +202,7 @@ const BankAccountId = () => {
       >
         <SecondaryButton
           text="ok"
-          onClick={() => navigate("/finance/")}
+          onClick={() => navigate("/finance/list")}
           style={{ width: "250px", marginTop: "10px" }}
         />
       </Modal>
@@ -233,7 +237,7 @@ const BankAccountId = () => {
           style={{ width: "250px", marginTop: "10px" }}
         />
       </Modal>
-    </section>
+    </div>
   ) : null;
 };
 
