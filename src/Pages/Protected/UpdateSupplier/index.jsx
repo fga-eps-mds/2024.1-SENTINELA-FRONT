@@ -12,6 +12,8 @@ import {
 } from "../../../Services/supplierService";
 import { useLocation, useNavigate } from "react-router-dom";
 import Modal from "../../../Components/Modal";
+import { Alert, Snackbar } from "@mui/material";
+import { isValidEmail } from "../../../Utils/validators";
 
 export default function UpdateSupplier() {
   const [nome, setNome] = useState("");
@@ -36,6 +38,7 @@ export default function UpdateSupplier() {
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showDeletedModal, setShowDeletedModal] = useState(false);
+  const [openError, setOpenError] = useState(false);
 
   const navigate = useNavigate();
 
@@ -140,6 +143,56 @@ export default function UpdateSupplier() {
     setUfEndereco(event.target.value);
   };
 
+  const isValidTelefone = (telefone) => {
+    const cleanedNumber = telefone.replace(/\D/g, ""); // Remove caracteres não numéricos
+
+    if (!cleanedNumber) {
+      return { isValid: true };
+    }
+
+    if (cleanedNumber.length != 10) {
+      return { isValid: false, message: "O telefone fornecido não é válido." };
+    }
+
+    return { isValid: true };
+  };
+
+  const isValidCelular = (celular) => {
+    const cleanedNumber = celular.replace(/\D/g, ""); // Remove caracteres não numéricos
+
+    if (!cleanedNumber) {
+      return { isValid: true };
+    }
+
+    if (cleanedNumber.length != 11) {
+      return { isValid: false, message: "O celular fornecido não é válido." };
+    }
+
+    return { isValid: true };
+  };
+
+  const validateInputs = () => {
+    const emailValidation = isValidEmail(email);
+    if (!emailValidation.isValid) {
+      setOpenError(emailValidation.message);
+      return false;
+    }
+
+    const celularValidation = isValidCelular(celular);
+    if (!celularValidation.isValid) {
+      setOpenError(celularValidation.message);
+      return false;
+    }
+
+    const telefoneValidation = isValidTelefone(telefone);
+    if (!telefoneValidation.isValid) {
+      setOpenError(telefoneValidation.message);
+      return false;
+    }
+
+    return true;
+  };
+
   useEffect(() => {
     const loadSupplier = async () => {
       const supplier = await getSupplierFormById(supplierId);
@@ -153,7 +206,7 @@ export default function UpdateSupplier() {
       setCelular(supplier.celular);
       setTelefone(supplier.telefone);
       setCep(supplier.cep);
-      setCidade(supplier.celular);
+      setCidade(supplier.cidade);
       setUfEndereco(supplier.uf_endereco);
       setLogradouro(supplier.logradouro);
       setComplemento(supplier.complemento);
@@ -164,32 +217,41 @@ export default function UpdateSupplier() {
       setChavePix(supplier.chavePix);
     };
     loadSupplier();
-  }, []);
+  }, [supplierId]);
 
   const handleUpdateSupplierButton = async () => {
-    const supplierData = {
-      nome,
-      tipoPessoa,
-      cpfCnpj,
-      statusFornecedor,
-      naturezaTransacao,
-      email,
-      nomeContato,
-      celular,
-      telefone,
-      cep,
-      cidade,
-      uf_endereco,
-      logradouro,
-      complemento,
-      nomeBanco,
-      agencia,
-      numeroBanco,
-      dv,
-      chavePix,
-    };
-    await updateSupplierFormById(supplierId, supplierData);
-    navigate("/fornecedores");
+    if (validateInputs()) {
+      const supplierData = {
+        nome,
+        tipoPessoa,
+        cpfCnpj,
+        statusFornecedor,
+        naturezaTransacao,
+        email,
+        nomeContato,
+        celular,
+        telefone,
+        cep,
+        cidade,
+        uf_endereco,
+        logradouro,
+        complemento,
+        nomeBanco,
+        agencia,
+        numeroBanco,
+        dv,
+        chavePix,
+      };
+      try {
+        await updateSupplierFormById(supplierId, supplierData);
+        setShowSaveModal(true);
+      } catch (error) {
+        console.error(
+          `Erro ao atualizar beneficios com ID ${supplierId}`,
+          error
+        );
+      }
+    }
   };
 
   const handleDeleteSupplierButton = async () => {
@@ -198,7 +260,8 @@ export default function UpdateSupplier() {
   };
 
   const handleSaveModal = () => {
-    setShowSaveModal(true);
+    setShowSaveModal(false);
+    navigate("/fornecedores");
   };
 
   const handleDeleteModal = () => {
@@ -357,14 +420,24 @@ export default function UpdateSupplier() {
         <div className="double-buttons">
           <SecondaryButton text="Deletar" onClick={handleDeleteModal} />
 
-          <PrimaryButton text="Salvar" onClick={handleSaveModal} />
+          <PrimaryButton text="Salvar" onClick={handleUpdateSupplierButton} />
         </div>
+
+        <Snackbar
+          open={openError}
+          autoHideDuration={6000}
+          onClose={() => setOpenError(false)}
+        >
+          <Alert onClose={() => setOpenError("")} severity="error">
+            {openError}
+          </Alert>
+        </Snackbar>
 
         <Modal alertTitle="Alterações Salvas" show={showSaveModal}>
           <SecondaryButton
             key={"saveButtons"}
             text="OK"
-            onClick={() => handleUpdateSupplierButton()}
+            onClick={() => handleSaveModal()}
           />
         </Modal>
 
