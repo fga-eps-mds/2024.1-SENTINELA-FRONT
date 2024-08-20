@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./index.css";
-// import dayjs from "dayjs";
+import dayjs from "dayjs";
 import FieldText from "../../../../Components/FieldText";
 import DataSelect from "../../../../Components/DataSelect";
 import FieldSelect from "../../../../Components/FieldSelect";
@@ -20,12 +20,12 @@ const ViewMembershipPage = () => {
   const [touchedFields, setTouchedFields] = useState({});
   const [openError, setOpenError] = useState(false);
   const [missingList, setMissingList] = useState([]);
+  setMissingList(null);
   const [unfilledDependent, setUnfilledDependent] = useState(false);
+  setUnfilledDependent(null);
   const [errorFields, setErrorFields] = useState(false);
 
-  setMissingList(false);
-  setUnfilledDependent(false);
-  setStatus(false);
+  // Campos de filiado
 
   const [email, setEmail] = useState("");
   const [sex, setSex] = useState("");
@@ -109,9 +109,9 @@ const ViewMembershipPage = () => {
           setUfOrganization(response?.uf_orgao || "");
           setUfAddress(response?.uf_address || "");
           setEducation(response?.education || "");
-          setHiringDate(response?.hiringDate || null);
-          setBirthDate(response?.birthDate || null);
-          setExpeditionDate(response?.expeditionDate || null);
+          setHiringDate(dayjs(response?.hiringDate) || null);
+          setBirthDate(dayjs(response?.birthDate) || null);
+          setExpeditionDate(dayjs(response?.expeditionDate) || null);
           setPosition(response?.position || "");
           setLotacao(response?.lotacao || "");
           setRegistration(response?.registration || "");
