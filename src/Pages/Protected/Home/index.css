@@ -1,4 +1,4 @@
-@media screen and (max-width: 768pxpx) {
+@media screen and (max-width: 768px) {
   .dash-section {
     display: flex;
     flex-direction: column;
@@ -129,5 +129,16 @@
     border: 4px solid green;
     border-radius: 4rem;
     margin-top: 1rem;
+  }
+
+  .lotation {
+    margin: 3rem;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+  }
+
+  .lotation-box {
+    width: 100%;
+    width: 20rem;
   }
 }
