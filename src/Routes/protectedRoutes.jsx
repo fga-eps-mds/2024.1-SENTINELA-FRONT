@@ -16,6 +16,10 @@ import Benefits from "../Pages/Protected/Benefit/Benefits";
 import BenefitsList from "../Pages/Protected/Benefit/BenefitsList";
 import BenefitsCreate from "../Pages/Protected/Benefit/BenefitsCreate";
 import BenefitsUpdate from "../Pages/Protected/Benefit/BenefitsUpdate";
+import FinanceHubPage from "../Pages/Protected/Finance/FinanceHubPage";
+import FinanceBankAccount from "../Pages/Protected/Finance/BankAccountCreate";
+import FinanceUpdate from "../Pages/Protected/Finance/BankAccountUpdate";
+import FinanceList from "../Pages/Protected/Finance/BankAccountList";
 
 const ProtectedRoutes = () => {
   return (
@@ -40,6 +44,10 @@ const ProtectedRoutes = () => {
       <Route path="/beneficios/lista" element={<BenefitsList />} />
       <Route path="/beneficios/criar" element={<BenefitsCreate />} />
       <Route path="/beneficios/editar/:id" element={<BenefitsUpdate />} />
+      <Route path="/finance/hub" element={<FinanceHubPage />} />
+      <Route path="/finance/criar" element={<FinanceBankAccount />} />
+      <Route path="/finance/update/:id" element={<FinanceUpdate />} />
+      <Route path="/finance/list" element={<FinanceList />} />
     </Routes>
   );
 };
