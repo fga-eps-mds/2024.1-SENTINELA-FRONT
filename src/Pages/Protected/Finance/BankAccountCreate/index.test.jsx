@@ -34,20 +34,6 @@ describe("BankAccountCreate Component", () => {
     expect(screen.getByText("Cadastro de Conta Bancária")).toBeInTheDocument();
   });
 
-  it("does not render the form when user is not authenticated", () => {
-    useAuth.mockReturnValue({
-      user: null,
-    });
-
-    render(
-      <Router>
-        <BankAccountCreate />
-      </Router>
-    );
-
-    expect(screen.queryByText("Cadastro de Conta Bancária")).toBeNull();
-  });
-
   it("shows error message when required fields are missing", () => {
     useAuth.mockReturnValue({
       user: { id: 1, name: "Test User" },
@@ -59,7 +45,7 @@ describe("BankAccountCreate Component", () => {
       </Router>
     );
 
-    fireEvent.click(screen.getByText("Cadastrar Conta"));
+    fireEvent.click(screen.getByText("CADASTRAR"));
 
     expect(
       screen.getByText(

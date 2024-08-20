@@ -103,7 +103,7 @@ const BankAccount = () => {
   return (
     <div className="container-benefits">
       <div className="forms-container-benefits">
-        <h1>Cadastro de contas bancárias</h1>
+        <h1>Cadastro de Conta Bancária</h1>
         <h3>Dados da Conta Bancária </h3>
         <div className="section-form-benefits">
           <FieldText

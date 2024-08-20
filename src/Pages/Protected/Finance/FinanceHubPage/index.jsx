@@ -29,7 +29,7 @@ export default function Finance() {
             <SecondaryButton text="Cadastro de Fornecedores" onClick="#" />
             <SecondaryButton text="Lista de forncedores" onClick="#" />
             <SecondaryButton
-              text="cadastro de conta bancária"
+              text="Cadastro de conta bancária"
               onClick={handleCadastroClick}
             />
             <SecondaryButton
