@@ -3,37 +3,18 @@ import { useAuth } from "../../../Context/auth";
 import { getUsers } from "../../../Services/userService";
 import FieldSelect from "../../../Components/FieldSelect";
 import "./index.css";
-import { Doughnut, Line } from "react-chartjs-2";
-import {
-  Chart,
-  ArcElement,
-  LineElement,
-  PointElement,
-  LinearScale,
-  Title,
-  CategoryScale,
-  Tooltip, // Importar Tooltip
-} from "chart.js";
-import DataSelect from "../../../Components/DataSelect";
+import { Doughnut } from "react-chartjs-2";
+import { Chart, ArcElement, Tooltip } from "chart.js";
+import SecondaryButton from "../../../Components/SecondaryButton";
 
 // Registrar os elementos necessários no Chart.js
-Chart.register(
-  ArcElement,
-  LineElement,
-  PointElement,
-  LinearScale,
-  Title,
-  CategoryScale,
-  Tooltip
-);
+Chart.register(ArcElement, Tooltip);
 
 const Home = () => {
   const { user } = useAuth();
   const [data, setData] = useState([]);
   const [isSind, setIsSind] = useState("Sindicalizado");
   const [lotacao, setLotacao] = useState("");
-  const [initialDate, setInitialDate] = useState(null);
-  const [finalDate, setFinalDate] = useState(null);
   const [orgao, setOrgao] = useState("");
 
   // Opções de filtro
@@ -46,7 +27,6 @@ const Home = () => {
         if (Array.isArray(response)) {
           const normalizedUsers = normalizeUserData(response);
           setData(normalizedUsers);
-          console.log(normalizedUsers);
         } else {
           console.error("Os dados recebidos não são um array.");
         }
@@ -62,6 +42,9 @@ const Home = () => {
     return users.map((user) => {
       if (user.lotacao) {
         user.lotacao = user.lotacao.toLowerCase().trim();
+      }
+      if (user.orgao) {
+        user.orgao = user.orgao.toLowerCase().trim();
       }
       return user;
     });
@@ -95,11 +78,16 @@ const Home = () => {
 
   const orgaolist = uniqueOrg(data);
 
-  //GRAPH CONFIGS
+  // Filtrar dados com base no status, lotação e órgão
   const filteredData = data.filter((user) => {
-    return user.status === true && (lotacao === "" || user.lotacao === lotacao);
+    return (
+      user.status === true &&
+      (lotacao === "" || user.lotacao === lotacao) &&
+      (orgao === "" || user.orgao === orgao)
+    );
   });
 
+  // Contagem de gênero
   const genderCounts = {
     Male: filteredData.filter((user) => user.sex === "Masculino").length,
     Female: filteredData.filter((user) => user.sex === "Feminino").length,
@@ -112,6 +100,30 @@ const Home = () => {
         label: "Divisão de sexo por lotação",
         data: [genderCounts.Male, genderCounts.Female],
         backgroundColor: ["lightblue", "pink"],
+        borderWidth: 4,
+      },
+    ],
+  };
+
+  // Contagem de usuários por órgão com base nos filtros
+  const orgaoCounts = orgaolist.reduce((acc, org) => {
+    const filteredByOrgao = filteredData.filter((user) => user.orgao === org);
+    acc[org] = filteredByOrgao.length;
+    return acc;
+  }, {});
+
+  const dataOrgao = {
+    labels: Object.keys(orgaoCounts),
+    datasets: [
+      {
+        label: "Orgãos por lotação",
+        data: Object.values(orgaoCounts),
+        backgroundColor: [
+          "lightgreen",
+          "lightcoral",
+          "lightyellow",
+          "lightgray",
+        ], // Adicione mais cores se necessário
         borderWidth: 4,
       },
     ],
@@ -132,18 +144,11 @@ const Home = () => {
     },
   };
 
-  // Dados e opções para o gráfico de linhas
-  const filiacoesData = {
-    labels: ["January", "February", "March", "April", "May", "June", "July"], // Exemplo de labels
-    datasets: [
-      {
-        label: "Filiações e Desfiliações",
-        data: [65, 59, 80, 81, 56, 55, 40], // Exemplo de dados
-        fill: false,
-        borderColor: "rgb(75, 192, 192)",
-        tension: 0.1,
-      },
-    ],
+  // Função para limpar todos os filtros
+  const clearFilters = () => {
+    setIsSind("Sindicalizado");
+    setLotacao("");
+    setOrgao("");
   };
 
   return (
@@ -179,47 +184,33 @@ const Home = () => {
         </div>
 
         <div className="lotation">
-          <div className="lotation-box">
+          <div className="donut-box">
             <h1>Divisão de sexo por lotação</h1>
             <Doughnut data={dataLotacao} options={optionsLotacao} />
+            <FieldSelect
+              label="Filtro de Lotação"
+              onChange={(e) => {
+                setLotacao(e.target.value);
+              }}
+              options={lotacoesOptions}
+              value={lotacao}
+            />
+            <div className="donut-box">
+              <h1>Divisão de lotação por órgão</h1>
+              <Doughnut data={dataOrgao} options={optionsLotacao} />
+              <FieldSelect
+                label="Filtro de Órgão"
+                onChange={(e) => {
+                  setOrgao(e.target.value);
+                }}
+                options={orgaolist}
+                value={orgao}
+              />
+            </div>
           </div>
-
-          <FieldSelect
-            label="Filtro"
-            onChange={(e) => {
-              setLotacao(e.target.value);
-            }}
-            options={lotacoesOptions}
-            value={lotacao}
-          />
         </div>
 
-        <div className="filiacoes">
-          <div className="filicacoes-box">
-            <h1>Filiações e Desfiliações</h1>
-            <Line data={filiacoesData} />
-          </div>
-          <DataSelect
-            label="Data Inicial"
-            value={initialDate}
-            onChange={(newValue) => setInitialDate(newValue)}
-          />
-          <DataSelect
-            label="Data Final"
-            value={finalDate}
-            onChange={(newValue) => setFinalDate(newValue)}
-          />
-
-          {/* filtro de órgãos*/}
-          <FieldSelect
-            label="Filtro"
-            onChange={(e) => {
-              setOrgao(e.target.value);
-            }}
-            options={orgaolist}
-            value={orgao}
-          />
-        </div>
+        <SecondaryButton text="Limpar Filtros" onClick={clearFilters} />
       </section>
     )
   );

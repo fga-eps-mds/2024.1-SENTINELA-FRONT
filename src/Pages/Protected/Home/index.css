@@ -29,7 +29,7 @@
     justify-content: space-between;
     align-items: center;
   }
-  .lotation-box {
+  .donut-box {
     display: inherit;
     flex-direction: column;
     justify-content: center;
@@ -92,13 +92,13 @@
 
   .lotation {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 
     justify-content: space-between;
     align-items: center;
   }
 
-  .lotation-box {
+  .donut-box {
     display: inherit;
     flex-direction: column;
     justify-content: center;
@@ -134,10 +134,10 @@
   .lotation {
     margin: 3rem;
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 2fr;
   }
 
-  .lotation-box {
+  .donut-box {
     width: 100%;
     width: 20rem;
   }
