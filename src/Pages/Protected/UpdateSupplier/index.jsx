@@ -356,7 +356,7 @@ export default function UpdateSupplier() {
             onChange={(e) => setCep(mascaraCEP(e.target.value))}
           />
 
-          <div className="double-box-benefits">
+          <div className="double-box">
             <FieldText
               label="Cidade"
               value={cidade}

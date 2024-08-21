@@ -221,8 +221,8 @@ export default function CreateSupplier() {
   };
 
   return (
-    <div className="container">
-      <div className="forms-container">
+    <div className="container-benefits">
+      <div className="forms-container-benefits">
         <h1>Cadastro de fornecedor</h1>
 
         <h3>Dados pessoais</h3>
@@ -234,7 +234,7 @@ export default function CreateSupplier() {
           required
         />
 
-        <div className="section-form">
+        <div className="section-form-benefits">
           <FieldSelect
             label="Classificação de pessoa"
             value={tipoPessoa}
@@ -265,7 +265,7 @@ export default function CreateSupplier() {
 
         <h3>Dados de Contato</h3>
 
-        <div className="section-form">
+        <div className="section-form-benefits">
           <FieldText
             label="E-mail"
             value={email}
@@ -294,7 +294,7 @@ export default function CreateSupplier() {
 
         <h3>Endereço</h3>
 
-        <div className="section-form">
+        <div className="section-form-benefits">
           <FieldText
             label="CEP"
             value={cep}
@@ -331,7 +331,7 @@ export default function CreateSupplier() {
 
         <h3>Dados Bancários</h3>
 
-        <div className="section-form">
+        <div className="section-form-benefits">
           <FieldText
             label="Banco"
             value={nomeBanco}

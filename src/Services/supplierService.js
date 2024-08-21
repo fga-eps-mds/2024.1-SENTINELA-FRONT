@@ -15,7 +15,7 @@ export const createSupplierForm = async (supplierData) => {
   try {
     await APIBank.post(`/SupplierForm/create`, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${storagedToken}`,
       },
       supplierData: supplierData,
     });
