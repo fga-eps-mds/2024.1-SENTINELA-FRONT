@@ -143,6 +143,25 @@ export default function UpdateSupplier() {
     setUfEndereco(event.target.value);
   };
 
+  const isValidCPForCNPJ = (cpfCnpj) => {
+    if (!cpfCnpj) {
+      return { isValid: true };
+    }
+
+    const cleanedValue = cpfCnpj.replace(/\D/g, ""); // Remove non-numeric characters
+
+    if (cleanedValue.length === 11) {
+      return { isValid: true };
+    } else if (cleanedValue.length === 14) {
+      return { isValid: true };
+    } else {
+      return {
+        isValid: false,
+        message: "O CPF ou CNPJ fornecido não é válido.",
+      };
+    }
+  };
+
   const isValidTelefone = (telefone) => {
     const cleanedNumber = telefone.replace(/\D/g, ""); // Remove caracteres não numéricos
 
@@ -187,6 +206,12 @@ export default function UpdateSupplier() {
     const telefoneValidation = isValidTelefone(telefone);
     if (!telefoneValidation.isValid) {
       setOpenError(telefoneValidation.message);
+      return false;
+    }
+
+    const cpfCnpjValidation = isValidCPForCNPJ(cpfCnpj);
+    if (!cpfCnpjValidation.isValid) {
+      setOpenError(cpfCnpjValidation.message);
       return false;
     }
 
