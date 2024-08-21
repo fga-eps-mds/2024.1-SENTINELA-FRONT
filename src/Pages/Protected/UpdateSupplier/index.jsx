@@ -278,8 +278,8 @@ export default function UpdateSupplier() {
   };
 
   return (
-    <section className="container">
-      <div className="forms-container">
+    <section className="container-benefits">
+      <div className="forms-container-benefits">
         <h1>Visualização de fornecedor</h1>
 
         <h3>Dados pessoais</h3>
@@ -290,7 +290,7 @@ export default function UpdateSupplier() {
           disabled={true}
         />
 
-        <div className="section-form">
+        <div className="section-form-benefits">
           <FieldSelect
             label="Classificação de pessoa"
             value={tipoPessoa}
@@ -321,7 +321,7 @@ export default function UpdateSupplier() {
 
         <h3>Dados de Contato</h3>
 
-        <div className="section-form">
+        <div className="section-form-benefits">
           <FieldText
             label="E-mail"
             value={email}
@@ -349,14 +349,14 @@ export default function UpdateSupplier() {
 
         <h3>Endereço</h3>
 
-        <div className="section-form">
+        <div className="section-form-benefits">
           <FieldText
             label="CEP"
             value={cep}
             onChange={(e) => setCep(mascaraCEP(e.target.value))}
           />
 
-          <div className="double-box">
+          <div className="double-box-benefits">
             <FieldText
               label="Cidade"
               value={cidade}
@@ -386,7 +386,7 @@ export default function UpdateSupplier() {
 
         <h3>Dados Bancários</h3>
 
-        <div className="section-form">
+        <div className="section-form-benefits">
           <FieldText
             label="Banco"
             value={nomeBanco}
