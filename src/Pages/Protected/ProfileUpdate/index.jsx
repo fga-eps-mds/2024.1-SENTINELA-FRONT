@@ -5,10 +5,10 @@ import FieldNumber from "../../../Components/FieldNumber";
 import PrimaryButton from "../../../Components/PrimaryButton";
 import SecondaryButton from "../../../Components/SecondaryButton";
 import { useAuth } from "../../../Context/auth";
-import { APIUsers } from "../../../Services/BaseService";
 import Modal from "../../../Components/Modal";
 import { Button } from "@mui/material";
 import "./index.css";
+import { getUserById, patchUserById } from "../../../Services/userService";
 
 const ProfileUpdate = () => {
   const navigate = useNavigate();
@@ -26,21 +26,15 @@ const ProfileUpdate = () => {
 
   useEffect(() => {
     const getUser = async () => {
-      try {
-        const response = await APIUsers.get(`users/${storagedUser.user._id}`, {
-          headers: { Authorization: `Bearer ${storagedUser.token}` },
-        });
-        setNome(response.data.name);
-        setCelular(response.data.phone);
-        setLogin(response.data.status ? "Ativo" : "Inativo");
-        setEmail(response.data.email);
-      } catch (error) {
-        console.error(error);
-      }
+      const response = await getUserById(storagedUser._id);
+      setNome(response?.name);
+      setCelular(response?.phone);
+      setLogin(response?.status ? "Ativo" : "Inativo");
+      setEmail(response?.email);
     };
 
     getUser();
-  }, []);
+  });
 
   useEffect(() => {
     setIsEmailValid(isValidEmail(email));
@@ -71,18 +65,11 @@ const ProfileUpdate = () => {
       return;
     }
     try {
-      await APIUsers.patch(
-        `users/patch/${storagedUser.user._id}`,
-        {
-          updatedUser: {
-            phone: celular,
-            email: email,
-          },
-        },
-        {
-          headers: { Authorization: `Bearer ${storagedUser.token}` },
-        }
-      );
+      const updatedUser = {
+        phone: celular,
+        email: email,
+      };
+      await patchUserById(storagedUser._id, updatedUser);
       setCelular(celular);
       setEmail(email);
       setOpenDialog(true);

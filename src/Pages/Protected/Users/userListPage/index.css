@@ -1,4 +1,4 @@
-@media screen and (min-width: 700px) {
+@media screen and (min-width: 1080px) {
   .forms-container-list {
     margin: 5rem;
     width: 100%;
@@ -11,15 +11,13 @@
     display: flex;
   }
   .double-box-list {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
+    display: grid;
+    grid-template-columns: 2.3fr 2fr;
   }
 
   .double-box-list button {
-    width: 400px;
-    margin-bottom: 10px;
-    bottom: 50px;
+    margin-top: 0px;
+    margin-bottom: 40px;
   }
   .btn-logout {
     background-color: transparent;
@@ -48,11 +46,11 @@
     justify-content: center;
   }
   .double-box-list {
-    display: grid;
+    display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
   }
   h1 {
-    text-align: center;
+    text-align: start;
   }
 }

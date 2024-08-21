@@ -19,6 +19,13 @@ export default function UserHubPage() {
     navigate("/perfil");
   };
 
+  const handleCadastroPerfilClick = () => {
+    navigate("/perfis/criar");
+  };
+
+  const handleListaPerfilClick = () => {
+    navigate("/perfis");
+  };
   return (
     <section className="container">
       <div className="area-card">
@@ -31,6 +38,11 @@ export default function UserHubPage() {
           />
           {/* <SecondaryButton text="SOLICITAÇÕES DE FILIAÇÃO" onClick={""} /> */}
           <SecondaryButton
+            text="Filiações pendentes"
+            onClick={() => navigate("membershipRequests/")}
+          />
+
+          <SecondaryButton
             text="CADASTRO DE USUÁRIOS"
             onClick={handleCadastroClick}
           />
@@ -41,6 +53,14 @@ export default function UserHubPage() {
           <SecondaryButton
             text="ATUALIZAR USUÁRIO"
             onClick={handleAtualizarClick}
+          />
+          <SecondaryButton
+            text="CADASTRO DE PERFIL"
+            onClick={handleCadastroPerfilClick}
+          />
+          <SecondaryButton
+            text="LISTA DE PERFIL"
+            onClick={handleListaPerfilClick}
           />
         </div>
       </div>

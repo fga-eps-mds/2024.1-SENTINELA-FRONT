@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import UserCreatePage from "./index";
 import { createUser, getRoles } from "../../../../Services/userService";
@@ -23,10 +23,10 @@ describe("UserCreatePage", () => {
     );
 
     expect(screen.getByText("Cadastro de usuário")).toBeInTheDocument();
-    expect(screen.getByLabelText("Nome Completo")).toBeInTheDocument();
-    expect(screen.getByLabelText("Celular")).toBeInTheDocument();
-    expect(screen.getByLabelText("Status")).toBeInTheDocument();
-    expect(screen.getByLabelText("Email")).toBeInTheDocument();
+    expect(screen.getByLabelText("Nome Completo*")).toBeInTheDocument();
+    expect(screen.getByLabelText("Celular*")).toBeInTheDocument();
+    expect(screen.getByLabelText("Status*")).toBeInTheDocument();
+    expect(screen.getByLabelText("Email*")).toBeInTheDocument();
     expect(screen.getByText("Cadastrar")).toBeInTheDocument();
 
     await screen.findByLabelText("Admin");
@@ -34,7 +34,7 @@ describe("UserCreatePage", () => {
     expect(screen.getByLabelText("User")).toBeInTheDocument();
   });
 
-  it("validates email format", () => {
+  it("validates email format", async () => {
     createUser.mockResolvedValue({
       data: { message: "Cadastro de usuário concluído" },
     });
@@ -45,28 +45,37 @@ describe("UserCreatePage", () => {
       </Router>
     );
 
-    const emailInput = screen.getByLabelText("Email");
+    const emailInput = screen.getByLabelText("Email*");
     fireEvent.change(emailInput, { target: { value: "invalid-email" } });
 
-    fireEvent.change(screen.getByLabelText("Email"), {
-      target: { value: "email" },
-    });
     fireEvent.click(screen.getByText("Cadastrar"));
+
+    await waitFor(() => {
+      expect(screen.getByText("*Insira um email válido")).toBeInTheDocument();
+    });
 
     expect(createUser).not.toHaveBeenCalled();
   });
 
-  it("shows an error message for invalid phone number", () => {
+  it("validates phone number format", async () => {
     render(
       <Router>
         <UserCreatePage />
       </Router>
     );
 
-    fireEvent.change(screen.getByLabelText("Celular"), {
-      target: { value: "123" },
-    });
+    const phoneInput = screen.getByLabelText("Celular*");
+    fireEvent.change(phoneInput, { target: { value: "123" } });
+
     fireEvent.click(screen.getByText("Cadastrar"));
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          "*Verifique se o número de celular inserido está completo"
+        )
+      ).toBeInTheDocument();
+    });
 
     expect(createUser).not.toHaveBeenCalled();
   });

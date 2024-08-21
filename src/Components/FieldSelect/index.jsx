@@ -3,7 +3,7 @@ import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import "dayjs/locale/pt-br"; // Importa a localização desejada para o dayjs
 import PropTypes from "prop-types";
 
-function FieldSelect({ label, value, onChange, options }) {
+function FieldSelect({ label, value, onChange, options, onBlur, erro }) {
   return (
     <FormControl
       variant="filled"
@@ -16,6 +16,8 @@ function FieldSelect({ label, value, onChange, options }) {
         value={value}
         onChange={onChange}
         label={label}
+        onBlur={onBlur}
+        error={erro}
         sx={{
           backgroundColor: "#EAE3D7",
           "& .MuiOutlinedInput-notchedOutline": {
@@ -66,6 +68,8 @@ FieldSelect.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.number])
   ).isRequired,
+  onBlur: PropTypes.func, // Added prop type for onBlur
+  erro: PropTypes.bool, // Added prop type for erro
 };
 
 export default FieldSelect;
