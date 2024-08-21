@@ -217,7 +217,7 @@ export default function UpdateSupplier() {
       setChavePix(supplier.chavePix);
     };
     loadSupplier();
-  }, [supplierId]);
+  });
 
   const handleUpdateSupplierButton = async () => {
     if (validateInputs()) {

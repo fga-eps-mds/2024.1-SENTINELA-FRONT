@@ -1,8 +1,18 @@
 import { APIUsers } from "./BaseService";
 
+const storagedToken = localStorage.getItem("@App:token");
+let token = null;
+
+if (storagedToken) {
+  try {
+    token = JSON.parse(storagedToken);
+  } catch (error) {
+    console.error("O token armazenado não é um JSON válido:", error);
+  }
+}
+
 export async function userLogin(email, password) {
   try {
-    console.log("paseiii");
     const response = await APIUsers.post("/login", {
       email,
       password,
@@ -16,7 +26,6 @@ export async function userLogin(email, password) {
 
 export const getUsers = async () => {
   try {
-    const token = localStorage.getItem("@App:token");
     if (!token) {
       throw new Error("No token found");
     }
@@ -31,7 +40,7 @@ export const getUsers = async () => {
   }
 };
 
-export const getUserById = async (id, token) => {
+export const getUserById = async (id) => {
   try {
     const response = await APIUsers.get(`/users/${id}`, {
       headers: {
@@ -52,6 +61,9 @@ export const createUser = async (userData) => {
       phone: userData.phone,
       status: userData.status,
       role: userData.role,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
   } catch (error) {
     console.error("Erro ao criar usuário:", error);
@@ -78,14 +90,12 @@ export const loginUser = async (credentials) => {
 
 export const patchUserById = async (id, updatedUser) => {
   try {
-    const storagedUserString = localStorage.getItem("@App:user");
-    const user = JSON.parse(storagedUserString);
     const response = await APIUsers.patch(
       `/users/patch/${id}`,
       { updatedUser },
       {
         headers: {
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${token}`,
         },
       }
     );
@@ -97,17 +107,50 @@ export const patchUserById = async (id, updatedUser) => {
   }
 };
 
+export const sendRecoveryPassword = async (email) => {
+  try {
+    const message = APIUsers.post(`/users/recover-password`, {
+      data: {
+        email,
+      },
+    });
+
+    return message;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const deleteUserById = async (id) => {
   try {
-    const storagedUserString = localStorage.getItem("@App:user");
-    const user = JSON.parse(storagedUserString);
-
     await APIUsers.delete(`/users/delete/${id}`, {
       headers: {
-        Authorization: `Bearer ${user.token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
   } catch (error) {
     console.error(`Erro ao deletar usuário com ID ${id}:`, error);
+  }
+};
+
+export const changePasswordById = async (newPassword, id) => {
+  try {
+    await APIUsers.patch(`/users/change-password/${id}`, {
+      newPassword,
+    });
+  } catch (error) {
+    return error;
+  }
+};
+
+export const verifyToken = async (token) => {
+  try {
+    const response = await APIUsers.post(`/verify-token`, {
+      token,
+    });
+    return response.data;
+  } catch (error) {
+    console.error(`Token inválido`, error);
+    throw error;
   }
 };

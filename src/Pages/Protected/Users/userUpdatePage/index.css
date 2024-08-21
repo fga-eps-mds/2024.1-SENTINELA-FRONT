@@ -14,7 +14,7 @@
   }
 }
 
-@media screen and (min-width: 700px) {
+@media screen and (min-width: 1080px) {
   .double-buttons-user {
     display: flex;
     justify-content: space-between; /* Distribui os botões igualmente no espaço disponível */

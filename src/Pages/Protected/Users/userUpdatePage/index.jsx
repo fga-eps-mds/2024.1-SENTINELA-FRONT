@@ -29,7 +29,8 @@ export default function UserUpdatePage() {
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showDeletedModal, setShowDeletedModal] = useState(false);
-  const [isEmailValid, setIsEmailValid] = useState(true); // Estado para validar o email
+  const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isCelularValid, setIsCelularValid] = useState(true);
 
   const handleNomeCompletoChange = (e) => {
     const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, "");
@@ -52,14 +53,7 @@ export default function UserUpdatePage() {
     const fetchUser = async () => {
       if (userId) {
         try {
-          const tokenString = localStorage.getItem("@App:user");
-          if (!tokenString) {
-            console.error("Token não encontrado no localStorage");
-            return;
-          }
-          const token = JSON.parse(tokenString).token;
-          const user = await getUserById(userId, token);
-
+          const user = await getUserById(userId);
           if (user) {
             setNomeCompleto(user.name || "");
             setCelular(user.phone || "");
@@ -76,14 +70,12 @@ export default function UserUpdatePage() {
     fetchUser();
   }, [userId]);
 
-  useEffect(() => {
-    setIsEmailValid(isValidEmail(email));
-  }, [email]);
-
   const isValidEmail = (email) => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
     return emailRegex.test(email);
   };
+
+  const removeMask = (celular) => celular.replace(/\D/g, "");
 
   const handleDelete = async () => {
     setShowDeleteModal(false);
@@ -98,9 +90,16 @@ export default function UserUpdatePage() {
   };
 
   const handleSave = async () => {
-    setShowSaveModal(false);
-    if (userId && isEmailValid) {
-      // Verifica se o email é válido antes de salvar
+    const trimmedCelular = removeMask(celular);
+    const isValidNumber =
+      /^\d+$/.test(trimmedCelular) && trimmedCelular.length > 10;
+    const isValidEmailAddress = isValidEmail(email);
+
+    setIsCelularValid(isValidNumber);
+    setIsEmailValid(isValidEmailAddress);
+
+    // Verifica se o email é válido antes de salvar
+    if (userId && isValidEmailAddress && isValidNumber) {
       const updatedUser = {
         name: nomeCompleto,
         email: email,
@@ -108,17 +107,9 @@ export default function UserUpdatePage() {
         status: login === "Ativo",
         role: perfilSelecionado,
       };
-
-      const tokenString = localStorage.getItem("@App:user");
-      if (!tokenString) {
-        console.error("Token não encontrado no localStorage");
-        return;
-      }
-      const token = JSON.parse(tokenString).token;
-
       try {
-        await patchUserById(userId, updatedUser, token);
-        handleSaveCloseDialog();
+        await patchUserById(userId, updatedUser);
+        handleSaveModal();
       } catch (error) {
         console.error(`Erro ao atualizar usuário com ID ${userId}:`, error);
       }
@@ -183,14 +174,18 @@ export default function UserUpdatePage() {
             options={loginOptions}
           />
         </div>
-
+        {!isCelularValid && (
+          <label className="isValid">
+            *Verifique se o número de celular inserido está completo
+          </label>
+        )}
         <FieldText
           label="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         {!isEmailValid && (
-          <label className="isEmailValid">*Insira um email válido</label>
+          <label className="isValid">*Insira um email válido</label>
         )}
 
         <h3>Perfil</h3>
@@ -212,14 +207,14 @@ export default function UserUpdatePage() {
 
         <div className="double-buttons-user">
           <SecondaryButton text="Deletar" onClick={handleDeleteModal} />
-          <PrimaryButton text="Salvar" onClick={handleSaveModal} />
+          <PrimaryButton text="Salvar" onClick={handleSave} />
         </div>
 
         <Modal alertTitle="Alterações Salvas" show={showSaveModal}>
           <SecondaryButton
             key={"saveButtons"}
             text="OK"
-            onClick={() => handleSave()}
+            onClick={() => handleSaveCloseDialog()}
             width="338px"
           />
         </Modal>

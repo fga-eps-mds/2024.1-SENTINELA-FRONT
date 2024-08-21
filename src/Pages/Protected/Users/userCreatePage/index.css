@@ -38,6 +38,13 @@
     margin-top: 3rem;
     color: #332117 !important;
   }
+  .isValid {
+    font-weight: 400;
+    font-size: small;
+    margin-left: 1rem;
+    margin-top: 10px;
+    color: red !important;
+  }
 
   #addDependentBttn {
     cursor: pointer;
@@ -50,7 +57,7 @@
   }
 }
 
-@media screen and (min-width: 700px) {
+@media screen and (min-width: 1080px) {
   .container-user {
     display: flex;
   }
@@ -60,6 +67,8 @@
     font-size: medium;
     margin-left: 8rem;
     margin-top: 12rem;
+    overflow: hidden;
+    white-space: nowrap;
   }
   .forms-container-user {
     margin: 5rem;
@@ -100,8 +109,9 @@
     margin-top: 3rem;
     color: #332117 !important;
   }
-  .isEmailValid {
+  .isValid {
     font-weight: 400;
+    font-size: small;
     margin-left: 1rem;
     margin-top: 10px;
     color: red !important;

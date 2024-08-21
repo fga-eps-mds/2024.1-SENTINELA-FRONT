@@ -1,18 +1,13 @@
-import { APIBank, APIUsers } from "./BaseService";
+import { APIBank } from "./BaseService";
 
-const storagedUser = localStorage.getItem("@App:user");
-const user = JSON.parse(storagedUser);
+const storagedToken = localStorage.getItem("@App:token");
+let token = null;
 
-export async function userLogin(email, password) {
+if (storagedToken) {
   try {
-    const response = await APIUsers.post("login", {
-      email,
-      password,
-    });
-
-    return response;
+    token = JSON.parse(storagedToken);
   } catch (error) {
-    return null;
+    console.error("O token armazenado não é um JSON válido:", error);
   }
 }
 
@@ -20,7 +15,7 @@ export const createSupplierForm = async (supplierData) => {
   try {
     await APIBank.post(`/SupplierForm/create`, {
       headers: {
-        Authorization: `Bearer ${user.token}`,
+        Authorization: `Bearer ${token}`,
       },
       supplierData: supplierData,
     });
@@ -35,7 +30,7 @@ export const getSupplierForm = async () => {
   try {
     const response = await APIBank.get(`/SupplierForm`, {
       headers: {
-        Authorization: `Bearer ${storagedUser.token}`,
+        Authorization: `Bearer ${storagedToken}`,
       },
     });
     return response.data;
@@ -57,7 +52,7 @@ export const updateSupplierFormById = async (id, supplierData) => {
   try {
     const response = await APIBank.patch(`/SupplierForm/update/${id}`, {
       headers: {
-        Authorization: `Bearer ${user.token}`,
+        Authorization: `Bearer ${token}`,
       },
       supplierData: supplierData,
     });

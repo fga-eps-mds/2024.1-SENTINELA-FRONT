@@ -8,7 +8,6 @@ import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
 import SecondaryButton from "../../../Components/SecondaryButton";
 import FieldText from "../../../Components/FieldText";
-
 import { getSupplierForm } from "../../../Services/supplierService";
 
 export default function ListSupplier() {
@@ -17,12 +16,16 @@ export default function ListSupplier() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const getSuppliers = async () => {
+    const fetchSupplierForm = async () => {
       const response = await getSupplierForm();
-      setSuppliers(response);
+      const data = response;
+      if (Array.isArray(data)) {
+        setSuppliers(data);
+      }
     };
-    getSuppliers();
-  }, []);
+
+    fetchSupplierForm();
+  });
 
   const handleItemClick = (suppliers) => {
     navigate(`/fornecedores/${suppliers.nome}`, {
