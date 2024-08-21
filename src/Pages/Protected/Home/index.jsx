@@ -34,6 +34,7 @@ const Home = () => {
   const [lotacao, setLotacao] = useState("");
   const [initialDate, setInitialDate] = useState(null);
   const [finalDate, setFinalDate] = useState(null);
+  const [orgao, setOrgao] = useState("");
 
   // Opções de filtro
   const filiadosOptions = ["Sindicalizado", "Não Sindicalizado"];
@@ -45,6 +46,7 @@ const Home = () => {
         if (Array.isArray(response)) {
           const normalizedUsers = normalizeUserData(response);
           setData(normalizedUsers);
+          console.log(normalizedUsers);
         } else {
           console.error("Os dados recebidos não são um array.");
         }
@@ -79,6 +81,21 @@ const Home = () => {
 
   const lotacoesOptions = uniqueLotacoes(data);
 
+  const uniqueOrg = (users) => {
+    const orgaoSet = new Set();
+
+    users.forEach((user) => {
+      if (user.orgao) {
+        orgaoSet.add(user.orgao.toLowerCase().trim());
+      }
+    });
+
+    return Array.from(orgaoSet);
+  };
+
+  const orgaolist = uniqueOrg(data);
+
+  //GRAPH CONFIGS
   const filteredData = data.filter((user) => {
     return user.status === true && (lotacao === "" || user.lotacao === lotacao);
   });
@@ -191,6 +208,16 @@ const Home = () => {
             label="Data Final"
             value={finalDate}
             onChange={(newValue) => setFinalDate(newValue)}
+          />
+
+          {/* filtro de órgãos*/}
+          <FieldSelect
+            label="Filtro"
+            onChange={(e) => {
+              setOrgao(e.target.value);
+            }}
+            options={orgaolist}
+            value={orgao}
           />
         </div>
       </section>
