@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect, vi } from "vitest"; // Importar 'expect' explicitamente
+import "@testing-library/jest-dom";
+import { describe, it, expect, vi } from "vitest";
 import Home from "./index";
 
 vi.mock("../../../Context/auth", () => ({
