@@ -50,7 +50,7 @@ export default function ListSupplier() {
         </div>
         <div className="search-box-benefits">
           <FieldText
-            label="Pesquisar fornecedores"
+            label="Pesquisar fornecedor"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
