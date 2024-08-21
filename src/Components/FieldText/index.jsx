@@ -12,7 +12,7 @@ export default function FieldText({
 }) {
   return (
     <TextField
-      id={`input-${label}`}
+      id={`field-${label.replace(/\s+/g, "-").toLowerCase()}`} // Gera um id único baseado no label
       label={label}
       value={value}
       variant="filled"
