@@ -1,9 +1,10 @@
 import { useState } from "react";
-import FieldText from "../../../Components/FieldText"; // Certifique-se de que o caminho está correto
+import FieldText from "../../../../Components/FieldText"; // Certifique-se de que o caminho está correto
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import PrimaryButton from "../../../Components/PrimaryButton"; // Certifique-se de que o caminho está correto
-import { createOrgan } from "../../../Services/organService";
-export default function ListOrgan() {
+import PrimaryButton from "../../../../Components/PrimaryButton"; // Certifique-se de que o caminho está correto
+import { createOrgan } from "../../../../Services/organService";
+
+export default function OrganCreate() {
   const [nomeOrgao, setNomeOrgao] = useState("");
   const [errors, setErrors] = useState({});
   const [lotacao, setLotacao] = useState([]);

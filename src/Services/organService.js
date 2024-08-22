@@ -11,3 +11,12 @@ export async function createOrgan(orgao, lotacao) {
     return error.response.data.error;
   }
 }
+
+export async function listOrgans() {
+  try {
+    const response = await APIUsers.get("organ/list");
+    return response.data;
+  } catch (error) {
+    return error.response.data.error;
+  }
+}
