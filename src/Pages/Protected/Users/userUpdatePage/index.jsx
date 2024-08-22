@@ -147,6 +147,19 @@ export default function UserUpdatePage() {
     navigate("/usuarios");
   };
 
+  const handleNavigateToContributions = () => {
+    navigate(`/movimentacoes/contribuicoes/${nomeCompleto}`, {
+      state: {
+        userId,
+        nomeCompleto,
+        celular,
+        email,
+        login,
+        perfilSelecionado,
+      },
+    });
+  };
+
   return (
     <section className="container">
       <div className="forms-container-user">
@@ -209,6 +222,11 @@ export default function UserUpdatePage() {
           <SecondaryButton text="Deletar" onClick={handleDeleteModal} />
           <PrimaryButton text="Salvar" onClick={handleSave} />
         </div>
+
+        <PrimaryButton
+          text="Histórico de Contribuições"
+          onClick={handleNavigateToContributions}
+        />
 
         <Modal alertTitle="Alterações Salvas" show={showSaveModal}>
           <SecondaryButton
