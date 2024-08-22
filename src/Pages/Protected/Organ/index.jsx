@@ -6,7 +6,7 @@ import { createOrgan } from "../../../Services/organService";
 export default function ListOrgan() {
   const [nomeOrgao, setNomeOrgao] = useState("");
   const [errors, setErrors] = useState({});
-  const [lotacao, setLotacao] = useState("");
+  const [lotacao, setLotacao] = useState([]);
   const [sigla, setSigla] = useState("");
   const [lotacoes, setLotacoes] = useState([]);
   const [currentLotacoes, setCurrentLotacoes] = useState([
@@ -16,15 +16,20 @@ export default function ListOrgan() {
   const [add, setAdd] = useState(false);
 
   const handleSubmit = async () => {
-    if (
-      nomeOrgao.trim() &&
-      lotacoes.every(
-        (lotacao) => lotacao.nomeLotacao.trim() && lotacao.sigla.trim()
-      )
-    ) {
-      const formData = { nomeOrgao, lotacoes };
+    if (nomeOrgao.trim() && lotacao.trim() && sigla.trim()) {
+      // Crie o primeiro item do array com os campos iniciais de lotação e sigla
+      const initialLotacao = {
+        nomeLotacao: lotacao,
+        sigla: sigla,
+      };
+
+      // Combine o primeiro item com as lotações confirmadas posteriormente
+      const combinedLotacoes = [initialLotacao, ...lotacoes];
+
+      const formData = { nomeOrgao, lotacoes: combinedLotacoes };
       console.log(formData);
-      const response = await createOrgan(nomeOrgao, lotacoes);
+
+      const response = await createOrgan(nomeOrgao, combinedLotacoes);
       if (response === 201) {
         alert("Órgão cadastrado com sucesso!");
       } else {
