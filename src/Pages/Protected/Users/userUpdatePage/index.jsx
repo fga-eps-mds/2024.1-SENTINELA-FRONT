@@ -1,4 +1,4 @@
-import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
+import { Button, FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import FieldNumber from "../../../../Components/FieldNumber";
@@ -164,14 +164,12 @@ export default function UserUpdatePage() {
     <section className="container">
       <div className="forms-container-user">
         <h1>Visualização de usuário</h1>
-
         <h3>Dados Pessoais</h3>
         <FieldText
           label="Nome Completo"
           value={nomeCompleto}
           onChange={handleNomeCompletoChange}
         />
-
         <div className="double-box-user">
           <FieldNumber
             label="Celular"
@@ -200,9 +198,13 @@ export default function UserUpdatePage() {
         {!isEmailValid && (
           <label className="isValid">*Insira um email válido</label>
         )}
-
+        <Button
+          className="contribution-btn"
+          onClick={handleNavigateToContributions}
+        >
+          Histórico de Contribuições
+        </Button>
         <h3>Perfil</h3>
-
         <RadioGroup
           className="perfil-radiogroup"
           value={perfilSelecionado}
@@ -217,16 +219,10 @@ export default function UserUpdatePage() {
             />
           ))}
         </RadioGroup>
-
         <div className="double-buttons-user">
           <SecondaryButton text="Deletar" onClick={handleDeleteModal} />
           <PrimaryButton text="Salvar" onClick={handleSave} />
         </div>
-
-        <PrimaryButton
-          text="Histórico de Contribuições"
-          onClick={handleNavigateToContributions}
-        />
 
         <Modal alertTitle="Alterações Salvas" show={showSaveModal}>
           <SecondaryButton
@@ -236,7 +232,6 @@ export default function UserUpdatePage() {
             width="338px"
           />
         </Modal>
-
         <Modal
           alertTitle="Deseja deletar o usuário do sistema?"
           show={showDeleteModal}
