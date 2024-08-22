@@ -2,7 +2,7 @@ import { useState } from "react";
 import FieldText from "../../../Components/FieldText"; // Certifique-se de que o caminho está correto
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import PrimaryButton from "../../../Components/PrimaryButton"; // Certifique-se de que o caminho está correto
-
+import { createOrgan } from "../../../Services/organService";
 export default function ListOrgan() {
   const [nomeOrgao, setNomeOrgao] = useState("");
   const [errors, setErrors] = useState({});
@@ -10,14 +10,31 @@ export default function ListOrgan() {
   const [sigla, setSigla] = useState("");
   const [lotacoes, setLotacoes] = useState([]);
   const [currentLotacoes, setCurrentLotacoes] = useState([
-    { nome: "", sigla: "" },
+    { nomeLotacao: "", sigla: "" },
   ]);
   const [confirmedLotacoes, setConfirmedLotacoes] = useState([false]);
   const [add, setAdd] = useState(false);
 
-  const handleSubmit = () => {
-    console.log({ nomeOrgao, lotacoes });
+  const handleSubmit = async () => {
+    if (
+      nomeOrgao.trim() &&
+      lotacoes.every(
+        (lotacao) => lotacao.nomeLotacao.trim() && lotacao.sigla.trim()
+      )
+    ) {
+      const formData = { nomeOrgao, lotacoes };
+      console.log(formData);
+      const response = await createOrgan(nomeOrgao, lotacoes);
+      if (response === 201) {
+        alert("Órgão cadastrado com sucesso!");
+      } else {
+        alert("Erro ao cadastrar órgão");
+      }
+    } else {
+      alert("Preencha todos os campos obrigatórios");
+    }
   };
+
   const handleBlur = (e, field) => {
     if (e.target.value.trim() === "") {
       setErrors((prevErrors) => ({
@@ -41,7 +58,7 @@ export default function ListOrgan() {
   const handleAddLotacao = () => {
     if (
       currentLotacoes.every(
-        (lotacao) => lotacao.nome.trim() && lotacao.sigla.trim()
+        (lotacao) => lotacao.nomeLotacao.trim() && lotacao.sigla.trim()
       )
     ) {
       setLotacoes([...lotacoes, ...currentLotacoes]);
@@ -49,7 +66,7 @@ export default function ListOrgan() {
         ...confirmedLotacoes,
         ...currentLotacoes.map(() => false),
       ]); // Reset confirmation status
-      setCurrentLotacoes([{ nome: "", sigla: "" }]);
+      setCurrentLotacoes([{ nomeLotacao: "", sigla: "" }]);
     } else {
       // Adicione a lógica de erro se necessário
     }
@@ -67,7 +84,7 @@ export default function ListOrgan() {
 
     console.log({ add });
     if (confirmedLotacoes.every((status) => status)) {
-      setCurrentLotacoes([...currentLotacoes, { nome: "", sigla: "" }]);
+      setCurrentLotacoes([...currentLotacoes, { nomeLotacao: "", sigla: "" }]);
       setConfirmedLotacoes([...confirmedLotacoes, false]);
     }
   };
@@ -130,9 +147,13 @@ export default function ListOrgan() {
                 <h3>Nova Lotação</h3>
                 <FieldText
                   label="Nome"
-                  value={lotacao.nome}
+                  value={lotacao.nomeLotacao}
                   onChange={(e) =>
-                    handleCurrentLotacaoChange(index, "nome", e.target.value)
+                    handleCurrentLotacaoChange(
+                      index,
+                      "nomeLotacao",
+                      e.target.value
+                    )
                   }
                   onBlur={(e) => handleBlur(e, `currentLotacao-${index}-nome`)}
                   erro={errors[`currentLotacao-${index}-nome`]}
@@ -164,9 +185,9 @@ export default function ListOrgan() {
               <h3>Lotação Confirmada {index + 1}</h3>
               <FieldText
                 label="Nome"
-                value={lotacao.nome}
+                value={lotacao.nomeLotacao}
                 onChange={(e) =>
-                  handleLotacaoChange(index, "nome", e.target.value)
+                  handleLotacaoChange(index, "nomeLotacao", e.target.value)
                 }
               />
               <FieldText
