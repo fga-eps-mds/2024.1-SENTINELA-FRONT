@@ -134,11 +134,12 @@ const Home = () => {
         label: "Órgãos por lotação",
         data: Object.values(orgaoCounts),
         backgroundColor: [
-          "lightgreen",
-          "lightcoral",
-          "lightyellow",
-          "lightgray",
-        ], // Adicione mais cores se necessário
+          "#B59F7B",
+          "#D4C4A8",
+          "#8D735A",
+          "#A69E89",
+          "#C0A77B",
+        ],
         borderWidth: 4,
       },
     ],
