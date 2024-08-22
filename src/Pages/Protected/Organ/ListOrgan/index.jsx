@@ -28,8 +28,11 @@ export default function OrganList() {
     navigate("/organ/create");
   };
 
-  const handleItemClick = () => {
-    navigate("/organ");
+  const handleItemClick = (organs) => {
+    navigate("/usuarios/hub"),
+      {
+        state: { organsId: organs._id },
+      };
   };
 
   const filteredOrgans = organs?.filter((organs) =>
@@ -65,7 +68,7 @@ export default function OrganList() {
                     onMouseLeave={(e) =>
                       (e.currentTarget.style.backgroundColor = "transparent")
                     }
-                    onClick={() => handleItemClick}
+                    onClick={() => handleItemClick(organs)}
                   >
                     <ListItemText primary={organs.orgao} />
                   </ListItemButton>

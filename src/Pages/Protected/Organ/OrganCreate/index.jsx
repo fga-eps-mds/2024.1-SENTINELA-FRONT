@@ -3,6 +3,8 @@ import FieldText from "../../../../Components/FieldText"; // Certifique-se de qu
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import PrimaryButton from "../../../../Components/PrimaryButton"; // Certifique-se de que o caminho está correto
 import { createOrgan } from "../../../../Services/organService";
+import { Snackbar } from "@mui/material";
+import Alert from "@mui/material/Alert";
 
 export default function OrganCreate() {
   const [nomeOrgao, setNomeOrgao] = useState("");
@@ -15,8 +17,14 @@ export default function OrganCreate() {
   ]);
   const [confirmedLotacoes, setConfirmedLotacoes] = useState([false]);
   const [add, setAdd] = useState(false);
+  const [openError, setOpenError] = useState(false);
 
   const handleSubmit = async () => {
+    if (!nomeOrgao || !lotacao || !sigla) {
+      setOpenError("Preencha todos os campos obrigatórios.");
+      return;
+    }
+
     if (nomeOrgao.trim() && lotacao.trim() && sigla.trim()) {
       // Crie o primeiro item do array com os campos iniciais de lotação e sigla
       const initialLotacao = {
@@ -36,8 +44,6 @@ export default function OrganCreate() {
       } else {
         alert("Erro ao cadastrar órgão");
       }
-    } else {
-      alert("Preencha todos os campos obrigatórios");
     }
   };
 
@@ -124,14 +130,14 @@ export default function OrganCreate() {
         />
         <h3>Dados de Lotações</h3>
         <FieldText
-          label="Lotação"
+          label="Lotação*"
           value={lotacao}
           onChange={(e) => setLotacao(e.target.value)}
           onBlur={(e) => handleBlur(e, "lotacao")}
           erro={errors["lotacao"]}
         />
         <FieldText
-          label="Sigla"
+          label="Sigla*"
           value={sigla}
           onChange={(e) => setSigla(e.target.value)}
           onBlur={(e) => handleBlur(e, "sigla")}
@@ -211,6 +217,15 @@ export default function OrganCreate() {
           ))}
         </div>
         <PrimaryButton text="Cadastrar Órgão" onClick={handleSubmit} />
+        <Snackbar
+          open={openError}
+          autoHideDuration={6000}
+          onClose={() => setOpenError(false)}
+        >
+          <Alert onClose={() => setOpenError("")} severity="error">
+            {openError}
+          </Alert>
+        </Snackbar>
       </div>
     </section>
   );
