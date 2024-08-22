@@ -1,18 +1,23 @@
 import { useState } from "react";
 import FieldText from "../../../Components/FieldText"; // Certifique-se de que o caminho está correto
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import PrimaryButton from "../../../Components/PrimaryButton"; // Certifique-se de que o caminho está correto
 
 export default function ListOrgan() {
   const [nomeOrgao, setNomeOrgao] = useState("");
+  const [errors, setErrors] = useState({});
   const [lotacao, setLotacao] = useState("");
   const [sigla, setSigla] = useState("");
-  const [errors, setErrors] = useState({});
-  const [showAdd, setShowAdd] = useState(false);
+  const [lotacoes, setLotacoes] = useState([]);
+  const [currentLotacoes, setCurrentLotacoes] = useState([
+    { nome: "", sigla: "" },
+  ]);
+  const [confirmedLotacoes, setConfirmedLotacoes] = useState([false]);
+  const [add, setAdd] = useState(false);
 
-  const handleShowAdd = () => {
-    setShowAdd((prevState) => !prevState);
+  const handleSubmit = () => {
+    console.log({ nomeOrgao, lotacoes });
   };
-
   const handleBlur = (e, field) => {
     if (e.target.value.trim() === "") {
       setErrors((prevErrors) => ({
@@ -25,6 +30,59 @@ export default function ListOrgan() {
         [field]: "",
       }));
     }
+  };
+
+  const handleCurrentLotacaoChange = (index, field, value) => {
+    const newLotacoes = [...currentLotacoes];
+    newLotacoes[index] = { ...newLotacoes[index], [field]: value };
+    setCurrentLotacoes(newLotacoes);
+  };
+
+  const handleAddLotacao = () => {
+    if (
+      currentLotacoes.every(
+        (lotacao) => lotacao.nome.trim() && lotacao.sigla.trim()
+      )
+    ) {
+      setLotacoes([...lotacoes, ...currentLotacoes]);
+      setConfirmedLotacoes([
+        ...confirmedLotacoes,
+        ...currentLotacoes.map(() => false),
+      ]); // Reset confirmation status
+      setCurrentLotacoes([{ nome: "", sigla: "" }]);
+    } else {
+      // Adicione a lógica de erro se necessário
+    }
+  };
+
+  const handleRemoveLotacao = (index) => {
+    if (lotacoes.length > 0) {
+      setLotacoes(lotacoes.filter((_, i) => i !== index));
+      setConfirmedLotacoes(confirmedLotacoes.filter((_, i) => i !== index));
+    }
+  };
+
+  const handleAddNewLotacao = () => {
+    setAdd(true);
+
+    console.log({ add });
+    if (confirmedLotacoes.every((status) => status)) {
+      setCurrentLotacoes([...currentLotacoes, { nome: "", sigla: "" }]);
+      setConfirmedLotacoes([...confirmedLotacoes, false]);
+    }
+  };
+
+  const handleConfirmLotacao = (index) => {
+    const newConfirmedLotacoes = [...confirmedLotacoes];
+    newConfirmedLotacoes[index] = true;
+    setConfirmedLotacoes(newConfirmedLotacoes);
+    handleAddLotacao(); // Adiciona as lotações confirmadas à lista de lotações
+  };
+
+  const handleLotacaoChange = (index, field, value) => {
+    const newLotacoes = [...lotacoes];
+    newLotacoes[index] = { ...newLotacoes[index], [field]: value };
+    setLotacoes(newLotacoes);
   };
 
   return (
@@ -41,45 +99,91 @@ export default function ListOrgan() {
           onBlur={(e) => handleBlur(e, "nomeOrgao")}
           erro={errors["nomeOrgao"]}
         />
-
-        <h3>Dados de Contato</h3>
-
+        <h3>Dados de Lotações</h3>
         <FieldText
-          label="Lotação*"
+          label="Lotação"
           value={lotacao}
           onChange={(e) => setLotacao(e.target.value)}
           onBlur={(e) => handleBlur(e, "lotacao")}
           erro={errors["lotacao"]}
         />
-
         <FieldText
           label="Sigla"
           value={sigla}
           onChange={(e) => setSigla(e.target.value)}
+          onBlur={(e) => handleBlur(e, "sigla")}
+          erro={errors["sigla"]}
         />
+        <h3>
+          Adicionar Nova Lotação{" "}
+          <AddCircleOutlineIcon onClick={handleAddNewLotacao} />
+        </h3>
 
         <div>
-          <h3 id="addDependentBttn" onClick={handleShowAdd}>
-            Adicionar mais lotações <AddCircleOutlineIcon />
-          </h3>
+          {add &&
+            currentLotacoes.map((lotacao, index) => (
+              <div
+                key={`current-${index}`}
+                className="section-lotacoes-form"
+                style={{ marginBottom: "50px" }}
+              >
+                <h3>Nova Lotação</h3>
+                <FieldText
+                  label="Nome"
+                  value={lotacao.nome}
+                  onChange={(e) =>
+                    handleCurrentLotacaoChange(index, "nome", e.target.value)
+                  }
+                  onBlur={(e) => handleBlur(e, `currentLotacao-${index}-nome`)}
+                  erro={errors[`currentLotacao-${index}-nome`]}
+                />
+                <FieldText
+                  label="Sigla"
+                  value={lotacao.sigla}
+                  onChange={(e) =>
+                    handleCurrentLotacaoChange(index, "sigla", e.target.value)
+                  }
+                  onBlur={(e) => handleBlur(e, `currentLotacao-${index}-sigla`)}
+                  erro={errors[`currentLotacao-${index}-sigla`]}
+                />
+                <PrimaryButton
+                  text="Confirmar Lotação"
+                  onClick={() => handleConfirmLotacao(index)}
+                />
+              </div>
+            ))}
         </div>
 
-        {showAdd && (
-          <div>
-            <FieldText
-              label="Lotação*"
-              value={lotacao}
-              onChange={(e) => setLotacao(e.target.value)}
-              onBlur={(e) => handleBlur(e, "lotacao")}
-              erro={errors["lotacao"]}
-            />
-            <FieldText
-              label="Sigla"
-              value={sigla}
-              onChange={(e) => setSigla(e.target.value)}
-            />
-          </div>
-        )}
+        <div>
+          {lotacoes.map((lotacao, index) => (
+            <div
+              key={`confirmed-${index}`}
+              className="section-lotacoes-form"
+              style={{ marginBottom: "50px" }}
+            >
+              <h3>Lotação Confirmada {index + 1}</h3>
+              <FieldText
+                label="Nome"
+                value={lotacao.nome}
+                onChange={(e) =>
+                  handleLotacaoChange(index, "nome", e.target.value)
+                }
+              />
+              <FieldText
+                label="Sigla"
+                value={lotacao.sigla}
+                onChange={(e) =>
+                  handleLotacaoChange(index, "sigla", e.target.value)
+                }
+              />
+              <PrimaryButton
+                text="Remover Lotação"
+                onClick={() => handleRemoveLotacao(index)}
+              />
+            </div>
+          ))}
+        </div>
+        <PrimaryButton text="Cadastrar Órgão" onClick={handleSubmit} />
       </div>
     </section>
   );
