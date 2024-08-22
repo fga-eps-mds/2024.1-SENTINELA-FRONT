@@ -26,6 +26,11 @@ export default function UserHubPage() {
   const handleListaPerfilClick = () => {
     navigate("/perfis");
   };
+
+  const handleListaOrgaosClick = () => {
+    navigate("/organ/list");
+  };
+
   return (
     <section className="container">
       <div className="area-card">
@@ -61,6 +66,10 @@ export default function UserHubPage() {
           <SecondaryButton
             text="LISTA DE PERFIL"
             onClick={handleListaPerfilClick}
+          />
+          <SecondaryButton
+            text="LISTA DE ÓRGÃOS"
+            onClick={handleListaOrgaosClick}
           />
         </div>
       </div>

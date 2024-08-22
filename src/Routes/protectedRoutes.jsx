@@ -21,6 +21,7 @@ import FinanceBankAccount from "../Pages/Protected/Finance/BankAccountCreate";
 import FinanceUpdate from "../Pages/Protected/Finance/BankAccountUpdate";
 import FinanceList from "../Pages/Protected/Finance/BankAccountList";
 import OrganCreate from "../Pages/Protected/Organ/OrganCreate";
+import OrganList from "../Pages/Protected/Organ/ListOrgan";
 
 const ProtectedRoutes = () => {
   return (
@@ -50,6 +51,7 @@ const ProtectedRoutes = () => {
       <Route path="/finance/update/:id" element={<FinanceUpdate />} />
       <Route path="/finance/list" element={<FinanceList />} />
       <Route path="/organ/create" element={<OrganCreate />} />
+      <Route path="/organ/list" element={<OrganList />} />
     </Routes>
   );
 };
