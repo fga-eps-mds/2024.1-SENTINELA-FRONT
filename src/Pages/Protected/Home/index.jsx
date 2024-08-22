@@ -78,19 +78,32 @@ const Home = () => {
 
   const orgaolist = uniqueOrg(data);
 
-  // Filtrar dados com base no status, lotação e órgão
-  const filteredData = data.filter((user) => {
-    return (
-      user.status === true &&
-      (lotacao === "" || user.lotacao === lotacao) &&
-      (orgao === "" || user.orgao === orgao)
-    );
-  });
+  // Função para obter dados filtrados por lotação
+  const getFilteredDataByLotacao = () => {
+    return data.filter((user) => {
+      return (
+        user.status === true && (lotacao === "" || user.lotacao === lotacao)
+      );
+    });
+  };
+
+  // Função para obter dados filtrados por órgão
+  const getFilteredDataByOrgao = () => {
+    return data.filter((user) => {
+      return user.status === true && (orgao === "" || user.orgao === orgao);
+    });
+  };
+
+  // Dados filtrados para cada gráfico
+  const filteredDataByLotacao = getFilteredDataByLotacao();
+  const filteredDataByOrgao = getFilteredDataByOrgao();
 
   // Contagem de gênero
   const genderCounts = {
-    Male: filteredData.filter((user) => user.sex === "Masculino").length,
-    Female: filteredData.filter((user) => user.sex === "Feminino").length,
+    Male: filteredDataByLotacao.filter((user) => user.sex === "Masculino")
+      .length,
+    Female: filteredDataByLotacao.filter((user) => user.sex === "Feminino")
+      .length,
   };
 
   const dataLotacao = {
@@ -107,7 +120,9 @@ const Home = () => {
 
   // Contagem de usuários por órgão com base nos filtros
   const orgaoCounts = orgaolist.reduce((acc, org) => {
-    const filteredByOrgao = filteredData.filter((user) => user.orgao === org);
+    const filteredByOrgao = filteredDataByOrgao.filter(
+      (user) => user.orgao === org
+    );
     acc[org] = filteredByOrgao.length;
     return acc;
   }, {});
@@ -116,7 +131,7 @@ const Home = () => {
     labels: Object.keys(orgaoCounts),
     datasets: [
       {
-        label: "Orgãos por lotação",
+        label: "Órgãos por lotação",
         data: Object.values(orgaoCounts),
         backgroundColor: [
           "lightgreen",
@@ -186,6 +201,7 @@ const Home = () => {
         <div className="lotation">
           <div className="donut-box">
             <h1>Divisão de sexo por lotação</h1>
+
             <Doughnut data={dataLotacao} options={optionsLotacao} />
 
             <FieldSelect
