@@ -28,7 +28,7 @@
 
   .list-item-organs {
     padding: 0.5rem;
-    margin-top: 2rem;
+    margin-top: 2rem !important;
   }
 }
 
@@ -74,6 +74,6 @@
 
   .list-item-organs {
     color: #332117 !important;
-    margin-top: 2rem;
+    margin-top: 2rem !important;
   }
 }
