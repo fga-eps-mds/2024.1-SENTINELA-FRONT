@@ -86,7 +86,7 @@ describe("BenefitsCreate", () => {
     expect(screen).toMatchSnapshot();
   });
 
-  it.skip("validates form correctly before submiting with only required fields", async () => {
+  it("validates form correctly before submiting with only required fields", async () => {
     render(
       <Router>
         <BenefitsCreate />

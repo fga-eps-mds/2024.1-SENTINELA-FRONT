@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { describe, it, expect, vi } from "vitest";
 import Home from "./index";
@@ -16,15 +16,34 @@ vi.mock("react-chartjs-2", () => ({
 }));
 
 describe("Home Component", () => {
-  it("renders without crashing", () => {
-    render(<Home />);
+  it("renders without crashing", async () => {
+    await waitFor(() => render(<Home />));
 
     expect(screen.getByText("Filiados")).toBeInTheDocument();
+    expect(screen.getByText("Divisão de sexo por lotação")).toBeInTheDocument();
+    expect(
+      screen.getByText("Divisão de lotação por órgão")
+    ).toBeInTheDocument();
 
     const doughnutCharts = screen.getAllByText("Mocked Doughnut Chart");
     expect(doughnutCharts).toHaveLength(2);
-
     expect(doughnutCharts[0]).toBeInTheDocument();
     expect(doughnutCharts[1]).toBeInTheDocument();
+
+    const filiadosSection = screen.getByText("Filiados").closest("div");
+    expect(within(filiadosSection).getByText(/Filtro/i)).toBeInTheDocument();
+    const donutBox = screen
+      .getByText("Divisão de sexo por lotação")
+      .closest("div");
+    expect(
+      within(donutBox).getByText(/Filtro de Lotação/i)
+    ).toBeInTheDocument();
+
+    const donutBox2 = screen
+      .getByText("Divisão de lotação por órgão")
+      .closest("div");
+    expect(within(donutBox2).getByText(/Filtro de Órgão/i)).toBeInTheDocument();
+
+    expect(screen.getByText("Limpar Filtros")).toBeInTheDocument();
   });
 });

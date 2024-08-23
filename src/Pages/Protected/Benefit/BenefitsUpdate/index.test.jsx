@@ -79,7 +79,7 @@ describe("BenefitsUpdate", () => {
     expect(screen).toMatchSnapshot();
   });
 
-  it.skip("validates form correctly before submiting", async () => {
+  it("validates form correctly before submiting", async () => {
     mockValidators();
 
     render(

@@ -202,7 +202,6 @@ const Home = () => {
         <div className="lotation">
           <div className="donut-box">
             <h1>Divisão de sexo por lotação</h1>
-
             <Doughnut data={dataLotacao} options={optionsLotacao} />
 
             <FieldSelect
