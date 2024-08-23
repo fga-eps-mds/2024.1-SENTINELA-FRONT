@@ -404,7 +404,7 @@ export default function CreateSupplier() {
 
         <Modal
           width="338px"
-          alertTitle="Cadastro de usuário concluído"
+          alertTitle="Cadastro de fornecedor concluído"
           show={showModal}
         >
           <SecondaryButton
