@@ -7,8 +7,15 @@ vi.mock("../../../Context/auth", () => ({
   useAuth: vi.fn().mockReturnValue({ user: {} }),
 }));
 
+//Entrada de dados
 vi.mock("../../../Services/userService", () => ({
-  getUsers: vi.fn().mockResolvedValue([]),
+  getUsers: vi.fn().mockResolvedValue([
+    { status: true, lotacao: "Lotacao 1", orgao: "Orgao 1", sex: "Masculino" },
+    { status: true, lotacao: "Lotacao 1", orgao: "Orgao 2", sex: "Feminino" },
+    { status: false, lotacao: "Lotacao 2", orgao: "Orgao 1", sex: "Masculino" },
+    { status: false, lotacao: "Lotacao 2", orgao: "Orgao 2", sex: "Feminino" },
+    { status: true, lotacao: "Lotacao 3", orgao: "Orgao 1", sex: "Masculino" },
+  ]),
 }));
 
 vi.mock("react-chartjs-2", () => ({
@@ -46,4 +53,7 @@ describe("Home Component", () => {
 
     expect(screen.getByText("Limpar Filtros")).toBeInTheDocument();
   });
+
+  //Ainda n descobri como implementar
+  it("updates the sindicalização filter correctly", async () => {});
 });
