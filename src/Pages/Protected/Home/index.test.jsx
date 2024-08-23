@@ -53,7 +53,4 @@ describe("Home Component", () => {
 
     expect(screen.getByText("Limpar Filtros")).toBeInTheDocument();
   });
-
-  //Ainda n descobri como implementar
-  it("updates the sindicalização filter correctly", async () => {});
 });
