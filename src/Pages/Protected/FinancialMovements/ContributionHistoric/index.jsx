@@ -8,6 +8,7 @@ import { ListItemText } from "@mui/material";
 import DataSelect from "../../../../Components/DataSelect";
 import FieldText from "../../../../Components/FieldText";
 import { getFinancialMovements } from "../../../../Services/FinancialMovementsService";
+import "./index.css";
 
 export default function UserHistoric() {
   const { state } = useLocation();
@@ -55,6 +56,10 @@ export default function UserHistoric() {
     return isDocumentTypeMatch && isDateInRange;
   });
 
+  const totalGasto = filteredMovements.reduce((total, movement) => {
+    return total + movement.valorBruto;
+  }, 0);
+
   return (
     <section className="container">
       <div className="forms-container">
@@ -81,6 +86,12 @@ export default function UserHistoric() {
             value={dataFinal}
             onChange={(newValue) => setDataFinal(newValue)}
           />
+        </div>
+
+        <div className="area-gastos">
+          <h3>
+            Valor gasto no período selecionado: R$ {totalGasto.toFixed(2)}
+          </h3>
         </div>
 
         <List>
