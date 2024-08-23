@@ -71,6 +71,15 @@ const OrganId = () => {
   };
 
   const handleRemoveLotacao = (index) => {
+    if (lotacoes.length === 1) {
+      setErrors({
+        ...errors,
+        "lotacao-removal": "Você deve manter pelo menos uma lotação.",
+      });
+      setOpenError(true);
+      return;
+    }
+
     setLotacoes(lotacoes.filter((_, i) => i !== index));
   };
 
@@ -198,7 +207,8 @@ const OrganId = () => {
         onClose={() => setOpenError(false)}
       >
         <Alert onClose={() => setOpenError(false)} severity="error">
-          Certifique-se de que todos os campos obrigatórios estão preenchidos
+          {errors["lotacao-removal"] ||
+            "Certifique-se de que todos os campos obrigatórios estão preenchidos"}
         </Alert>
       </Snackbar>
 
