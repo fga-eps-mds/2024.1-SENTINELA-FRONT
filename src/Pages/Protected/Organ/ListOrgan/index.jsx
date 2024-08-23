@@ -29,10 +29,7 @@ export default function OrganList() {
   };
 
   const handleItemClick = (organs) => {
-    navigate("/usuarios/hub"),
-      {
-        state: { organsId: organs._id },
-      };
+    navigate(`/organ/update/${organs._id}`);
   };
 
   const filteredOrgans = organs?.filter((organs) =>
