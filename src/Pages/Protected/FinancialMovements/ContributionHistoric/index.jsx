@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -7,8 +7,11 @@ import Divider from "@mui/material/Divider";
 import { ListItemText } from "@mui/material";
 import DataSelect from "../../../../Components/DataSelect";
 import FieldText from "../../../../Components/FieldText";
+import { getFinancialMovements } from "../../../../Services/FinancialMovementsService";
 
 export default function UserHistoric() {
+  const { state } = useLocation();
+  const { nomeCompleto } = state || {};
   const [movements, setMovements] = useState([]);
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
@@ -16,33 +19,24 @@ export default function UserHistoric() {
   const [dataFinal, setDataFinal] = useState(null);
 
   useEffect(() => {
-    // Movimentação hard coded
-    const hardCodedMovements = [
-      {
-        _id: "1",
-        tipoDocumento: "Nota Fiscal",
-        datadePagamento: "2023-08-01",
-        valorBruto: 1500.0,
-      },
-      {
-        _id: "2",
-        tipoDocumento: "Recibo",
-        datadePagamento: "2023-08-15",
-        valorBruto: 2500.0,
-      },
-      {
-        _id: "3",
-        tipoDocumento: "Fatura",
-        datadePagamento: "2023-07-25",
-        valorBruto: 2000.0,
-      },
-    ];
+    const fetchMovements = async () => {
+      try {
+        const allMovements = await getFinancialMovements(); // Fetch movements from API
+        const filteredMovements = allMovements.filter(
+          (movement) => movement.nomeOrigem === nomeCompleto
+        );
+        setMovements(filteredMovements);
+      } catch (error) {
+        console.error("Erro ao buscar movimentações:", error);
+      }
+    };
 
-    setMovements(hardCodedMovements);
-  }, []);
+    if (nomeCompleto) {
+      fetchMovements();
+    }
+  }, [nomeCompleto]);
 
   const handleItemClick = (movement) => {
-    console.log("Item clicked:", movement);
     navigate(`/movimentacoes/visualizar/${movement._id}`, {
       state: { movementId: movement._id },
     });
@@ -56,8 +50,7 @@ export default function UserHistoric() {
     const movementDate = new Date(movement.datadePagamento);
     const isDateInRange =
       (!dataInicio || movementDate >= new Date(dataInicio)) &&
-      (!dataInicio || movementDate <= new Date(dataFinal));
-    console.log(dataInicio, dataFinal, movementDate, isDateInRange);
+      (!dataFinal || movementDate <= new Date(dataFinal));
 
     return isDocumentTypeMatch && isDateInRange;
   });
