@@ -5,6 +5,9 @@ import PrimaryButton from "../../../../Components/PrimaryButton"; // Certifique-
 import { createOrgan } from "../../../../Services/organService";
 import { Snackbar } from "@mui/material";
 import Alert from "@mui/material/Alert";
+import Modal from "../../../../Components/Modal";
+import SecondaryButton from "../../../../Components/SecondaryButton";
+import { useNavigate } from "react-router-dom";
 
 export default function OrganCreate() {
   const [nomeOrgao, setNomeOrgao] = useState("");
@@ -18,6 +21,8 @@ export default function OrganCreate() {
   const [confirmedLotacoes, setConfirmedLotacoes] = useState([false]);
   const [add, setAdd] = useState(false);
   const [openError, setOpenError] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async () => {
     if (!nomeOrgao || !lotacao || !sigla) {
@@ -37,14 +42,20 @@ export default function OrganCreate() {
 
       const formData = { nomeOrgao, lotacoes: combinedLotacoes };
       console.log(formData);
-
-      const response = await createOrgan(nomeOrgao, combinedLotacoes);
-      if (response === 201) {
-        alert("Órgão cadastrado com sucesso!");
-      } else {
-        alert("Erro ao cadastrar órgão");
+      try {
+        const response = await createOrgan(nomeOrgao, combinedLotacoes);
+        if (response) {
+          setShowModal(true);
+        }
+      } catch (error) {
+        console.error("Erro ao cadstrar órgao: ", error);
       }
     }
+  };
+
+  const handleCloseDialog = () => {
+    setShowModal(false);
+    navigate("/organ/list");
   };
 
   const handleBlur = (e, field) => {
@@ -216,7 +227,7 @@ export default function OrganCreate() {
             </div>
           ))}
         </div>
-        <PrimaryButton text="Cadastrar Órgão" onClick={handleSubmit} />
+        <PrimaryButton text="Cadastrar" onClick={handleSubmit} />
         <Snackbar
           open={openError}
           autoHideDuration={6000}
@@ -226,6 +237,19 @@ export default function OrganCreate() {
             {openError}
           </Alert>
         </Snackbar>
+
+        <Modal
+          width="338px"
+          alertTitle="Órgão cadastrado com sucesso!"
+          show={showModal}
+        >
+          <SecondaryButton
+            key={"modalButtons"}
+            text="OK"
+            onClick={handleCloseDialog}
+            width="338px"
+          />
+        </Modal>
       </div>
     </section>
   );
