@@ -75,7 +75,7 @@ export default function UserHistoric() {
           />
         </div>
 
-        <div className="date-box">
+        <div className="date-box-hc">
           <DataSelect
             label="Data Inicial"
             value={dataInicio}
