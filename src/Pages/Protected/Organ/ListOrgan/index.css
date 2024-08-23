@@ -14,10 +14,18 @@
 
   .double-box-list-organs {
     display: contents;
-    font-size: 16px;
+    font-size: 20px;
     color: #332117 !important;
     margin-left: 1.2rem;
     white-space: nowrap;
+  }
+
+  .title-center {
+    text-align: center;
+    margin: 0 auto;
+    justify-content: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
   }
 
   .double-box-list-organs .MuiButton-root {
@@ -52,7 +60,7 @@
 
   .search-box-organs {
     display: grid;
-    width: 85%;
+    width: 100%;
     margin-top: 1rem;
     position: relative;
   }
@@ -64,12 +72,10 @@
   }
 
   .double-box-list-organs button {
-    display: grid;
-    margin-top: 0px;
-    margin-bottom: 40px;
-    width: 334px;
+    margin-left: 1rem;
+    margin-right: 10px;
+    width: auto;
     height: 44px;
-    position: relative;
   }
 
   .list-item-organs {

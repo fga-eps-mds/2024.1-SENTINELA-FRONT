@@ -40,7 +40,7 @@ export default function OrganList() {
     <section className="container-list-organs">
       <div className="forms-container-list-organs">
         <div className="double-box-list-organs">
-          <h1> Lista de órgãos</h1>
+          <h1 className="title-center"> Lista de órgãos</h1>
           <PrimaryButton text="Cadastrar órgão" onClick={handleSubmit} />
         </div>
         <div className="search-box-organs">
