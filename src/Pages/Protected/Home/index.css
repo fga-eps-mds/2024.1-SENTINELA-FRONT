@@ -151,18 +151,19 @@
   .dash-section {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    margin: 3rem;
   }
 
   .filiados-section {
-    margin: 3rem;
+    width: 100%;
   }
 
   .filiados {
     display: flex;
     flex-direction: row;
-
     justify-content: space-between;
-    align-items: center;
+    margin: inherit;
   }
 
   .filiados-box {
@@ -176,13 +177,14 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-
+    width: 100%;
     margin: 3rem;
     align-items: flex-end;
   }
 
   .donut-box {
     display: flex;
+    margin: inherit;
     flex-direction: column;
     justify-content: center;
     align-items: center;
