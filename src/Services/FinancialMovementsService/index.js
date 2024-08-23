@@ -1,16 +1,28 @@
 import { APIBank } from "../BaseService";
 
-const storagedUser = localStorage.getItem("@App:user");
-const user = JSON.parse(storagedUser);
+const storagedToken = localStorage.getItem("@App:token");
+let token = null;
+
+if (storagedToken) {
+  try {
+    token = JSON.parse(storagedToken);
+  } catch (error) {
+    console.error("O token armazenado não é um JSON válido:", error);
+  }
+}
 
 export const createFinancialMovements = async (financialMovementsData) => {
   try {
+    if (!token) {
+      throw new Error("No token found");
+    }
+
     const response = await APIBank.post(
       `/financialMovements/create`,
       { financialMovementsData },
       {
         headers: {
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${token}`,
         },
       }
     );
@@ -28,9 +40,13 @@ export const createFinancialMovements = async (financialMovementsData) => {
 
 export const getFinancialMovements = async () => {
   try {
+    if (!token) {
+      throw new Error("No token found");
+    }
+
     const response = await APIBank.get("/financialMovements", {
       headers: {
-        Authorization: `Bearer ${user.token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
     return response.data;
@@ -41,9 +57,13 @@ export const getFinancialMovements = async () => {
 
 export const getFinancialMovementsById = async (id) => {
   try {
+    if (!token) {
+      throw new Error("No token found");
+    }
+
     const response = await APIBank.get(`/financialMovements/${id}`, {
       headers: {
-        Authorization: `Bearer ${user.token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
     return response.data;
@@ -57,12 +77,16 @@ export const updateFinancialMovementsById = async (
   financialMovementsData
 ) => {
   try {
+    if (!token) {
+      throw new Error("No token found");
+    }
+
     const response = await APIBank.patch(
       `/financialMovements/update/${id}`,
       { financialMovementsData },
       {
         headers: {
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${token}`,
         },
       }
     );
@@ -78,9 +102,13 @@ export const updateFinancialMovementsById = async (
 
 export const deleteFinancialMovementsById = async (id) => {
   try {
+    if (!token) {
+      throw new Error("No token found");
+    }
+
     await APIBank.delete(`/financialMovements/delete/${id}`, {
       headers: {
-        Authorization: `Bearer ${user.token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
     console.log(`Movimentação financeira com ID ${id} deletada com sucesso.`);

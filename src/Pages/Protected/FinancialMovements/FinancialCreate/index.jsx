@@ -8,8 +8,9 @@ import "./index.css";
 import DataSelect from "../../../../Components/DataSelect";
 import CheckField from "../../../../Components/Checkfield";
 import { createFinancialMovements } from "../../../../Services/FinancialMovementsService";
+import { getUsers } from "../../../../Services/userService";
+import { getSupplierForm } from "../../../../Services/supplierService";
 import { useNavigate } from "react-router-dom";
-import { APIBank, APIUsers } from "../../../../Services/BaseService";
 
 export default function FinancialCreate() {
   const [contaOrigem, setContaOrigem] = useState("");
@@ -35,28 +36,11 @@ export default function FinancialCreate() {
   useEffect(() => {
     const fetchNomesOrigem = async () => {
       try {
-        const storagedUserString = localStorage.getItem("@App:user");
-        const storagedUser = storagedUserString
-          ? JSON.parse(storagedUserString)
-          : null;
-
-        if (!storagedUser || !storagedUser.token) {
-          console.error("Token de autorização não encontrado.");
-          return;
-        }
-
         switch (contaOrigem) {
           case "Sindicalizado": {
-            const response = await APIUsers.get("users", {
-              headers: {
-                Authorization: `Bearer ${storagedUser.token}`,
-              },
-            });
-
-            const data = response.data;
-            if (Array.isArray(data)) {
-              const nomes = data.map((user) => user.name);
-              setNomesOrigem(nomes);
+            const users = await getUsers();
+            if (Array.isArray(users)) {
+              setNomesOrigem(users.map((user) => user.name));
             } else {
               console.error("Os dados recebidos não são um array.");
             }
@@ -67,16 +51,9 @@ export default function FinancialCreate() {
             break;
           }
           case "Fornecedor": {
-            const response = await APIBank.get("/SupplierForm", {
-              headers: {
-                Authorization: `Bearer ${storagedUser.token}`,
-              },
-            });
-
-            const data = response.data;
-            if (Array.isArray(data)) {
-              const nomes = data.map((supplier) => supplier.nome);
-              setNomesOrigem(nomes);
+            const suppliers = await getSupplierForm();
+            if (Array.isArray(suppliers)) {
+              setNomesOrigem(suppliers.map((supplier) => supplier.nome));
             } else {
               console.error("Os dados recebidos não são um array.");
             }
@@ -90,34 +67,17 @@ export default function FinancialCreate() {
       }
     };
 
-    fetchNomesOrigem();
+    if (contaOrigem) fetchNomesOrigem();
   }, [contaOrigem]);
 
   useEffect(() => {
     const fetchNomesDestino = async () => {
       try {
-        const storagedUserString = localStorage.getItem("@App:user");
-        const storagedUser = storagedUserString
-          ? JSON.parse(storagedUserString)
-          : null;
-
-        if (!storagedUser || !storagedUser.token) {
-          console.error("Token de autorização não encontrado.");
-          return;
-        }
-
         switch (contaDestino) {
           case "Sindicalizado": {
-            const response = await APIUsers.get("users", {
-              headers: {
-                Authorization: `Bearer ${storagedUser.token}`,
-              },
-            });
-
-            const data = response.data;
-            if (Array.isArray(data)) {
-              const nomes = data.map((user) => user.name);
-              setNomesDestino(nomes);
+            const users = await getUsers();
+            if (Array.isArray(users)) {
+              setNomesDestino(users.map((user) => user.name));
             } else {
               console.error("Os dados recebidos não são um array.");
             }
@@ -128,16 +88,9 @@ export default function FinancialCreate() {
             break;
           }
           case "Fornecedor": {
-            const response = await APIBank.get("/SupplierForm", {
-              headers: {
-                Authorization: `Bearer ${storagedUser.token}`,
-              },
-            });
-
-            const data = response.data;
-            if (Array.isArray(data)) {
-              const nomes = data.map((supplier) => supplier.nome);
-              setNomesDestino(nomes);
+            const suppliers = await getSupplierForm();
+            if (Array.isArray(suppliers)) {
+              setNomesDestino(suppliers.map((supplier) => supplier.nome));
             } else {
               console.error("Os dados recebidos não são um array.");
             }
@@ -151,7 +104,7 @@ export default function FinancialCreate() {
       }
     };
 
-    fetchNomesDestino();
+    if (contaDestino) fetchNomesDestino();
   }, [contaDestino]);
 
   const handleCurrencyInput = (value) => {
