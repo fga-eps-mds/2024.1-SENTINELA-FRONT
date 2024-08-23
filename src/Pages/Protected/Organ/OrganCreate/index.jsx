@@ -8,6 +8,7 @@ import Alert from "@mui/material/Alert";
 import Modal from "../../../../Components/Modal";
 import SecondaryButton from "../../../../Components/SecondaryButton";
 import { useNavigate } from "react-router-dom";
+import "./index.css";
 
 export default function OrganCreate() {
   const [nomeOrgao, setNomeOrgao] = useState("");
@@ -140,20 +141,22 @@ export default function OrganCreate() {
           erro={errors["nomeOrgao"]}
         />
         <h3>Dados de Lotações</h3>
-        <FieldText
-          label="Lotação*"
-          value={lotacao}
-          onChange={(e) => setLotacao(e.target.value)}
-          onBlur={(e) => handleBlur(e, "lotacao")}
-          erro={errors["lotacao"]}
-        />
-        <FieldText
-          label="Sigla*"
-          value={sigla}
-          onChange={(e) => setSigla(e.target.value)}
-          onBlur={(e) => handleBlur(e, "sigla")}
-          erro={errors["sigla"]}
-        />
+        <div className="section-doublebox">
+          <FieldText
+            label="Lotação*"
+            value={lotacao}
+            onChange={(e) => setLotacao(e.target.value)}
+            onBlur={(e) => handleBlur(e, "lotacao")}
+            erro={errors["lotacao"]}
+          />
+          <FieldText
+            label="Sigla*"
+            value={sigla}
+            onChange={(e) => setSigla(e.target.value)}
+            onBlur={(e) => handleBlur(e, "sigla")}
+            erro={errors["sigla"]}
+          />
+        </div>
         <h3>
           Adicionar Nova Lotação{" "}
           <AddCircleOutlineIcon onClick={handleAddNewLotacao} />
