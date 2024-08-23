@@ -1,0 +1,192 @@
+.container {
+  display: flex;
+}
+
+.forms-container {
+  display: flex;
+  justify-content: start;
+  flex-direction: row;
+}
+
+.select-profile {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.row-labels,
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.row-labels label,
+.row label {
+  flex: 1;
+  text-align: center;
+}
+
+.row label {
+  text-align: left;
+  padding-right: 10px;
+  font-weight: bold;
+}
+
+.row .MuiCheckbox-root {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+.invalid {
+  font-size: small;
+  font-weight: 400;
+  margin-left: 1rem;
+  margin-top: 10px;
+  color: red !important;
+}
+
+@media screen and (max-width: 1080px) {
+  .container {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .double-box {
+    display: contents;
+    grid-template-columns: 0.5fr 0.5fr;
+  }
+
+  .double-box-roles {
+    display: contents;
+    grid-template-columns: 0.5fr 0.5fr;
+  }
+
+  .double-buttons-roles {
+    display: contents;
+    grid-template-columns: 0.5fr 0.3fr;
+  }
+
+  h1 {
+    font-weight: 800;
+    text-align: left;
+    margin-bottom: 3rem;
+    color: #332117 !important;
+  }
+
+  h3 {
+    font-weight: 400;
+    margin-left: 1rem;
+    margin-top: 3rem;
+    color: #332117 !important;
+  }
+
+  #addDependentBttn {
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .container {
+    display: grid;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .container {
+    display: flex;
+  }
+
+  .profile-status {
+    font-size: 18px;
+    font-weight: 600;
+    margin-left: 8rem;
+    margin-top: 12rem;
+  }
+
+  .forms-container {
+    display: flex;
+    margin: 1vw;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .double-box {
+    display: contents;
+    grid-template-columns: 0.5fr 0.5fr;
+  }
+
+  .perfil-radiogroup {
+    margin: 2vw;
+  }
+
+  .forms-container button {
+    width: 100%;
+  }
+
+  .select-profile {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20%;
+  }
+
+  .row-labels {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .row-labels label,
+  .row label {
+    flex: 1;
+    text-align: center;
+  }
+
+  .row label {
+    text-align: left;
+    padding-right: 10px;
+    font-weight: bold;
+  }
+
+  .row .MuiCheckbox-root {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .double-buttons-roles {
+    display: flex;
+    justify-content: space-between; /* Distribui os botões igualmente no espaço disponível */
+    align-items: end; /* Alinha os botões verticalmente */
+    gap: 20px;
+  }
+
+  .double-buttons-roles button {
+    flex: 1; /* Faz com que os botões ocupem o espaço disponível igualmente */
+    height: 40px;
+  }
+  #addDependentBttn {
+    cursor: pointer;
+  }
+
+  label {
+    color: #332117 !important;
+  }
+
+  h1 {
+    font-weight: 800;
+    margin-bottom: 3rem;
+    color: #332117 !important;
+  }
+
+  h3 {
+    font-weight: 400;
+    margin-left: 1rem;
+    margin-top: 3rem;
+    color: #332117 !important;
+  }
+
+  #addDependentBttn {
+    cursor: pointer;
+  }
+}

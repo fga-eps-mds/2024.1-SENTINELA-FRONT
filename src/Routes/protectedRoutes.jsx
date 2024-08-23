@@ -8,6 +8,9 @@ import UserUpdatePage from "../Pages/Protected/Users/userUpdatePage";
 import Supplier from "../Pages/Protected/CreateSupplier";
 import ListSupplier from "../Pages/Protected/ListSupplier";
 import ViewSupplier from "../Pages/Protected/UpdateSupplier";
+import RolesCreatePage from "../Pages/Protected/Roles/RolesCreatePage";
+import RolesListPage from "../Pages/Protected/Roles/RolesListPage";
+import RolesUpdatePage from "../Pages/Protected/Roles/RolesUpdatePage";
 import MembershipRequest from "../Pages/Protected/MembershipRequests";
 import Benefits from "../Pages/Protected/Benefit/Benefits";
 import BenefitsList from "../Pages/Protected/Benefit/BenefitsList";
@@ -25,6 +28,9 @@ const ProtectedRoutes = () => {
       <Route path="/usuarios/editar/:nome" element={<UserUpdatePage />} />
       <Route path="/usuarios" element={<UserListPage />} />
       <Route path="/usuarios/hub" element={<UserHubPage />} />
+      <Route path="/perfis" element={<RolesListPage />} />
+      <Route path="/perfis/criar" element={<RolesCreatePage />} />
+      <Route path="/perfis/editar/:name" element={<RolesUpdatePage />} />
       <Route path="/perfil" element={<ProfileUpdate />} />
       <Route
         path="usuarios/hub/membershipRequests"
