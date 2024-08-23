@@ -1,0 +1,132 @@
+@media screen and (max-width: 1080px) {
+  .bar-container-benefits {
+    display: grid;
+  }
+
+  .container-organ {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+
+  label {
+    color: #332117 !important;
+  }
+
+  .forms-container-organ {
+    margin: 1rem;
+    width: 90%;
+    display: inherit;
+    flex-direction: column;
+    min-height: 95vh;
+  }
+
+  .section-doublebox {
+    flex-direction: column;
+    align-items: flex-start;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .section-doublebox button {
+    width: 200%;
+    margin-bottom: 2rem;
+    height: auto;
+  }
+
+  .forms-container-organ button {
+    width: 100%;
+    margin-top: auto;
+    margin-bottom: 1rem;
+    height: 100%;
+  }
+
+  .secondarybutton {
+    width: 200%;
+    margin-bottom: 2rem;
+    margin-top: 0.5rem;
+  }
+
+  .forms-container-organ h1 {
+    font-size: 22px;
+    font-weight: 800;
+    margin-left: 8px;
+    margin-right: 50px;
+    margin-top: 1rem;
+    margin-bottom: -1rem;
+    color: #332117 !important;
+    white-space: nowrap;
+  }
+
+  .forms-container-organ h3 {
+    font-size: 16px;
+    font-weight: 400;
+    margin-left: 1rem;
+    margin-top: 3rem;
+    color: #332117 !important;
+  }
+
+  .adition-button {
+    margin-top: auto;
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 1080px) {
+  .bar-container-benefits {
+    display: flex;
+    height: 100%;
+    position: fixed;
+  }
+
+  .container-organ {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+  }
+
+  .forms-container-organ {
+    margin: 1rem;
+    width: 90%;
+    display: inherit;
+    /* justify-content: center; */
+    flex-direction: column;
+    min-height: 95vh;
+  }
+
+  .forms-container-organ button {
+    width: 100%;
+    height: 100%;
+    margin-top: auto;
+  }
+
+  .forms-container-organ h1 {
+    font-size: 34px;
+    font-weight: 800;
+    margin-bottom: -0.5rem;
+    margin-top: 2rem;
+  }
+
+  .forms-container-organ h3 {
+    font-size: 24px;
+    font-weight: 400;
+    margin-left: 1rem;
+    margin-top: 3rem;
+  }
+
+  .section-doublebox {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .section-doublebox button {
+    width: 200%;
+    margin-bottom: 2rem;
+    height: auto;
+  }
+
+  .adition-button {
+    margin-top: auto;
+    width: 100%;
+  }
+}

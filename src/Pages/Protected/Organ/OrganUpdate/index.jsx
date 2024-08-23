@@ -142,9 +142,11 @@ const OrganId = () => {
   };
 
   return user ? (
-    <div className="container-benefits">
-      <div className="forms-container-benefits">
+    <div className="container-organ">
+      <div className="forms-container-organ">
         <h1>Editar Órgão</h1>
+
+        <h3>Dados do Órgão</h3>
 
         <FieldText
           label="Órgão *"
@@ -154,13 +156,9 @@ const OrganId = () => {
           erro={errors["orgao"]}
         />
 
-        <h3>Lotação</h3>
+        <h3>Dados de Lotação</h3>
         {lotacoes.map((lotacao, index) => (
-          <div
-            key={index}
-            className="section-lotacoes-form"
-            style={{ marginBottom: "20px" }}
-          >
+          <div key={index} className="section-doublebox">
             <FieldText
               label="Nome da Lotação"
               value={lotacao.nomeLotacao}
@@ -179,16 +177,22 @@ const OrganId = () => {
               onBlur={(e) => handleBlur(e, `lotacao-${index}-sigla`)}
               erro={errors[`lotacao-${index}-sigla`]}
             />
-            <SecondaryButton
-              text="Remover Lotação"
-              onClick={() => handleRemoveLotacao(index)}
-            />
+            <div className="secondarybutton">
+              <SecondaryButton
+                className="secondary-button-responsive"
+                text="Remover Lotação"
+                onClick={() => handleRemoveLotacao(index)}
+              />
+            </div>
           </div>
         ))}
-        <PrimaryButton
-          text="Adicionar Nova Lotação"
-          onClick={handleAddLotacao}
-        />
+
+        <div className="adition-button">
+          <PrimaryButton
+            text="Adicionar Nova Lotação"
+            onClick={handleAddLotacao}
+          />
+        </div>
 
         <div className="edit-buttons">
           <SecondaryButton
