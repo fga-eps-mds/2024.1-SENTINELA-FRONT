@@ -17,4 +17,15 @@
   .double-box h1 {
     font-size: 34px;
   }
+
+  .valor-gasto {
+    text-align: right !important;
+    margin-right: 0 !important;
+    color: #332117 !important;
+  }
+
+  .pag-sind {
+    text-align: center !important;
+    color: #332117 !important;
+  }
 }

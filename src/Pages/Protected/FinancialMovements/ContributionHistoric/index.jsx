@@ -90,7 +90,7 @@ export default function UserHistoric() {
 
         <div className="area-gastos">
           <h3>
-            Valor gasto no período selecionado: R$ {totalGasto.toFixed(2)}
+            Valor recebido no período selecionado: R$ {totalGasto.toFixed(2)}
           </h3>
         </div>
 
@@ -112,14 +112,26 @@ export default function UserHistoric() {
                   }
                   onClick={() => handleItemClick(movement)}
                 >
+                  <ListItemText primary={movement.tipoDocumento} />
                   <ListItemText
-                    primary={movement.tipoDocumento}
-                    secondary={`Data de pagamento: ${new Date(
-                      movement.datadePagamento
-                    ).toLocaleDateString()}`}
+                    className="pag-sind"
+                    secondary={
+                      <>
+                        Data de pagamento: <br />
+                        {new Date(
+                          movement.datadePagamento
+                        ).toLocaleDateString()}
+                      </>
+                    }
                   />
                   <ListItemText
-                    secondary={`R$ ${movement.valorBruto.toFixed(2)}`}
+                    className="valor-gasto"
+                    secondary={
+                      <>
+                        Valor recebido <br /> R${" "}
+                        {movement.valorBruto.toFixed(2)}
+                      </>
+                    }
                   />
                 </ListItemButton>
               </ListItem>
