@@ -40,7 +40,7 @@ export default function SideBar({ fullHeight = true }) {
       key="financeiro"
       text="FINANCEIRO"
       onClick={() => {
-        navigate("/fornecedores");
+        navigate("/finance/hub");
       }}
     />,
     <SideButton
