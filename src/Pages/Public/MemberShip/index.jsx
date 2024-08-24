@@ -360,7 +360,7 @@ const MemberShip = () => {
       uf_naturalidade,
       uf_orgao,
       uf_address: uf_endereco,
-      marialStatus: estadoCivil,
+      maritalStatus: estadoCivil,
       education: escolaridade,
       rg,
       orgao,

@@ -7,26 +7,34 @@ import FieldSelect from "../../../../Components/FieldSelect";
 import PrimaryButton from "../../../../Components/PrimaryButton";
 import { Snackbar } from "@mui/material";
 import Alert from "@mui/material/Alert";
-// import SecondaryButton from "../../../../Components/SecondaryButton";
 import { useLocation } from "react-router-dom";
-import { getMemberShipById } from "../../../../Services/memberShipService";
+import {
+  deleteMember,
+  getMemberShipById,
+  updateMembership,
+} from "../../../../Services/memberShipService";
+import {
+  tipoSanguineoList,
+  sexoList,
+  ufList,
+  estadoCivilList,
+  escolaridadeList,
+} from "../../../../Utils/constants";
+// import { mascaraCPF, mascaraRg, mascaraTelefone, mascaraCEP, validateField } from "../../../../Utils/mask";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import SecondaryButton from "../../../../Components/SecondaryButton";
 
 const ViewMembershipPage = () => {
   const { state } = useLocation();
   const membershipId = state?.membershipId;
-  //   const navigate = useNavigate();
 
-  const [errors, setErrors] = useState({});
   const [touchedFields, setTouchedFields] = useState({});
+  const [errors, setErrors] = useState({});
   const [openError, setOpenError] = useState(false);
-  const [missingList, setMissingList] = useState([]);
-  setMissingList(null);
-  const [unfilledDependent, setUnfilledDependent] = useState(false);
-  setUnfilledDependent(null);
   const [errorFields, setErrorFields] = useState(false);
+  const [showDependentForm, setShowDependentForm] = useState(false);
 
   // Campos de filiado
-
   const [email, setEmail] = useState("");
   const [sex, setSex] = useState("");
   const [maritalStatus, setMaritalStatus] = useState("");
@@ -53,65 +61,42 @@ const ViewMembershipPage = () => {
   const [street, setStreet] = useState("");
   const [complement, setComplement] = useState("");
   const [phone, setPhone] = useState("");
-  const [cellPhone, setCellPhone] = useState("");
+  const [landline, setLandline] = useState("");
   const [workPlace, setWorkPlace] = useState("");
   const [shipperOrganization, setShipperOrganization] = useState("");
-  const [status, setStatus] = useState(false);
   const [religion, setReligion] = useState("");
   const [dependents, setDependents] = useState([]);
 
-  console.log(status);
+  // campos Dependente:
+  const [currentDependent, setCurrentDependent] = useState({
+    name: "",
+    birthDate: "",
+    relationship: "",
+    cpfDependente: "",
+    celularDependente: "",
+  });
 
-  const fieldNames = {
-    email: "Email",
-    sexo: "Sexo",
-    estadoCivil: "Estado Civil",
-    tipoSanguineo: "Tipo Sanguíneo",
-    uf_naturalidade: "UF de Naturalidade",
-    uf_orgao: "UF do Órgão",
-    uf_endereco: "UF do Endereço",
-    escolaridade: "Escolaridade",
-    dataContratacao: "Data de Contratação",
-    dataDeNascimento: "Data de Nascimento",
-    dataExpedicao: "Data de Expedição",
-    cargo: "Cargo",
-    lotacao: "Lotação",
-    matricula: "Matrícula",
-    nomeCompleto: "Nome Completo",
-    naturalidade: "Naturalidade",
-    rg: "RG",
-    orgao: "Órgão",
-    cpf: "CPF",
-    nomeDaMae: "Nome da Mãe",
-    nomeDoPai: "Nome do Pai",
-    cep: "CEP",
-    cidade: "Cidade",
-    logradouro: "Logradouro",
-    complemento: "Complemento",
-    telefone: "Telefone",
-    celular: "Celular",
-    postoDeTrabalho: "Posto de Trabalho",
-    orgaoExpedidor: "Órgão Expedidor",
-    religiao: "Religião",
-  };
-
+  // fetch dados do usuário
   useEffect(() => {
     const fetchMembership = async () => {
       try {
         const response = await getMemberShipById(membershipId);
-
         if (response) {
           setEmail(response?.email || "");
           setSex(response?.sex || "");
-          setMaritalStatus(response?.marialStatus || "");
+          setMaritalStatus(response?.maritalStatus || ""); // Corrigido para maritalStatus
           setBloodType(response?.bloodType || "");
           setUfNaturalness(response?.uf_naturalidade || "");
           setUfOrganization(response?.uf_orgao || "");
           setUfAddress(response?.uf_address || "");
           setEducation(response?.education || "");
-          setHiringDate(dayjs(response?.hiringDate) || null);
-          setBirthDate(dayjs(response?.birthDate) || null);
-          setExpeditionDate(dayjs(response?.expeditionDate) || null);
+          setHiringDate(
+            response?.hiringDate ? dayjs(response?.hiringDate) : null
+          );
+          setBirthDate(response?.birthDate ? dayjs(response?.birthDate) : null);
+          setExpeditionDate(
+            response?.expeditionDate ? dayjs(response?.expeditionDate) : null
+          );
           setPosition(response?.position || "");
           setLotacao(response?.lotacao || "");
           setRegistration(response?.registration || "");
@@ -127,61 +112,130 @@ const ViewMembershipPage = () => {
           setStreet(response?.street || "");
           setComplement(response?.complement || "");
           setPhone(response?.phone || "");
-          setCellPhone(response?.cellPhone || "");
+          setLandline(response?.landline || "");
           setWorkPlace(response?.workPlace || "");
           setShipperOrganization(response?.shipperOrganization || "");
-          setStatus(response?.status || "");
           setReligion(response?.religion || "");
-          setDependents(response?.dependents || "");
+          setDependents(response?.dependents || []);
         }
       } catch (err) {
-        console.error("Error loading membership information.");
+        console.error("Error loading membership information:", err);
       }
     };
 
-    fetchMembership();
+    if (membershipId) {
+      fetchMembership();
+    }
   }, [membershipId]);
 
-  const tipoSanguineoList = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
-  const sexoList = ["Masculino", "Feminino"];
-  const ufList = [
-    "AC",
-    "AL",
-    "AP",
-    "AM",
-    "BA",
-    "CE",
-    "DF",
-    "ES",
-    "GO",
-    "MA",
-    "MT",
-    "MS",
-    "MG",
-    "PA",
-    "PB",
-    "PR",
-    "PE",
-    "PI",
-    "RJ",
-    "RN",
-    "RS",
-    "RO",
-    "RR",
-    "SC",
-    "SP",
-    "SE",
-    "TO",
-  ];
-  const estadoCivilList = ["Solteiro", "Casado", "Separado", "Viúvo"];
-  const escolaridadeList = [
-    "Ensino Fundamental",
-    "Ensino Médio",
-    "Ensino Superior",
-    "Pós-Graduação",
-    "Mestrado",
-    "Doutorado",
-  ];
+  // adicionar dependente
+  const handleSaveDependent = () => {
+    if (
+      !currentDependent.name ||
+      !currentDependent.birthDate ||
+      !currentDependent.relationship ||
+      !currentDependent.cpfDependente ||
+      !currentDependent.celularDependente ||
+      currentDependent.cpfDependente.length < 14 ||
+      currentDependent.celularDependente.length < 15
+    ) {
+      setOpenError(true);
+    } else {
+      setDependents([...dependents, currentDependent]);
+      setCurrentDependent({
+        name: "",
+        birthDate: "",
+        relationship: "",
+        cpfDependente: "",
+        celularDependente: "",
+      });
+      setShowDependentForm(true);
+    }
+  };
+
+  const handleDependentChange = (field, value) => {
+    setCurrentDependent((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleRemoveDependent = (index) => {
+    const newDependentes = dependents.filter((_, i) => i !== index);
+    setDependents(newDependentes);
+  };
+
+  // att usuario
+  const handleUpdateUser = async () => {
+    try {
+      const formData = {
+        name,
+        email,
+        phone,
+        bloodType,
+        registration,
+        birthDate,
+        sex,
+        landline,
+        naturalness,
+        uf_naturalidade: ufNaturalness,
+        uf_orgao: ufOrganization,
+        uf_address: ufAddress,
+        maritalStatus: maritalStatus,
+        education,
+        rg,
+        orgao: organization,
+        cpf,
+        hiringDate,
+        expeditionDate,
+        position,
+        lotacao,
+        cep,
+        motherName,
+        fatherName,
+        city,
+        street,
+        complement,
+        workPlace,
+        shipperOrganization,
+        religion,
+        dependents,
+      };
+
+      await updateMembership(membershipId, formData);
+    } catch (error) {
+      console.log(error);
+      alert("Erro ao atualizar usuário");
+    }
+  };
+
+  // deletar usuário
+  const handleDeleteUser = async () => {
+    try {
+      await deleteMember(membershipId);
+    } catch {
+      alert("Erro ao deletar usuário.");
+    }
+  };
+
+  // validacao de campos
+  const handleBlur = (e, fieldName) => {
+    const { value } = e.target;
+    validateField(fieldName, value);
+    setTouchedFields((prev) => ({ ...prev, [fieldName]: true }));
+  };
+
+  const erro = (campo) => {
+    return touchedFields[campo] && errors[campo] ? (
+      <span className="error-message">{errors[campo]}</span>
+    ) : null;
+  };
+
+  const validateField = (fieldName, value) => {
+    let error = "";
+    if (!value.trim()) {
+      // Checks if the field is empty or just whitespace
+      error = "Campo obrigatório";
+    }
+    setErrors((prev) => ({ ...prev, [fieldName]: error }));
+  };
 
   //máscaras
   const mascaraCPF = (cpf) => {
@@ -217,60 +271,38 @@ const ViewMembershipPage = () => {
     return formattedCEP.replace(/(\d{5})(\d)/, "$1-$2");
   };
 
-  const validateField = (fieldName, value) => {
-    let error = "";
-    if (!value.trim()) {
-      // Checks if the field is empty or just whitespace
-      error = "Campo obrigatório";
-    }
-    setErrors((prev) => ({ ...prev, [fieldName]: error }));
-  };
-
-  // Handler for field blur event
-  const handleBlur = (e, fieldName) => {
-    const { value } = e.target;
-    validateField(fieldName, value);
-    setTouchedFields((prev) => ({ ...prev, [fieldName]: true }));
-  };
-
-  const erro = (campo) => {
-    return touchedFields[campo] && errors[campo] ? (
-      <span className="error-message">{errors[campo]}</span>
-    ) : null;
-  };
-
   return !name ? null : (
     <section className="container">
       <div className="forms-container">
-        <h1>Formulário de Filiação</h1>
-
+        <h1>Dados de {name}</h1>
         <h3> Dados Pessoais </h3>
-
-        <FieldText
-          label="Nome Completo *"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          onBlur={(e) => handleBlur(e, "nomeCompleto")}
-          erro={erro("nomeCompleto")}
-        />
-
         <div className="section-form">
           <FieldText
-            label="Religião *"
-            value={religion}
-            onChange={(e) => setReligion(e.target.value)}
-            onBlur={(e) => handleBlur(e, "religiao")}
-            erro={erro("religiao")}
+            label="Nome Completo *"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            onBlur={(e) => handleBlur(e, "nomeCompleto")}
+            erro={erro("nomeCompleto")}
           />
 
-          <FieldSelect
-            label="Tipo Sanguíneo *"
-            value={bloodType}
-            onChange={(e) => setBloodType(e.target.value)}
-            options={tipoSanguineoList}
-            onBlur={(e) => handleBlur(e, "tipoSanguineo")}
-            erro={erro("tipoSanguineo")}
-          />
+          <div className="double-box">
+            <FieldText
+              label="Religião *"
+              value={religion}
+              onChange={(e) => setReligion(e.target.value)}
+              onBlur={(e) => handleBlur(e, "religiao")}
+              erro={erro("religiao")}
+            />
+
+            <FieldSelect
+              label="Tipo Sanguíneo *"
+              value={bloodType}
+              onChange={(e) => setBloodType(e.target.value)}
+              options={tipoSanguineoList}
+              onBlur={(e) => handleBlur(e, "tipoSanguineo")}
+              erro={erro("tipoSanguineo")}
+            />
+          </div>
 
           <FieldText
             label="Matrícula *"
@@ -297,7 +329,7 @@ const ViewMembershipPage = () => {
             erro={erro("sexo")}
           />
 
-          <div className="double-box" style={{ marginLeft: "0px" }}>
+          <div className="double-box">
             <FieldText
               label="Naturalidade *"
               value={naturalness}
@@ -316,23 +348,25 @@ const ViewMembershipPage = () => {
             />
           </div>
 
-          <FieldSelect
-            label="Estado Civil *"
-            value={maritalStatus}
-            onChange={(e) => setMaritalStatus(e.target.value)}
-            options={estadoCivilList}
-            onBlur={(e) => handleBlur(e, "estadoCivil")}
-            erro={erro("estadoCivil")}
-          />
+          <div className="double-box">
+            <FieldSelect
+              label="Estado Civil *"
+              value={maritalStatus}
+              onChange={(e) => setMaritalStatus(e.target.value)}
+              options={estadoCivilList}
+              onBlur={(e) => handleBlur(e, "estadoCivil")}
+              erro={erro("estadoCivil")}
+            />
 
-          <FieldSelect
-            label="Escolaridade *"
-            value={education}
-            onChange={(e) => setEducation(e.target.value)}
-            options={escolaridadeList}
-            onBlur={(e) => handleBlur(e, "escolaridade")}
-            erro={erro("escolaridade")}
-          />
+            <FieldSelect
+              label="Escolaridade *"
+              value={education}
+              onChange={(e) => setEducation(e.target.value)}
+              options={escolaridadeList}
+              onBlur={(e) => handleBlur(e, "escolaridade")}
+              erro={erro("escolaridade")}
+            />
+          </div>
 
           <FieldText
             label="RG *"
@@ -395,20 +429,18 @@ const ViewMembershipPage = () => {
         </div>
 
         <h3> Dados de Contato </h3>
-
-        <FieldText
-          label="E-mail *"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          onBlur={(e) => handleBlur(e, "email")}
-          erro={erro("email")}
-        />
-
         <div className="section-form">
           <FieldText
+            label="E-mail *"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            onBlur={(e) => handleBlur(e, "email")}
+            erro={erro("email")}
+          />
+          <FieldText
             label="Celular *"
-            value={cellPhone}
-            onChange={(e) => setCellPhone(mascaraTelefone(e.target.value))}
+            value={landline}
+            onChange={(e) => setLandline(mascaraTelefone(e.target.value))}
             onBlur={(e) => handleBlur(e, "celular")}
             erro={erro("celular")}
           />
@@ -510,6 +542,76 @@ const ViewMembershipPage = () => {
         <div>
           <div>
             <div>
+              <h3>
+                Adicionar Dependente{" "}
+                <AddCircleOutlineIcon
+                  id="addDependentBttn"
+                  onClick={() => setShowDependentForm(true)}
+                />
+              </h3>
+            </div>
+            {showDependentForm && (
+              <div>
+                <div className="dependentToAdd">
+                  <div className="section-dependent-form">
+                    <FieldText
+                      label="Nome Completo *"
+                      value={currentDependent.name}
+                      onChange={(e) =>
+                        handleDependentChange("name", e.target.value)
+                      }
+                    />
+
+                    <DataSelect
+                      label="Data de Nascimento *"
+                      value={
+                        currentDependent.birthDate
+                          ? currentDependent.birthDate.format("YYYY-MM-DD")
+                          : ""
+                      }
+                      onChange={(newDate) =>
+                        handleDependentChange("birthDate", dayjs(newDate))
+                      }
+                    />
+
+                    <FieldText
+                      label="relationship *"
+                      value={currentDependent.relationship}
+                      onChange={(e) =>
+                        handleDependentChange("relationship", e.target.value)
+                      }
+                    />
+
+                    <FieldText
+                      label="CPF *"
+                      value={currentDependent.cpfDependente}
+                      onChange={(e) =>
+                        handleDependentChange(
+                          "cpfDependente",
+                          mascaraCPF(e.target.value)
+                        )
+                      }
+                    />
+
+                    <FieldText
+                      label="Celular *"
+                      value={currentDependent.celularDependente}
+                      onChange={(e) =>
+                        handleDependentChange(
+                          "celularDependente",
+                          mascaraTelefone(e.target.value)
+                        )
+                      }
+                    />
+                  </div>
+                  <PrimaryButton
+                    text="Confirmar Dependente"
+                    onClick={handleSaveDependent}
+                  />
+                </div>
+              </div>
+            )}
+            <div>
               {dependents.map((dependent, index) => (
                 <div key={index}>
                   <h3 id="dependentTitle">Dependente {index + 1}</h3>
@@ -518,15 +620,46 @@ const ViewMembershipPage = () => {
                     key={index}
                     style={{ marginBottom: "50px" }}
                   >
-                    <div className="section-dependent-form"></div>
+                    <div className="section-dependent-form">
+                      <FieldText
+                        label="Nome Completo"
+                        value={dependent.nomeCompletoDependente}
+                      />
+                      <FieldText
+                        label="Data de Nascimento"
+                        value={dayjs(dependent.dataNasc).format("DD/MM/YYYY")}
+                      />
+
+                      <FieldText
+                        label="Parentesco"
+                        value={dependent.parentesco}
+                      />
+
+                      <FieldText label="CPF" value={dependent.cpfDependente} />
+
+                      <FieldText
+                        label="Celular"
+                        value={dependent.celularDependente}
+                      />
+                    </div>
                     <PrimaryButton
                       text="Remover Dependente"
-                      onClick={() => {}}
+                      onClick={() => handleRemoveDependent(index)}
                     />
                   </div>
                 </div>
               ))}
             </div>
+          </div>
+          <div className="double-box" style={{ gap: "5px" }}>
+            <PrimaryButton
+              text="Editar Usuário"
+              onClick={() => handleUpdateUser()}
+            />
+            <SecondaryButton
+              text="Remover Usuário"
+              onClick={() => handleDeleteUser()}
+            />
           </div>
 
           <Snackbar
@@ -535,15 +668,7 @@ const ViewMembershipPage = () => {
             onClose={() => setOpenError(false)}
           >
             <Alert onClose={() => setOpenError(false)} severity="error">
-              {missingList.length <= 5 && missingList.length != 0
-                ? `Os seguintes campos estão faltando: ${missingList.map((key) => fieldNames[key]).join(", ")}`
-                : "Certifique-se de que todos os campos estão preenchidos"}
-              {unfilledDependent && (
-                <>
-                  <br />
-                  Existem campos de dependentes não preenchidos
-                </>
-              )}
+              Certifique-se de que todos os campos estão preenchidos
             </Alert>
           </Snackbar>
           <Snackbar

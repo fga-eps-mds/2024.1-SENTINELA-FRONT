@@ -28,22 +28,37 @@ export async function getMemberShip(status) {
 export async function getMemberShipById(id) {
   try {
     const response = await APIUsers.get(`membership/${id}`);
-    console.log(response);
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return error.response.data.erro;
   }
 }
 
-export const updateMemberStatus = async (memberId) => {
+export const updateMemberStatus = async (memberId, formData) => {
   try {
     const response = await APIUsers.patch(
-      `membership/updateStatus/${memberId}`
+      `membership/updateStatus/${memberId}`,
+      {
+        formData,
+      }
     );
     return response.data;
   } catch (error) {
     return error.response ? error.response.data.error : "An error occurred";
+  }
+};
+
+export const updateMembership = async (memberId, formData) => {
+  try {
+    console.log(formData);
+    console.log(memberId);
+    await APIUsers.patch(`membership/update/${memberId}`, {
+      formData,
+    });
+  } catch (error) {
+    console.log(error);
+    return error.response.data.erro;
   }
 };
 
