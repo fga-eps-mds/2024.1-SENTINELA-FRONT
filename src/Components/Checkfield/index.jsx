@@ -16,14 +16,14 @@ const CustomContainer = styled(Box)(({ theme }) => ({
   margin: ".7rem", // Mantém o espaçamento similar ao TextField
   fontFamily: '"Noto Sans", sans-serif',
   fontSize: "1rem", // Ajuste do tamanho da fonte para combinar com o TextField
-  color: theme.palette.text.primary,
+  color: theme.palette.contrastText,
   transition: "border-color 0.3s, background-color 0.3s", // Transição suave para o highlight e clique
   cursor: "pointer", // Mostra que o container é clicável
   "&:hover": {
-    borderColor: theme.palette.primary.main, // Cor da borda ao passar o mouse
+    borderColor: theme.palette.main, // Cor da borda ao passar o mouse
   },
   "&.Mui-focused": {
-    borderColor: theme.palette.primary.main, // Cor da borda ao focar
+    borderColor: theme.palette.main, // Cor da borda ao focar
   },
   "&:active": {
     backgroundColor: "#d4c7b4", // Animação ao clique, muda a cor do fundo

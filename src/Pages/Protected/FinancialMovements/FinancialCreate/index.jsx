@@ -7,6 +7,8 @@ import SecondaryButton from "../../../../Components/SecondaryButton";
 import "./index.css";
 import DataSelect from "../../../../Components/DataSelect";
 import CheckField from "../../../../Components/Checkfield";
+import { Snackbar } from "@mui/material";
+import Alert from "@mui/material/Alert";
 import { createFinancialMovements } from "../../../../Services/FinancialMovementsService";
 import { getUsers } from "../../../../Services/userService";
 import { getSupplierForm } from "../../../../Services/supplierService";
@@ -31,6 +33,7 @@ export default function FinancialCreate() {
   const [showModal, setShowModal] = useState(false);
   const [nomesOrigem, setNomesOrigem] = useState([]);
   const [nomesDestino, setNomesDestino] = useState([]);
+  const [openError, setOpenError] = useState(false);
   const maxDescricaoLength = 130;
 
   useEffect(() => {
@@ -200,7 +203,6 @@ export default function FinancialCreate() {
 
     console.log("Dados enviados ao backend:", financialData);
 
-    const error = await createFinancialMovements(financialData);
 
     if (
       !contaOrigem ||
@@ -211,7 +213,9 @@ export default function FinancialCreate() {
       !tipoDocumento ||
       !valorBruto
     ) {
-      alert("Preencha todos os campos obrigatórios!");
+      setOpenError(
+        "Certifique-se de que todos os campos obrigatórios estão preenchidos"
+      );
       return;
     }
 
@@ -220,10 +224,15 @@ export default function FinancialCreate() {
       return;
     }
 
+    try{
+      const error = await createFinancialMovements(financialData);
     if (!error) {
       console.log("Cadastro realizado com sucesso.");
       setShowModal(true);
     } else {
+      console.error("Erro ao cadastrar movimentação financeira:", error);
+    }
+    } catch (error) {
       console.error("Erro ao cadastrar movimentação financeira:", error);
     }
   };
@@ -391,6 +400,17 @@ export default function FinancialCreate() {
             width="338px"
           />
         </Modal>
+
+        <Snackbar
+          open={openError}
+          autoHideDuration={6000}
+          onClose={() => setOpenError(false)}
+        >
+          <Alert onClose={() => setOpenError("")} severity="error">
+            {openError}
+          </Alert>
+        </Snackbar>
+
       </div>
     </section>
   );
