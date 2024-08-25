@@ -18,7 +18,7 @@ export default function OrganList() {
   useEffect(() => {
     const getOrgansInfo = async () => {
       const response = await listOrgans();
-      setOrgans(response);
+      setOrgans(Array.isArray(response) ? response : []);
     };
 
     getOrgansInfo();
@@ -29,7 +29,9 @@ export default function OrganList() {
   };
 
   const handleItemClick = (organs) => {
-    navigate(`/organ/update/${organs._id}`);
+    navigate(`/organ/update/${organs.orgao}`, {
+      state: { organsId: organs._id },
+    });
   };
 
   const filteredOrgans = organs?.filter((organs) =>

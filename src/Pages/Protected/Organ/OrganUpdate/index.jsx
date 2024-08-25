@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../../../Context/auth";
 import PrimaryButton from "../../../../Components/PrimaryButton";
 import SecondaryButton from "../../../../Components/SecondaryButton";
@@ -14,14 +14,15 @@ import {
   updateOrgan,
 } from "../../../../Services/organService";
 
-const OrganId = () => {
+export const OrganId = () => {
   const [orgao, setOrgao] = useState("");
   const [lotacoes, setLotacoes] = useState([{ nomeLotacao: "", sigla: "" }]);
   const [errors, setErrors] = useState({});
   const [openError, setOpenError] = useState(false);
 
   const { user } = useAuth();
-  const { id } = useParams(); // Pega o ID da URL
+  const { state } = useLocation();
+  const organsId = state?.organsId;
   const navigate = useNavigate();
 
   const [openSave, setOpenSave] = useState(false);
@@ -31,9 +32,7 @@ const OrganId = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("Buscando dados do órgão com ID:", id);
-        const result = await getOrganById(id);
-        console.log("Dados recebidos:", result.orgao, result.lotacao);
+        const result = await getOrganById(organsId);
         setOrgao(result.orgao || "");
         setLotacoes(result.lotacao || [{ nomeLotacao: "", sigla: "" }]);
       } catch (error) {
@@ -41,10 +40,10 @@ const OrganId = () => {
       }
     };
 
-    if (id) {
+    if (organsId) {
       fetchData();
     }
-  }, [id]);
+  }, [organsId]);
 
   const handleBlur = (e, field) => {
     if (e.target.value.trim() === "") {
@@ -121,7 +120,7 @@ const OrganId = () => {
     console.log("Dados atualizados:", updatedData);
 
     try {
-      const response = await updateOrgan(id, updatedData);
+      const response = await updateOrgan(organsId, updatedData);
       console.log("Resposta do servidor:", response);
       setOpenSave(true);
     } catch (error) {
@@ -134,7 +133,7 @@ const OrganId = () => {
     try {
       setOpenVerificationDelete(false);
       setOpenDeleteOrgan(true);
-      const response = await deleteOrganById(id);
+      const response = await deleteOrganById(organsId);
       console.log("Resposta do servidor:", response);
     } catch (error) {
       console.error("Erro ao excluir orgao:", error);
