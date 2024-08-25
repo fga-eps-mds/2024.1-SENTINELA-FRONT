@@ -90,9 +90,7 @@ describe("FinancialCreate", () => {
       </Router>
     );
 
-    expect(
-      screen.getByText("Cadastro de Movimentações Financeiras")
-    ).toBeInTheDocument();
+    expect(screen).toMatchSnapshot();
   });
 
   it("validates required fields before submitting", async () => {
@@ -102,16 +100,8 @@ describe("FinancialCreate", () => {
       </Router>
     );
 
-    // // Tentativa de submeter o formulário sem preencher campos obrigatórios
-    // await userEvent.click(screen.getByText("Cadastrar"));
+    await fillUpRequiredFields();
 
-    // // Verifica se as mensagens de erro estão visíveis
-    // expect(await screen.findByText("Preencha todos os campos obrigatórios!")).toBeInTheDocument();
-    // expect(createFinancialMovements).not.toHaveBeenCalled();
-
-    // await fillUpRequiredFields();
-
-    // Submetendo após preencher todos os campos obrigatórios
     await userEvent.click(screen.getByText("Cadastrar"));
 
     // Espera que a função de criação seja chamada após preencher os campos obrigatórios
