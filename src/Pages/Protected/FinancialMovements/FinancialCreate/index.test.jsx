@@ -6,6 +6,7 @@ import { createFinancialMovements } from "../../../../Services/FinancialMovement
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
 
+// Função auxiliar para preencher campos obrigatórios
 async function fillUpRequiredFields() {
   const selects = screen.getAllByRole("combobox");
 
@@ -57,6 +58,7 @@ async function fillUpRequiredFields() {
   await userEvent.type(dataPagamentoInput, "01/02/2024");
 }
 
+// Mocking the services
 function mockServices() {
   vi.mock("../../../../Services/FinancialMovementsService", () => ({
     createFinancialMovements: vi.fn(),
@@ -93,6 +95,26 @@ describe("FinancialCreate", () => {
     expect(screen).toMatchSnapshot();
   });
 
+  it("formats CPF and CNPJ correctly", async () => {
+    render(
+      <Router>
+        <FinancialCreate />
+      </Router>
+    );
+
+    // Localiza o input de CPF/CNPJ (substitua o identificador conforme necessário)
+    const cpfCnpjInput = screen.getByLabelText("CPF/CNPJ");
+
+    // Testando a formatação do CPF
+    await userEvent.type(cpfCnpjInput, "12345678901");
+    expect(cpfCnpjInput.value).toBe("123.456.789-01");
+
+    // Limpando o input e testando a formatação do CNPJ
+    await userEvent.clear(cpfCnpjInput);
+    await userEvent.type(cpfCnpjInput, "12345678000199");
+    expect(cpfCnpjInput.value).toBe("12.345.678/0001-99");
+  });
+
   it("validates required fields before submitting", async () => {
     render(
       <Router>
@@ -100,8 +122,10 @@ describe("FinancialCreate", () => {
       </Router>
     );
 
+    // Preenche os campos obrigatórios
     await fillUpRequiredFields();
 
+    // Submetendo após preencher todos os campos obrigatórios
     await userEvent.click(screen.getByText("Cadastrar"));
 
     // Espera que a função de criação seja chamada após preencher os campos obrigatórios
