@@ -8,25 +8,25 @@ import PropTypes from "prop-types";
 const CustomContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  justifyContent: "space-between", // Alinha o label à esquerda e a checkbox à direita
-  padding: "0 .7rem", // Ajuste de padding para alinhar com os outros campos
+  justifyContent: "space-between",
+  padding: "0 .7rem",
   backgroundColor: "#EAE3D7",
-  borderRadius: "4px", // Cantos arredondados
-  borderBottom: `1px solid ${theme.palette.main}`, // Borda semelhante ao TextField
-  margin: ".7rem", // Mantém o espaçamento similar ao TextField
+  borderRadius: "4px",
+  borderBottom: `1px solid ${theme?.palette?.main || "#ccc"}`, // Fallback
+  margin: ".7rem",
   fontFamily: '"Noto Sans", sans-serif',
-  fontSize: "1rem", // Ajuste do tamanho da fonte para combinar com o TextField
-  color: theme.palette.text.primary,
-  transition: "border-color 0.3s, background-color 0.3s", // Transição suave para o highlight e clique
-  cursor: "pointer", // Mostra que o container é clicável
+  fontSize: "1rem",
+  color: theme?.palette?.text?.primary || "#000", // Fallback
+  transition: "border-color 0.3s, background-color 0.3s",
+  cursor: "pointer",
   "&:hover": {
-    borderColor: theme.palette.primary.main, // Cor da borda ao passar o mouse
+    borderColor: theme?.palette?.primary?.main || "#000", // Fallback
   },
   "&.Mui-focused": {
-    borderColor: theme.palette.primary.main, // Cor da borda ao focar
+    borderColor: theme?.palette?.primary?.main || "#000", // Fallback
   },
   "&:active": {
-    backgroundColor: "#d4c7b4", // Animação ao clique, muda a cor do fundo
+    backgroundColor: "#d4c7b4",
   },
 }));
 
