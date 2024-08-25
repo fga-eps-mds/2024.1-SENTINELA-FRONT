@@ -1,4 +1,4 @@
-import { render, screen, cleanup } from "@testing-library/react";
+import { render, screen, fireEvent, cleanup } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { describe, it, expect, vi, afterEach } from "vitest";
 import "@testing-library/jest-dom";
@@ -33,23 +33,23 @@ describe("OrganCreate Component", () => {
     expect(screen.getByText("Cadastro de Órgãos")).toBeInTheDocument();
   });
 
-  //   it("shows error message when required fields are missing", () => {
-  //     useAuth.mockReturnValue({
-  //       organ: { nomeOrgao: "", lotacao: "", sigla: "" },
-  //     });
+  it("shows error message when required fields are missing", () => {
+    useAuth.mockReturnValue({
+      organ: { nomeOrgao: "", lotacao: "", sigla: "" },
+    });
 
-  //     render(
-  //       <Router>
-  //         <OrganCreate />
-  //       </Router>
-  //     );
+    render(
+      <Router>
+        <OrganCreate />
+      </Router>
+    );
 
-  //     fireEvent.click(screen.getByText("Cadastrar"));
+    fireEvent.click(screen.getByText("Cadastrar"));
 
-  //     expect(
-  //       screen.getByText("Preencha todos os campos obrigatórios.")
-  //     ).toBeInTheDocument();
-  //   });
+    expect(
+      screen.getByText("Preencha todos os campos obrigatórios.")
+    ).toBeInTheDocument();
+  });
 
   //   it("shows unique error message if name is already registered", async () => {
   //     useAuth.mockReturnValue({
