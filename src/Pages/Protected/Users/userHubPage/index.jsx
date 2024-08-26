@@ -43,11 +43,6 @@ export default function UserHubPage() {
           />
 
           <SecondaryButton
-            text="LISTA DE FILIADOS"
-            onClick={() => navigate("/filiados")}
-          />
-
-          <SecondaryButton
             text="CADASTRO DE USUÁRIOS"
             onClick={handleCadastroClick}
           />

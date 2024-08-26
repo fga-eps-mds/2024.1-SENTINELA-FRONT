@@ -16,8 +16,7 @@ import Benefits from "../Pages/Protected/Benefit/Benefits";
 import BenefitsList from "../Pages/Protected/Benefit/BenefitsList";
 import BenefitsCreate from "../Pages/Protected/Benefit/BenefitsCreate";
 import BenefitsUpdate from "../Pages/Protected/Benefit/BenefitsUpdate";
-import MembershipListPage from "../Pages/Protected/Users/MembershipListPage/membershipListPage";
-import ViewMembershipPage from "../Pages/Protected/Users/ViewMembershipPage/viewMembershipPage";
+import ViewMembershipPage from "../Pages/Protected/Users/ViewMembershipPage";
 import FinanceHubPage from "../Pages/Protected/Finance/FinanceHubPage";
 import FinanceBankAccount from "../Pages/Protected/Finance/BankAccountCreate";
 import FinanceUpdate from "../Pages/Protected/Finance/BankAccountUpdate";
@@ -33,7 +32,6 @@ const ProtectedRoutes = () => {
       <Route path="/usuarios/criar" element={<UserCreatePage />} />
       <Route path="/usuarios/editar/:nome" element={<UserUpdatePage />} />
       <Route path="/usuarios" element={<UserListPage />} />
-      <Route path="/filiados" element={<MembershipListPage />} />
       <Route path="/filiados/:id" element={<ViewMembershipPage />} />
       <Route path="/usuarios/hub" element={<UserHubPage />} />
       <Route path="/perfis" element={<RolesListPage />} />

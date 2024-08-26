@@ -359,7 +359,7 @@ const MemberShip = () => {
       uf_naturalidade,
       uf_orgao,
       uf_address: uf_endereco,
-      maritalStatus: estadoCivil,
+      marialStatus: estadoCivil,
       education: escolaridade,
       rg,
       orgao,
@@ -381,8 +381,6 @@ const MemberShip = () => {
       dependents: dependentes,
     };
 
-    console.log(formData);
-
     const message = await createMemberShip(formData);
     if (message != 201) {
       setErrorFields(message);
@@ -393,7 +391,7 @@ const MemberShip = () => {
   };
   return (
     <section className="section">
-      <div className="forms-container">
+      <div className="forms-container-benefits">
         <h1>Formulário de Filiação</h1>
 
         <h3> Dados Pessoais </h3>
@@ -406,7 +404,7 @@ const MemberShip = () => {
           erro={erro("nomeCompleto")}
         />
 
-        <div className="section-form">
+        <div className="section-form-benefits">
           <FieldText
             label="Religião"
             value={religiao}
@@ -556,7 +554,7 @@ const MemberShip = () => {
           erro={erro("email")}
         />
 
-        <div className="section-form">
+        <div className="section-form-benefits">
           <FieldText
             label="Celular *"
             value={celular}
@@ -575,7 +573,7 @@ const MemberShip = () => {
         </div>
 
         <h3> Endereço </h3>
-        <div className="section-form">
+        <div className="section-form-benefits">
           <FieldText
             label="CEP"
             value={cep}
@@ -620,7 +618,7 @@ const MemberShip = () => {
         </div>
 
         <h3> Dados de Contratação </h3>
-        <div className="section-form">
+        <div className="section-form-benefits">
           <FieldText
             label="Cargo"
             value={cargo}

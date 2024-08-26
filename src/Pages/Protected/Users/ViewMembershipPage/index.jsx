@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./index.css";
+import "../../../../index.css";
 import dayjs from "dayjs";
 import FieldText from "../../../../Components/FieldText";
 import DataSelect from "../../../../Components/DataSelect";
@@ -7,7 +8,8 @@ import FieldSelect from "../../../../Components/FieldSelect";
 import PrimaryButton from "../../../../Components/PrimaryButton";
 import { Snackbar } from "@mui/material";
 import Alert from "@mui/material/Alert";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import Modal from "../../../../Components/Modal";
 import {
   deleteMember,
   getMemberShipById,
@@ -27,12 +29,16 @@ import SecondaryButton from "../../../../Components/SecondaryButton";
 const ViewMembershipPage = () => {
   const { state } = useLocation();
   const membershipId = state?.membershipId;
+  const navigate = useNavigate();
 
   const [touchedFields, setTouchedFields] = useState({});
   const [errors, setErrors] = useState({});
   const [openError, setOpenError] = useState(false);
-  const [errorFields, setErrorFields] = useState(false);
+  const [openErrorMember, setOpenErrorMember] = useState(false);
   const [showDependentForm, setShowDependentForm] = useState(false);
+  const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [missingFields, setMissingFields] = useState([]);
 
   // Campos de filiado
   const [email, setEmail] = useState("");
@@ -69,9 +75,9 @@ const ViewMembershipPage = () => {
 
   // campos Dependente:
   const [currentDependent, setCurrentDependent] = useState({
-    name: "",
-    birthDate: "",
-    relationship: "",
+    nomeCompletoDependente: "",
+    dataNasc: "",
+    parentesco: "",
     cpfDependente: "",
     celularDependente: "",
   });
@@ -131,9 +137,9 @@ const ViewMembershipPage = () => {
   // adicionar dependente
   const handleSaveDependent = () => {
     if (
-      !currentDependent.name ||
-      !currentDependent.birthDate ||
-      !currentDependent.relationship ||
+      !currentDependent.nomeCompletoDependente ||
+      !currentDependent.dataNasc ||
+      !currentDependent.parentesco ||
       !currentDependent.cpfDependente ||
       !currentDependent.celularDependente ||
       currentDependent.cpfDependente.length < 14 ||
@@ -199,9 +205,24 @@ const ViewMembershipPage = () => {
         dependents,
       };
 
-      await updateMembership(membershipId, formData);
+      // Verifica os campos faltantes diretamente, sem esperar a atualização do estado
+      const fieldsMissing = checkMissingFields();
+
+      if (fieldsMissing.length > 0) {
+        setMissingFields(fieldsMissing); // Aqui você ainda pode atualizar o estado se necessário
+        setOpenErrorMember(true);
+        throw new Error("missing fields");
+      }
+
+      const message = await updateMembership(membershipId, formData);
+      if (message) {
+        throw new Error(message);
+      }
+
+      setOpenSuccessDialog(false);
+      alert("usuário atualizado com sucesso!");
     } catch (error) {
-      console.log(error);
+      setOpenSuccessDialog(false);
       alert("Erro ao atualizar usuário");
     }
   };
@@ -209,8 +230,17 @@ const ViewMembershipPage = () => {
   // deletar usuário
   const handleDeleteUser = async () => {
     try {
-      await deleteMember(membershipId);
+      const message = await deleteMember(membershipId);
+
+      if (message) {
+        throw new Error(message);
+      }
+
+      setOpenDeleteDialog(false);
+      alert("usuário deletado com sucesso!");
+      navigate("/usuarios");
     } catch {
+      setOpenSuccessDialog(false);
       alert("Erro ao deletar usuário.");
     }
   };
@@ -220,6 +250,34 @@ const ViewMembershipPage = () => {
     const { value } = e.target;
     validateField(fieldName, value);
     setTouchedFields((prev) => ({ ...prev, [fieldName]: true }));
+  };
+
+  const checkMissingFields = () => {
+    const missingFields = [];
+
+    if (!email) missingFields.push("Email");
+    if (!sex) missingFields.push("Sexo");
+    if (!maritalStatus) missingFields.push("Estado Civil");
+    if (!ufNaturalness) missingFields.push("UF de Naturalidade");
+    if (!ufOrganization) missingFields.push("UF da Organização");
+    if (!ufAddress) missingFields.push("UF do Endereço");
+    if (!birthDate) missingFields.push("Data de Nascimento");
+    if (!expeditionDate) missingFields.push("Data de Expedição");
+    if (!lotacao) missingFields.push("Lotação");
+    if (!registration) missingFields.push("Matrícula");
+    if (!name) missingFields.push("Nome");
+    if (!naturalness) missingFields.push("Naturalidade");
+    if (!rg) missingFields.push("RG");
+    if (!cpf) missingFields.push("CPF");
+    if (!cep) missingFields.push("CEP");
+    if (!city) missingFields.push("Cidade");
+    if (!phone) missingFields.push("Celular");
+    if (!shipperOrganization) missingFields.push("Órgão Expedidor");
+
+    // Dependentes podem ser opcionais, então só adiciona se for necessário
+    if (dependents.length === 0) missingFields.push("Dependentes");
+
+    return missingFields;
   };
 
   const erro = (campo) => {
@@ -271,38 +329,39 @@ const ViewMembershipPage = () => {
     return formattedCEP.replace(/(\d{5})(\d)/, "$1-$2");
   };
 
-  return !name ? null : (
-    <section className="container">
-      <div className="forms-container">
-        <h1>Dados de {name}</h1>
+  return !membershipId ? (
+    <div>Carregando...</div>
+  ) : (
+    <section className="section">
+      <div className="forms-container-benefits">
+        <h1>Dados do usuário</h1>
         <h3> Dados Pessoais </h3>
-        <div className="section-form">
+
+        <FieldText
+          label="Nome Completo *"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          onBlur={(e) => handleBlur(e, "nomeCompleto")}
+          erro={!!(touchedFields["nomeCompleto"] && errors["nomeCompleto"])} // Transforma em booleano
+        />
+
+        <div className="section-form-benefits">
           <FieldText
-            label="Nome Completo *"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            onBlur={(e) => handleBlur(e, "nomeCompleto")}
-            erro={erro("nomeCompleto")}
+            label="Religião *"
+            value={religion}
+            onChange={(e) => setReligion(e.target.value)}
+            onBlur={(e) => handleBlur(e, "religiao")}
+            erro={erro("religiao")}
           />
 
-          <div className="double-box">
-            <FieldText
-              label="Religião *"
-              value={religion}
-              onChange={(e) => setReligion(e.target.value)}
-              onBlur={(e) => handleBlur(e, "religiao")}
-              erro={erro("religiao")}
-            />
-
-            <FieldSelect
-              label="Tipo Sanguíneo *"
-              value={bloodType}
-              onChange={(e) => setBloodType(e.target.value)}
-              options={tipoSanguineoList}
-              onBlur={(e) => handleBlur(e, "tipoSanguineo")}
-              erro={erro("tipoSanguineo")}
-            />
-          </div>
+          <FieldSelect
+            label="Tipo Sanguíneo *"
+            value={bloodType}
+            onChange={(e) => setBloodType(e.target.value)}
+            options={tipoSanguineoList}
+            onBlur={(e) => handleBlur(e, "tipoSanguineo")}
+            erro={erro("tipoSanguineo")}
+          />
 
           <FieldText
             label="Matrícula *"
@@ -329,7 +388,7 @@ const ViewMembershipPage = () => {
             erro={erro("sexo")}
           />
 
-          <div className="double-box">
+          <div className="double-box" style={{ marginLeft: "0px" }}>
             <FieldText
               label="Naturalidade *"
               value={naturalness}
@@ -348,25 +407,23 @@ const ViewMembershipPage = () => {
             />
           </div>
 
-          <div className="double-box">
-            <FieldSelect
-              label="Estado Civil *"
-              value={maritalStatus}
-              onChange={(e) => setMaritalStatus(e.target.value)}
-              options={estadoCivilList}
-              onBlur={(e) => handleBlur(e, "estadoCivil")}
-              erro={erro("estadoCivil")}
-            />
+          <FieldSelect
+            label="Estado Civil *"
+            value={maritalStatus}
+            onChange={(e) => setMaritalStatus(e.target.value)}
+            options={estadoCivilList}
+            onBlur={(e) => handleBlur(e, "estadoCivil")}
+            erro={erro("estadoCivil")}
+          />
 
-            <FieldSelect
-              label="Escolaridade *"
-              value={education}
-              onChange={(e) => setEducation(e.target.value)}
-              options={escolaridadeList}
-              onBlur={(e) => handleBlur(e, "escolaridade")}
-              erro={erro("escolaridade")}
-            />
-          </div>
+          <FieldSelect
+            label="Escolaridade *"
+            value={education}
+            onChange={(e) => setEducation(e.target.value)}
+            options={escolaridadeList}
+            onBlur={(e) => handleBlur(e, "escolaridade")}
+            erro={erro("escolaridade")}
+          />
 
           <FieldText
             label="RG *"
@@ -429,17 +486,19 @@ const ViewMembershipPage = () => {
         </div>
 
         <h3> Dados de Contato </h3>
-        <div className="section-form">
-          <FieldText
-            label="E-mail *"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            onBlur={(e) => handleBlur(e, "email")}
-            erro={erro("email")}
-          />
+
+        <FieldText
+          label="E-mail *"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          onBlur={(e) => handleBlur(e, "email")}
+          erro={erro("email")}
+        />
+
+        <div className="section-form-benefits">
           <FieldText
             label="Celular *"
-            value={landline}
+            value={phone}
             onChange={(e) => setLandline(mascaraTelefone(e.target.value))}
             onBlur={(e) => handleBlur(e, "celular")}
             erro={erro("celular")}
@@ -447,7 +506,7 @@ const ViewMembershipPage = () => {
 
           <FieldText
             label="Telefone *"
-            value={phone}
+            value={landline}
             onChange={(e) => setPhone(mascaraTelefone(e.target.value))}
             onBlur={(e) => handleBlur(e, "telefone")}
             erro={erro("telefone")}
@@ -455,7 +514,7 @@ const ViewMembershipPage = () => {
         </div>
 
         <h3> Endereço </h3>
-        <div className="section-form">
+        <div className="section-form-benefits">
           <FieldText
             label="CEP *"
             value={cep}
@@ -500,7 +559,7 @@ const ViewMembershipPage = () => {
         </div>
 
         <h3> Dados de Contratação </h3>
-        <div className="section-form">
+        <div className="section-form-benefits">
           <FieldText
             label="Cargo *"
             value={position}
@@ -556,29 +615,32 @@ const ViewMembershipPage = () => {
                   <div className="section-dependent-form">
                     <FieldText
                       label="Nome Completo *"
-                      value={currentDependent.name}
+                      value={currentDependent.nomeCompletoDependente}
                       onChange={(e) =>
-                        handleDependentChange("name", e.target.value)
+                        handleDependentChange(
+                          "nomeCompletoDependente",
+                          e.target.value
+                        )
                       }
                     />
 
                     <DataSelect
                       label="Data de Nascimento *"
                       value={
-                        currentDependent.birthDate
-                          ? currentDependent.birthDate.format("YYYY-MM-DD")
+                        currentDependent.dataNasc
+                          ? currentDependent.dataNasc.format("YYYY-MM-DD")
                           : ""
                       }
                       onChange={(newDate) =>
-                        handleDependentChange("birthDate", dayjs(newDate))
+                        handleDependentChange("dataNasc", dayjs(newDate))
                       }
                     />
 
                     <FieldText
-                      label="relationship *"
-                      value={currentDependent.relationship}
+                      label="Parentesco *"
+                      value={currentDependent.parentesco}
                       onChange={(e) =>
-                        handleDependentChange("relationship", e.target.value)
+                        handleDependentChange("parentesco", e.target.value)
                       }
                     />
 
@@ -624,22 +686,30 @@ const ViewMembershipPage = () => {
                       <FieldText
                         label="Nome Completo"
                         value={dependent.nomeCompletoDependente}
+                        onChange={() => {}}
                       />
                       <FieldText
                         label="Data de Nascimento"
                         value={dayjs(dependent.dataNasc).format("DD/MM/YYYY")}
+                        onChange={() => {}}
                       />
 
                       <FieldText
                         label="Parentesco"
                         value={dependent.parentesco}
+                        onChange={() => {}}
                       />
 
-                      <FieldText label="CPF" value={dependent.cpfDependente} />
+                      <FieldText
+                        label="CPF"
+                        value={dependent.cpfDependente}
+                        onChange={() => {}}
+                      />
 
                       <FieldText
                         label="Celular"
                         value={dependent.celularDependente}
+                        onChange={() => {}}
                       />
                     </div>
                     <PrimaryButton
@@ -651,14 +721,19 @@ const ViewMembershipPage = () => {
               ))}
             </div>
           </div>
-          <div className="double-box" style={{ gap: "5px" }}>
+          <div
+            className="double-box"
+            style={{ gap: "40px", alignItems: "center" }}
+          >
             <PrimaryButton
-              text="Editar Usuário"
-              onClick={() => handleUpdateUser()}
+              text="Atualizar dados do Usuário"
+              onClick={() => {
+                setOpenSuccessDialog(true);
+              }}
             />
             <SecondaryButton
-              text="Remover Usuário"
-              onClick={() => handleDeleteUser()}
+              text="Deletar Usuário"
+              onClick={() => setOpenDeleteDialog(true)}
             />
           </div>
 
@@ -672,16 +747,64 @@ const ViewMembershipPage = () => {
             </Alert>
           </Snackbar>
           <Snackbar
-            open={errorFields}
+            open={openErrorMember}
             autoHideDuration={6000}
-            onClose={() => setErrorFields(false)}
+            onClose={() => {
+              setOpenErrorMember(false);
+              setMissingFields([]);
+            }}
           >
-            <Alert onClose={() => setErrorFields(false)} severity="error">
-              {errorFields}
+            <Alert
+              onClose={() => {
+                setMissingFields([]);
+              }}
+              severity="warning"
+            >
+              Existem campos não preenchidos ou inválidos:
+              <div style={{ whiteSpace: "pre-line" }}>
+                {missingFields.join("\n")}
+              </div>
             </Alert>
           </Snackbar>
+
           <footer style={{ height: "100px" }} />
         </div>
+        <Modal
+          show={openSuccessDialog}
+          width="400px"
+          alertTitle="Ao confirmar você estará alterando os dados do usuário."
+          alert="deseja confirmar a ação?"
+        >
+          {" "}
+          <SecondaryButton
+            text="Não"
+            onClick={() => setOpenSuccessDialog(false)}
+            width="100px"
+          />
+          <PrimaryButton
+            text="Sim"
+            onClick={() => handleUpdateUser()}
+            width="100px"
+          />
+        </Modal>
+        <Modal
+          show={openDeleteDialog}
+          width="400px"
+          alertTitle="Ao confirmar você estará deletando os dados do usuário."
+          alert="deseja confirmar a ação?"
+        >
+          {" "}
+          <SecondaryButton
+            text="Não"
+            onClick={() => setOpenDeleteDialog(false)}
+            width="100px"
+          />
+          <PrimaryButton
+            text="Sim"
+            onClick={() => handleDeleteUser()}
+            width="100px"
+          />
+        </Modal>
       </div>
     </section>
   );

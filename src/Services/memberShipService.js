@@ -51,21 +51,20 @@ export const updateMemberStatus = async (memberId, formData) => {
 
 export const updateMembership = async (memberId, formData) => {
   try {
-    console.log(formData);
-    console.log(memberId);
     await APIUsers.patch(`membership/update/${memberId}`, {
       formData,
     });
+
+    return false;
   } catch (error) {
-    console.log(error);
     return error.response.data.erro;
   }
 };
 
 export async function deleteMember(memberId) {
   try {
-    const response = await APIUsers.delete(`membership/delete/${memberId}`);
-    return response.data;
+    await APIUsers.delete(`membership/delete/${memberId}`);
+    return false;
   } catch (error) {
     return error.response.data.erro;
   }
