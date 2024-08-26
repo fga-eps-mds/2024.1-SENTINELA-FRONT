@@ -135,10 +135,10 @@ describe("FinancialUpdate", () => {
         <FinancialUpdate />
       </Router>
     );
-  
+
     screen.debug(); // Verifique o HTML renderizado
   });
-  
+
   it("should correctly update fields when changing inputs", async () => {
     render(
       <Router>
@@ -152,5 +152,4 @@ describe("FinancialUpdate", () => {
     await userEvent.type(descricaoInput, "Descrição alterada");
     expect(descricaoInput.value).toBe("Descrição alterada");
   });
-
 });
