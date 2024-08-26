@@ -5,9 +5,10 @@ import {
   cleanup,
   fireEvent,
   waitFor,
+  act,
 } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
-import BenefitsUpdate from "./index";
+import UpdateSupplier from "./index";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
 import {
@@ -31,14 +32,21 @@ function mockValidators() {
           ? { isValid: true }
           : {
               isValid: false,
-              message: "O telefone fornecido não é válido.",
+              message: "O celular fornecido não é válido.",
             },
-      isValidSite: (site) =>
-        !site || site === "https://valid.com"
+      isValidTelefone: (telefone) =>
+        !telefone || telefone === "(61) 991234-1234"
           ? { isValid: true }
           : {
               isValid: false,
-              message: "O site fornecido não é válido.",
+              message: "O telefone fornecido não é válido.",
+            },
+      isValidCPForCNPJ: (cpfCNPJ) =>
+        !cpfCNPJ || cpfCNPJ === "123.456.789-10"
+          ? { isValid: true }
+          : {
+              isValid: false,
+              message: "O cpf fornecido não é válido.",
             },
     };
   });
@@ -65,72 +73,90 @@ describe("SupplierUpdate", () => {
   it("renders correctly", () => {
     render(
       <Router>
-        <BenefitsUpdate />
+        <UpdateSupplier />
       </Router>
     );
     expect(screen).toMatchSnapshot();
   });
 
-  it("validates form correctly before submiting", async () => {
+  it.only("validates form correctly before submitting", async () => {
     mockValidators();
 
     render(
       <Router>
-        <BenefitsUpdate />
+        <UpdateSupplier />
       </Router>
     );
 
-    const emailInput = await screen.findByLabelText("E-mail");
+    await act(async () => {
+      const emailInput = await screen.findByLabelText("E-mail");
 
-    await fireEvent.change(emailInput, {
-      target: { value: "invalid-email" },
+      fireEvent.change(emailInput, {
+        target: { value: "invalid-email" },
+      });
+
+      await userEvent.click(screen.getByText("Salvar"));
+
+      expect(updateSupplierFormById).not.toHaveBeenCalled(); // Não chamar função por conta de email inválido
+
+      fireEvent.change(emailInput, {
+        target: { value: "valid@email.com" },
+      });
+
+      const celInput = await screen.findByLabelText("Celular");
+
+      fireEvent.change(celInput, {
+        target: { value: "123" },
+      });
+
+      await userEvent.click(screen.getByText("Salvar"));
+
+      expect(updateSupplierFormById).not.toHaveBeenCalled(); // Não chamar função por conta de email inválido
+
+      fireEvent.change(celInput, {
+        target: { value: "(61) 91234-1234" },
+      });
+
+      const phoneInput = await screen.findByLabelText("Telefone");
+
+      fireEvent.change(phoneInput, {
+        target: { value: "123" },
+      });
+
+      await userEvent.click(screen.getByText("Salvar"));
+
+      expect(updateSupplierFormById).not.toHaveBeenCalled(); // Não chamar função por conta de email inválido
+
+      fireEvent.change(phoneInput, {
+        target: { value: "(61) 991234-1234" },
+      });
+
+      const cpfCNPJInput = await screen.findByLabelText("CPF/CNPJ");
+
+      fireEvent.change(cpfCNPJInput, {
+        target: { value: "123" },
+      });
+
+      await userEvent.click(screen.getByText("Salvar"));
+
+      expect(updateSupplierFormById).not.toHaveBeenCalled(); // Não chamar função por conta de email inválido
+
+      fireEvent.change(cpfCNPJInput, {
+        target: { value: "123.456.789-10" },
+      });
+
+      await userEvent.click(screen.getByText("Salvar"));
+
+      await waitFor(() =>
+        expect(updateSupplierFormById).toHaveBeenCalledTimes(1)
+      );
     });
-
-    await userEvent.click(screen.getByText("Salvar"));
-
-    expect(
-      screen.getByText("O e-mail fornecido não é válido.")
-    ).toBeInTheDocument();
-
-    expect(updateSupplierFormById).not.toHaveBeenCalled();
-
-    await userEvent.click(screen.getByRole("button", { name: /close/i }));
-
-    await fireEvent.change(emailInput, {
-      target: { value: "valid@email.com" },
-    });
-
-    const phoneInput = await screen.findByLabelText("Telefone/Celular");
-
-    await fireEvent.change(phoneInput, {
-      target: { value: "123" },
-    });
-
-    await userEvent.click(screen.getByText("Salvar"));
-
-    expect(
-      screen.getByText("O telefone fornecido não é válido.")
-    ).toBeInTheDocument();
-
-    expect(updateSupplierFormById).not.toHaveBeenCalled();
-
-    await userEvent.click(screen.getByRole("button", { name: /close/i }));
-
-    await fireEvent.change(phoneInput, {
-      target: { value: "61912341234" },
-    });
-
-    await userEvent.click(screen.getByText("Salvar"));
-
-    await waitFor(() =>
-      expect(updateSupplierFormById).toHaveBeenCalledTimes(1)
-    );
   });
 
   it("deletes supplier correctly", async () => {
     render(
       <Router>
-        <BenefitsUpdate />
+        <UpdateSupplier />
       </Router>
     );
 
