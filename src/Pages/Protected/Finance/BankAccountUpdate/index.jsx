@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useAuth } from "../../../Context/auth";
-import SideBar from "../../../Components/SideBar";
-import SideButton from "../../../Components/SideButton";
-import PrimaryButton from "../../../Components/PrimaryButton";
-import SecondaryButton from "../../../Components/SecondaryButton";
-import FieldSelect from "../../../Components/FieldSelect";
-import FieldText from "../../../Components/FieldText";
+import { useAuth } from "../../../../Context/auth";
+import PrimaryButton from "../../../../Components/PrimaryButton";
+import SecondaryButton from "../../../../Components/SecondaryButton";
+import FieldSelect from "../../../../Components/FieldSelect";
+import FieldText from "../../../../Components/FieldText";
 import "./index.css";
 import { Snackbar } from "@mui/material";
 import Alert from "@mui/material/Alert";
@@ -14,8 +12,8 @@ import {
   getBankAccount,
   deleteBankAccount,
   updateBankAccount,
-} from "../../../Services/bankAccountService";
-import Modal from "../../../Components/Moldal";
+} from "../../../../Services/bankAccountService";
+import Modal from "../../../../Components/Modal";
 
 const BankAccountId = () => {
   const [name, setName] = useState("");
@@ -76,25 +74,11 @@ const BankAccountId = () => {
     setOpenSave(true);
   };
 
-  const buttons = [
-    <SideButton
-      key="home"
-      text="PÁGINA INICIAL"
-      onClick={() => navigate("/home/")}
-    />,
-    <SideButton key="filiacao" text="CADASTROS" />,
-    <SideButton
-      key="financeiro"
-      text="FINANCEIRO"
-      onClick={() => navigate("/finance/")}
-    />,
-    <SideButton key="beneficios" text="BENEFÍCIOS" />,
-  ];
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         const result = await getBankAccount(id);
+        console.log(result);
         setName(result.name || "");
         setPix(result.pix || "");
         setBank(result.bank || "");
@@ -126,8 +110,11 @@ const BankAccountId = () => {
       ...(agency && { agency }), // Inclui agency se não estiver vazio
     };
 
+    console.log("Dados atualizados:", updatedData);
+
     try {
       const response = await updateBankAccount(id, updatedData);
+      console.log("Resposta do servidor:", response);
       return response;
     } catch (error) {
       console.error("Erro ao enviar dados:", error);
@@ -135,13 +122,13 @@ const BankAccountId = () => {
   };
 
   return user ? (
-    <section className="bank-container">
-      <div>
-        <SideBar className="side-menu" buttons={buttons} />
-      </div>
-      <div className="section">
-        <h1>Visualização de Conta Bancária</h1>
-        <div className="form">
+    <div className="container-benefits">
+      <div className="forms-container-benefits">
+        <h1>Visualização de benefícios</h1>
+
+        <h3>Dados do benefício</h3>
+
+        <div className="section-form-benefits">
           <FieldText
             label="Nome *"
             value={name}
@@ -185,6 +172,7 @@ const BankAccountId = () => {
             options={listStatus}
           />
         </div>
+
         <div className="edit-buttons">
           <SecondaryButton
             text="Deletar"
@@ -214,7 +202,7 @@ const BankAccountId = () => {
       >
         <SecondaryButton
           text="ok"
-          onClick={() => navigate("/finance/")}
+          onClick={() => navigate("/finance/list")}
           style={{ width: "250px", marginTop: "10px" }}
         />
       </Modal>
@@ -245,11 +233,11 @@ const BankAccountId = () => {
       >
         <SecondaryButton
           text="ok"
-          onClick={() => navigate("/finance/listBankAccount")}
+          onClick={() => navigate("/finance/list")}
           style={{ width: "250px", marginTop: "10px" }}
         />
       </Modal>
-    </section>
+    </div>
   ) : null;
 };
 

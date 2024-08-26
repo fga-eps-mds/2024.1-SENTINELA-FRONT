@@ -176,7 +176,7 @@ describe("BenefitsCreate", () => {
     const siteInput = await screen.findByLabelText("Site");
 
     await fireEvent.change(siteInput, {
-      target: { value: "sitemalformatado..com" },
+      target: { value: "sitemalformatado" },
     });
 
     // submentendo novamente
