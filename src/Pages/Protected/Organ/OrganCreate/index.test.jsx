@@ -1,4 +1,10 @@
-import { render, screen, fireEvent, cleanup } from "@testing-library/react";
+import {
+  render,
+  screen,
+  fireEvent,
+  cleanup,
+  waitFor,
+} from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { describe, it, expect, vi, afterEach, beforeEach } from "vitest";
 import "@testing-library/jest-dom";
@@ -122,5 +128,23 @@ describe("OrganCreate Component", () => {
     fireEvent.click(confirmButton);
 
     expect(screen.getByText("Lotação Confirmada 1")).toBeInTheDocument();
+  });
+
+  it("validates and leave for list page when press confirm", async () => {
+    render(
+      <Router>
+        <OrganCreate />
+      </Router>
+    );
+
+    await fillUpRequiredFields();
+
+    fireEvent.click(screen.getByText("Cadastrar"));
+
+    waitFor(() => {
+      expect(screen.getByText("Órgão cadastrado com sucesso!"));
+      fireEvent.click(screen.getByText("OK"));
+      expect(window.location.pathname).toBe("/organ/list");
+    });
   });
 });
