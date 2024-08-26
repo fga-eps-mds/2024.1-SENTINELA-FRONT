@@ -130,12 +130,4 @@
     margin-top: 1rem; /* Diminua ou ajuste a margem superior */
     grid-column: 1 / -1; /* Faz o botão ocupar toda a largura da grid */
   }
-
-  .hidden {
-    display: none;
-  }
-
-  .visible {
-    display: block;
-  }
 }

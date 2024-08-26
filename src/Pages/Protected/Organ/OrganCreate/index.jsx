@@ -110,7 +110,7 @@ export default function OrganCreate() {
   const handleAddNewLotacao = () => {
     setAdd(true);
 
-    console.log({ add });
+    ({ add });
     if (confirmedLotacoes.every((status) => status)) {
       setCurrentLotacoes([...currentLotacoes, { nomeLotacao: "", sigla: "" }]);
       setConfirmedLotacoes([...confirmedLotacoes, false]);

@@ -1,25 +1,43 @@
 import { render, screen, fireEvent, cleanup } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
-import { describe, it, expect, vi, afterEach } from "vitest";
+import { describe, it, expect, vi, afterEach, beforeEach } from "vitest";
 import "@testing-library/jest-dom";
 import OrganCreate from "./index";
 import { useAuth } from "../../../../Context/auth";
+import { createOrgan } from "../../../../Services/organService";
+import userEvent from "@testing-library/user-event";
 
 vi.mock("../../../../Context/auth", () => ({
   useAuth: vi.fn(),
 }));
 
-vi.mock("../../../../Services/organService", () => ({
-  createOrgan: vi.fn(),
-}));
+async function fillUpRequiredFields() {
+  const nomeOrgao = await screen.findByLabelText(/Nome do órgão*/i);
+  const nomeLotacao = await screen.findByLabelText(/Lotação*/i);
+  const nomeSigla = await screen.findByLabelText(/Sigla*/i);
+
+  fireEvent.change(nomeOrgao, {
+    target: { value: "Órgão-Teste" },
+  });
+  fireEvent.change(nomeLotacao, {
+    target: { value: "Lot-teste" },
+  });
+  fireEvent.change(nomeSigla, {
+    target: { value: "Sigla-Teste" },
+  });
+}
 
 describe("OrganCreate Component", () => {
+  beforeEach(() => {
+    vi.mock("../../../../Services/organService");
+  });
+
   afterEach(() => {
     cleanup();
     vi.clearAllMocks();
   });
 
-  it("renders the form correctly when user is authenticated", () => {
+  it("renders the form correctly when user is authenticated", async () => {
     useAuth.mockReturnValue({
       user: { id: 1, name: "Test User" },
     });
@@ -30,10 +48,13 @@ describe("OrganCreate Component", () => {
       </Router>
     );
 
+    expect(screen).toMatchSnapshot();
     expect(screen.getByText("Cadastro de Órgãos")).toBeInTheDocument();
+    expect(screen.getByText("Dados do Órgão")).toBeInTheDocument();
+    expect(screen.getByText("Dados de Lotações")).toBeInTheDocument();
   });
 
-  it("shows error message when required fields are missing", () => {
+  it("validates form correctly before submiting with only required fields", async () => {
     useAuth.mockReturnValue({
       organ: { nomeOrgao: "", lotacao: "", sigla: "" },
     });
@@ -49,78 +70,57 @@ describe("OrganCreate Component", () => {
     expect(
       screen.getByText("Preencha todos os campos obrigatórios.")
     ).toBeInTheDocument();
+
+    expect(createOrgan).not.toHaveBeenCalled();
+
+    await userEvent.click(screen.getByRole("button", { name: /close/i }));
+
+    const nomeOrgao = await screen.findByLabelText(/Nome do órgão*/i);
+    fireEvent.change(nomeOrgao, {
+      target: { value: "Orgao 1" },
+    });
+
+    fireEvent.click(screen.getByText("Cadastrar"));
+    expect(createOrgan).not.toHaveBeenCalled();
+
+    const nomeLotacao = await screen.findByLabelText(/Lotação*/i);
+    fireEvent.change(nomeLotacao, {
+      target: { value: "LOT1" },
+    });
+
+    fireEvent.click(screen.getByText("Cadastrar"));
+    expect(createOrgan).not.toHaveBeenCalled();
+
+    await fillUpRequiredFields();
+    fireEvent.click(screen.getByText("Cadastrar"));
+    expect(createOrgan).toHaveBeenCalledTimes(1);
   });
 
-  //   it("shows unique error message if name is already registered", async () => {
-  //     useAuth.mockReturnValue({
-  //       user: { id: 1, name: "Test User" },
-  //     });
+  it("validates form correctly before submiting with non required fields", async () => {
+    render(
+      <Router>
+        <OrganCreate />
+      </Router>
+    );
+    await fillUpRequiredFields();
 
-  //     createOrgan.mockResolvedValue({
-  //       status: 409,
-  //       data: { error: "Nome já cadastrado" },
-  //     });
+    const addIcon = screen.getByTestId("AddCircleOutlineIcon"); // Certifique-se de que o ícone tem um data-testid
+    fireEvent.click(addIcon);
 
-  //     render(
-  //       <Router>
-  //         <OrganCreate />
-  //       </Router>
-  //     );
+    const newLotacaoField = screen.getByLabelText("Nome");
+    const newSiglaField = screen.getByLabelText("Sigla");
+    expect(newLotacaoField).toBeInTheDocument();
+    expect(newSiglaField).toBeInTheDocument();
 
-  //     fireEvent.change(screen.getByLabelText(/Nome do órgão/i), {
-  //       target: { value: "Conta Teste" },
-  //     });
-  //     fireEvent.click(screen.getByText("Cadastrar"));
+    fireEvent.change(newLotacaoField, { target: { value: "Nova Lotação" } });
+    fireEvent.change(newSiglaField, { target: { value: "NL" } });
 
-  //     expect(await screen.findByText("Nome já cadastrado")).toBeInTheDocument();
-  //   });
+    expect(newLotacaoField.value).toBe("Nova Lotação");
+    expect(newSiglaField.value).toBe("NL");
 
-  //   it.only("navigates to list page after successful creation", async () => {
-  //     useAuth.mockReturnValue({
-  //       organ: { nomeOrgao: "Conta Teste", lotacao: "Teste", sigla: "TST" },
-  //     });
+    const confirmButton = screen.getByText("Confirmar Lotação");
+    fireEvent.click(confirmButton);
 
-  //     createOrgan.mockResolvedValue({
-  //       status: 201,
-  //     });
-
-  //     render(
-  //       <Router>
-  //         <OrganCreate />
-  //       </Router>
-  //     );
-
-  //     // Verifique se o input existe e é acessível
-  //     const inputNome = screen.getByLabelText(/Nome do órgão/i);
-  //     expect(inputNome).toBeInTheDocument();
-
-  //     const inputLotacao = screen.getByLabelText(/Lotação/i);
-  //     expect(inputLotacao).toBeInTheDocument();
-
-  //     const inputSigla = screen.getByLabelText(/Sigla/i);
-  //     expect(inputSigla).toBeInTheDocument();
-
-  //     // Alterando o valor do input
-  //     fireEvent.change(inputNome, { target: { value: "Conta Teste" } });
-
-  //     // Verifique se o botão de cadastrar existe e é acessível
-  //     const buttonCadastrar = screen.getByText("Cadastrar");
-  //     expect(buttonCadastrar).toBeInTheDocument();
-
-  //     // Clique no botão de cadastrar
-  //     fireEvent.click(buttonCadastrar);
-
-  //     // Espera pelo modal aparecer com `findByRole`
-  //     const modal = await screen.findByTestId('modal-overlay');
-  //     expect(modal).toBeInTheDocument();
-
-  //     // Verifique o texto dentro do modal
-  //     expect(await screen.findByText(/Órgão cadastrado com sucesso!/i)).toBeInTheDocument();
-
-  //     // Clique para fechar o modal
-  //     fireEvent.click(screen.getByText("OK"));
-
-  //     // Verifique o redirecionamento
-  //     expect(window.location.pathname).toBe("/organ/list");
-  //   });
+    expect(screen.getByText("Lotação Confirmada 1")).toBeInTheDocument();
+  });
 });
