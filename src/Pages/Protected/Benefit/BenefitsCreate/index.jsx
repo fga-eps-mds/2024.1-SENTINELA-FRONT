@@ -346,7 +346,7 @@ export default function BenefitsCreate() {
           autoHideDuration={6000}
           onClose={() => setOpenError(false)}
         >
-          <Alert onClose={() => setOpenError("")} severity="error">
+          <Alert onClose={() => setOpenError(false)} severity="error">
             {openError}
           </Alert>
         </Snackbar>
