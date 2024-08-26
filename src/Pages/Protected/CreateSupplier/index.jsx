@@ -7,6 +7,9 @@ import PrimaryButton from "../../../Components/PrimaryButton";
 import SecondaryButton from "../../../Components/SecondaryButton";
 import Modal from "../../../Components/Modal";
 import { createSupplierForm } from "../../../Services/supplierService";
+import { Snackbar } from "@mui/material";
+import Alert from "@mui/material/Alert";
+import { isValidEmail } from "../../../Utils/validators";
 
 export default function CreateSupplier() {
   const navigate = useNavigate();
@@ -31,6 +34,7 @@ export default function CreateSupplier() {
   const [dv, setDv] = useState("");
   const [chavePix, setChavePix] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [openError, setOpenError] = useState(false);
 
   const tipoPessoaList = ["Jurídica", "Física"];
   const statusFornecedorList = ["Ativo", "Inativo"];
@@ -130,36 +134,108 @@ export default function CreateSupplier() {
     setUfEndereco(event.target.value);
   };
 
-  const handleSubmit = async () => {
-    if (nome.trim() === "") {
-      alert("O campo 'Nome/Razão Social' é obrigatório.");
+  const isValidCPForCNPJ = (cpfCnpj) => {
+    if (!cpfCnpj) {
+      return { isValid: true };
+    }
+
+    const cleanedValue = cpfCnpj.replace(/\D/g, ""); // Remove non-numeric characters
+
+    if (cleanedValue.length === 11) {
+      return { isValid: true };
+    } else if (cleanedValue.length === 14) {
+      return { isValid: true };
+    } else {
+      return {
+        isValid: false,
+        message: "O CPF ou CNPJ fornecido não é válido.",
+      };
+    }
+  };
+
+  const isValidTelefone = (telefone) => {
+    const cleanedNumber = telefone.replace(/\D/g, ""); // Remove caracteres não numéricos
+
+    if (!cleanedNumber) {
+      return { isValid: true };
+    }
+
+    if (cleanedNumber.length != 10) {
+      return { isValid: false, message: "O telefone fornecido não é válido." };
+    }
+
+    return { isValid: true };
+  };
+
+  const isValidCelular = (celular) => {
+    const cleanedNumber = celular.replace(/\D/g, ""); // Remove caracteres não numéricos
+
+    if (!cleanedNumber) {
+      return { isValid: true };
+    }
+
+    if (cleanedNumber.length != 11) {
+      return { isValid: false, message: "O celular fornecido não é válido." };
+    }
+
+    return { isValid: true };
+  };
+
+  const handleCheck = async () => {
+    if (!nome) {
+      setOpenError(
+        "Certifique-se de que todos os campos obrigatórios estão preenchidos"
+      );
+      return;
+    }
+
+    const emailValidation = isValidEmail(email);
+    if (!emailValidation.isValid) {
+      setOpenError(emailValidation.message);
+      return;
+    }
+
+    const telefoneValidation = isValidTelefone(telefone);
+    if (!telefoneValidation.isValid) {
+      setOpenError(telefoneValidation.message);
+      return;
+    }
+
+    const cpfCnpjValidation = isValidCPForCNPJ(cpfCnpj);
+    if (!cpfCnpjValidation.isValid) {
+      setOpenError(cpfCnpjValidation.message);
+      return;
+    }
+
+    const celularValidation = isValidCelular(celular);
+    if (!celularValidation.isValid) {
+      setOpenError(celularValidation.message);
       return;
     }
 
     const supplierData = {
       nome,
-      tipoPessoa: tipoPessoa || null,
-      cpfCnpj: cpfCnpj || null,
-      statusFornecedor: statusFornecedor || null,
-      naturezaTransacao: naturezaTransacao || null,
-      email: email || null,
-      nomeContato: nomeContato || null,
-      celular: celular || null,
-      telefone: telefone || null,
-      cep: cep || null,
-      cidade: cidade || null,
-      uf_endereco: uf_endereco || null,
-      logradouro: logradouro || null,
-      complemento: complemento || null,
-      nomeBanco: nomeBanco || null,
-      agencia: agencia || null,
-      numeroBanco: numeroBanco || null,
-      dv: dv || null,
-      chavePix: chavePix || null,
+      tipoPessoa,
+      cpfCnpj,
+      statusFornecedor,
+      naturezaTransacao,
+      email,
+      nomeContato,
+      celular,
+      telefone,
+      cep,
+      cidade,
+      uf_endereco,
+      logradouro,
+      complemento,
+      nomeBanco,
+      agencia,
+      numeroBanco,
+      dv,
+      chavePix,
     };
     const erro = await createSupplierForm(supplierData);
-
-    if (erro) {
+    if (!erro) {
       setShowModal(true);
     }
   };
@@ -170,20 +246,20 @@ export default function CreateSupplier() {
   };
 
   return (
-    <div className="container">
-      <div className="forms-container">
+    <div className="container-benefits">
+      <div className="forms-container-benefits">
         <h1>Cadastro de fornecedor</h1>
 
         <h3>Dados pessoais</h3>
 
         <FieldText
-          label="Nome/Razão Social"
+          label="Nome/Razão Social *"
           value={nome}
           onChange={(e) => setNome(e.target.value)}
           required
         />
 
-        <div className="section-form">
+        <div className="section-form-benefits">
           <FieldSelect
             label="Classificação de pessoa"
             value={tipoPessoa}
@@ -214,11 +290,12 @@ export default function CreateSupplier() {
 
         <h3>Dados de Contato</h3>
 
-        <div className="section-form">
+        <div className="section-form-benefits">
           <FieldText
             label="E-mail"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            name="email"
           />
 
           <FieldText
@@ -242,7 +319,7 @@ export default function CreateSupplier() {
 
         <h3>Endereço</h3>
 
-        <div className="section-form">
+        <div className="section-form-benefits">
           <FieldText
             label="CEP"
             value={cep}
@@ -279,7 +356,7 @@ export default function CreateSupplier() {
 
         <h3>Dados Bancários</h3>
 
-        <div className="section-form">
+        <div className="section-form-benefits">
           <FieldText
             label="Banco"
             value={nomeBanco}
@@ -312,12 +389,22 @@ export default function CreateSupplier() {
         />
 
         <div id="envio">
-          <PrimaryButton text="CADASTRAR" onClick={handleSubmit} />
+          <PrimaryButton text="CADASTRAR" onClick={handleCheck} />
         </div>
+
+        <Snackbar
+          open={openError}
+          autoHideDuration={6000}
+          onClose={() => setOpenError(false)}
+        >
+          <Alert onClose={() => setOpenError("")} severity="error">
+            {openError}
+          </Alert>
+        </Snackbar>
 
         <Modal
           width="338px"
-          alertTitle="Cadastro de usuário concluído"
+          alertTitle="Cadastro de fornecedor concluído"
           show={showModal}
         >
           <SecondaryButton

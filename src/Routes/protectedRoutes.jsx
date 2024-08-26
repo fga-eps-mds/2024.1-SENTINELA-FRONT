@@ -28,7 +28,7 @@ const ProtectedRoutes = () => {
       <Route path="/home" element={<Home />} />
       <Route path="/fornecedores/criar" element={<Supplier />} />
       <Route path="/fornecedores" element={<ListSupplier />} />
-      <Route path="/fornecedores/:nome" element={<ViewSupplier />} />
+      <Route path="/fornecedores/:id" element={<ViewSupplier />} />
       <Route path="/usuarios/criar" element={<UserCreatePage />} />
       <Route path="/usuarios/editar/:nome" element={<UserUpdatePage />} />
       <Route path="/usuarios" element={<UserListPage />} />
