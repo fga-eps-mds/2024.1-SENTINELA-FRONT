@@ -79,7 +79,7 @@ describe("SupplierUpdate", () => {
     expect(screen).toMatchSnapshot();
   });
 
-  it.only("validates form correctly before submitting", async () => {
+  it("validates form correctly before submitting", async () => {
     mockValidators();
 
     render(
