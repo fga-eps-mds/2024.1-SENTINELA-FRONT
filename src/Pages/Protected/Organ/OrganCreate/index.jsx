@@ -41,11 +41,9 @@ export default function OrganCreate() {
       // Combine o primeiro item com as lotações confirmadas posteriormente
       const combinedLotacoes = [initialLotacao, ...lotacoes];
 
-      const formData = { nomeOrgao, lotacoes: combinedLotacoes };
-      console.log(formData);
+      //const formData = { nomeOrgao, lotacoes: combinedLotacoes };
       try {
         const response = await createOrgan(nomeOrgao, combinedLotacoes);
-        console.log(response);
         if (response === 201) {
           setShowModal(true);
         }
@@ -134,7 +132,7 @@ export default function OrganCreate() {
 
   return (
     <section className="section">
-      <div className="forms-container-benefits">
+      <div className="forms-container-organs">
         <h1>Cadastro de Órgãos</h1>
 
         <h3>Dados do Órgão</h3>
@@ -169,14 +167,14 @@ export default function OrganCreate() {
         </h3>
 
         <div>
+          <h3 style={{ display: add ? "block" : "none" }}>Nova Lotação</h3>
           {add &&
             currentLotacoes.map((lotacao, index) => (
               <div
                 key={`current-${index}`}
-                className="section-lotacoes-form"
-                style={{ marginBottom: "50px" }}
+                className="section-doublebox"
+                // style={{ marginBottom: "50px" }}
               >
-                <h3>Nova Lotação</h3>
                 <FieldText
                   label="Nome"
                   value={lotacao.nomeLotacao}
@@ -199,36 +197,36 @@ export default function OrganCreate() {
                   onBlur={(e) => handleBlur(e, `currentLotacao-${index}-sigla`)}
                   erro={errors[`currentLotacao-${index}-sigla`]}
                 />
-                <PrimaryButton
-                  text="Confirmar Lotação"
-                  onClick={() => handleConfirmLotacao(index)}
-                />
+                <div className="confirmlotation">
+                  <PrimaryButton
+                    text="Confirmar Lotação"
+                    onClick={() => handleConfirmLotacao(index)}
+                  />
+                </div>
               </div>
             ))}
         </div>
 
         <div>
           {lotacoes.map((lotacao, index) => (
-            <div
-              key={`confirmed-${index}`}
-              className="section-lotacoes-form"
-              style={{ marginBottom: "50px" }}
-            >
+            <div key={`confirmed-${index}`} style={{ marginBottom: "50px" }}>
               <h3>Lotação Confirmada {index + 1}</h3>
-              <FieldText
-                label="Nome"
-                value={lotacao.nomeLotacao}
-                onChange={(e) =>
-                  handleLotacaoChange(index, "nomeLotacao", e.target.value)
-                }
-              />
-              <FieldText
-                label="Sigla"
-                value={lotacao.sigla}
-                onChange={(e) =>
-                  handleLotacaoChange(index, "sigla", e.target.value)
-                }
-              />
+              <div className="section-doublebox">
+                <FieldText
+                  label="Nome"
+                  value={lotacao.nomeLotacao}
+                  onChange={(e) =>
+                    handleLotacaoChange(index, "nomeLotacao", e.target.value)
+                  }
+                />
+                <FieldText
+                  label="Sigla"
+                  value={lotacao.sigla}
+                  onChange={(e) =>
+                    handleLotacaoChange(index, "sigla", e.target.value)
+                  }
+                />
+              </div>
               <PrimaryButton
                 text="Remover Lotação"
                 onClick={() => handleRemoveLotacao(index)}

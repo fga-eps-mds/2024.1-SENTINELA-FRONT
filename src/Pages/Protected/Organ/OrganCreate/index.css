@@ -1,9 +1,9 @@
 @media screen and (max-width: 1080px) {
-  .bar-container-benefits {
+  .bar-container-organs {
     display: grid;
   }
 
-  .container-benefits {
+  .container-organs {
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
@@ -13,7 +13,7 @@
     color: #332117 !important;
   }
 
-  .forms-container-benefits {
+  .forms-container-organs {
     margin: 1rem;
     width: 90%;
     display: inherit;
@@ -27,12 +27,12 @@
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   }
 
-  .forms-container-benefits button {
+  .forms-container-organs button {
     width: 100%;
     margin-top: auto;
   }
 
-  .forms-container-benefits h1 {
+  .forms-container-organs h1 {
     font-size: 22px;
     font-weight: 800;
     margin-left: 8px;
@@ -43,7 +43,7 @@
     white-space: nowrap;
   }
 
-  .forms-container-benefits h3 {
+  .forms-container-organs h3 {
     font-size: 16px;
     font-weight: 400;
     margin-left: 1rem;
@@ -51,72 +51,38 @@
     color: #332117 !important;
   }
 
-  .file-upload-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 0.8rem;
-    border-radius: 5px;
-    background-color: #eae3d7;
-    margin-top: 0.7rem;
-    margin-right: 0.8rem;
-    margin-left: 0.8rem;
-  }
-
-  .file-input {
-    font-size: 0px;
-    margin: 0;
-    overflow: hidden;
-    white-space: nowrap;
-  }
-
-  .file-input::file-selector-button {
-    cursor: pointer;
-    font-size: 11px;
-    color: #000;
-    background-color: #eae3d7;
-    padding: 0.5rem 0rem;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-
-  .change-file-logotipo {
-    font-size: 1rem;
-    color: #000000;
-    margin-bottom: 0.5rem;
-  }
-
-  .logotipo-preview {
-    max-width: 45px;
-    max-height: 60px;
-    margin-top: -50px;
-    margin-bottom: 10px;
-    margin-left: 130px;
-    display: flex;
-    overflow: hidden;
-  }
-
-  .logotipo-preview img {
+  .section-doublebox {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* grid-gap: 1rem; Espaçamento entre as colunas */
+    align-items: start; /* Alinhamento ao topo */
     width: 100%;
-    height: auto;
-    display: block;
+  }
+
+  .confirmlotation {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem; /* Diminua ou ajuste a margem superior */
+    grid-column: 1 / -1; /* Faz o botão ocupar toda a largura da grid */
   }
 }
 
 @media screen and (min-width: 1080px) {
-  .bar-container-benefits {
+  /* .bar-container-benefits {
     display: flex;
     height: 100%;
     position: fixed;
-  }
+  } */
 
-  .container-benefits {
+  .container-organs {
     display: flex;
     flex-direction: row;
     margin-bottom: 20px;
   }
 
-  .forms-container-benefits {
+  .forms-container-organs {
     margin: 1rem;
     width: 90%;
     display: inherit;
@@ -125,22 +91,51 @@
     min-height: 95vh;
   }
 
-  .forms-container-benefits button {
+  .forms-container-organs button {
     width: 100%;
     margin-top: auto;
   }
 
-  .forms-container-benefits h1 {
+  .forms-container-organs h1 {
     font-size: 34px;
     font-weight: 800;
     margin-bottom: -0.5rem;
     margin-top: 2rem;
   }
 
-  .forms-container-benefits h3 {
+  .forms-container-organs h3 {
     font-size: 24px;
     font-weight: 400;
     margin-left: 1rem;
     margin-top: 3rem;
+  }
+
+  .section-doublebox {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* grid-gap: 1rem; Espaçamento entre as colunas */
+    align-items: start; /* Alinhamento ao topo */
+    width: 100%;
+  }
+  .titulo-nova-lotacao {
+    display: flex;
+    width: 200%;
+  }
+
+  .confirmlotation {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem; /* Diminua ou ajuste a margem superior */
+    grid-column: 1 / -1; /* Faz o botão ocupar toda a largura da grid */
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .visible {
+    display: block;
   }
 }
