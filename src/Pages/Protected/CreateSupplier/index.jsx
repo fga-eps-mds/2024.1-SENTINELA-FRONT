@@ -100,6 +100,11 @@ export default function CreateSupplier() {
       .replace(/(\d{5})(\d{4})$/, "$1-$2");
   };
 
+  const mascaraNumericos = (numerico) => {
+    let res = numerico.replace(/\D/g, "");
+    return res;
+  };
+
   const mascaraTelefone = (telefone) => {
     let formattedTelefone = telefone.replace(/\D/g, "");
     if (formattedTelefone.length > 10) {
@@ -366,19 +371,19 @@ export default function CreateSupplier() {
           <FieldText
             label="Agência"
             value={agencia}
-            onChange={(e) => setAgencia(e.target.value)}
+            onChange={(e) => setAgencia(mascaraNumericos(e.target.value))}
           />
 
           <FieldText
             label="Número"
             value={numeroBanco}
-            onChange={(e) => setNumeroBanco(e.target.value)}
+            onChange={(e) => setNumeroBanco(mascaraNumericos(e.target.value))}
           />
 
           <FieldText
             label="DV"
             value={dv}
-            onChange={(e) => setDv(e.target.value)}
+            onChange={(e) => setDv(mascaraNumericos(e.target.value))}
           />
         </div>
 
