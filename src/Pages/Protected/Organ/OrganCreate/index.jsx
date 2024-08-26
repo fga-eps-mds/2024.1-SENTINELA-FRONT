@@ -45,8 +45,14 @@ export default function OrganCreate() {
       console.log(formData);
       try {
         const response = await createOrgan(nomeOrgao, combinedLotacoes);
-        if (response) {
+        console.log(response);
+        if (response === 201) {
           setShowModal(true);
+        }
+        if (response == "Nome já cadastrado") {
+          setOpenError("Órgão já cadastrado.");
+
+          return;
         }
       } catch (error) {
         console.error("Erro ao cadstrar órgao: ", error);
