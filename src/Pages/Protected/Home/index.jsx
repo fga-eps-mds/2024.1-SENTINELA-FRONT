@@ -171,17 +171,19 @@ const Home = () => {
     user && (
       <section className="dash-section">
         <div className="filiados-section">
-          <h1>Filiados</h1>
+          <h1 style={{ fontSize: 40 }}>Filiados</h1>
 
           <div className="filiados">
             <div className="filiados-box">
               <h2>Total</h2>
-              <h1 id="box">{data.length}</h1>
+              <h1 style={{ color: "#E2B73D !important" }} id="box">
+                {data.length}
+              </h1>
             </div>
 
             <div className="filiados-box">
               <h2>{isSind}</h2>
-              <h1 id="box">
+              <h1 style={{ color: "#E2B73D !important" }} id="box">
                 {isSind === "Sindicalizado"
                   ? data.filter((item) => item.status === true).length
                   : data.filter((item) => item.status === false).length}
