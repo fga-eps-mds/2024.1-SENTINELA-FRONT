@@ -1,9 +1,13 @@
 import { describe, it, expect, vi, afterEach, beforeEach } from "vitest";
-import { render, screen, cleanup } from "@testing-library/react";
+import { render, screen, cleanup, waitFor } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import BankAccountId from "./index";
 import "@testing-library/jest-dom";
-import { getBankAccount } from "../../../../Services/bankAccountService";
+import {
+  getBankAccount,
+  updateBankAccount,
+} from "../../../../Services/bankAccountService";
+import { MemoryRouter, Routes, Route } from "react-router-dom";
 
 function mockServices() {
   vi.mock("../../../../Services/bankAccountService", () => ({
@@ -42,59 +46,62 @@ describe("BankAccountId", () => {
     );
     expect(screen).toMatchSnapshot();
   });
+  it("should fetch and display bank account data", async () => {
+    // Mock da resposta do serviço getBankAccount
+    const bankAccountData = {
+      name: "Conta Teste",
+      pix: "123456789",
+      bank: "Banco Teste",
+      accountType: "Conta Corrente",
+      accountNumber: "12345678901",
+      dv: "1",
+      status: "Ativo",
+      agency: "12345",
+    };
 
-  //   it("updates name correctly", async () => {
-  //     render(
-  //       <Router>
-  //         <BankAccountId />
-  //       </Router>
-  //     );
+    getBankAccount.mockResolvedValue(bankAccountData);
 
-  //     // Verifique se o rótulo está presente
-  //     await waitFor(() => {
-  //       expect(screen.getByLabelText('Nome *')).toBeInTheDocument();
-  //     });
+    render(
+      <MemoryRouter initialEntries={["/finance/bankAccount/123"]}>
+        <Routes>
+          <Route path="/finance/bankAccount/:id" element={<BankAccountId />} />
+        </Routes>
+      </MemoryRouter>
+    );
 
-  //     // Atualize o campo "Nome"
-  //     const nameInput = screen.getByLabelText('Nome *');
-  //     await userEvent.clear(nameInput);
-  //     await userEvent.type(nameInput, 'Updated Name');
+    // expect(screen.getByText("Visualização de Conta Bancária")).toBeInTheDocument();
 
-  //     await userEvent.click(screen.getByText('Salvar'));
+    // Espera a chamada do fetch
+    await waitFor(() => {
+      expect(getBankAccount).toHaveBeenCalledWith("123");
+    });
+  });
+  it("should update bank account data", async () => {
+    // Mock da resposta do serviço updateBankAccount
+    const updatedBankAccountData = {
+      name: "Conta Atualizada",
+      pix: "987654321",
+      bank: "Banco Atualizado",
+      accountType: "Poupança",
+      accountNumber: "98765432109",
+      dv: "2",
+      status: "Inativo",
+      agency: "54321",
+    };
 
-  //     await waitFor(() =>
-  //       expect(updateBankAccount).toHaveBeenCalledWith(expect.any(String), {
-  //         name: 'Updated Name',
-  //         pix: 'Test Pix',
-  //         bank: 'Test Bank',
-  //         accountType: 'Conta Corrente',
-  //         accountNumber: '12345678901',
-  //         dv: '1',
-  //         status: 'Ativo',
-  //         agency: '12345',
-  //       })
-  //     );
-  //   });
+    getBankAccount.mockResolvedValue(updatedBankAccountData);
+    updateBankAccount.mockResolvedValue(updatedBankAccountData);
+    render(
+      <MemoryRouter initialEntries={["/finance/bank-account/123"]}>
+        <Routes>
+          <Route path="/finance/bank-account/:id" element={<BankAccountId />} />
+        </Routes>
+      </MemoryRouter>
+    );
 
-  //   it("deletes bank account correctly", async () => {
-  //     render(
-  //       <Router>
-  //         <BankAccountId />
-  //       </Router>
-  //     );
-
-  //     await userEvent.click(screen.getByText((content, element) =>
-  //       content.startsWith("Deletar") && element.tagName.toLowerCase() === 'button'
-  //     ));
-
-  //     expect(
-  //       screen.getByText('Deseja deletar conta bancária do sistema?')
-  //     ).toBeInTheDocument();
-
-  //     await userEvent.click(screen.getByText('Excluir Conta bancária'));
-
-  //     await waitFor(() =>
-  //       expect(deleteBankAccount).toHaveBeenCalledWith(expect.any(String))
-  //     );
-  //   });
+    // Espera a chamada do fetch
+    await waitFor(() => {
+      expect(getBankAccount).toHaveBeenCalledWith("123");
+    });
+  });
 });
