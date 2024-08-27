@@ -10,7 +10,10 @@ import { BrowserRouter as Router } from "react-router-dom";
 import OrganId from "./index";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
-import { updateOrgan } from "../../../../Services/organService";
+import {
+  deleteOrganById,
+  updateOrgan,
+} from "../../../../Services/organService";
 
 describe("OrgansUpdate", () => {
   beforeEach(() => {
@@ -108,6 +111,29 @@ describe("OrgansUpdate", () => {
       expect(screen.getByText("Alterações salvas"));
       fireEvent.click(screen.getByText("OK"));
       expect(window.location.pathname).toBe("/organ/list");
+    });
+  });
+
+  it("deletes organ correctly", async () => {
+    render(
+      <Router>
+        <OrganId />
+      </Router>
+    );
+    await userEvent.click(screen.getByText("Deletar"));
+
+    expect(
+      screen.getByText("Deseja deletar órgão do sistema?")
+    ).toBeInTheDocument();
+
+    await userEvent.click(screen.getByText(/Excluir órgão/i));
+
+    await waitFor(() => expect(deleteOrganById).toHaveBeenCalledTimes(1));
+
+    waitFor(() => {
+      expect(screen.getByText("Órgão excluído com sucesso!"));
+      fireEvent.click(screen.getByText("OK"));
+      expect(window.location.pathname).toBe("organ/list");
     });
   });
 });

@@ -215,7 +215,7 @@ export const OrganId = () => {
       <Modal
         show={openDeleteOrgan}
         width="400px"
-        alertTitle="Órgão excluída"
+        alertTitle="Órgão excluído com sucesso!"
         alert=""
       >
         <SecondaryButton
