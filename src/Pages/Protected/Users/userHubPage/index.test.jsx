@@ -58,6 +58,13 @@ describe("UserHubPage", () => {
     });
   });
 
+  it("navigates to organ list on button click", async () => {
+    fireEvent.click(screen.getByText(/Lista de Órgãos/i));
+    await waitFor(() => {
+      expect(window.location.pathname).toBe("/organ/list");
+    });
+  });
+
   it("renders logos correctly", () => {
     expect(screen.getByAltText("Sindpol Logo")).toBeInTheDocument();
     expect(screen.getByAltText("Sentinela Logo")).toBeInTheDocument();
