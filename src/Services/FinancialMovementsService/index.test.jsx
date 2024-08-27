@@ -20,7 +20,8 @@ vi.mock("../BaseService", () => ({
 
 describe("Financial Movements Service", () => {
   const mockToken = "mockToken";
-  const financialMovementsData = { contaOrigem: "Fornecedor",
+  const financialMovementsData = {
+    contaOrigem: "Fornecedor",
     contaDestino: "Sindicalizado",
     nomeOrigem: "Nome Exemplo",
     nomeDestino: "Nome Exemplo",
@@ -34,7 +35,8 @@ describe("Financial Movements Service", () => {
     datadeVencimento: dayjs("2024-01-01"),
     datadePagamento: dayjs("2024-02-01"),
     baixada: false,
-    descricao: "Descrição de exemplo", };
+    descricao: "Descrição de exemplo",
+  };
   const financialMovementId = "123";
 
   beforeEach(() => {
@@ -95,7 +97,10 @@ describe("Financial Movements Service", () => {
   });
 
   it("should update a financial movement", async () => {
-    const updatedFinancialMovement = { ...financialMovementsData, valorBruto: "2000" };
+    const updatedFinancialMovement = {
+      ...financialMovementsData,
+      valorBruto: "2000",
+    };
     APIBank.patch.mockResolvedValueOnce({ data: updatedFinancialMovement });
 
     const result = await updateFinancialMovementsById(
@@ -114,7 +119,6 @@ describe("Financial Movements Service", () => {
   });
 
   it("should delete a financial movement", async () => {
-
     APIBank.delete.mockResolvedValueOnce({
       data: { message: "Financial movement deleted" },
     });
@@ -129,5 +133,4 @@ describe("Financial Movements Service", () => {
     );
     expect(result).toEqual({ message: "Financial movement deleted" });
   });
-  
 });

@@ -8,7 +8,7 @@ export const createFinancialMovements = async (financialMovementsData) => {
     }
     const response = await APIBank.post(
       `/financialMovements/create`,
-       financialMovementsData,
+      financialMovementsData,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -72,7 +72,7 @@ export const updateFinancialMovementsById = async (
     }
     const response = await APIBank.patch(
       `/financialMovements/update/${id}`,
-       financialMovementsData ,
+      financialMovementsData,
       {
         headers: {
           Authorization: `Bearer ${token}`,
