@@ -1,8 +1,16 @@
 import { describe, it, expect, vi, afterEach, beforeEach } from "vitest";
-import { render, screen, cleanup } from "@testing-library/react";
+import {
+  render,
+  screen,
+  cleanup,
+  fireEvent,
+  waitFor,
+} from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import OrganId from "./index";
 import "@testing-library/jest-dom";
+import userEvent from "@testing-library/user-event";
+import { updateOrgan } from "../../../../Services/organService";
 
 describe("OrgansUpdate", () => {
   beforeEach(() => {
@@ -41,19 +49,65 @@ describe("OrgansUpdate", () => {
     expect(screen.getByText("Dados de Lotação")).toBeInTheDocument();
   });
 
-  //   it("validate form before submit", async () => {
-  //     render(
-  //       <Router>
-  //         <OrganId />
-  //       </Router>
-  //     );
+  it("validate form before submit", async () => {
+    render(
+      <Router>
+        <OrganId />
+      </Router>
+    );
 
-  //     const nomeInput = screen.findByLabelText("Órgão *");
-  //     fireEvent.change(nomeInput, {
-  //         target: { value: "manue"},
-  //     })
+    const nomeInput = await screen.findByLabelText("Órgão *");
+    const lotInput = await screen.findByLabelText("Nome da Lotação *");
+    const siglaInput = await screen.findByLabelText("Sigla *");
 
-  //     await userEvent.click(screen.getByText("Salvar"));
+    fireEvent.change(nomeInput, {
+      target: { value: "" },
+    });
 
-  //   });
+    await userEvent.click(screen.getByText("Salvar"));
+
+    // Espera até que a mensagem de erro seja exibida
+    const errorMessage = await screen.findByText(
+      "Certifique-se de que todos os campos obrigatórios estão preenchidos"
+    );
+    expect(errorMessage).toBeInTheDocument();
+
+    // Fecha o Snackbar
+    await userEvent.click(screen.getByRole("button", { name: /close/i }));
+
+    // Aguarda até que a mensagem de erro seja removida do DOM
+    await waitFor(() =>
+      expect(
+        screen.queryByText(
+          "Certifique-se de que todos os campos obrigatórios estão preenchidos"
+        )
+      ).not.toBeInTheDocument()
+    );
+    //Espera que a função de mandar pro banco não foi chamada
+    expect(updateOrgan).not.toHaveBeenCalled();
+
+    fireEvent.change(nomeInput, {
+      target: { value: "Organ-Teste" },
+    });
+
+    fireEvent.change(lotInput, {
+      target: { value: "Lotação1" },
+    });
+
+    fireEvent.change(siglaInput, {
+      target: { value: "L1" },
+    });
+
+    await userEvent.click(screen.getByText("Salvar"));
+
+    await waitFor(() => {
+      expect(updateOrgan).toHaveBeenCalled();
+    });
+
+    waitFor(() => {
+      expect(screen.getByText("Alterações salvas"));
+      fireEvent.click(screen.getByText("OK"));
+      expect(window.location.pathname).toBe("/organ/list");
+    });
+  });
 });
