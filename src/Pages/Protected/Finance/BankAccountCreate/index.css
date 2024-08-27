@@ -1,60 +1,85 @@
 @media screen and (max-width: 1080px) {
-  .bank-container {
+  .bar-container-benefits {
     display: grid;
   }
 
-  .bank-container .section {
+  .container-benefits {
     display: flex;
     flex-direction: column;
-    margin: 3rem;
+    margin-bottom: 20px;
   }
 
-  .bank-container .section .form {
+  label {
+    color: #332117 !important;
+  }
+
+  .forms-container-benefits {
+    margin: 1rem;
     width: 90%;
-    display: grid;
-    align-items: end;
-  }
-
-  .Botao-submit-bankAccount .MuiButton-root {
-    width: 100%;
-    position: relative;
-    display: flex;
-  }
-
-  .edit-buttons {
-    display: flex;
-    flex-direction: column;
+    display: inherit;
     justify-content: center;
-    align-items: center;
-    gap: 20px;
+    flex-direction: column;
+  }
+
+  .forms-container-benefits button {
+    width: 100%;
+  }
+
+  .forms-container-benefits h1 {
+    font-size: 22px;
+    font-weight: 800;
+    margin-left: 8px;
+    margin-right: 50px;
     margin-top: 1rem;
+    margin-bottom: -1rem;
+    color: #332117 !important;
+    white-space: nowrap;
+  }
+
+  .forms-container-benefits h3 {
+    font-size: 16px;
+    font-weight: 400;
+    margin-left: 1rem;
+    margin-top: 3rem;
+    color: #332117 !important;
   }
 }
 
-@media screen and (min-width: 1081px) {
-  .bank-container {
+@media screen and (min-width: 1080px) {
+  .bar-container-benefits {
     display: flex;
     height: 100%;
+    position: fixed;
   }
 
-  .bank-container .section {
-    display: block;
-    width: 100%;
+  .container-benefits {
+    display: flex;
     flex-direction: row;
-    margin: 3rem;
+    margin-bottom: 20px;
   }
 
-  .bank-container .section .form {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+  .forms-container-benefits {
+    margin: 1rem;
+    width: 90%;
+    display: inherit;
     justify-content: center;
     flex-direction: column;
   }
 
-  .Botao-submit-bankAccount {
-    display: flex;
-    align-items: end;
-    margin-top: 1rem;
+  .forms-container-benefits button {
+    width: 100%;
+  }
+
+  .forms-container-benefits h1 {
+    font-size: 34px;
+    font-weight: 800;
+    margin-bottom: -0.5rem;
+  }
+
+  .forms-container-benefits h3 {
+    font-size: 24px;
+    font-weight: 400;
+    margin-left: 1rem;
+    margin-top: 3rem;
   }
 }
