@@ -127,6 +127,11 @@ export default function UpdateSupplier() {
     return formattedCEP.replace(/(\d{5})(\d)/, "$1-$2");
   };
 
+  const mascaraNumericos = (numerico) => {
+    let res = numerico.replace(/\D/g, "");
+    return res;
+  };
+
   const handleChangeTipoPessoa = (event) => {
     setTipoPessoa(event.target.value);
   };
@@ -421,19 +426,19 @@ export default function UpdateSupplier() {
           <FieldText
             label="Agência"
             value={agencia}
-            onChange={(e) => setAgencia(e.target.value)}
+            onChange={(e) => setAgencia(mascaraNumericos(e.target.value))}
           />
 
           <FieldText
             label="Número"
             value={numeroBanco}
-            onChange={(e) => setNumeroBanco(e.target.value)}
+            onChange={(e) => setNumeroBanco(mascaraNumericos(e.target.value))}
           />
 
           <FieldText
             label="DV"
             value={dv}
-            onChange={(e) => setDv(e.target.value)}
+            onChange={(e) => setDv(mascaraNumericos(e.target.value))}
           />
         </div>
         <FieldText
