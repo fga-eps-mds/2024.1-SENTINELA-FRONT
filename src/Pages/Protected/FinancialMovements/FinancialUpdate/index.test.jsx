@@ -136,7 +136,7 @@ describe("FinancialUpdate", () => {
       </Router>
     );
 
-    screen.debug(); // Verifique o HTML renderizado
+    screen.debug();
   });
 
   it("should correctly update fields when changing inputs", async () => {
