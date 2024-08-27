@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DataSelect from "../../../../Components/DataSelect";
 import FieldSelect from "../../../../Components/FieldSelect";
-//import PrimaryButton from "../../../../Components/PrimaryButton";
+import { getSupplierForm } from "../../../../Services/supplierService";
 
 export default function GenerateFinancialReport() {
-  const [fornecedor] = useState("");
+  const [fornecedor, setFornecedor] = useState("");
   const [tipoLancamento, setTipoLancamento] = useState("");
   const [tipoDocumento, setTipoDocumento] = useState("");
   const [contaBancaria, setContaBancaria] = useState("");
@@ -12,6 +12,24 @@ export default function GenerateFinancialReport() {
   const [formArquivo, setFormArquivo] = useState("");
   const [dataInicio, setDataInicio] = useState(null);
   const [dataFinal, setDataFinal] = useState(null);
+  const [fornecedores, setFornecedores] = useState([]);
+
+  useEffect(() => {
+    const fetchFornecedores = async () => {
+      try {
+        const suppliers = await getSupplierForm();
+        if (Array.isArray(suppliers)) {
+          setFornecedores(suppliers.map((supplier) => supplier.nome));
+        } else {
+          console.error("Os dados recebidos não são um array.");
+        }
+      } catch (error) {
+        console.error("Erro ao buscar fornecedores:", error);
+      }
+    };
+
+    fetchFornecedores();
+  }, []);
 
   const handleChangeTipoLancamento = (event) => {
     console.log("Tipo lançamento: ", event.target.value);
@@ -45,10 +63,10 @@ export default function GenerateFinancialReport() {
 
         <div className="double-box-fin">
           <FieldSelect
-            label="Empresa/Fornecedor"
+            label="Fornecedor"
             value={fornecedor}
-            onChange={""}
-            options={["Empresa", "Fornecedor"]}
+            onChange={(e) => setFornecedor(e.target.value)}
+            options={fornecedores}
           />
           <FieldSelect
             label="Tipo de lançamento"
