@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useAuth } from "../../../../Context/auth";
 import PrimaryButton from "../../../../Components/PrimaryButton";
 import SecondaryButton from "../../../../Components/SecondaryButton";
 import FieldText from "../../../../Components/FieldText";
@@ -19,8 +18,6 @@ export const OrganId = () => {
   const [lotacoes, setLotacoes] = useState([{ nomeLotacao: "", sigla: "" }]);
   const [errors, setErrors] = useState({});
   const [openError, setOpenError] = useState(false);
-
-  const { user } = useAuth();
   const { state } = useLocation();
   const organsId = state?.organsId;
   const navigate = useNavigate();
@@ -140,7 +137,7 @@ export const OrganId = () => {
     }
   };
 
-  return user ? (
+  return (
     <div className="container-organ">
       <div className="forms-container-organ">
         <h1>Editar Órgão</h1>
@@ -159,7 +156,7 @@ export const OrganId = () => {
         {lotacoes.map((lotacao, index) => (
           <div key={index} className="section-doublebox">
             <FieldText
-              label="Nome da Lotação"
+              label="Nome da Lotação *"
               value={lotacao.nomeLotacao}
               onChange={(e) =>
                 handleLotacaoChange(index, "nomeLotacao", e.target.value)
@@ -168,7 +165,7 @@ export const OrganId = () => {
               erro={errors[`lotacao-${index}-nome`]}
             />
             <FieldText
-              label="Sigla"
+              label="Sigla *"
               value={lotacao.sigla}
               onChange={(e) =>
                 handleLotacaoChange(index, "sigla", e.target.value)
@@ -259,7 +256,7 @@ export const OrganId = () => {
         />
       </Modal>
     </div>
-  ) : null;
+  );
 };
 
 export default OrganId;
