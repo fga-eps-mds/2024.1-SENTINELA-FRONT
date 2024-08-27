@@ -136,4 +136,51 @@ describe("OrgansUpdate", () => {
       expect(window.location.pathname).toBe("organ/list");
     });
   });
+
+  it("Remove the only lotation", async () => {
+    render(
+      <Router>
+        <OrganId />
+      </Router>
+    );
+
+    await userEvent.click(screen.getByText(/Remover Lotação/i));
+
+    expect(
+      screen.getByText("Você deve manter pelo menos uma lotação.")
+    ).toBeInTheDocument();
+
+    expect(deleteOrganById).not.toHaveBeenCalled();
+  });
+
+  it("Add new lotation", async () => {
+    render(
+      <Router>
+        <OrganId />
+      </Router>
+    );
+
+    await userEvent.click(screen.getByText(/Adicionar Nova Lotação/i));
+
+    const newlotAdd = await screen.findByLabelText("Nome da Lotação *");
+    const newsiglaAdd = await screen.findByLabelText("Sigla *");
+
+    // expect(newlotAdd.length).toBeGreaterThan(1);
+    // expect(newsiglaAdd.length).toBeGreaterThan(1);
+
+    fireEvent.change(newlotAdd, {
+      target: { value: "NovaLotacao" },
+    });
+
+    fireEvent.change(newsiglaAdd, {
+      target: { value: "NovaSigla" },
+    });
+
+    // const removeButtons = screen.getAllByText(/Remover Lotação/i);
+
+    // expect(removeButtons.length).toBeGreaterThan(1);
+
+    // Clica no botão 'Remover Lotação' correspondente à nova lotação adicionada
+    // await userEvent.click(removeButtons[1]);
+  });
 });
