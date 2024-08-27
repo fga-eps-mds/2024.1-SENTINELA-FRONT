@@ -20,6 +20,10 @@ import FinanceHubPage from "../Pages/Protected/Finance/FinanceHubPage";
 import FinanceBankAccount from "../Pages/Protected/Finance/BankAccountCreate";
 import FinanceUpdate from "../Pages/Protected/Finance/BankAccountUpdate";
 import FinanceList from "../Pages/Protected/Finance/BankAccountList";
+import FinancialMovements from "../Pages/Protected/FinancialMovements/FinancialCreate";
+import FinancialList from "../Pages/Protected/FinancialMovements/FinancialList";
+import FinancialUpdate from "../Pages/Protected/FinancialMovements/FinancialUpdate";
+import ContributionHistoric from "../Pages/Protected/FinancialMovements/ContributionHistoric";
 
 const ProtectedRoutes = () => {
   return (
@@ -48,6 +52,16 @@ const ProtectedRoutes = () => {
       <Route path="/finance/criar" element={<FinanceBankAccount />} />
       <Route path="/finance/update/:id" element={<FinanceUpdate />} />
       <Route path="/finance/list" element={<FinanceList />} />
+      <Route path="/movimentacoes/criar" element={<FinancialMovements />} />
+      <Route path="/movimentacoes/lista" element={<FinancialList />} />
+      <Route
+        path="/movimentacoes/visualizar/:id"
+        element={<FinancialUpdate />}
+      />
+      <Route
+        path="/movimentacoes/contribuicoes/:name"
+        element={<ContributionHistoric />}
+      />
     </Routes>
   );
 };
