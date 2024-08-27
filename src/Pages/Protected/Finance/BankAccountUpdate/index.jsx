@@ -100,7 +100,7 @@ const BankAccountId = () => {
   const handleUpdate = async () => {
     // Construir o objeto de dados atualizados dinamicamente
     const updatedData = {
-      ...(name && { name }), // Inclui name se não estiver vazio
+      ...(name && { name }),
       ...(pix && { pix }), // Inclui pix se não estiver vazio
       ...(bank && { bank }), // Inclui bank se não estiver vazio
       ...(accountType && { accountType }), // Inclui accountType se não estiver vazio
