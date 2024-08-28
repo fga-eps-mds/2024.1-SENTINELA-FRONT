@@ -73,6 +73,7 @@ describe("BankAccountId", () => {
     );
     expect(screen).toMatchSnapshot();
   });
+
   it("should fetch and display bank account data", async () => {
     // Mock da resposta do serviço getBankAccount
     const bankAccountData = {
@@ -119,9 +120,37 @@ describe("BankAccountId", () => {
     getBankAccount.mockResolvedValue(updatedBankAccountData);
     updateBankAccount.mockResolvedValue(updatedBankAccountData);
     render(
-      <MemoryRouter initialEntries={["/finance/bank-account/123"]}>
+      <MemoryRouter initialEntries={["/finance/bankAccount/123"]}>
         <Routes>
-          <Route path="/finance/bank-account/:id" element={<BankAccountId />} />
+          <Route path="/finance/bankAccount/:id" element={<BankAccountId />} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    // Espera a chamada do fetch
+    await waitFor(() => {
+      expect(getBankAccount).toHaveBeenCalledWith("123");
+    });
+  });
+  it("should't update bank account data", async () => {
+    // Mock da resposta do serviço updateBankAccount
+    const updatedBankAccountData = {
+      name: "",
+      pix: "987654321",
+      bank: "Banco Atualizado",
+      accountType: "Poupança",
+      accountNumber: "98765432109",
+      dv: "2",
+      status: "Inativo",
+      agency: "54321",
+    };
+
+    getBankAccount.mockResolvedValue(updatedBankAccountData);
+    updateBankAccount.mockResolvedValue(updatedBankAccountData);
+    render(
+      <MemoryRouter initialEntries={["/finance/bankAccount/123"]}>
+        <Routes>
+          <Route path="/finance/bankAccount/:id" element={<BankAccountId />} />
         </Routes>
       </MemoryRouter>
     );
