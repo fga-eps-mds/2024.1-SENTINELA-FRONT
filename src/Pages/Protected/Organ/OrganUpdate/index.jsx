@@ -114,11 +114,8 @@ export const OrganId = () => {
       ), // Apenas lotações completas
     };
 
-    console.log("Dados atualizados:", updatedData);
-
     try {
-      const response = await updateOrgan(organsId, updatedData);
-      console.log("Resposta do servidor:", response);
+      await updateOrgan(organsId, updatedData);
       setOpenSave(true);
     } catch (error) {
       console.error("Erro ao enviar dados:", error);
@@ -130,8 +127,7 @@ export const OrganId = () => {
     try {
       setOpenVerificationDelete(false);
       setOpenDeleteOrgan(true);
-      const response = await deleteOrganById(organsId);
-      console.log("Resposta do servidor:", response);
+      await deleteOrganById(organsId);
     } catch (error) {
       console.error("Erro ao excluir orgao:", error);
     }
