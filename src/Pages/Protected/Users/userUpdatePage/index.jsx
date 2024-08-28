@@ -1,4 +1,4 @@
-import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
+import { Button, FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import FieldNumber from "../../../../Components/FieldNumber";
@@ -29,6 +29,8 @@ export default function UserUpdatePage() {
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showDeletedModal, setShowDeletedModal] = useState(false);
+  const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isCelularValid, setIsCelularValid] = useState(true);
 
   const handleNomeCompletoChange = (e) => {
     const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, "");
@@ -57,7 +59,7 @@ export default function UserUpdatePage() {
             setCelular(user.phone || "");
             setLogin(user.status ? "Ativo" : "Inativo");
             setEmail(user.email || "");
-            setPerfilSelecionado(user.role || "");
+            setPerfilSelecionado(user.role._id || "");
           }
         } catch (error) {
           console.error("Erro ao buscar usuário:", error);
@@ -73,6 +75,8 @@ export default function UserUpdatePage() {
     return emailRegex.test(email);
   };
 
+  const removeMask = (celular) => celular.replace(/\D/g, "");
+
   const handleDelete = async () => {
     setShowDeleteModal(false);
     if (userId) {
@@ -86,8 +90,16 @@ export default function UserUpdatePage() {
   };
 
   const handleSave = async () => {
+    const trimmedCelular = removeMask(celular);
+    const isValidNumber =
+      /^\d+$/.test(trimmedCelular) && trimmedCelular.length > 10;
+    const isValidEmailAddress = isValidEmail(email);
+
+    setIsCelularValid(isValidNumber);
+    setIsEmailValid(isValidEmailAddress);
+
     // Verifica se o email é válido antes de salvar
-    if (userId && isValidEmail(email)) {
+    if (userId && isValidEmailAddress && isValidNumber) {
       const updatedUser = {
         name: nomeCompleto,
         email: email,
@@ -135,18 +147,29 @@ export default function UserUpdatePage() {
     navigate("/usuarios");
   };
 
+  const handleNavigateToContributions = () => {
+    navigate(`/movimentacoes/contribuicoes/${nomeCompleto}`, {
+      state: {
+        userId,
+        nomeCompleto,
+        celular,
+        email,
+        login,
+        perfilSelecionado,
+      },
+    });
+  };
+
   return (
     <section className="container">
       <div className="forms-container-user">
         <h1>Visualização de usuário</h1>
-
         <h3>Dados Pessoais</h3>
         <FieldText
           label="Nome Completo"
           value={nomeCompleto}
           onChange={handleNomeCompletoChange}
         />
-
         <div className="double-box-user">
           <FieldNumber
             label="Celular"
@@ -162,18 +185,26 @@ export default function UserUpdatePage() {
             options={loginOptions}
           />
         </div>
-
+        {!isCelularValid && (
+          <label className="isValid">
+            *Verifique se o número de celular inserido está completo
+          </label>
+        )}
         <FieldText
           label="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        {!isValidEmail(email) && (
-          <label className="isEmailValid">*Insira um email válido</label>
+        {!isEmailValid && (
+          <label className="isValid">*Insira um email válido</label>
         )}
-
+        <Button
+          className="contribution-btn"
+          onClick={handleNavigateToContributions}
+        >
+          Histórico de Contribuições
+        </Button>
         <h3>Perfil</h3>
-
         <RadioGroup
           className="perfil-radiogroup"
           value={perfilSelecionado}
@@ -188,7 +219,6 @@ export default function UserUpdatePage() {
             />
           ))}
         </RadioGroup>
-
         <div className="double-buttons-user">
           <SecondaryButton text="Deletar" onClick={handleDeleteModal} />
           <PrimaryButton text="Salvar" onClick={handleSave} />
@@ -202,7 +232,6 @@ export default function UserUpdatePage() {
             width="338px"
           />
         </Modal>
-
         <Modal
           alertTitle="Deseja deletar o usuário do sistema?"
           show={showDeleteModal}

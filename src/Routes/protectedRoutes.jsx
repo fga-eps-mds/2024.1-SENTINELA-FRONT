@@ -16,6 +16,14 @@ import Benefits from "../Pages/Protected/Benefit/Benefits";
 import BenefitsList from "../Pages/Protected/Benefit/BenefitsList";
 import BenefitsCreate from "../Pages/Protected/Benefit/BenefitsCreate";
 import BenefitsUpdate from "../Pages/Protected/Benefit/BenefitsUpdate";
+import FinanceHubPage from "../Pages/Protected/Finance/FinanceHubPage";
+import FinanceBankAccount from "../Pages/Protected/Finance/BankAccountCreate";
+import FinanceUpdate from "../Pages/Protected/Finance/BankAccountUpdate";
+import FinanceList from "../Pages/Protected/Finance/BankAccountList";
+import FinancialMovements from "../Pages/Protected/FinancialMovements/FinancialCreate";
+import FinancialList from "../Pages/Protected/FinancialMovements/FinancialList";
+import FinancialUpdate from "../Pages/Protected/FinancialMovements/FinancialUpdate";
+import ContributionHistoric from "../Pages/Protected/FinancialMovements/ContributionHistoric";
 
 const ProtectedRoutes = () => {
   return (
@@ -23,7 +31,7 @@ const ProtectedRoutes = () => {
       <Route path="/home" element={<Home />} />
       <Route path="/fornecedores/criar" element={<Supplier />} />
       <Route path="/fornecedores" element={<ListSupplier />} />
-      <Route path="/fornecedores/:nome" element={<ViewSupplier />} />
+      <Route path="/fornecedores/:id" element={<ViewSupplier />} />
       <Route path="/usuarios/criar" element={<UserCreatePage />} />
       <Route path="/usuarios/editar/:nome" element={<UserUpdatePage />} />
       <Route path="/usuarios" element={<UserListPage />} />
@@ -40,6 +48,20 @@ const ProtectedRoutes = () => {
       <Route path="/beneficios/lista" element={<BenefitsList />} />
       <Route path="/beneficios/criar" element={<BenefitsCreate />} />
       <Route path="/beneficios/editar/:id" element={<BenefitsUpdate />} />
+      <Route path="/finance/hub" element={<FinanceHubPage />} />
+      <Route path="/finance/criar" element={<FinanceBankAccount />} />
+      <Route path="/finance/update/:id" element={<FinanceUpdate />} />
+      <Route path="/finance/list" element={<FinanceList />} />
+      <Route path="/movimentacoes/criar" element={<FinancialMovements />} />
+      <Route path="/movimentacoes/lista" element={<FinancialList />} />
+      <Route
+        path="/movimentacoes/visualizar/:id"
+        element={<FinancialUpdate />}
+      />
+      <Route
+        path="/movimentacoes/contribuicoes/:name"
+        element={<ContributionHistoric />}
+      />
     </Routes>
   );
 };

@@ -27,14 +27,18 @@ def generate_metrics():
     # nome do repositório, vem como argumento no release.yml
     repository_name = sys.argv[1]
     # nome da branch onde foi chamada o script, vem de argumento no release.yml
-    branch = sys.argv[2]
+    ref_name = sys.argv[2]
+
     # url montada
     # base url = api do sonar
     # prefix = id da org da disciplina
     # repository_name = nome do repositorio (unido com prefix separado por _ é o identificador do projeto no sonar)
     # o join do metrics une as métricas a serem solicitadas como parâmetros
     # branch = específica o nome da branch para pegar as métricas daquela branch em específicp
-    url = f'{base_url}{prefix}_{repository_name}&metricKeys={",".join(metrics)}&branch={branch}'
+
+    # Verifica se a referência é uma branch ou uma tag
+    url = f'{base_url}{prefix}_{repository_name}&metricKeys={",".join(metrics)}&branch={ref_name}' if 'refs/heads/' in sys.argv[2] else f'{base_url}{prefix}_{repository_name}&metricKeys={",".join(metrics)}&tag={ref_name}'
+
 
     with urllib.request.urlopen(url) as res:
         data = json.load(res)
@@ -44,7 +48,7 @@ def generate_metrics():
         underlined_repo_name = repository_name[:16] + \
             repository_name[16:].replace('-', "_")
 
-        filename = f"{prefix}-{underlined_repo_name}-{date_padrao_hilmer}-{branch}.json"
+        filename = f"{prefix}-{underlined_repo_name}-{date_padrao_hilmer}-{ref_name}.json"
         print(filename)
         with open(filename, "w") as file:
             json.dump(data, file)

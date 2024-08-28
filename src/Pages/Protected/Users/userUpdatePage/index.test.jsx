@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, vi, afterEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, useNavigate } from "react-router-dom";
 import UserUpdatePage from "./index";
 import {
   getRoles,
@@ -23,6 +23,7 @@ vi.mock("react-router-dom", async (importOriginal) => {
     useLocation: () => ({
       state: { userId: "123" },
     }),
+    useNavigate: vi.fn(), // Mocks useNavigate
   };
 });
 
@@ -82,10 +83,14 @@ describe("UserUpdatePage", () => {
     const emailInput = screen.getByLabelText("Email");
     fireEvent.change(emailInput, { target: { value: "invalid-email" } });
 
-    expect(screen.getByText("*Insira um email válido")).toBeInTheDocument();
+    fireEvent.click(screen.getByText("Salvar"));
+
+    await waitFor(() => {
+      expect(screen.getByText("*Insira um email válido")).toBeInTheDocument();
+    });
   });
 
-  it("shows an error message for invalid phone number", async () => {
+  it("validates phone number input", async () => {
     getRoles.mockResolvedValueOnce([]);
     getUserById.mockResolvedValueOnce({
       name: "",
@@ -103,7 +108,11 @@ describe("UserUpdatePage", () => {
     fireEvent.click(screen.getByText("Salvar"));
 
     await waitFor(() => {
-      expect(patchUserById).not.toHaveBeenCalled();
+      expect(
+        screen.getByText(
+          "*Verifique se o número de celular inserido está completo"
+        )
+      ).toBeInTheDocument();
     });
   });
 
@@ -146,5 +155,41 @@ describe("UserUpdatePage", () => {
       );
       expect(screen.getByText("Alterações Salvas")).toBeInTheDocument();
     });
+  });
+
+  it("navigates to the contributions page when the button is clicked", async () => {
+    const mockNavigate = vi.fn();
+    vi.mocked(useNavigate).mockReturnValue(mockNavigate);
+
+    getRoles.mockResolvedValueOnce([{ _id: "1", name: "Admin" }]);
+    getUserById.mockResolvedValueOnce({
+      name: "John Doe",
+      phone: "1234567890",
+      status: true,
+      email: "john.doe@example.com",
+      role: "1",
+    });
+
+    setup();
+
+    await waitFor(() => {
+      expect(screen.getByLabelText("Nome Completo")).toHaveValue("John Doe");
+    });
+
+    fireEvent.click(screen.getByText("Histórico de Contribuições"));
+
+    expect(mockNavigate).toHaveBeenCalledWith(
+      `/movimentacoes/contribuicoes/John Doe`,
+      {
+        state: {
+          userId: "123",
+          nomeCompleto: "John Doe",
+          celular: "1234567890",
+          email: "john.doe@example.com",
+          login: "Ativo", // ou o estado correto
+          perfilSelecionado: "1",
+        },
+      }
+    );
   });
 });
