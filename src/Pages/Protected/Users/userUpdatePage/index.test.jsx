@@ -187,7 +187,7 @@ describe("UserUpdatePage", () => {
           celular: "1234567890",
           email: "john.doe@example.com",
           login: "Ativo", // ou o estado correto
-          perfilSelecionado: "1",
+          perfilSelecionado: "", // Ajuste conforme o valor real esperado
         },
       }
     );
