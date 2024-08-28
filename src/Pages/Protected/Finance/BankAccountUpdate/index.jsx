@@ -71,7 +71,6 @@ const BankAccountId = () => {
 
   const saveUpdate = () => {
     handleUpdate();
-    setOpenSave(true);
   };
 
   useEffect(() => {
@@ -99,6 +98,11 @@ const BankAccountId = () => {
 
   const handleUpdate = async () => {
     // Construir o objeto de dados atualizados dinamicamente
+    if (name === "" || accountType === "" || bank === "" || status === "") {
+      setOpenError(true);
+      return;
+    }
+
     const updatedData = {
       ...(name && { name }), // Inclui name se não estiver vazio
       ...(pix && { pix }), // Inclui pix se não estiver vazio
@@ -115,6 +119,7 @@ const BankAccountId = () => {
     try {
       const response = await updateBankAccount(id, updatedData);
       console.log("Resposta do servidor:", response);
+      setOpenSave(true);
       return response;
     } catch (error) {
       console.error("Erro ao enviar dados:", error);
