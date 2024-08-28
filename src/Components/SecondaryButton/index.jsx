@@ -2,7 +2,12 @@ import PropTypes from "prop-types";
 import theme from "../../Styles/global";
 import { Button } from "@mui/material";
 
-export default function SecondaryButton({ text, onClick, maxWidth }) {
+export default function SecondaryButton({
+  text,
+  onClick,
+  maxWidth,
+  marginTop,
+}) {
   const rgbaValue01 = `rgba(174, 136, 60, 0.1);`;
   return (
     <Button
@@ -15,6 +20,7 @@ export default function SecondaryButton({ text, onClick, maxWidth }) {
         border: `2px solid ${theme.palette.button}`, // Cor do stroke em torno do botão
         maxWidth: { maxWidth }, // Largura do botão
         width: "90%",
+        marginTop: { marginTop },
         "&amp;:hover": {
           transform: "scale(1.03)",
           backgroundColor: rgbaValue01,
@@ -30,4 +36,5 @@ SecondaryButton.propTypes = {
   text: PropTypes.string.isRequired,
   maxWidth: PropTypes.string,
   onClick: PropTypes.func,
+  marginTop: PropTypes.string,
 };

@@ -184,8 +184,9 @@ const BankAccountId = () => {
             onClick={() => {
               setOpenVerificationDelete(true);
             }}
+            marginTop="1rem"
           />
-          <PrimaryButton text="Salvar" onClick={saveUpdate} />
+          <PrimaryButton text="Salvar" onClick={saveUpdate} marginTop="1rem" />
         </div>
       </div>
 
