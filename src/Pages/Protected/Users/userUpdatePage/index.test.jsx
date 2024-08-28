@@ -123,7 +123,7 @@ describe("UserUpdatePage", () => {
       phone: "1234567890",
       status: true,
       email: "john.doe@example.com",
-      role: "1",
+      role: { _id: "1" },
     });
 
     setup();
@@ -149,7 +149,7 @@ describe("UserUpdatePage", () => {
           email: "jane.doe@example.com",
           phone: "0987654321",
           status: true,
-          role: "1",
+          role: { _id: "1" },
         },
         "mock-token"
       );
@@ -167,7 +167,7 @@ describe("UserUpdatePage", () => {
       phone: "1234567890",
       status: true,
       email: "john.doe@example.com",
-      role: "1",
+      role: { _id: "1" },
     });
 
     setup();
@@ -186,7 +186,7 @@ describe("UserUpdatePage", () => {
           nomeCompleto: "John Doe",
           celular: "1234567890",
           email: "john.doe@example.com",
-          login: "Ativo", // ou o estado correto
+          login: "Ativo",
           perfilSelecionado: "1",
         },
       }
