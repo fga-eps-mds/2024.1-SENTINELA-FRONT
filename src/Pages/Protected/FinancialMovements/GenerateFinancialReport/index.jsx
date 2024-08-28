@@ -3,6 +3,7 @@ import DataSelect from "../../../../Components/DataSelect";
 import FieldSelect from "../../../../Components/FieldSelect";
 import { getSupplierForm } from "../../../../Services/supplierService";
 import { generateFinancialReport } from "../../../../Services/pdfService";
+import { generateCSVReport } from "../../../../Services/csvService";
 
 export default function GenerateFinancialReport() {
   const [fornecedor, setFornecedor] = useState("");
@@ -33,21 +34,40 @@ export default function GenerateFinancialReport() {
   }, []);
 
   const handleGenerateReport = async () => {
-    const reportGenerated = await generateFinancialReport({
-      fornecedor,
-      tipoLancamento,
-      tipoDocumento,
-      contaBancaria,
-      sitPagamento,
-      formArquivo,
-      dataInicio,
-      dataFinal,
-    });
+    try {
+      let reportGenerated;
 
-    if (!reportGenerated) {
-      console.log("Relatório gerado e baixado com sucesso!");
-    } else {
-      console.error("Erro ao gerar o relatório.");
+      if (formArquivo === "CSV") {
+        reportGenerated = await generateCSVReport({
+          fornecedor,
+          tipoLancamento,
+          tipoDocumento,
+          contaBancaria,
+          sitPagamento,
+          formArquivo,
+          dataInicio,
+          dataFinal,
+        });
+      } else {
+        reportGenerated = await generateFinancialReport({
+          fornecedor,
+          tipoLancamento,
+          tipoDocumento,
+          contaBancaria,
+          sitPagamento,
+          formArquivo,
+          dataInicio,
+          dataFinal,
+        });
+      }
+
+      if (!reportGenerated) {
+        console.log("Relatório gerado e baixado com sucesso!");
+      } else {
+        console.error("Erro ao gerar o relatório.");
+      }
+    } catch (error) {
+      console.error("Erro ao gerar o relatório:", error);
     }
   };
 
