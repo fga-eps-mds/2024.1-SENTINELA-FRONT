@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import DataSelect from "../../../../Components/DataSelect";
 import FieldSelect from "../../../../Components/FieldSelect";
 import { getSupplierForm } from "../../../../Services/supplierService";
+import { generateFinancialReport } from "../../../../Services/pdfService";
 
 export default function GenerateFinancialReport() {
   const [fornecedor, setFornecedor] = useState("");
@@ -30,6 +31,25 @@ export default function GenerateFinancialReport() {
 
     fetchFornecedores();
   }, []);
+
+  const handleGenerateReport = async () => {
+    const reportGenerated = await generateFinancialReport({
+      fornecedor,
+      tipoLancamento,
+      tipoDocumento,
+      contaBancaria,
+      sitPagamento,
+      formArquivo,
+      dataInicio,
+      dataFinal,
+    });
+
+    if (!reportGenerated) {
+      console.log("Relatório gerado e baixado com sucesso!");
+    } else {
+      console.error("Erro ao gerar o relatório.");
+    }
+  };
 
   const handleChangeTipoLancamento = (event) => {
     console.log("Tipo lançamento: ", event.target.value);
@@ -153,6 +173,7 @@ export default function GenerateFinancialReport() {
             onChange={(newValue) => setDataFinal(newValue)}
           />
         </div>
+        <button onClick={handleGenerateReport}>Gerar Relatório</button>
       </div>
     </section>
   );
