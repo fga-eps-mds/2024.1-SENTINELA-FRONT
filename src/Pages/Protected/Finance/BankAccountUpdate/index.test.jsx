@@ -8,6 +8,7 @@ import {
   updateBankAccount,
 } from "../../../../Services/bankAccountService";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
+import { useAuth } from "../../../../Context/auth";
 
 function mockServices() {
   vi.mock("../../../../Services/bankAccountService", () => ({
@@ -16,6 +17,9 @@ function mockServices() {
     deleteBankAccount: vi.fn(),
   }));
 }
+vi.mock("../../../../Context/auth", () => ({
+  useAuth: vi.fn(),
+}));
 
 describe("BankAccountId", () => {
   beforeEach(() => {
@@ -36,6 +40,29 @@ describe("BankAccountId", () => {
   afterEach(() => {
     cleanup();
     vi.clearAllMocks();
+  });
+  it("deve renderizar o componente quando o usuário está autenticado", () => {
+    useAuth.mockReturnValue({ user: { id: "user123" } });
+
+    render(
+      <MemoryRouter>
+        <BankAccountId />
+      </MemoryRouter>
+    );
+
+    expect(screen.getByText("Visualização de benefícios")).toBeInTheDocument();
+  });
+
+  it("não deve renderizar o componente quando o usuário não está autenticado", () => {
+    useAuth.mockReturnValue({ user: null });
+
+    const { container } = render(
+      <MemoryRouter>
+        <BankAccountId />
+      </MemoryRouter>
+    );
+
+    expect(container.firstChild).toBeNull();
   });
 
   it("renders correctly", () => {
