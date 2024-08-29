@@ -11,18 +11,6 @@ export default function UserHubPage() {
     navigate("/usuarios");
   };
 
-  const handleCadastroClick = () => {
-    navigate("/usuarios/criar");
-  };
-
-  const handleAtualizarClick = () => {
-    navigate("/perfil");
-  };
-
-  const handleCadastroPerfilClick = () => {
-    navigate("/perfis/criar");
-  };
-
   const handleListaPerfilClick = () => {
     navigate("/perfis");
   };
@@ -46,22 +34,9 @@ export default function UserHubPage() {
             text="Filiações pendentes"
             onClick={() => navigate("membershipRequests/")}
           />
-
-          <SecondaryButton
-            text="CADASTRO DE USUÁRIOS"
-            onClick={handleCadastroClick}
-          />
           <SecondaryButton
             text="LISTA DE USUÁRIOS"
             onClick={handleListaClick}
-          />
-          <SecondaryButton
-            text="ATUALIZAR USUÁRIO"
-            onClick={handleAtualizarClick}
-          />
-          <SecondaryButton
-            text="CADASTRO DE PERFIL"
-            onClick={handleCadastroPerfilClick}
           />
           <SecondaryButton
             text="LISTA DE PERFIL"
