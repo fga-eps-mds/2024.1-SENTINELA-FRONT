@@ -87,6 +87,18 @@ const ProfileUpdate = () => {
     navigate("/home");
   };
 
+  const handleNavigateToContributions = () => {
+    navigate(`/movimentacoes/contribuicoes/${nome}`, {
+      state: {
+        storagedUser,
+        nome,
+        celular,
+        email,
+        login,
+      },
+    });
+  };
+
   return (
     user && (
       <section className="container">
@@ -128,6 +140,12 @@ const ProfileUpdate = () => {
               <label className="isEmailValid">*Insira um email válido</label>
             )}
           </div>
+          <Button
+            className="contribution-btn"
+            onClick={handleNavigateToContributions}
+          >
+            Histórico de Contribuições
+          </Button>
           <div className="section-doublebtn">
             <SecondaryButton text="Cancelar" onClick={handleCancel} />
             <PrimaryButton text="Salvar" onClick={handleSubmit} />
