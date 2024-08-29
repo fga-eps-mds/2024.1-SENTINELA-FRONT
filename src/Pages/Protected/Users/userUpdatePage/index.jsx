@@ -59,7 +59,7 @@ export default function UserUpdatePage() {
             setCelular(user.phone || "");
             setLogin(user.status ? "Ativo" : "Inativo");
             setEmail(user.email || "");
-            setPerfilSelecionado(user.role || "");
+            setPerfilSelecionado(user.role._id || "");
           }
         } catch (error) {
           console.error("Erro ao buscar usuário:", error);
