@@ -117,6 +117,10 @@ const MemberShip = () => {
     "Doutorado",
   ];
 
+  //NO AGUARDO DO MERGE PARA PEGAR OS DADOS DO BANCO
+  const lotacaoList = ["Lotação1", "Lotação2", "Lotação3"];
+  const orgaoList = ["Órgão1", "Óergão2", "Órgão3"];
+
   const fieldNames = {
     email: "Email",
     sexo: "Sexo",
@@ -313,12 +317,12 @@ const MemberShip = () => {
     //if (!dataDeNascimento) erros.dataDeNascimento = 1;
     //if (!dataExpedicao) erros.dataExpedicao = 1;
     //if (!cargo) erros.cargo = 1;
-    //if (!lotacao) erros.lotacao = 1;
+    if (!lotacao) erros.lotacao = 1;
     if (!matricula) erros.matricula = 1;
     if (!nomeCompleto) erros.nomeCompleto = 1;
     //if (!naturalidade) erros.naturalidade = 1;
     if (!rg) erros.rg = 1;
-    //if (!orgao) erros.orgao = 1;
+    if (!orgao) erros.orgao = 1;
     if (!cpf) erros.cpf = 1;
     //if (!nomeDaMae) erros.nomeDaMae = 1;
     //if (!nomeDoPai) erros.nomeDoPai = 1;
@@ -593,7 +597,7 @@ const MemberShip = () => {
             />
 
             <FieldSelect
-              label="UF *"
+              label="UF"
               value={uf_endereco}
               onChange={handleChangeUfEndereco}
               options={ufList}
@@ -636,6 +640,8 @@ const MemberShip = () => {
             onBlur={(e) => handleBlur(e, "dataContratacao")}
             erro={erro("dataContratacao")}
           />
+
+          {/*
           <FieldText
             label="Lotação"
             value={lotacao}
@@ -643,7 +649,26 @@ const MemberShip = () => {
             onBlur={(e) => handleBlur(e, "lotacao")}
             erro={erro("lotacao")}
           />
+           */}
 
+          <FieldSelect
+            label="Lotação *"
+            value={lotacao}
+            onChange={(e) => setlotacao(e.target.value)}
+            options={lotacaoList}
+            onBlur={(e) => handleBlur(e, "lotacao")}
+            erro={erro("lotacao")}
+          />
+
+          <FieldSelect
+            label="Órgão *"
+            value={orgao}
+            onChange={(e) => setOrgao(e.target.value)}
+            options={orgaoList}
+            onBlur={(e) => handleBlur(e, "orgao")}
+            erro={erro("orgao")}
+          />
+          {/*
           <FieldText
             label="Órgão"
             value={orgao}
@@ -651,6 +676,7 @@ const MemberShip = () => {
             onBlur={(e) => handleBlur(e, "orgao")}
             erro={erro("orgao")}
           />
+          */}
           <FieldText
             label="Posto de Trabalho"
             value={postoDeTrabalho}
