@@ -302,7 +302,7 @@ const MemberShip = () => {
     const erros = {};
 
     if (!email) erros.email = 1;
-    //if (!sexo) erros.sexo = 1;
+    if (!sexo) erros.sexo = 1;
     //if (!estadoCivil) erros.estadoCivil = 1;
     //if (!tipoSanguineo) erros.tipoSanguineo = 1;
     //if (!uf_naturalidade) erros.uf_naturalidade = 1;
@@ -441,7 +441,7 @@ const MemberShip = () => {
           />
 
           <FieldSelect
-            label="Sexo"
+            label="Sexo *"
             value={sexo}
             onChange={handleChangeSexo}
             options={sexoList}
