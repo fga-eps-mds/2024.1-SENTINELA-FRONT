@@ -94,6 +94,19 @@
     height: 44px;
   }
 
+  .contribution-bttn {
+    background-color: transparent !important;
+
+    margin-top: 1.5rem !important;
+    margin-left: 0.8rem !important;
+
+    color: #332117 !important;
+    text-decoration: underline !important;
+    font-size: 13px !important;
+    text-align: left !important;
+    justify-content: flex-start !important;
+  }
+
   .profile-status {
     font-size: 18px;
     font-weight: 600;
@@ -311,6 +324,23 @@
     align-items: center;
     margin-top: 0.5rem;
     margin-left: 9rem;
+  }
+
+  .contribution-bttn {
+    background-color: transparent !important;
+
+    margin-top: 1.5rem !important;
+    margin-left: 0.5rem !important;
+
+    color: #332117 !important;
+    text-decoration: underline !important;
+    font-size: 16px !important;
+    text-align: left !important;
+    justify-content: flex-start !important;
+
+    cursor: pointer;
+    padding-left: 10px !important;
+    width: 48% !important;
   }
 
   .btn-logout {

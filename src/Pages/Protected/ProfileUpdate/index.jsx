@@ -139,13 +139,13 @@ const ProfileUpdate = () => {
             {!isEmailValid && (
               <label className="isEmailValid">*Insira um email válido</label>
             )}
+            <Button
+              className="contribution-bttn"
+              onClick={handleNavigateToContributions}
+            >
+              Histórico de Contribuições
+            </Button>
           </div>
-          <Button
-            className="contribution-btn"
-            onClick={handleNavigateToContributions}
-          >
-            Histórico de Contribuições
-          </Button>
           <div className="section-doublebtn">
             <SecondaryButton text="Cancelar" onClick={handleCancel} />
             <PrimaryButton text="Salvar" onClick={handleSubmit} />
