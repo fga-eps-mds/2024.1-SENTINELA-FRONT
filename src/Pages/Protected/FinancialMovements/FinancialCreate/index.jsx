@@ -6,11 +6,11 @@ import PrimaryButton from "../../../../Components/PrimaryButton";
 import SecondaryButton from "../../../../Components/SecondaryButton";
 import "./index.css";
 import DataSelect from "../../../../Components/DataSelect";
-import CheckField from "../../../../Components/Checkfield";
 import { createFinancialMovements } from "../../../../Services/FinancialMovementsService";
 import { getUsers } from "../../../../Services/userService";
 import { getSupplierForm } from "../../../../Services/supplierService";
 import { useNavigate } from "react-router-dom";
+import FieldTextCheckbox from "../../../../Components/FieldTextCheckbox";
 
 export default function FinancialCreate() {
   const [contaOrigem, setContaOrigem] = useState("");
@@ -27,6 +27,7 @@ export default function FinancialCreate() {
   const [dataVencimento, setDataVencimento] = useState(null);
   const [dataPagamento, setDataPagamento] = useState(null);
   const [baixada, setBaixada] = useState(false);
+  const [isCheck, setIsCheck] = useState(false);
   const [descricao, setDescricao] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [nomesOrigem, setNomesOrigem] = useState([]);
@@ -109,7 +110,7 @@ export default function FinancialCreate() {
 
   const handleCurrencyInput = (value) => {
     const numericValue = value.replace(/\D/g, "");
-    return numericValue ? (parseFloat(numericValue) / 100).toFixed(2) : ""; // Converte para valor monetário
+    return numericValue ? (parseFloat(numericValue) / 100).toFixed(2) : "";
   };
 
   const handleCpfCnpjInput = (value) => {
@@ -131,38 +132,27 @@ export default function FinancialCreate() {
   };
 
   const handleChangeContaOrigem = (event) => {
-    console.log("Conta Origem:", event.target.value);
     setContaOrigem(event.target.value);
   };
 
   const handleChangeContaDestino = (event) => {
-    console.log("Conta Destino:", event.target.value);
     setContaDestino(event.target.value);
   };
 
   const handleChangeNomeOrigem = (event) => {
-    console.log("Nome Origem:", event.target.value);
     setNomeOrigem(event.target.value);
   };
 
   const handleChangeNomeDestino = (event) => {
-    console.log("Nome Destino:", event.target.value);
     setNomeDestino(event.target.value);
   };
 
   const handleChangeTipoDocumento = (event) => {
-    console.log("Tipo Documento:", event.target.value);
     setTipoDocumento(event.target.value);
   };
 
   const handleChangePagamento = (event) => {
-    console.log("Forma de Pagamento:", event.target.value);
     setPagamento(event.target.value);
-  };
-
-  const handleChangeBaixada = (newChecked) => {
-    console.log("Baixada:", newChecked);
-    setBaixada(newChecked);
   };
 
   const handleChangeDescricao = (event) => {
@@ -194,11 +184,9 @@ export default function FinancialCreate() {
       formadePagamento: pagamento,
       datadeVencimento: dataVencimento,
       datadePagamento: dataPagamento,
-      baixada,
+      baixada: isCheck,
       descricao,
     };
-
-    console.log("Dados enviados ao backend:", financialData);
 
     const error = await createFinancialMovements(financialData);
 
@@ -221,7 +209,6 @@ export default function FinancialCreate() {
     }
 
     if (!error) {
-      console.log("Cadastro realizado com sucesso.");
       setShowModal(true);
     } else {
       console.error("Erro ao cadastrar movimentação financeira:", error);
@@ -361,10 +348,13 @@ export default function FinancialCreate() {
             value={dataPagamento}
             onChange={(newValue) => setDataPagamento(newValue)}
           />
-          <CheckField
+          <FieldTextCheckbox
             label="Baixada"
             value={baixada}
-            onChange={handleChangeBaixada}
+            onChange={(e) => setBaixada(e.target.value)}
+            checked={isCheck}
+            onCheckboxChange={(e) => setIsCheck(e.target.checked)}
+            disabled={true}
           />
         </div>
 

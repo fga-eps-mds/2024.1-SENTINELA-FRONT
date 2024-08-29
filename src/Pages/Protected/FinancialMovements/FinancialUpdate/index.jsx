@@ -7,7 +7,7 @@ import PrimaryButton from "../../../../Components/PrimaryButton";
 import SecondaryButton from "../../../../Components/SecondaryButton";
 import "./index.css";
 import DataSelect from "../../../../Components/DataSelect";
-import CheckField from "../../../../Components/Checkfield";
+import FieldTextCheckbox from "../../../../Components/FieldTextCheckbox";
 import {
   getFinancialMovementsById,
   updateFinancialMovementsById,
@@ -32,6 +32,7 @@ export default function FinancialUpdate() {
   const [dataVencimento, setDataVencimento] = useState(null);
   const [dataPagamento, setDataPagamento] = useState(null);
   const [baixada, setBaixada] = useState(false);
+  const [isCheck, setIsCheck] = useState(false);
   const [descricao, setDescricao] = useState("");
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -62,7 +63,8 @@ export default function FinancialUpdate() {
           setPagamento(data.formadePagamento || "");
           setDataVencimento(dayjs(data.datadeVencimento || null));
           setDataPagamento(dayjs(data.datadePagamento || null));
-          setBaixada(data.baixada || false);
+          setBaixada(data.baixada || null);
+          setIsCheck(data.baixada || false);
           setDescricao(data.descricao || "");
         } catch (error) {
           console.error("Erro ao buscar dados da movimentação:", error);
@@ -164,7 +166,7 @@ export default function FinancialUpdate() {
         formadePagamento: pagamento,
         datadeVencimento: dataVencimento,
         datadePagamento: dataPagamento,
-        baixada,
+        baixada: isCheck,
         descricao,
       };
       await updateFinancialMovementsById(movementId, updatedData);
@@ -207,33 +209,23 @@ export default function FinancialUpdate() {
   };
 
   const handleChangeNomeOrigem = (event) => {
-    console.log("Nome Origem:", event.target.value);
     setNomeOrigem(event.target.value);
   };
 
   const handleChangeNomeDestino = (event) => {
-    console.log("Nome Destino:", event.target.value);
     setNomeDestino(event.target.value);
   };
 
   const handleChangeContaOrigem = (event) => {
-    console.log("Conta Origem:", event.target.value);
     setContaOrigem(event.target.value);
   };
 
   const handleChangeContaDestino = (event) => {
-    console.log("Conta Destino:", event.target.value);
     setContaDestino(event.target.value);
   };
 
   const handleChangePagamento = (event) => {
-    console.log("Forma de Pagamento:", event.target.value);
     setPagamento(event.target.value);
-  };
-
-  const handleChangeBaixada = (newChecked) => {
-    console.log("Baixada:", newChecked);
-    setBaixada(newChecked);
   };
 
   const handleChangeDescricao = (event) => {
@@ -330,10 +322,13 @@ export default function FinancialUpdate() {
             value={dataPagamento}
             onChange={(newValue) => setDataPagamento(newValue)}
           />
-          <CheckField
+          <FieldTextCheckbox
             label="Baixada"
             value={baixada}
-            onChange={handleChangeBaixada}
+            onChange={(e) => setBaixada(e.target.value)}
+            checked={isCheck}
+            onCheckboxChange={(e) => setIsCheck(e.target.checked)}
+            disabled={true}
           />
         </div>
 
