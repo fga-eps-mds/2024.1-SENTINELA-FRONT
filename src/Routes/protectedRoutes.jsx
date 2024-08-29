@@ -20,6 +20,9 @@ import FinanceHubPage from "../Pages/Protected/Finance/FinanceHubPage";
 import FinanceBankAccount from "../Pages/Protected/Finance/BankAccountCreate";
 import FinanceUpdate from "../Pages/Protected/Finance/BankAccountUpdate";
 import FinanceList from "../Pages/Protected/Finance/BankAccountList";
+import OrganCreate from "../Pages/Protected/Organ/OrganCreate";
+import OrganList from "../Pages/Protected/Organ/ListOrgan";
+import OrganUpdate from "../Pages/Protected/Organ/OrganUpdate";
 import FinancialMovements from "../Pages/Protected/FinancialMovements/FinancialCreate";
 import FinancialList from "../Pages/Protected/FinancialMovements/FinancialList";
 import FinancialUpdate from "../Pages/Protected/FinancialMovements/FinancialUpdate";
@@ -52,6 +55,9 @@ const ProtectedRoutes = () => {
       <Route path="/finance/criar" element={<FinanceBankAccount />} />
       <Route path="/finance/update/:id" element={<FinanceUpdate />} />
       <Route path="/finance/list" element={<FinanceList />} />
+      <Route path="/organ/create" element={<OrganCreate />} />
+      <Route path="/organ/list" element={<OrganList />} />
+      <Route path="/organ/update/:id" element={<OrganUpdate />} />
       <Route path="/movimentacoes/criar" element={<FinancialMovements />} />
       <Route path="/movimentacoes/lista" element={<FinancialList />} />
       <Route
