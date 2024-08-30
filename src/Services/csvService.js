@@ -12,10 +12,11 @@ if (storagedToken) {
 }
 
 export const generateCSVReport = async ({
-  fornecedor,
-  tipoLancamento,
+  contaOrigem,
+  contaDestino,
+  nomeOrigem,
+  nomeDestino,
   tipoDocumento,
-  contaBancaria,
   sitPagamento,
   formArquivo,
   dataInicio,
@@ -29,10 +30,11 @@ export const generateCSVReport = async ({
     const response = await APIBank.post(
       "/financialMovements/report",
       {
-        fornecedor,
-        tipoLancamento,
+        contaOrigem,
+        contaDestino,
+        nomeOrigem,
+        nomeDestino,
         tipoDocumento,
-        contaBancaria,
         sitPagamento,
         formArquivo,
         dataInicio,

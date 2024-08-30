@@ -4,34 +4,94 @@ import FieldSelect from "../../../../Components/FieldSelect";
 import { getSupplierForm } from "../../../../Services/supplierService";
 import { generateFinancialReport } from "../../../../Services/pdfService";
 import { generateCSVReport } from "../../../../Services/csvService";
+import { getUsers } from "../../../../Services/userService";
 
 export default function GenerateFinancialReport() {
-  const [fornecedor, setFornecedor] = useState("");
-  const [tipoLancamento, setTipoLancamento] = useState("");
+  const [contaOrigem, setContaOrigem] = useState("");
+  const [contaDestino, setContaDestino] = useState("");
+  const [nomeOrigem, setNomeOrigem] = useState("");
+  const [nomeDestino, setNomeDestino] = useState("");
   const [tipoDocumento, setTipoDocumento] = useState("");
-  const [contaBancaria, setContaBancaria] = useState("");
   const [sitPagamento, setSitPagamento] = useState("");
   const [formArquivo, setFormArquivo] = useState("");
   const [dataInicio, setDataInicio] = useState(null);
   const [dataFinal, setDataFinal] = useState(null);
-  const [fornecedores, setFornecedores] = useState([]);
+  const [nomesOrigem, setNomesOrigem] = useState([]);
+  const [nomesDestino, setNomesDestino] = useState([]);
 
   useEffect(() => {
-    const fetchFornecedores = async () => {
+    const fetchNomesOrigem = async () => {
       try {
-        const suppliers = await getSupplierForm();
-        if (Array.isArray(suppliers)) {
-          setFornecedores(suppliers.map((supplier) => supplier.nome));
-        } else {
-          console.error("Os dados recebidos não são um array.");
+        switch (contaOrigem) {
+          case "Sindicalizado": {
+            const users = await getUsers();
+            if (Array.isArray(users)) {
+              setNomesOrigem(users.map((user) => user.name));
+            } else {
+              console.error("Os dados recebidos não são um array.");
+            }
+            break;
+          }
+          case "Sindicato": {
+            setNomesOrigem(["Conta BRB", "Conta Mercado Pago"]);
+            break;
+          }
+          case "Fornecedor": {
+            const suppliers = await getSupplierForm();
+            if (Array.isArray(suppliers)) {
+              setNomesOrigem(suppliers.map((supplier) => supplier.nome));
+            } else {
+              console.error("Os dados recebidos não são um array.");
+            }
+            break;
+          }
+          default:
+            console.error("Tipo de conta desconhecido.");
         }
       } catch (error) {
-        console.error("Erro ao buscar fornecedores:", error);
+        console.error("Erro ao buscar lista de nomes:", error);
       }
     };
 
-    fetchFornecedores();
-  }, []);
+    if (contaOrigem) fetchNomesOrigem();
+  }, [contaOrigem]);
+
+  useEffect(() => {
+    const fetchNomesDestino = async () => {
+      try {
+        switch (contaDestino) {
+          case "Sindicalizado": {
+            const users = await getUsers();
+            if (Array.isArray(users)) {
+              setNomesDestino(users.map((user) => user.name));
+            } else {
+              console.error("Os dados recebidos não são um array.");
+            }
+            break;
+          }
+          case "Sindicato": {
+            setNomesDestino(["Conta BRB", "Conta Mercado Pago"]);
+            break;
+          }
+          case "Fornecedor": {
+            const suppliers = await getSupplierForm();
+            if (Array.isArray(suppliers)) {
+              setNomesDestino(suppliers.map((supplier) => supplier.nome));
+            } else {
+              console.error("Os dados recebidos não são um array.");
+            }
+            break;
+          }
+          default:
+            console.error("Tipo de conta desconhecido.");
+        }
+      } catch (error) {
+        console.error("Erro ao buscar lista de nomes:", error);
+      }
+    };
+
+    if (contaDestino) fetchNomesDestino();
+  }, [contaDestino]);
 
   const handleGenerateReport = async () => {
     try {
@@ -39,10 +99,11 @@ export default function GenerateFinancialReport() {
 
       if (formArquivo === "CSV") {
         reportGenerated = await generateCSVReport({
-          fornecedor,
-          tipoLancamento,
+          contaOrigem,
+          contaDestino,
+          nomeOrigem,
+          nomeDestino,
           tipoDocumento,
-          contaBancaria,
           sitPagamento,
           formArquivo,
           dataInicio,
@@ -50,10 +111,11 @@ export default function GenerateFinancialReport() {
         });
       } else {
         reportGenerated = await generateFinancialReport({
-          fornecedor,
-          tipoLancamento,
+          contaOrigem,
+          contaDestino,
+          nomeOrigem,
+          nomeDestino,
           tipoDocumento,
-          contaBancaria,
           sitPagamento,
           formArquivo,
           dataInicio,
@@ -71,31 +133,6 @@ export default function GenerateFinancialReport() {
     }
   };
 
-  const handleChangeTipoLancamento = (event) => {
-    console.log("Tipo lançamento: ", event.target.value);
-    setTipoLancamento(event.target.value);
-  };
-
-  const handleChangeContaBancaria = (event) => {
-    console.log("Conta bancária:", event.target.value);
-    setContaBancaria(event.target.value);
-  };
-
-  const handleChangeTipoDocumento = (event) => {
-    console.log("Tipo Documento:", event.target.value);
-    setTipoDocumento(event.target.value);
-  };
-
-  const handleChangeSitPagamento = (event) => {
-    console.log("Situação Pagamento:", event.target.value);
-    setSitPagamento(event.target.value);
-  };
-
-  const handleFormArquivo = (event) => {
-    console.log("Formato do arquivo: ", event.target.value);
-    setFormArquivo(event.target.value);
-  };
-
   return (
     <section className="container-financial-report">
       <div className="forms-container-financial-report">
@@ -103,21 +140,27 @@ export default function GenerateFinancialReport() {
 
         <div className="double-box-fin">
           <FieldSelect
-            label="Fornecedor"
-            value={fornecedor}
-            onChange={(e) => setFornecedor(e.target.value)}
-            options={fornecedores}
+            label="Nome Origem"
+            value={nomeOrigem}
+            onChange={(e) => setNomeOrigem(e.target.value)}
+            options={nomesOrigem}
           />
           <FieldSelect
-            label="Tipo de lançamento"
-            value={tipoLancamento}
-            onChange={handleChangeTipoLancamento}
-            options={["Entrada", "Saída"]}
+            label="Conta Origem"
+            value={contaOrigem}
+            onChange={(e) => setContaOrigem(e.target.value)}
+            options={["Fornecedor", "Sindicalizado", "Sindicato"]}
+          />
+          <FieldSelect
+            label="Conta Destino"
+            value={contaDestino}
+            onChange={(e) => setContaDestino(e.target.value)}
+            options={["Fornecedor", "Sindicalizado", "Sindicato"]}
           />
           <FieldSelect
             label="Tipo de documento"
             value={tipoDocumento}
-            onChange={handleChangeTipoDocumento}
+            onChange={(e) => setTipoDocumento(e.target.value)}
             options={[
               "",
               "AÇÃO JUDICIAL",
@@ -165,21 +208,21 @@ export default function GenerateFinancialReport() {
             ]}
           />
           <FieldSelect
-            label="Conta Bancária"
-            value={contaBancaria}
-            onChange={handleChangeContaBancaria}
-            options={["Conta BRB", "Conta Mercado Pago"]}
+            label="Nome destino"
+            value={nomeDestino}
+            onChange={(e) => setNomeDestino(e.target.value)}
+            options={nomesDestino}
           />
           <FieldSelect
             label="Situação de pagamento"
             value={sitPagamento}
-            onChange={handleChangeSitPagamento}
+            onChange={(e) => setSitPagamento(e.target.value)}
             options={["Pago", "Não pago"]}
           />
           <FieldSelect
             label="Formato de arquivo"
             value={formArquivo}
-            onChange={handleFormArquivo}
+            onChange={(e) => setFormArquivo(e.target.value)}
             options={["CSV", "PDF"]}
           />
           <DataSelect
