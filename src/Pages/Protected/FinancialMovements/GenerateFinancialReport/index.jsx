@@ -6,6 +6,7 @@ import { getSupplierForm } from "../../../../Services/supplierService";
 import { generateFinancialReport } from "../../../../Services/pdfService";
 import { generateCSVReport } from "../../../../Services/csvService";
 import { getUsers } from "../../../../Services/userService";
+import "./index.css";
 
 export default function GenerateFinancialReport() {
   const [contaOrigem, setContaOrigem] = useState("");
@@ -149,7 +150,7 @@ export default function GenerateFinancialReport() {
       <div className="forms-container-financial-report">
         <h1> Gerar relatório financeiro </h1>
 
-        <div className="double-box-fin">
+        <div className="double-box-gfr">
           <FieldSelect
             label="Conta Origem"
             value={contaOrigem}
@@ -230,12 +231,6 @@ export default function GenerateFinancialReport() {
             onChange={(e) => setSitPagamento(e.target.value)}
             options={["Pago", "Não pago"]}
           />
-          <FieldSelect
-            label="Formato de arquivo"
-            value={formArquivo}
-            onChange={(e) => setFormArquivo(e.target.value)}
-            options={["CSV", "PDF"]}
-          />
           <DataSelect
             label="Data início"
             value={dataInicio}
@@ -247,7 +242,21 @@ export default function GenerateFinancialReport() {
             onChange={(newValue) => setDataFinal(newValue)}
           />
         </div>
-        <PrimaryButton text="Gerar relatório" onClick={handleGenerateReport} />
+
+        <div className="box-format-pdfcsv">
+          <FieldSelect
+            label="Formato de arquivo"
+            value={formArquivo}
+            onChange={(e) => setFormArquivo(e.target.value)}
+            options={["CSV", "PDF"]}
+          />
+        </div>
+        <div>
+          <PrimaryButton
+            text="Gerar relatório"
+            onClick={handleGenerateReport}
+          />
+        </div>
       </div>
     </section>
   );
