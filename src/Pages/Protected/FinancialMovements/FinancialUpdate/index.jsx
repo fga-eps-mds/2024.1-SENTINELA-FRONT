@@ -261,13 +261,13 @@ export default function FinancialUpdate() {
             options={nomesOrigem}
           />
           <FieldSelect
-            label="Nome Destino *"
+            label="Nome destino *"
             value={nomeDestino}
             onChange={handleChangeNomeDestino}
             options={nomesDestino}
           />
           <FieldText
-            label="Tipo Documento"
+            label="Tipo documento"
             value={tipoDocumento}
             onChange={(e) => setTipoDocumento(e.target.value)}
           />
@@ -277,12 +277,12 @@ export default function FinancialUpdate() {
             onChange={(e) => setcpFCnpj(handleCpfCnpjInput(e.target.value))}
           />
           <FieldText
-            label="Valor Bruto *"
+            label="Valor bruto *"
             value={valorBruto}
             onChange={(e) => setValorBruto(handleCurrencyInput(e.target.value))}
           />
           <FieldText
-            label="Valor Liquído"
+            label="Valor líquido"
             value={valorLiquido}
             onChange={(e) =>
               setValorLiquido(handleCurrencyInput(e.target.value))
@@ -299,7 +299,7 @@ export default function FinancialUpdate() {
             onChange={(e) => setDesconto(handleCurrencyInput(e.target.value))}
           />
           <FieldSelect
-            label="Forma de Pagamento *"
+            label="Forma de pagamento *"
             value={pagamento}
             onChange={handleChangePagamento}
             options={[
@@ -350,7 +350,7 @@ export default function FinancialUpdate() {
           <PrimaryButton text="Salvar" onClick={handleSave} />
         </div>
 
-        <Modal alertTitle="Alterações Salvas" show={showSaveModal}>
+        <Modal alertTitle="Alterações salvas" show={showSaveModal}>
           <SecondaryButton
             key={"saveButtons"}
             text="OK"
@@ -380,7 +380,7 @@ export default function FinancialUpdate() {
           />
         </Modal>
 
-        <Modal alertTitle="Movimentação Deletada" show={showDeletedModal}>
+        <Modal alertTitle="Movimentação deletada" show={showDeletedModal}>
           <SecondaryButton
             key={"okButtons"}
             text="OK"
