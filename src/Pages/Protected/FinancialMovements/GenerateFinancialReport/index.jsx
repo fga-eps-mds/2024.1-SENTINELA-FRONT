@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import DataSelect from "../../../../Components/DataSelect";
 import FieldSelect from "../../../../Components/FieldSelect";
+import PrimaryButton from "../../../../Components/PrimaryButton";
 import { getSupplierForm } from "../../../../Services/supplierService";
 import { generateFinancialReport } from "../../../../Services/pdfService";
 import { generateCSVReport } from "../../../../Services/csvService";
@@ -95,6 +96,16 @@ export default function GenerateFinancialReport() {
 
   const handleGenerateReport = async () => {
     try {
+      const startDate = new Date(dataInicio);
+      const endDate = new Date(dataFinal);
+
+      if (startDate > endDate) {
+        console.error(
+          "A data de início deve ser anterior ou igual à data final."
+        );
+        return;
+      }
+
       let reportGenerated;
 
       if (formArquivo === "CSV") {
@@ -140,12 +151,6 @@ export default function GenerateFinancialReport() {
 
         <div className="double-box-fin">
           <FieldSelect
-            label="Nome Origem"
-            value={nomeOrigem}
-            onChange={(e) => setNomeOrigem(e.target.value)}
-            options={nomesOrigem}
-          />
-          <FieldSelect
             label="Conta Origem"
             value={contaOrigem}
             onChange={(e) => setContaOrigem(e.target.value)}
@@ -156,6 +161,18 @@ export default function GenerateFinancialReport() {
             value={contaDestino}
             onChange={(e) => setContaDestino(e.target.value)}
             options={["Fornecedor", "Sindicalizado", "Sindicato"]}
+          />
+          <FieldSelect
+            label="Nome Origem"
+            value={nomeOrigem}
+            onChange={(e) => setNomeOrigem(e.target.value)}
+            options={nomesOrigem}
+          />
+          <FieldSelect
+            label="Nome destino"
+            value={nomeDestino}
+            onChange={(e) => setNomeDestino(e.target.value)}
+            options={nomesDestino}
           />
           <FieldSelect
             label="Tipo de documento"
@@ -208,12 +225,6 @@ export default function GenerateFinancialReport() {
             ]}
           />
           <FieldSelect
-            label="Nome destino"
-            value={nomeDestino}
-            onChange={(e) => setNomeDestino(e.target.value)}
-            options={nomesDestino}
-          />
-          <FieldSelect
             label="Situação de pagamento"
             value={sitPagamento}
             onChange={(e) => setSitPagamento(e.target.value)}
@@ -236,7 +247,7 @@ export default function GenerateFinancialReport() {
             onChange={(newValue) => setDataFinal(newValue)}
           />
         </div>
-        <button onClick={handleGenerateReport}>Gerar Relatório</button>
+        <PrimaryButton text="Gerar relatório" onClick={handleGenerateReport} />
       </div>
     </section>
   );
