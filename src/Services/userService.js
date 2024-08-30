@@ -1,11 +1,15 @@
+// import { checkModule, checkAction } from "../Utils/permission";
 import { APIUsers } from "./BaseService";
 
 const storagedToken = localStorage.getItem("@App:token");
+const storagedUser = localStorage.getItem("@App:user");
 let token = null;
+let user = null;
 
 if (storagedToken) {
   try {
     token = JSON.parse(storagedToken);
+    user = JSON.parse(storagedUser);
   } catch (error) {
     console.error("O token armazenado não é um JSON válido:", error);
   }
@@ -30,6 +34,11 @@ export const getUsers = async () => {
       throw new Error("No token found");
     }
     const response = await APIUsers.get("/users", {
+      params: {
+        userId: `${user._id}`,
+        moduleName: "users",
+        action: "read",
+      },
       headers: {
         Authorization: `Bearer ${token}`,
       },
