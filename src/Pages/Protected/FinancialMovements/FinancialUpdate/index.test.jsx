@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { render, screen, cleanup } from "@testing-library/react";
+import { render, screen, cleanup, waitFor } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import FinancialUpdate from "./index";
 import { deleteFinancialMovementsById } from "../../../../Services/FinancialMovementsService";
@@ -129,16 +129,6 @@ describe("FinancialUpdate", () => {
     expect(screen.getByText("Alterações Salvas")).toBeInTheDocument();
   });
 
-  it("should render labels correctly", () => {
-    render(
-      <Router>
-        <FinancialUpdate />
-      </Router>
-    );
-
-    screen.debug(); // Verifique o HTML renderizado
-  });
-
   it("should correctly update fields when changing inputs", async () => {
     render(
       <Router>
@@ -151,5 +141,125 @@ describe("FinancialUpdate", () => {
     await userEvent.clear(descricaoInput);
     await userEvent.type(descricaoInput, "Descrição alterada");
     expect(descricaoInput.value).toBe("Descrição alterada");
+  });
+
+  it("should set SupplierNames when Conta Origem is selected", async () => {
+    render(
+      <Router>
+        <FinancialUpdate />
+      </Router>
+    );
+
+    const selects = screen.getAllByRole("combobox");
+
+    const contaOrigemSelect = selects.find(
+      (s) => s.id === "select-Conta origem"
+    );
+
+    await userEvent.click(contaOrigemSelect);
+    await userEvent.click(screen.getByRole("option", { name: "Fornecedor" }));
+
+    const nomeOrigemSelect = selects.find(
+      (s) => s.id === "select-Nome origem *"
+    );
+
+    await userEvent.click(nomeOrigemSelect);
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole("option", { name: "Nome Exemplo" })
+      ).toBeInTheDocument();
+    });
+  });
+
+  it("should set SupplierNames when Conta Destino is selected", async () => {
+    render(
+      <Router>
+        <FinancialUpdate />
+      </Router>
+    );
+
+    const selects = screen.getAllByRole("combobox");
+
+    const contaDestinoSelect = selects.find(
+      (s) => s.id === "select-Conta destino"
+    );
+
+    await userEvent.click(contaDestinoSelect);
+    await userEvent.click(screen.getByRole("option", { name: "Fornecedor" }));
+
+    const nomeDestinoSelect = selects.find(
+      (s) => s.id === "select-Nome Destino *"
+    );
+
+    await userEvent.click(nomeDestinoSelect);
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole("option", { name: "Nome Exemplo" })
+      ).toBeInTheDocument();
+    });
+  });
+
+  it("should set UserNames when Conta Origem is selected", async () => {
+    render(
+      <Router>
+        <FinancialUpdate />
+      </Router>
+    );
+
+    const selects = screen.getAllByRole("combobox");
+
+    const contaOrigemSelect = selects.find(
+      (s) => s.id === "select-Conta origem"
+    );
+
+    await userEvent.click(contaOrigemSelect);
+    await userEvent.click(
+      screen.getByRole("option", { name: "Sindicalizado" })
+    );
+
+    const nomeOrigemSelect = selects.find(
+      (s) => s.id === "select-Nome origem *"
+    );
+
+    await userEvent.click(nomeOrigemSelect);
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole("option", { name: "Nome Exemplo" })
+      ).toBeInTheDocument();
+    });
+  });
+
+  it("should set UserNames when Conta Destino is selected", async () => {
+    render(
+      <Router>
+        <FinancialUpdate />
+      </Router>
+    );
+
+    const selects = screen.getAllByRole("combobox");
+
+    const contaDestinoSelect = selects.find(
+      (s) => s.id === "select-Conta destino"
+    );
+
+    await userEvent.click(contaDestinoSelect);
+    await userEvent.click(
+      screen.getByRole("option", { name: "Sindicalizado" })
+    );
+
+    const nomeDestinoSelect = selects.find(
+      (s) => s.id === "select-Nome Destino *"
+    );
+
+    await userEvent.click(nomeDestinoSelect);
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole("option", { name: "Nome Exemplo" })
+      ).toBeInTheDocument();
+    });
   });
 });
