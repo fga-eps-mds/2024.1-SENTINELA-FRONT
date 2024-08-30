@@ -359,7 +359,7 @@ const MemberShip = () => {
       uf_naturalidade,
       uf_orgao,
       uf_address: uf_endereco,
-      marialStatus: estadoCivil,
+      maritalStatus: estadoCivil,
       education: escolaridade,
       rg,
       orgao,
@@ -439,7 +439,7 @@ const MemberShip = () => {
           />
 
           <FieldSelect
-            label="Sexo"
+            label="Sexo *"
             value={sexo}
             onChange={handleChangeSexo}
             options={sexoList}

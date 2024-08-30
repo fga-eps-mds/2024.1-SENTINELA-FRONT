@@ -149,9 +149,9 @@ const ViewMembershipPage = () => {
     } else {
       setDependents([...dependents, currentDependent]);
       setCurrentDependent({
-        name: "",
-        birthDate: "",
-        relationship: "",
+        nomeCompletoDependente: "",
+        dataNasc: "",
+        parentesco: "",
         cpfDependente: "",
         celularDependente: "",
       });
@@ -255,27 +255,14 @@ const ViewMembershipPage = () => {
   const checkMissingFields = () => {
     const missingFields = [];
 
-    if (!email) missingFields.push("Email");
-    if (!sex) missingFields.push("Sexo");
-    if (!maritalStatus) missingFields.push("Estado Civil");
-    if (!ufNaturalness) missingFields.push("UF de Naturalidade");
-    if (!ufOrganization) missingFields.push("UF da Organização");
-    if (!ufAddress) missingFields.push("UF do Endereço");
-    if (!birthDate) missingFields.push("Data de Nascimento");
-    if (!expeditionDate) missingFields.push("Data de Expedição");
-    if (!lotacao) missingFields.push("Lotação");
-    if (!registration) missingFields.push("Matrícula");
     if (!name) missingFields.push("Nome");
-    if (!naturalness) missingFields.push("Naturalidade");
+    if (!registration) missingFields.push("Matrícula");
+    if (!sex) missingFields.push("Sexo");
     if (!rg) missingFields.push("RG");
     if (!cpf) missingFields.push("CPF");
-    if (!cep) missingFields.push("CEP");
-    if (!city) missingFields.push("Cidade");
+    if (!email) missingFields.push("Email");
     if (!phone) missingFields.push("Celular");
-    if (!shipperOrganization) missingFields.push("Órgão Expedidor");
-
-    // Dependentes podem ser opcionais, então só adiciona se for necessário
-    if (dependents.length === 0) missingFields.push("Dependentes");
+    if (!ufAddress) missingFields.push("UF do Endereço");
 
     return missingFields;
   };
@@ -347,7 +334,7 @@ const ViewMembershipPage = () => {
 
         <div className="section-form-benefits">
           <FieldText
-            label="Religião *"
+            label="Religião"
             value={religion}
             onChange={(e) => setReligion(e.target.value)}
             onBlur={(e) => handleBlur(e, "religiao")}
@@ -355,7 +342,7 @@ const ViewMembershipPage = () => {
           />
 
           <FieldSelect
-            label="Tipo Sanguíneo *"
+            label="Tipo Sanguíneo"
             value={bloodType}
             onChange={(e) => setBloodType(e.target.value)}
             options={tipoSanguineoList}
@@ -372,7 +359,7 @@ const ViewMembershipPage = () => {
           />
 
           <DataSelect
-            label="Data de Nascimento *"
+            label="Data de Nascimento"
             value={birthDate}
             onChange={(newValue) => setBirthDate(newValue)}
             onBlur={(e) => handleBlur(e, "dataDeNascimento")}
@@ -390,7 +377,7 @@ const ViewMembershipPage = () => {
 
           <div className="double-box" style={{ marginLeft: "0px" }}>
             <FieldText
-              label="Naturalidade *"
+              label="Naturalidade"
               value={naturalness}
               onChange={(e) => setNaturalness(e.target.value)}
               onBlur={(e) => handleBlur(e, "naturalidade")}
@@ -398,7 +385,7 @@ const ViewMembershipPage = () => {
             />
 
             <FieldSelect
-              label="UF *"
+              label="UF"
               value={ufNaturalness}
               onChange={(e) => setUfNaturalness(e.target.value)}
               options={ufList}
@@ -408,7 +395,7 @@ const ViewMembershipPage = () => {
           </div>
 
           <FieldSelect
-            label="Estado Civil *"
+            label="Estado Civil"
             value={maritalStatus}
             onChange={(e) => setMaritalStatus(e.target.value)}
             options={estadoCivilList}
@@ -417,7 +404,7 @@ const ViewMembershipPage = () => {
           />
 
           <FieldSelect
-            label="Escolaridade *"
+            label="Escolaridade"
             value={education}
             onChange={(e) => setEducation(e.target.value)}
             options={escolaridadeList}
@@ -435,7 +422,7 @@ const ViewMembershipPage = () => {
 
           <div className="double-box" style={{ marginLeft: "0px" }}>
             <FieldText
-              label="Órgão Expeditor *"
+              label="Órgão Expeditor"
               value={shipperOrganization}
               onChange={(e) => setShipperOrganization(e.target.value)}
               onBlur={(e) => handleBlur(e, "orgaoExpedidor")}
@@ -443,7 +430,7 @@ const ViewMembershipPage = () => {
             />
 
             <FieldSelect
-              label="UF *"
+              label="UF"
               value={ufOrganization}
               onChange={(e) => setUfOrganization(e.target.value)}
               options={ufList}
@@ -461,7 +448,7 @@ const ViewMembershipPage = () => {
           />
 
           <DataSelect
-            label="Data de Expedição *"
+            label="Data de Expedição"
             value={expeditionDate}
             onChange={(newValue) => setExpeditionDate(newValue)}
             onBlur={(e) => handleBlur(e, "dataExpedicao")}
@@ -469,7 +456,7 @@ const ViewMembershipPage = () => {
           />
 
           <FieldText
-            label="Nome do Pai *"
+            label="Nome do Pai"
             value={fatherName}
             onChange={(e) => setFatherName(e.target.value)}
             onBlur={(e) => handleBlur(e, "nomeDoPai")}
@@ -477,7 +464,7 @@ const ViewMembershipPage = () => {
           />
 
           <FieldText
-            label="Nome da Mãe *"
+            label="Nome da Mãe"
             value={motherName}
             onChange={(e) => setMotherName(e.target.value)}
             onBlur={(e) => handleBlur(e, "nomeDaMae")}
@@ -505,7 +492,7 @@ const ViewMembershipPage = () => {
           />
 
           <FieldText
-            label="Telefone *"
+            label="Telefone"
             value={landline}
             onChange={(e) => setPhone(mascaraTelefone(e.target.value))}
             onBlur={(e) => handleBlur(e, "telefone")}
@@ -516,7 +503,7 @@ const ViewMembershipPage = () => {
         <h3> Endereço </h3>
         <div className="section-form-benefits">
           <FieldText
-            label="CEP *"
+            label="CEP"
             value={cep}
             onChange={(e) => setCep(mascaraCEP(e.target.value))}
             onBlur={(e) => handleBlur(e, "cep")}
@@ -524,7 +511,7 @@ const ViewMembershipPage = () => {
           />
           <div className="double-box" style={{ marginLeft: "0px" }}>
             <FieldText
-              label="Cidade *"
+              label="Cidade"
               value={city}
               onChange={(e) => setCity(e.target.value)}
               onBlur={(e) => handleBlur(e, "cidade")}
@@ -542,7 +529,7 @@ const ViewMembershipPage = () => {
           </div>
 
           <FieldText
-            label="Logradouro *"
+            label="Logradouro"
             value={street}
             onChange={(e) => setStreet(e.target.value)}
             onBlur={(e) => handleBlur(e, "logradouro")}
@@ -550,7 +537,7 @@ const ViewMembershipPage = () => {
           />
 
           <FieldText
-            label="Complemento *"
+            label="Complemento"
             value={complement}
             onChange={(e) => setComplement(e.target.value)}
             onBlur={(e) => handleBlur(e, "complemento")}
@@ -561,7 +548,7 @@ const ViewMembershipPage = () => {
         <h3> Dados de Contratação </h3>
         <div className="section-form-benefits">
           <FieldText
-            label="Cargo *"
+            label="Cargo"
             value={position}
             onChange={(e) => setPosition(e.target.value)}
             onBlur={(e) => handleBlur(e, "cargo")}
@@ -569,14 +556,14 @@ const ViewMembershipPage = () => {
           />
 
           <DataSelect
-            label="Data de Contratação *"
+            label="Data de Contratação"
             value={hiringDate}
             onChange={(newValue) => setHiringDate(newValue)}
             onBlur={(e) => handleBlur(e, "dataContratacao")}
             erro={erro("dataContratacao")}
           />
           <FieldText
-            label="Lotação *"
+            label="Lotação"
             value={lotacao}
             onChange={(e) => setLotacao(e.target.value)}
             onBlur={(e) => handleBlur(e, "lotacao")}
@@ -584,14 +571,14 @@ const ViewMembershipPage = () => {
           />
 
           <FieldText
-            label="Órgão *"
+            label="Órgão"
             value={organization}
             onChange={(e) => setOrganization(e.target.value)}
             onBlur={(e) => handleBlur(e, "orgao")}
             erro={erro("orgao")}
           />
           <FieldText
-            label="Posto de Trabalho *"
+            label="Posto de Trabalho"
             value={workPlace}
             onChange={(e) => setWorkPlace(e.target.value)}
             onBlur={(e) => handleBlur(e, "postoDeTrabalho")}
