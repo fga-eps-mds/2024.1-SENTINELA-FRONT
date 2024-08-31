@@ -100,7 +100,7 @@ export default function GenerateFinancialReport() {
       const startDate = new Date(dataInicio);
       const endDate = new Date(dataFinal);
 
-      if (startDate > endDate) {
+      if (!endDate && startDate > endDate) {
         console.error(
           "A data de início deve ser anterior ou igual à data final."
         );
