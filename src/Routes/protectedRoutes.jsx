@@ -34,11 +34,56 @@ const ProtectedRoutes = () => {
     <Routes>
       <Route path="/unauthorized" element={<Unauthorized />} />
       <Route path="/home" element={<Home />} />
-      <Route path="/fornecedores/criar" element={<Supplier />} />
-      <Route path="/fornecedores" element={<ListSupplier />} />
-      <Route path="/fornecedores/:id" element={<ViewSupplier />} />
-      <Route path="/usuarios/criar" element={<UserCreatePage />} />
-      <Route path="/usuarios/editar/:nome" element={<UserUpdatePage />} />
+      <Route
+        path="/fornecedores/criar"
+        element={
+          <PermissionProtect
+            element={<Supplier />}
+            moduleName="finance"
+            action="create"
+          />
+        }
+      />
+      <Route
+        path="/fornecedores"
+        element={
+          <PermissionProtect
+            element={<ListSupplier />}
+            moduleName="finance"
+            action="read"
+          />
+        }
+      />
+      <Route
+        path="/fornecedores/:id"
+        element={
+          <PermissionProtect
+            element={<ViewSupplier />}
+            moduleName="finance"
+            action="read"
+          />
+        }
+      />
+      <Route
+        path="/usuarios/criar"
+        element={
+          <PermissionProtect
+            element={<UserCreatePage />}
+            moduleName="users"
+            action="create"
+          />
+        }
+      />
+      <Route
+        path="/usuarios/editar/:nome"
+        element={
+          <PermissionProtect
+            element={<UserUpdatePage />}
+            moduleName="users"
+            action="update"
+          />
+        }
+      />
       <Route
         path="/usuarios"
         element={
@@ -49,35 +94,206 @@ const ProtectedRoutes = () => {
           />
         }
       />
-      <Route path="/usuarios/hub" element={<UserHubPage />} />
-      <Route path="/perfis" element={<RolesListPage />} />
-      <Route path="/perfis/criar" element={<RolesCreatePage />} />
-      <Route path="/perfis/editar/:name" element={<RolesUpdatePage />} />
+      <Route
+        path="/usuarios/hub"
+        element={
+          <PermissionProtect
+            element={<UserHubPage />}
+            moduleName="users"
+            action="read"
+          />
+        }
+      />
+      <Route
+        path="/perfis"
+        element={
+          <PermissionProtect
+            element={<RolesListPage />}
+            moduleName="users"
+            action="create"
+          />
+        }
+      />
+      <Route
+        path="/perfis/criar"
+        element={
+          <PermissionProtect
+            element={<RolesCreatePage />}
+            moduleName="users"
+            action="create"
+          />
+        }
+      />
+      <Route
+        path="/perfis/editar/:name"
+        element={
+          <PermissionProtect
+            element={<RolesUpdatePage />}
+            moduleName="users"
+            action="update"
+          />
+        }
+      />
       <Route path="/perfil" element={<ProfileUpdate />} />
       <Route
         path="usuarios/hub/membershipRequests"
-        element={<MembershipRequest />}
+        element={
+          <PermissionProtect
+            element={<MembershipRequest />}
+            moduleName="users"
+            action="create"
+          />
+        }
       />
-      <Route path="/beneficios" element={<Benefits />} />
-      <Route path="/beneficios/lista" element={<BenefitsList />} />
-      <Route path="/beneficios/criar" element={<BenefitsCreate />} />
-      <Route path="/beneficios/editar/:id" element={<BenefitsUpdate />} />
-      <Route path="/finance/hub" element={<FinanceHubPage />} />
-      <Route path="/finance/criar" element={<FinanceBankAccount />} />
-      <Route path="/finance/update/:id" element={<FinanceUpdate />} />
-      <Route path="/finance/list" element={<FinanceList />} />
-      <Route path="/organ/create" element={<OrganCreate />} />
-      <Route path="/organ/list" element={<OrganList />} />
-      <Route path="/organ/update/:id" element={<OrganUpdate />} />
-      <Route path="/movimentacoes/criar" element={<FinancialMovements />} />
-      <Route path="/movimentacoes/lista" element={<FinancialList />} />
+      <Route
+        path="/beneficios"
+        element={
+          <PermissionProtect
+            element={<Benefits />}
+            moduleName="benefits"
+            action="read"
+          />
+        }
+      />
+      <Route
+        path="/beneficios/lista"
+        element={
+          <PermissionProtect
+            element={<BenefitsList />}
+            moduleName="benefits"
+            action="read"
+          />
+        }
+      />
+      <Route
+        path="/beneficios/criar"
+        element={
+          <PermissionProtect
+            element={<BenefitsCreate />}
+            moduleName="benefits"
+            action="create"
+          />
+        }
+      />
+      <Route
+        path="/beneficios/editar/:id"
+        element={
+          <PermissionProtect
+            element={<BenefitsUpdate />}
+            moduleName="benefits"
+            action="update"
+          />
+        }
+      />
+      <Route
+        path="/finance/hub"
+        element={
+          <PermissionProtect
+            element={<FinanceHubPage />}
+            moduleName="finance"
+            action="read"
+          />
+        }
+      />
+      <Route
+        path="/finance/criar"
+        element={
+          <PermissionProtect
+            element={<FinanceBankAccount />}
+            moduleName="finance"
+            action="create"
+          />
+        }
+      />
+      <Route
+        path="/finance/update/:id"
+        element={
+          <PermissionProtect
+            element={<FinanceUpdate />}
+            moduleName="finance"
+            action="update"
+          />
+        }
+      />
+      <Route
+        path="/finance/list"
+        element={
+          <PermissionProtect
+            element={<FinanceList />}
+            moduleName="finance"
+            action="read"
+          />
+        }
+      />
+      <Route
+        path="/organ/create"
+        element={
+          <PermissionProtect
+            element={<OrganCreate />}
+            moduleName="users"
+            action="create"
+          />
+        }
+      />
+      <Route
+        path="/organ/list"
+        element={
+          <PermissionProtect
+            element={<OrganList />}
+            moduleName="users"
+            action="read"
+          />
+        }
+      />
+      <Route
+        path="/organ/update/:id"
+        element={
+          <PermissionProtect
+            element={<OrganUpdate />}
+            moduleName="users"
+            action="create"
+          />
+        }
+      />
+      <Route
+        path="/movimentacoes/criar"
+        element={
+          <PermissionProtect
+            element={<FinancialMovements />}
+            moduleName="finance"
+            action="create"
+          />
+        }
+      />
+      <Route
+        path="/movimentacoes/lista"
+        element={
+          <PermissionProtect
+            element={<FinancialList />}
+            moduleName="finance"
+            action="read"
+          />
+        }
+      />
       <Route
         path="/movimentacoes/visualizar/:id"
-        element={<FinancialUpdate />}
+        element={
+          <PermissionProtect
+            element={<FinancialMovements />}
+            moduleName="finance"
+            action="update"
+          />
+        }
       />
       <Route
         path="/movimentacoes/contribuicoes/:name"
-        element={<ContributionHistoric />}
+        element={
+          <PermissionProtect
+            element={<ContributionHistoric />}
+            moduleName="finance"
+            action="read"
+          />
+        }
       />
     </Routes>
   );
