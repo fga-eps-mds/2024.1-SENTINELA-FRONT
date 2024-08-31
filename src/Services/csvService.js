@@ -1,16 +1,5 @@
 import { APIBank } from "./BaseService";
 
-const storagedToken = localStorage.getItem("@App:token");
-let token = null;
-
-if (storagedToken) {
-  try {
-    token = JSON.parse(storagedToken);
-  } catch (error) {
-    console.error("O token armazenado não é um JSON válido:", error);
-  }
-}
-
 export const generateCSVReport = async ({
   contaOrigem,
   contaDestino,
@@ -23,6 +12,17 @@ export const generateCSVReport = async ({
   dataFinal,
 }) => {
   try {
+    const storagedToken = localStorage.getItem("@App:token");
+    let token = null;
+
+    if (storagedToken) {
+      try {
+        token = JSON.parse(storagedToken);
+      } catch (error) {
+        console.error("O token armazenado não é um JSON válido:", error);
+      }
+    }
+
     if (!token) {
       throw new Error("No token found");
     }
@@ -61,7 +61,9 @@ export const generateCSVReport = async ({
     console.log("Relatório CSV gerado com sucesso");
     return false;
   } catch (error) {
-    const errorMessage = await error.response.data.text();
+    const errorMessage = error?.response?.data?.text
+      ? await error.response.data.text()
+      : "Unknown error";
     console.error("Erro ao gerar relatório CSV:", errorMessage);
     return true;
   }
