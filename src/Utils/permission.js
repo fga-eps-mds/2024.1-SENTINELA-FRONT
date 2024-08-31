@@ -1,3 +1,4 @@
+
 export const checkModule = (permissions, module) => {
   return permissions.some((permission) => permission.module === module);
 };
