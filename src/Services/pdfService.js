@@ -1,16 +1,5 @@
 import { APIBank } from "./BaseService";
 
-const storagedToken = localStorage.getItem("@App:token");
-let token = null;
-
-if (storagedToken) {
-  try {
-    token = JSON.parse(storagedToken);
-  } catch (error) {
-    console.error("O token armazenado não é um JSON válido:", error);
-  }
-}
-
 export const generateFinancialReport = async ({
   contaOrigem,
   contaDestino,
@@ -23,6 +12,17 @@ export const generateFinancialReport = async ({
   dataFinal,
 }) => {
   try {
+    const storagedToken = localStorage.getItem("@App:token");
+    let token = null;
+
+    if (storagedToken) {
+      try {
+        token = JSON.parse(storagedToken);
+      } catch (error) {
+        console.error("O token armazenado não é um JSON válido:", error);
+      }
+    }
+
     if (!token) {
       throw new Error("No token found");
     }
@@ -44,7 +44,7 @@ export const generateFinancialReport = async ({
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        responseType: "blob", // Important for handling binary data like PDFs
+        responseType: "blob",
       }
     );
 
@@ -62,7 +62,9 @@ export const generateFinancialReport = async ({
     console.log("Relatório financeiro gerado com sucesso");
     return false;
   } catch (error) {
-    const errorMessage = await error.response.data.text();
+    const errorMessage = error?.response?.data?.text
+      ? await error.response.data.text()
+      : "Unknown error";
     console.error("Erro ao gerar relatório financeiro:", errorMessage);
     return true;
   }
