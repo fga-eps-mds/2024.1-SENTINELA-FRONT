@@ -8,6 +8,35 @@ import { generateCSVReport } from "../../../../Services/csvService";
 import { getUsers } from "../../../../Services/userService";
 import "./index.css";
 
+const fetchNomes = async (conta, setNomes) => {
+  try {
+    let names = [];
+    switch (conta) {
+      case "Sindicalizado": {
+        const users = await getUsers();
+        names = Array.isArray(users) ? users.map((user) => user.name) : [];
+        break;
+      }
+      case "Sindicato": {
+        names = ["Conta BRB", "Conta Mercado Pago"];
+        break;
+      }
+      case "Fornecedor": {
+        const suppliers = await getSupplierForm();
+        names = Array.isArray(suppliers)
+          ? suppliers.map((supplier) => supplier.nome)
+          : [];
+        break;
+      }
+      default:
+        console.error("Tipo de conta desconhecido.");
+    }
+    setNomes(names);
+  } catch (error) {
+    console.error("Erro ao buscar lista de nomes:", error);
+  }
+};
+
 export default function GenerateFinancialReport() {
   const [contaOrigem, setContaOrigem] = useState("");
   const [contaDestino, setContaDestino] = useState("");
@@ -22,119 +51,40 @@ export default function GenerateFinancialReport() {
   const [nomesDestino, setNomesDestino] = useState([]);
 
   useEffect(() => {
-    const fetchNomesOrigem = async () => {
-      try {
-        switch (contaOrigem) {
-          case "Sindicalizado": {
-            const users = await getUsers();
-            if (Array.isArray(users)) {
-              setNomesOrigem(users.map((user) => user.name));
-            } else {
-              console.error("Os dados recebidos não são um array.");
-            }
-            break;
-          }
-          case "Sindicato": {
-            setNomesOrigem(["Conta BRB", "Conta Mercado Pago"]);
-            break;
-          }
-          case "Fornecedor": {
-            const suppliers = await getSupplierForm();
-            if (Array.isArray(suppliers)) {
-              setNomesOrigem(suppliers.map((supplier) => supplier.nome));
-            } else {
-              console.error("Os dados recebidos não são um array.");
-            }
-            break;
-          }
-          default:
-            console.error("Tipo de conta desconhecido.");
-        }
-      } catch (error) {
-        console.error("Erro ao buscar lista de nomes:", error);
-      }
-    };
-
-    if (contaOrigem) fetchNomesOrigem();
+    if (contaOrigem) fetchNomes(contaOrigem, setNomesOrigem);
   }, [contaOrigem]);
 
   useEffect(() => {
-    const fetchNomesDestino = async () => {
-      try {
-        switch (contaDestino) {
-          case "Sindicalizado": {
-            const users = await getUsers();
-            if (Array.isArray(users)) {
-              setNomesDestino(users.map((user) => user.name));
-            } else {
-              console.error("Os dados recebidos não são um array.");
-            }
-            break;
-          }
-          case "Sindicato": {
-            setNomesDestino(["Conta BRB", "Conta Mercado Pago"]);
-            break;
-          }
-          case "Fornecedor": {
-            const suppliers = await getSupplierForm();
-            if (Array.isArray(suppliers)) {
-              setNomesDestino(suppliers.map((supplier) => supplier.nome));
-            } else {
-              console.error("Os dados recebidos não são um array.");
-            }
-            break;
-          }
-          default:
-            console.error("Tipo de conta desconhecido.");
-        }
-      } catch (error) {
-        console.error("Erro ao buscar lista de nomes:", error);
-      }
-    };
-
-    if (contaDestino) fetchNomesDestino();
+    if (contaDestino) fetchNomes(contaDestino, setNomesDestino);
   }, [contaDestino]);
 
   const handleGenerateReport = async () => {
     try {
       const startDate = new Date(dataInicio);
       const endDate = new Date(dataFinal);
-
-      if (!endDate && startDate > endDate) {
+      if (!endDate || startDate > endDate) {
         console.error(
           "A data de início deve ser anterior ou igual à data final."
         );
         return;
       }
-
+      const reportParams = {
+        contaOrigem,
+        contaDestino,
+        nomeOrigem,
+        nomeDestino,
+        tipoDocumento,
+        sitPagamento,
+        formArquivo,
+        dataInicio,
+        dataFinal,
+      };
       let reportGenerated;
-
       if (formArquivo === "CSV") {
-        reportGenerated = await generateCSVReport({
-          contaOrigem,
-          contaDestino,
-          nomeOrigem,
-          nomeDestino,
-          tipoDocumento,
-          sitPagamento,
-          formArquivo,
-          dataInicio,
-          dataFinal,
-        });
+        reportGenerated = await generateCSVReport(reportParams);
       } else {
-        reportGenerated = await generateFinancialReport({
-          contaOrigem,
-          contaDestino,
-          nomeOrigem,
-          nomeDestino,
-          tipoDocumento,
-          sitPagamento,
-          formArquivo,
-          dataInicio,
-          dataFinal,
-        });
+        reportGenerated = await generateFinancialReport(reportParams);
       }
-
       if (!reportGenerated) {
         console.log("Relatório gerado e baixado com sucesso!");
       } else {
@@ -148,8 +98,7 @@ export default function GenerateFinancialReport() {
   return (
     <section className="container-financial-report">
       <div className="forms-container-financial-report">
-        <h1> Gerar relatório financeiro </h1>
-
+        <h1>Gerar relatório financeiro</h1>
         <div className="double-box-gfr">
           <FieldSelect
             label="Conta Origem"
@@ -242,7 +191,6 @@ export default function GenerateFinancialReport() {
             onChange={(newValue) => setDataFinal(newValue)}
           />
         </div>
-
         <div className="box-format-pdfcsv">
           <FieldSelect
             label="Formato de arquivo"
