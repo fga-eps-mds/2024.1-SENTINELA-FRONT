@@ -170,6 +170,7 @@ const ViewMembershipPage = () => {
 
   // att usuario
   const handleUpdateUser = async () => {
+    console.log("handleUpdateUser chamada");
     try {
       const formData = {
         name,
@@ -592,6 +593,7 @@ const ViewMembershipPage = () => {
                 Adicionar Dependente{" "}
                 <AddCircleOutlineIcon
                   id="addDependentBttn"
+                  data-testid="add-dependent-icon"
                   onClick={() => setShowDependentForm(true)}
                 />
               </h3>
@@ -601,7 +603,7 @@ const ViewMembershipPage = () => {
                 <div className="dependentToAdd">
                   <div className="section-dependent-form">
                     <FieldText
-                      label="Nome Completo *"
+                      label="Nome Completo Dependente *"
                       value={currentDependent.nomeCompletoDependente}
                       onChange={(e) =>
                         handleDependentChange(
@@ -671,24 +673,24 @@ const ViewMembershipPage = () => {
                   >
                     <div className="section-dependent-form">
                       <FieldText
-                        label="Nome Completo"
+                        label="Nome Completo Dependente"
                         value={dependent.nomeCompletoDependente}
                         onChange={() => {}}
                       />
                       <FieldText
-                        label="Data de Nascimento"
+                        label="Data de Nascimento Dependente"
                         value={dayjs(dependent.dataNasc).format("DD/MM/YYYY")}
                         onChange={() => {}}
                       />
 
                       <FieldText
-                        label="Parentesco"
+                        label="Parentesco Dependente"
                         value={dependent.parentesco}
                         onChange={() => {}}
                       />
 
                       <FieldText
-                        label="CPF"
+                        label="CPF Dependente"
                         value={dependent.cpfDependente}
                         onChange={() => {}}
                       />
