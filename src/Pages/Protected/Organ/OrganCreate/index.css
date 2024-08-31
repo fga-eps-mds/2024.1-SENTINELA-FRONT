@@ -1,0 +1,133 @@
+@media screen and (max-width: 1080px) {
+  .bar-container-organs {
+    display: grid;
+  }
+
+  .container-organs {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+
+  label {
+    color: #332117 !important;
+  }
+
+  .forms-container-organs {
+    margin: 1rem;
+    width: 90%;
+    display: inherit;
+    justify-content: center;
+    flex-direction: column;
+    min-height: 95vh;
+  }
+
+  .section-doublebox {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+
+  .forms-container-organs button {
+    width: 100%;
+    margin-top: auto;
+  }
+
+  .forms-container-organs h1 {
+    font-size: 22px;
+    font-weight: 800;
+    margin-left: 8px;
+    margin-right: 50px;
+    margin-top: 1rem;
+    margin-bottom: -1rem;
+    color: #332117 !important;
+    white-space: nowrap;
+  }
+
+  .forms-container-organs h3 {
+    font-size: 16px;
+    font-weight: 400;
+    margin-left: 1rem;
+    margin-top: 3rem;
+    color: #332117 !important;
+  }
+
+  .section-doublebox {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* grid-gap: 1rem; Espaçamento entre as colunas */
+    align-items: start; /* Alinhamento ao topo */
+    width: 100%;
+  }
+
+  .confirmlotation {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem; /* Diminua ou ajuste a margem superior */
+    grid-column: 1 / -1; /* Faz o botão ocupar toda a largura da grid */
+  }
+}
+
+@media screen and (min-width: 1080px) {
+  /* .bar-container-benefits {
+    display: flex;
+    height: 100%;
+    position: fixed;
+  } */
+
+  .container-organs {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+  }
+
+  .forms-container-organs {
+    margin: 1rem;
+    width: 90%;
+    display: inherit;
+    justify-content: center;
+    flex-direction: column;
+    min-height: 95vh;
+  }
+
+  .forms-container-organs button {
+    width: 100%;
+    margin-top: auto;
+  }
+
+  .forms-container-organs h1 {
+    font-size: 34px;
+    font-weight: 800;
+    margin-bottom: -0.5rem;
+    margin-top: 2rem;
+  }
+
+  .forms-container-organs h3 {
+    font-size: 24px;
+    font-weight: 400;
+    margin-left: 1rem;
+    margin-top: 3rem;
+  }
+
+  .section-doublebox {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* grid-gap: 1rem; Espaçamento entre as colunas */
+    align-items: start; /* Alinhamento ao topo */
+    width: 100%;
+  }
+  .titulo-nova-lotacao {
+    display: flex;
+    width: 200%;
+  }
+
+  .confirmlotation {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem; /* Diminua ou ajuste a margem superior */
+    grid-column: 1 / -1; /* Faz o botão ocupar toda a largura da grid */
+  }
+}

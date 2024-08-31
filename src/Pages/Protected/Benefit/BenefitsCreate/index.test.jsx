@@ -114,7 +114,7 @@ describe("BenefitsCreate", () => {
     expect(createBenefitsForm).toHaveBeenCalledTimes(1);
   });
 
-  it.skip("validates form correctly before submiting with non required fields", async () => {
+  it("validates form correctly before submiting with email", async () => {
     mockValidators();
     render(
       <Router>
@@ -150,6 +150,22 @@ describe("BenefitsCreate", () => {
       target: { value: "valid@email.com" },
     });
 
+    await userEvent.click(screen.getByText("CADASTRAR"));
+
+    // form deve ser submetido agora que todos os campos obrigatórios estão preenchidos
+    // e os não obrigatórios foram validados
+    expect(createBenefitsForm).toHaveBeenCalledTimes(1);
+  });
+  it("validates form correctly before submiting with phone", async () => {
+    mockValidators();
+    render(
+      <Router>
+        <BenefitsCreate />
+      </Router>
+    );
+
+    await fillUpRequiredFields();
+
     // porém preenchendo um telefone inválido
     const celularInput = await screen.findByLabelText("Telefone/Celular");
 
@@ -172,6 +188,23 @@ describe("BenefitsCreate", () => {
     await fireEvent.change(celularInput, {
       target: { value: "61912341234" },
     });
+
+    // submentendo novamente
+    await userEvent.click(screen.getByText("CADASTRAR"));
+
+    // form deve ser submetido agora que todos os campos obrigatórios estão preenchidos
+    // e os não obrigatórios foram validados
+    expect(createBenefitsForm).toHaveBeenCalledTimes(1);
+  });
+  it("validates form correctly before submiting with site", async () => {
+    mockValidators();
+    render(
+      <Router>
+        <BenefitsCreate />
+      </Router>
+    );
+
+    await fillUpRequiredFields();
 
     const siteInput = await screen.findByLabelText("Site");
 

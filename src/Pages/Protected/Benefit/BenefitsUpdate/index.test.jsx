@@ -79,7 +79,7 @@ describe("BenefitsUpdate", () => {
     expect(screen).toMatchSnapshot();
   });
 
-  it("validates form correctly before submiting", async () => {
+  it("validates email correctly before submiting", async () => {
     mockValidators();
 
     render(
@@ -108,6 +108,22 @@ describe("BenefitsUpdate", () => {
       target: { value: "valid@email.com" },
     });
 
+    await userEvent.click(screen.getByText("Salvar"));
+
+    await waitFor(() =>
+      expect(updateBenefitsFormById).toHaveBeenCalledTimes(1)
+    );
+  });
+
+  it("validates phone correctly before submiting", async () => {
+    mockValidators();
+
+    render(
+      <Router>
+        <BenefitsUpdate />
+      </Router>
+    );
+
     const phoneInput = await screen.findByLabelText("Telefone/Celular");
 
     await fireEvent.change(phoneInput, {
@@ -128,6 +144,22 @@ describe("BenefitsUpdate", () => {
       target: { value: "61912341234" },
     });
 
+    await userEvent.click(screen.getByText("Salvar"));
+
+    await waitFor(() =>
+      expect(updateBenefitsFormById).toHaveBeenCalledTimes(1)
+    );
+  });
+
+  it("validates site correctly before submitting", async () => {
+    mockValidators();
+
+    render(
+      <Router>
+        <BenefitsUpdate />
+      </Router>
+    );
+
     const siteInput = await screen.findByLabelText("Site");
 
     await fireEvent.change(siteInput, {
@@ -147,7 +179,6 @@ describe("BenefitsUpdate", () => {
     await fireEvent.change(siteInput, {
       target: { value: "https://valid.com" },
     });
-
     await userEvent.click(screen.getByText("Salvar"));
 
     await waitFor(() =>
