@@ -28,18 +28,27 @@ import FinancialMovements from "../Pages/Protected/FinancialMovements/FinancialC
 import FinancialList from "../Pages/Protected/FinancialMovements/FinancialList";
 import FinancialUpdate from "../Pages/Protected/FinancialMovements/FinancialUpdate";
 import ContributionHistoric from "../Pages/Protected/FinancialMovements/ContributionHistoric";
-import Unauthorized from "../Pages/Protected/Unauthorized"
+import Unauthorized from "../Pages/Protected/Unauthorized";
 const ProtectedRoutes = () => {
   return (
     <Routes>
-      <Route path ="/unauthorized" element={<Unauthorized />}/>
+      <Route path="/unauthorized" element={<Unauthorized />} />
       <Route path="/home" element={<Home />} />
       <Route path="/fornecedores/criar" element={<Supplier />} />
       <Route path="/fornecedores" element={<ListSupplier />} />
       <Route path="/fornecedores/:id" element={<ViewSupplier />} />
       <Route path="/usuarios/criar" element={<UserCreatePage />} />
       <Route path="/usuarios/editar/:nome" element={<UserUpdatePage />} />
-      <Route path="/usuarios" element={<PermissionProtect element={<UserListPage />} moduleName="users" action="read" />} />
+      <Route
+        path="/usuarios"
+        element={
+          <PermissionProtect
+            element={<UserListPage />}
+            moduleName="users"
+            action="read"
+          />
+        }
+      />
       <Route path="/usuarios/hub" element={<UserHubPage />} />
       <Route path="/perfis" element={<RolesListPage />} />
       <Route path="/perfis/criar" element={<RolesCreatePage />} />
