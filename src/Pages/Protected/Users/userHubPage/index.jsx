@@ -32,7 +32,7 @@ export default function UserHubPage() {
           {/* <SecondaryButton text="SOLICITAÇÕES DE FILIAÇÃO" onClick={""} /> */}
           <SecondaryButton
             text="Filiações pendentes"
-            onClick={() => navigate("filiacaos-pendentes/")}
+            onClick={() => navigate("filiacoes-pendentes/")}
           />
           <SecondaryButton
             text="LISTA DE USUÁRIOS"
