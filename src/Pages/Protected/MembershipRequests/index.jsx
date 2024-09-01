@@ -12,6 +12,7 @@ import CheckList from "../../../Components/Checklist";
 import PrimaryButton from "../../../Components/PrimaryButton";
 import Modal from "../../../Components/Modal";
 import { useNavigate } from "react-router-dom";
+import { deleteUserById } from "../../../Services/userService";
 
 export default function MembershipRequest() {
   const { user } = useAuth();
@@ -62,11 +63,12 @@ export default function MembershipRequest() {
 
   const handleReject = async () => {
     try {
-      const membersToDelete = filteredMembers.filter((member) =>
-        checkedItems.includes(member.name)
-      );
-      for (const memberDelete of membersToDelete) {
+      filteredMembers.filter((member) => checkedItems.includes(member.name));
+
+      for (const memberDelete of filteredMembers) {
         await deleteMember(memberDelete._id);
+        console.log("memberDelete", memberDelete);
+        await deleteUserById(memberDelete._id);
       }
 
       setTryingDelete(false);

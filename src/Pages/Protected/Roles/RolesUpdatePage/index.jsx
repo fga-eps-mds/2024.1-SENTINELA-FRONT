@@ -58,12 +58,18 @@ export default function RolesUpdatePage() {
             moduleNameMap[permission.module.toLowerCase()] ||
             permission.module.toLowerCase();
 
-          permission.access.forEach((access) => {
-            const index = accessIndexMap[access];
-            if (index !== undefined) {
-              permissionsMap[moduleName][index] = true;
-            }
-          });
+          if (permissionsMap[moduleName]) {
+            permission.access.forEach((access) => {
+              const index = accessIndexMap[access];
+              if (index !== undefined) {
+                permissionsMap[moduleName][index] = true;
+              }
+            });
+          } else {
+            console.warn(
+              `Módulo desconhecido encontrado: ${permission.module}`
+            );
+          }
         });
 
         setFinanceiro(permissionsMap.finance);

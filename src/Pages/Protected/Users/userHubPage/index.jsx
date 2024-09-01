@@ -11,21 +11,14 @@ export default function UserHubPage() {
     navigate("/usuarios");
   };
 
-  const handleCadastroClick = () => {
-    navigate("/usuarios/criar");
-  };
-
-  const handleAtualizarClick = () => {
-    navigate("/perfil");
-  };
-
-  const handleCadastroPerfilClick = () => {
-    navigate("/perfis/criar");
-  };
-
   const handleListaPerfilClick = () => {
     navigate("/perfis");
   };
+
+  const handleListaOrgaosClick = () => {
+    navigate("/organ/list");
+  };
+
   return (
     <section className="container">
       <div className="area-card">
@@ -41,26 +34,17 @@ export default function UserHubPage() {
             text="Filiações pendentes"
             onClick={() => navigate("filiacaos-pendentes/")}
           />
-
-          <SecondaryButton
-            text="CADASTRO DE USUÁRIOS"
-            onClick={handleCadastroClick}
-          />
           <SecondaryButton
             text="LISTA DE USUÁRIOS"
             onClick={handleListaClick}
           />
           <SecondaryButton
-            text="ATUALIZAR USUÁRIO"
-            onClick={handleAtualizarClick}
-          />
-          <SecondaryButton
-            text="CADASTRO DE PERFIL"
-            onClick={handleCadastroPerfilClick}
-          />
-          <SecondaryButton
             text="LISTA DE PERFIL"
             onClick={handleListaPerfilClick}
+          />
+          <SecondaryButton
+            text="LISTA DE ÓRGÃOS"
+            onClick={handleListaOrgaosClick}
           />
         </div>
       </div>

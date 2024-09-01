@@ -1,4 +1,4 @@
-import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
+import { Button, FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import FieldNumber from "../../../../Components/FieldNumber";
@@ -49,6 +49,7 @@ export default function UserUpdatePage() {
     loadRoles();
   }, []);
 
+  //Puxa os dados ded usuário para atualizar a página
   useEffect(() => {
     const fetchUser = async () => {
       if (userId) {
@@ -59,7 +60,7 @@ export default function UserUpdatePage() {
             setCelular(user.phone || "");
             setLogin(user.status ? "Ativo" : "Inativo");
             setEmail(user.email || "");
-            setPerfilSelecionado(user.role || "");
+            setPerfilSelecionado(user.role._id || "");
           }
         } catch (error) {
           console.error("Erro ao buscar usuário:", error);
@@ -147,18 +148,29 @@ export default function UserUpdatePage() {
     navigate("/usuarios");
   };
 
+  const handleNavigateToContributions = () => {
+    navigate(`/movimentacoes/contribuicoes/${nomeCompleto}`, {
+      state: {
+        userId,
+        nomeCompleto,
+        celular,
+        email,
+        login,
+        perfilSelecionado,
+      },
+    });
+  };
+
   return (
     <section className="container">
       <div className="forms-container-user">
         <h1>Visualização de usuário</h1>
-
         <h3>Dados Pessoais</h3>
         <FieldText
           label="Nome Completo"
           value={nomeCompleto}
           onChange={handleNomeCompletoChange}
         />
-
         <div className="double-box-user">
           <FieldNumber
             label="Celular"
@@ -187,9 +199,13 @@ export default function UserUpdatePage() {
         {!isEmailValid && (
           <label className="isValid">*Insira um email válido</label>
         )}
-
+        <Button
+          className="contribution-btn"
+          onClick={handleNavigateToContributions}
+        >
+          Histórico de Contribuições
+        </Button>
         <h3>Perfil</h3>
-
         <RadioGroup
           className="perfil-radiogroup"
           value={perfilSelecionado}
@@ -204,7 +220,6 @@ export default function UserUpdatePage() {
             />
           ))}
         </RadioGroup>
-
         <div className="double-buttons-user">
           <SecondaryButton text="Deletar" onClick={handleDeleteModal} />
           <PrimaryButton text="Salvar" onClick={handleSave} />
@@ -218,7 +233,6 @@ export default function UserUpdatePage() {
             width="338px"
           />
         </Modal>
-
         <Modal
           alertTitle="Deseja deletar o usuário do sistema?"
           show={showDeleteModal}
