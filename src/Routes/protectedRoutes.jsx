@@ -279,7 +279,7 @@ const ProtectedRoutes = () => {
         path="/movimentacoes/visualizar/:id"
         element={
           <PermissionProtect
-            element={<FinancialMovements />}
+            element={<FinancialUpdate />}
             moduleName="finance"
             action="update"
           />

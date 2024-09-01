@@ -19,11 +19,15 @@ describe("Unauthorized Page", () => {
     );
 
     // Verifica se o título "Acesso Negado" está na tela
-    const titleElement = screen.getByRole("heading", { name: /acesso negado/i });
+    const titleElement = screen.getByRole("heading", {
+      name: /acesso negado/i,
+    });
     expect(titleElement).toBeInTheDocument();
 
     // Verifica se o parágrafo de permissão está na tela
-    const paragraphElement = screen.getByText(/você não tem permissão para acessar esta página/i);
+    const paragraphElement = screen.getByText(
+      /você não tem permissão para acessar esta página/i
+    );
     expect(paragraphElement).toBeInTheDocument();
   });
 });

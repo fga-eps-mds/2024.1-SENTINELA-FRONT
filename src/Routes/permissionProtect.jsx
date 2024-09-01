@@ -1,5 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import AuthContext from "../Context/auth";
+import PropTypes from "prop-types";
 import { checkAction } from "../Utils/permission";
 import { Navigate } from "react-router-dom";
 import { getRoleById } from "../Services/RoleService/roleService";
@@ -40,6 +41,12 @@ const PermissionProtect = ({ element, moduleName, action }) => {
   } else {
     return <Navigate to="/unauthorized" />;
   }
+};
+
+PermissionProtect.propTypes = {
+  element: PropTypes.element.isRequired,
+  moduleName: PropTypes.string.isRequired,
+  action: PropTypes.string.isRequired,
 };
 
 export default PermissionProtect;

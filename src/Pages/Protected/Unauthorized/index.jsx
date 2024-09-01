@@ -1,6 +1,3 @@
-// src/Pages/Protected/Unauthorized/index.jsx
-import React from "react";
-
 const Unauthorized = () => {
   return (
     <div>
