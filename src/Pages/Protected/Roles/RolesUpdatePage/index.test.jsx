@@ -194,4 +194,36 @@ describe("RolesUpdatePage", () => {
     // Verifica se o modal de sucesso foi exibido
     expect(screen.getByText("PERFIL DELETADO COM SUCESSO")).toBeInTheDocument();
   });
+
+  it("displays warning when an unknown module is encountered", async () => {
+    // Espiona a função console.warn
+    const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+    // Mock da função getRoleById para retornar um módulo desconhecido
+    getRoleById.mockResolvedValue({
+      name: "Admin",
+      permissions: [
+        { module: "unknown_module", access: ["create", "read"] }, // Módulo desconhecido
+      ],
+    });
+
+    render(
+      <MemoryRouter initialEntries={[{ state: { roleId: "mock-role-id" } }]}>
+        <Routes>
+          <Route path="/" element={<RolesUpdatePage />} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    // Aguarda a execução do efeito
+    await waitFor(() => {
+      // Verifica se console.warn foi chamado com a mensagem esperada
+      expect(warnSpy).toHaveBeenCalledWith(
+        "Módulo desconhecido encontrado: unknown_module"
+      );
+    });
+
+    // Limpa o mock do console.warn
+    warnSpy.mockRestore();
+  });
 });
