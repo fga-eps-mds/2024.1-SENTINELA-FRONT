@@ -711,7 +711,7 @@ const ViewMembershipPage = () => {
             </div>
           </div>
           <div
-            className="double-box"
+            className="section-doublebtn"
             style={{ gap: "40px", alignItems: "center" }}
           >
             <PrimaryButton
