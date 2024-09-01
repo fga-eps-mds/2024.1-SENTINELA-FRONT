@@ -6,6 +6,8 @@ import { getSupplierForm } from "../../../../Services/supplierService";
 import { generateFinancialReport } from "../../../../Services/pdfService";
 import { generateCSVReport } from "../../../../Services/csvService";
 import { getUsers } from "../../../../Services/userService";
+import { Snackbar } from "@mui/material";
+import Alert from "@mui/material/Alert";
 import "./index.css";
 
 const fetchNomes = async (conta, setNomes) => {
@@ -49,6 +51,8 @@ export default function GenerateFinancialReport() {
   const [dataFinal, setDataFinal] = useState(null);
   const [nomesOrigem, setNomesOrigem] = useState([]);
   const [nomesDestino, setNomesDestino] = useState([]);
+  const [openError, setOpenError] = useState(false);
+  const [openGenerateError, setOpenGenerateError] = useState(false);
 
   useEffect(() => {
     if (contaOrigem) fetchNomes(contaOrigem, setNomesOrigem);
@@ -68,6 +72,7 @@ export default function GenerateFinancialReport() {
         );
         return;
       }
+
       const reportParams = {
         contaOrigem,
         contaDestino,
@@ -80,6 +85,11 @@ export default function GenerateFinancialReport() {
         dataFinal,
       };
       let reportGenerated;
+      if (!formArquivo) {
+        setOpenError("Selecione o formato de arquivo");
+        return;
+      }
+
       if (formArquivo === "CSV") {
         reportGenerated = await generateCSVReport(reportParams);
       } else {
@@ -89,6 +99,7 @@ export default function GenerateFinancialReport() {
         console.log("Relatório gerado e baixado com sucesso!");
       } else {
         console.error("Erro ao gerar o relatório.");
+        setOpenGenerateError(true);
       }
     } catch (error) {
       console.error("Erro ao gerar o relatório:", error);
@@ -119,7 +130,7 @@ export default function GenerateFinancialReport() {
             options={nomesOrigem}
           />
           <FieldSelect
-            label="Nome destino"
+            label="Nome Destino"
             value={nomeDestino}
             onChange={(e) => setNomeDestino(e.target.value)}
             options={nomesDestino}
@@ -193,7 +204,7 @@ export default function GenerateFinancialReport() {
         </div>
         <div className="box-format-pdfcsv">
           <FieldSelect
-            label="Formato de arquivo"
+            label="Formato de arquivo*"
             value={formArquivo}
             onChange={(e) => setFormArquivo(e.target.value)}
             options={["CSV", "PDF"]}
@@ -205,6 +216,25 @@ export default function GenerateFinancialReport() {
             onClick={handleGenerateReport}
           />
         </div>
+        <Snackbar
+          open={openError}
+          autoHideDuration={6000}
+          onClose={() => setOpenError(false)}
+        >
+          <Alert onClose={() => setOpenError(false)} severity="error">
+            {openError}
+          </Alert>
+        </Snackbar>
+
+        <Snackbar
+          open={openGenerateError}
+          autoHideDuration={6000}
+          onClose={() => setOpenGenerateError(false)}
+        >
+          <Alert onClose={() => setOpenGenerateError(false)} severity="error">
+            Não foram encontradas movimentações nesse período
+          </Alert>
+        </Snackbar>
       </div>
     </section>
   );
