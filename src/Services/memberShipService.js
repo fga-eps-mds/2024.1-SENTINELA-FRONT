@@ -30,14 +30,18 @@ export async function getMemberShipById(id) {
     const response = await APIUsers.get(`membership/${id}`);
     return response.data;
   } catch (error) {
+    console.error(error);
     return error.response.data.erro;
   }
 }
 
-export const updateMemberStatus = async (memberId) => {
+export const updateMemberStatus = async (memberId, formData) => {
   try {
     const response = await APIUsers.patch(
-      `membership/updateStatus/${memberId}`
+      `membership/updateStatus/${memberId}`,
+      {
+        formData,
+      }
     );
     return response.data;
   } catch (error) {
@@ -45,10 +49,22 @@ export const updateMemberStatus = async (memberId) => {
   }
 };
 
+export const updateMembership = async (memberId, formData) => {
+  try {
+    await APIUsers.patch(`membership/update/${memberId}`, {
+      formData,
+    });
+
+    return false;
+  } catch (error) {
+    return error.response.data.erro;
+  }
+};
+
 export async function deleteMember(memberId) {
   try {
-    const response = await APIUsers.delete(`membership/delete/${memberId}`);
-    return response.data;
+    await APIUsers.delete(`membership/delete/${memberId}`);
+    return false;
   } catch (error) {
     return error.response.data.erro;
   }
