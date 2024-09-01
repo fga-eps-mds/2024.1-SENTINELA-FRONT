@@ -11,12 +11,12 @@ export default function UserHubPage() {
     navigate("/usuarios");
   };
 
-  const handleCadastroClick = () => {
-    navigate("/usuarios/criar");
+  const handleListaPerfilClick = () => {
+    navigate("/perfis");
   };
 
-  const handleAtualizarClick = () => {
-    navigate("/perfil");
+  const handleListaOrgaosClick = () => {
+    navigate("/organ/list");
   };
 
   return (
@@ -32,20 +32,19 @@ export default function UserHubPage() {
           {/* <SecondaryButton text="SOLICITAÇÕES DE FILIAÇÃO" onClick={""} /> */}
           <SecondaryButton
             text="Filiações pendentes"
-            onClick={() => navigate("membershipRequests/")}
-          />
-
-          <SecondaryButton
-            text="CADASTRO DE USUÁRIOS"
-            onClick={handleCadastroClick}
+            onClick={() => navigate("filiacoes-pendentes/")}
           />
           <SecondaryButton
             text="LISTA DE USUÁRIOS"
             onClick={handleListaClick}
           />
           <SecondaryButton
-            text="ATUALIZAR USUÁRIO"
-            onClick={handleAtualizarClick}
+            text="LISTA DE PERFIL"
+            onClick={handleListaPerfilClick}
+          />
+          <SecondaryButton
+            text="LISTA DE ÓRGÃOS"
+            onClick={handleListaOrgaosClick}
           />
         </div>
       </div>

@@ -60,7 +60,6 @@ export default function SideBar({ fullHeight = true }) {
       }}
     />,
     <SideButton
-      hidden={user ? "none" : "flex"}
       key="filiacão"
       text="FILIAÇÃO"
       onClick={() => {

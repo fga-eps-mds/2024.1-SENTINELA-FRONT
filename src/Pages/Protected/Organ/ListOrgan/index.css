@@ -1,0 +1,85 @@
+@media screen and (max-width: 1080px) {
+  .container-list-organs {
+    display: grid;
+    width: 90%;
+    position: relative;
+  }
+
+  .search-box-organs {
+    display: grid;
+    width: 100%;
+    margin-top: 1rem;
+    position: relative;
+  }
+
+  .double-box-list-organs {
+    display: contents;
+    font-size: 20px;
+    color: #332117 !important;
+    margin-left: 1.2rem;
+    white-space: nowrap;
+  }
+
+  .title-center {
+    text-align: center;
+    margin: 0 auto;
+    justify-content: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .double-box-list-organs .MuiButton-root {
+    margin-left: 1.2rem;
+    margin-bottom: 0.5rem;
+    width: 90%;
+  }
+
+  .list-item-organs {
+    padding: 0.5rem;
+    margin-top: 2rem !important;
+  }
+}
+
+@media screen and (min-width: 1080px) {
+  label {
+    color: #332117 !important;
+  }
+
+  .container-list-organs {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .forms-container-list-organs {
+    margin: 3.5rem;
+    width: 80%;
+    display: inherit;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .search-box-organs {
+    display: grid;
+    width: 100%;
+    margin-top: 1rem;
+    position: relative;
+  }
+
+  .double-box-list-organs {
+    display: grid;
+    grid-template-columns: 2.3fr 2fr;
+    font-size: 24px;
+  }
+
+  .double-box-list-organs button {
+    margin-left: 1rem;
+    margin-right: 10px;
+    width: auto;
+    height: 44px;
+  }
+
+  .list-item-organs {
+    color: #332117 !important;
+    margin-top: 2rem !important;
+  }
+}

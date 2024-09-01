@@ -9,12 +9,25 @@
     grid-template-columns: 0.5fr 0.3fr;
   }
 
+  .contribution-btn {
+    background-color: transparent !important;
+
+    margin-top: 1.5rem !important;
+    margin-left: 0.8rem !important;
+
+    color: #332117 !important;
+    text-decoration: underline !important;
+    font-size: 13px !important;
+    text-align: left !important;
+    justify-content: flex-start !important;
+  }
+
   #addDependentBttn {
     cursor: pointer;
   }
 }
 
-@media screen and (min-width: 700px) {
+@media screen and (min-width: 1080px) {
   .double-buttons-user {
     display: flex;
     justify-content: space-between; /* Distribui os botões igualmente no espaço disponível */
@@ -26,6 +39,24 @@
     flex: 1; /* Faz com que os botões ocupem o espaço disponível igualmente */
     height: 40px;
   }
+
+  .contribution-btn {
+    background-color: transparent !important;
+
+    margin-top: 1.5rem !important;
+    margin-left: 0.5rem !important;
+
+    color: #332117 !important;
+    text-decoration: underline !important;
+    font-size: 16px !important;
+    text-align: left !important;
+    justify-content: flex-start !important;
+
+    cursor: pointer;
+    padding-left: 10px !important;
+    width: 48% !important;
+  }
+
   #addDependentBttn {
     cursor: pointer;
   }

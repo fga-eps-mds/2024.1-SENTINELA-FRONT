@@ -12,6 +12,8 @@ import {
 } from "../../../Services/supplierService";
 import { useLocation, useNavigate } from "react-router-dom";
 import Modal from "../../../Components/Modal";
+import { Alert, Snackbar } from "@mui/material";
+import { isValidEmail } from "../../../Utils/validators";
 
 export default function UpdateSupplier() {
   const [nome, setNome] = useState("");
@@ -36,6 +38,7 @@ export default function UpdateSupplier() {
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showDeletedModal, setShowDeletedModal] = useState(false);
+  const [openError, setOpenError] = useState(false);
 
   const navigate = useNavigate();
 
@@ -124,6 +127,11 @@ export default function UpdateSupplier() {
     return formattedCEP.replace(/(\d{5})(\d)/, "$1-$2");
   };
 
+  const mascaraNumericos = (numerico) => {
+    let res = numerico.replace(/\D/g, "");
+    return res;
+  };
+
   const handleChangeTipoPessoa = (event) => {
     setTipoPessoa(event.target.value);
   };
@@ -140,6 +148,81 @@ export default function UpdateSupplier() {
     setUfEndereco(event.target.value);
   };
 
+  const isValidCPForCNPJ = (cpfCnpj) => {
+    if (!cpfCnpj) {
+      return { isValid: true };
+    }
+
+    const cleanedValue = cpfCnpj.replace(/\D/g, ""); // Remove non-numeric characters
+
+    if (cleanedValue.length === 11) {
+      return { isValid: true };
+    } else if (cleanedValue.length === 14) {
+      return { isValid: true };
+    } else {
+      return {
+        isValid: false,
+        message: "O CPF ou CNPJ fornecido não é válido.",
+      };
+    }
+  };
+
+  const isValidTelefone = (telefone) => {
+    const cleanedNumber = telefone.replace(/\D/g, ""); // Remove caracteres não numéricos
+
+    if (!cleanedNumber) {
+      return { isValid: true };
+    }
+
+    if (cleanedNumber.length != 10) {
+      return { isValid: false, message: "O telefone fornecido não é válido." };
+    }
+
+    return { isValid: true };
+  };
+
+  const isValidCelular = (celular) => {
+    const cleanedNumber = celular.replace(/\D/g, ""); // Remove caracteres não numéricos
+
+    if (!cleanedNumber) {
+      return { isValid: true };
+    }
+
+    if (cleanedNumber.length != 11) {
+      return { isValid: false, message: "O celular fornecido não é válido." };
+    }
+
+    return { isValid: true };
+  };
+
+  const validateInputs = () => {
+    const emailValidation = isValidEmail(email);
+    if (!emailValidation.isValid) {
+      setOpenError(emailValidation.message);
+      return false;
+    }
+
+    const celularValidation = isValidCelular(celular);
+    if (!celularValidation.isValid) {
+      setOpenError(celularValidation.message);
+      return false;
+    }
+
+    const telefoneValidation = isValidTelefone(telefone);
+    if (!telefoneValidation.isValid) {
+      setOpenError(telefoneValidation.message);
+      return false;
+    }
+
+    const cpfCnpjValidation = isValidCPForCNPJ(cpfCnpj);
+    if (!cpfCnpjValidation.isValid) {
+      setOpenError(cpfCnpjValidation.message);
+      return false;
+    }
+
+    return true;
+  };
+
   useEffect(() => {
     const loadSupplier = async () => {
       const supplier = await getSupplierFormById(supplierId);
@@ -153,7 +236,7 @@ export default function UpdateSupplier() {
       setCelular(supplier.celular);
       setTelefone(supplier.telefone);
       setCep(supplier.cep);
-      setCidade(supplier.celular);
+      setCidade(supplier.cidade);
       setUfEndereco(supplier.uf_endereco);
       setLogradouro(supplier.logradouro);
       setComplemento(supplier.complemento);
@@ -164,32 +247,41 @@ export default function UpdateSupplier() {
       setChavePix(supplier.chavePix);
     };
     loadSupplier();
-  });
+  }, [supplierId]);
 
   const handleUpdateSupplierButton = async () => {
-    const supplierData = {
-      nome,
-      tipoPessoa,
-      cpfCnpj,
-      statusFornecedor,
-      naturezaTransacao,
-      email,
-      nomeContato,
-      celular,
-      telefone,
-      cep,
-      cidade,
-      uf_endereco,
-      logradouro,
-      complemento,
-      nomeBanco,
-      agencia,
-      numeroBanco,
-      dv,
-      chavePix,
-    };
-    await updateSupplierFormById(supplierId, supplierData);
-    navigate("/fornecedores");
+    if (validateInputs()) {
+      const supplierData = {
+        nome,
+        tipoPessoa,
+        cpfCnpj,
+        statusFornecedor,
+        naturezaTransacao,
+        email,
+        nomeContato,
+        celular,
+        telefone,
+        cep,
+        cidade,
+        uf_endereco,
+        logradouro,
+        complemento,
+        nomeBanco,
+        agencia,
+        numeroBanco,
+        dv,
+        chavePix,
+      };
+      try {
+        await updateSupplierFormById(supplierId, supplierData);
+        setShowSaveModal(true);
+      } catch (error) {
+        console.error(
+          `Erro ao atualizar beneficios com ID ${supplierId}`,
+          error
+        );
+      }
+    }
   };
 
   const handleDeleteSupplierButton = async () => {
@@ -198,7 +290,8 @@ export default function UpdateSupplier() {
   };
 
   const handleSaveModal = () => {
-    setShowSaveModal(true);
+    setShowSaveModal(false);
+    navigate("/fornecedores");
   };
 
   const handleDeleteModal = () => {
@@ -215,8 +308,8 @@ export default function UpdateSupplier() {
   };
 
   return (
-    <section className="container">
-      <div className="forms-container">
+    <section className="container-benefits">
+      <div className="forms-container-benefits">
         <h1>Visualização de fornecedor</h1>
 
         <h3>Dados pessoais</h3>
@@ -224,9 +317,10 @@ export default function UpdateSupplier() {
           label="Nome/Razão social"
           value={nome}
           onChange={(e) => setNome(e.target.value)}
+          disabled={true}
         />
 
-        <div className="section-form">
+        <div className="section-form-benefits">
           <FieldSelect
             label="Classificação de pessoa"
             value={tipoPessoa}
@@ -257,7 +351,7 @@ export default function UpdateSupplier() {
 
         <h3>Dados de Contato</h3>
 
-        <div className="section-form">
+        <div className="section-form-benefits">
           <FieldText
             label="E-mail"
             value={email}
@@ -285,7 +379,7 @@ export default function UpdateSupplier() {
 
         <h3>Endereço</h3>
 
-        <div className="section-form">
+        <div className="section-form-benefits">
           <FieldText
             label="CEP"
             value={cep}
@@ -322,7 +416,7 @@ export default function UpdateSupplier() {
 
         <h3>Dados Bancários</h3>
 
-        <div className="section-form">
+        <div className="section-form-benefits">
           <FieldText
             label="Banco"
             value={nomeBanco}
@@ -332,19 +426,19 @@ export default function UpdateSupplier() {
           <FieldText
             label="Agência"
             value={agencia}
-            onChange={(e) => setAgencia(e.target.value)}
+            onChange={(e) => setAgencia(mascaraNumericos(e.target.value))}
           />
 
           <FieldText
             label="Número"
             value={numeroBanco}
-            onChange={(e) => setNumeroBanco(e.target.value)}
+            onChange={(e) => setNumeroBanco(mascaraNumericos(e.target.value))}
           />
 
           <FieldText
             label="DV"
             value={dv}
-            onChange={(e) => setDv(e.target.value)}
+            onChange={(e) => setDv(mascaraNumericos(e.target.value))}
           />
         </div>
         <FieldText
@@ -356,14 +450,24 @@ export default function UpdateSupplier() {
         <div className="double-buttons">
           <SecondaryButton text="Deletar" onClick={handleDeleteModal} />
 
-          <PrimaryButton text="Salvar" onClick={handleSaveModal} />
+          <PrimaryButton text="Salvar" onClick={handleUpdateSupplierButton} />
         </div>
+
+        <Snackbar
+          open={openError}
+          autoHideDuration={6000}
+          onClose={() => setOpenError(false)}
+        >
+          <Alert onClose={() => setOpenError("")} severity="error">
+            {openError}
+          </Alert>
+        </Snackbar>
 
         <Modal alertTitle="Alterações Salvas" show={showSaveModal}>
           <SecondaryButton
             key={"saveButtons"}
             text="OK"
-            onClick={() => handleUpdateSupplierButton()}
+            onClick={() => handleSaveModal()}
           />
         </Modal>
 

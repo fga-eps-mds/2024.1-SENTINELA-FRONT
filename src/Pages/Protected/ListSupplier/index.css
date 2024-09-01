@@ -32,7 +32,6 @@
     font-weight: 800;
     margin-bottom: 3rem;
     color: #332117 !important;
-    margin-left: 15%;
   }
 
   h3 {
@@ -48,7 +47,7 @@
 
   .list-item {
     color: #332117 !important;
-    margin-bottom: 1rem; /* Ajusta o espaçamento entre os itens */
+    margin-top: 2.5rem !important;
   }
 }
 
@@ -111,7 +110,7 @@
   }
 
   .list-item {
+    margin-top: 2.5rem !important;
     color: #332117 !important;
-    margin-bottom: 4rem; /* Ajusta o espaçamento entre os itens */
   }
 }

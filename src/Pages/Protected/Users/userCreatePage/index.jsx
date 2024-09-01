@@ -20,6 +20,7 @@ export default function UserCreatePage() {
   const [roles, setRoles] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isCelularValid, setIsCelularValid] = useState(true);
 
   const login_options = ["Ativo", "Inativo"];
 
@@ -44,8 +45,11 @@ export default function UserCreatePage() {
   const handleSubmit = async () => {
     const trimmedCelular = removeMask(celular);
     const isValidNumber =
-      /^\d+$/.test(trimmedCelular) && trimmedCelular.length >= 10;
+      /^\d+$/.test(trimmedCelular) && trimmedCelular.length > 10;
     const isValidEmailAddress = isValidEmail(email);
+
+    setIsCelularValid(isValidNumber);
+    setIsEmailValid(isValidEmailAddress);
 
     if (!isValidNumber || !isValidEmailAddress) {
       return;
@@ -82,41 +86,43 @@ export default function UserCreatePage() {
     loadRoles();
   }, []);
 
-  useEffect(() => {
-    setIsEmailValid(!email || isValidEmail(email));
-  }, [email]);
-
   return (
     <section className="container-user">
       <div className="forms-container-user">
         <h1>Cadastro de usuário</h1>
         <h3>Dados Pessoais</h3>
         <FieldText
-          label="Nome Completo"
+          label="Nome Completo*"
           value={nomeCompleto}
           onChange={handleNomeCompletoChange}
         />
+
         <div className="double-box-user">
           <FieldNumber
-            label="Celular"
+            label="Celular*"
             value={celular}
             onChange={(e) => setCelular(e.target.value)}
             format="(##) ##### ####"
           />
           <FieldSelect
-            label="Status"
+            label="Status*"
             value={login}
             onChange={handleChangeLogin}
             options={login_options}
           />
         </div>
+        {!isCelularValid && (
+          <label className="isValid">
+            *Verifique se o número de celular inserido está completo
+          </label>
+        )}
         <FieldText
-          label="Email"
+          label="Email*"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         {!isEmailValid && (
-          <label className="isEmailValid">*Insira um email válido</label>
+          <label className="isValid">*Insira um email válido</label>
         )}
         <h3>Perfil</h3>
         <RadioGroup
