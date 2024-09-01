@@ -46,7 +46,7 @@ const ProtectedRoutes = () => {
       <Route path="/perfis/editar/:name" element={<RolesUpdatePage />} />
       <Route path="/perfil" element={<ProfileUpdate />} />
       <Route
-        path="usuarios/hub/filiacaos-pendentes"
+        path="usuarios/hub/filiacoes-pendentes"
         element={<MembershipRequest />}
       />
       <Route path="/beneficios" element={<Benefits />} />
