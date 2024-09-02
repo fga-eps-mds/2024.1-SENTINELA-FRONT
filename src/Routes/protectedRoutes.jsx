@@ -29,7 +29,8 @@ import FinancialMovements from "../Pages/Protected/FinancialMovements/FinancialC
 import FinancialList from "../Pages/Protected/FinancialMovements/FinancialList";
 import FinancialUpdate from "../Pages/Protected/FinancialMovements/FinancialUpdate";
 import ContributionHistoric from "../Pages/Protected/FinancialMovements/ContributionHistoric";
-import Unauthorized from "../Pages/Protected/Unauthorized";import GenerateFinancialReport from "../Pages/Protected/FinancialMovements/GenerateFinancialReport";
+import Unauthorized from "../Pages/Protected/Unauthorized";
+import GenerateFinancialReport from "../Pages/Protected/FinancialMovements/GenerateFinancialReport";
 
 const ProtectedRoutes = () => {
   return (
