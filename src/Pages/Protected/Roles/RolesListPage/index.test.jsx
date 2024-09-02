@@ -13,6 +13,9 @@ vi.mock("../../../../Services/BaseService", () => ({
   },
 }));
 vi.mock("../../../../Utils/permission", () => ({
+  usePermissions: () => ({
+    somePermission: true,
+  }),
   checkAction: () => true,
 }));
 describe("RolesListPage", () => {

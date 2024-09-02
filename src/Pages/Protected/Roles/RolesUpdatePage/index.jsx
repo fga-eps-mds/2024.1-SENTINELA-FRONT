@@ -11,12 +11,11 @@ import {
   deleteRole,
 } from "../../../../Services/RoleService/roleService";
 import CheckboxRow from "../../../../Components/CheckboxRow";
-import { checkAction } from "../../../../Utils/permission";
-import AuthContext from "../../../../Context/auth";
-import { useContext } from "react";
+import { checkAction, usePermissions } from "../../../../Utils/permission";
+
 
 export default function RolesUpdatePage() {
-  const [userPermissions, setUserPermissions] = useState([]);
+  const permissions = usePermissions();
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -31,25 +30,10 @@ export default function RolesUpdatePage() {
   const location = useLocation();
   const { roleId } = location.state;
 
-  const canDelete = checkAction(userPermissions, "users", "delete");
-  const canUpdate = checkAction(userPermissions, "users", "update");
-  const { user } = useContext(AuthContext);
+  const canDelete = checkAction(permissions, "users", "delete");
+  const canUpdate = checkAction(permissions, "users", "update");
 
-  useEffect(() => {
-    const fetchRolePermissions = async () => {
-      if (user?.role) {
-        try {
-          const role = await getRoleById(user.role);
-          setUserPermissions(role?.permissions || []);
-        } catch (error) {
-          console.error("Erro ao buscar permissões do papel:", error);
-          setUserPermissions([]);
-        }
-      }
-    };
 
-    fetchRolePermissions();
-  }, [user]);
 
   useEffect(() => {
     const fetchRole = async () => {

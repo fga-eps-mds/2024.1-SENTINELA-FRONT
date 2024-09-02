@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./index.css";
 //import "../../Users/userListPage/index.css";
@@ -10,15 +10,14 @@ import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
 import FieldText from "../../../../Components/FieldText";
 import { APIUsers } from "../../../../Services/BaseService";
-import { checkAction } from "../../../../Utils/permission";
-import AuthContext from "../../../../Context/auth";
-import { getRoleById } from "../../../../Services/RoleService/roleService";
+import { checkAction, usePermissions } from "../../../../Utils/permission";
+
 
 export default function RolesListPage() {
-  const { user } = useContext(AuthContext);
+
   const [roles, setRoles] = useState([]);
   const [search, setSearch] = useState("");
-  const [userPermissions, setUserPermissions] = useState([]);
+  const permissions = usePermissions();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -47,23 +46,7 @@ export default function RolesListPage() {
     fetchRoleForm();
   }, []);
 
-  useEffect(() => {
-    const fetchRolePermissions = async () => {
-      if (user?.role) {
-        try {
-          const role = await getRoleById(user.role);
-          setUserPermissions(role?.permissions || []);
-        } catch (error) {
-          console.error("Erro ao buscar permissões do papel:", error);
-          setUserPermissions([]);
-        }
-      }
-    };
-
-    fetchRolePermissions();
-  }, [user]);
-
-  const hasPermission = checkAction(userPermissions, "users", "create");
+  const hasPermission = checkAction(permissions, "users", "create");
 
   const handleSubmit = () => {
     navigate("/perfis/criar");
