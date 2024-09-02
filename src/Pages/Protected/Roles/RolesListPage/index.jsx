@@ -1,19 +1,24 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import "./index.css";
 //import "../../Users/userListPage/index.css";
 import PrimaryButton from "../../../../Components/PrimaryButton";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemText";
+import ListItemButton from "@mui/material/ListItemButton";
 import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
 import FieldText from "../../../../Components/FieldText";
 import { APIUsers } from "../../../../Services/BaseService";
+import { checkAction } from "../../../../Utils/permission";
+import AuthContext from "../../../../Context/auth";
+import { getRoleById } from "../../../../Services/RoleService/roleService";
 
 export default function RolesListPage() {
+  const { user } = useContext(AuthContext);
   const [roles, setRoles] = useState([]);
   const [search, setSearch] = useState("");
+  const [userPermissions, setUserPermissions] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -42,6 +47,24 @@ export default function RolesListPage() {
     fetchRoleForm();
   }, []);
 
+  useEffect(() => {
+    const fetchRolePermissions = async () => {
+      if (user?.role) {
+        try {
+          const role = await getRoleById(user.role);
+          setUserPermissions(role?.permissions || []);
+        } catch (error) {
+          console.error("Erro ao buscar permissões do papel:", error);
+          setUserPermissions([]);
+        }
+      }
+    };
+
+    fetchRolePermissions();
+  }, [user]);
+
+  const hasPermission = checkAction(userPermissions, "users", "create");
+
   const handleSubmit = () => {
     navigate("/perfis/criar");
   };
@@ -61,7 +84,9 @@ export default function RolesListPage() {
       <div className="forms-container">
         <div className="double-box">
           <h1>Lista de perfis</h1>
-          <PrimaryButton text="Cadastrar perfil" onClick={handleSubmit} />
+          {hasPermission && (
+            <PrimaryButton text="Cadastrar perfil" onClick={handleSubmit} />
+          )}
         </div>
 
         <FieldText

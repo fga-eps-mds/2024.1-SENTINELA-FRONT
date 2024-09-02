@@ -12,7 +12,9 @@ vi.mock("../../../../Services/BaseService", () => ({
     get: vi.fn(),
   },
 }));
-
+vi.mock("../../../../Utils/permission", () => ({
+  checkAction: () => true,
+}));
 describe("RolesListPage", () => {
   beforeEach(() => {
     localStorage.setItem("@App:user", JSON.stringify({ token: "mock-token" }));
