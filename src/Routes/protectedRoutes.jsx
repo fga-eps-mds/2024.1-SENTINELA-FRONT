@@ -114,7 +114,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<RolesListPage />}
             moduleName="users"
-            action="create"
+            action="read"
           />
         }
       />
@@ -301,11 +301,13 @@ const ProtectedRoutes = () => {
       />
       <Route
         path="/movimentacoes/relatorio"
-        element={<GenerateFinancialReport />}
-      />
-      <Route
-        path="/movimentacoes/relatorio"
-        element={<GenerateFinancialReport />}
+        eelement={
+          <PermissionProtect
+            element={<GenerateFinancialReport />}
+            moduleName="finance"
+            action="read"
+          />
+        }
       />
     </Routes>
   );
