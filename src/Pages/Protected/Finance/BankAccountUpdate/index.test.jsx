@@ -141,6 +141,70 @@ describe("BankAccountId", () => {
       expect(getBankAccount).toHaveBeenCalledWith("123");
     });
   });
+  it("should validate Agencia", async () => {
+    useAuth.mockReturnValue({ user: { id: "user123" } });
+
+    render(
+      <MemoryRouter>
+        <BankAccountId />
+      </MemoryRouter>
+    );
+
+    expect(
+      screen.getByText("Visualização de Conta Bancária")
+    ).toBeInTheDocument();
+
+    const agenciaInput = await screen.findByLabelText("Agência");
+
+    await fireEvent.change(agenciaInput, {
+      target: { value: "12345678" },
+    });
+
+    expect(agenciaInput.value).toBe("12345");
+  });
+  it("should validate dv", async () => {
+    useAuth.mockReturnValue({ user: { id: "user123" } });
+
+    render(
+      <MemoryRouter>
+        <BankAccountId />
+      </MemoryRouter>
+    );
+
+    expect(
+      screen.getByText("Visualização de Conta Bancária")
+    ).toBeInTheDocument();
+
+    const dvInput = await screen.findByLabelText("DV");
+
+    await fireEvent.change(dvInput, {
+      target: { value: "12345678" },
+    });
+
+    expect(dvInput.value).toBe("1");
+  });
+  it("should validate accountNumber", async () => {
+    useAuth.mockReturnValue({ user: { id: "user123" } });
+
+    render(
+      <MemoryRouter>
+        <BankAccountId />
+      </MemoryRouter>
+    );
+
+    expect(
+      screen.getByText("Visualização de Conta Bancária")
+    ).toBeInTheDocument();
+
+    const accountNumberInput = await screen.findByLabelText("Número da conta");
+
+    await fireEvent.change(accountNumberInput, {
+      target: { value: "012345678912" },
+    });
+
+    expect(accountNumberInput.value).toBe("01234567891");
+  });
+
   it("should't update bank account data", async () => {
     // Mock da resposta do serviço updateBankAccount
     const updatedBankAccountData = {
