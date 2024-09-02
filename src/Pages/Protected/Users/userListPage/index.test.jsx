@@ -17,7 +17,6 @@ vi.mock("../../../../Services/RoleService/roleService", () => ({
 
 vi.mock("../../../../Utils/permission", () => ({
   usePermissions: () => ({
-
     somePermission: true,
   }),
   checkAction: () => true,

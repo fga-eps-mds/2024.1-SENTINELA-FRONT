@@ -12,9 +12,7 @@ import FieldText from "../../../../Components/FieldText";
 import { APIUsers } from "../../../../Services/BaseService";
 import { checkAction, usePermissions } from "../../../../Utils/permission";
 
-
 export default function RolesListPage() {
-
   const [roles, setRoles] = useState([]);
   const [search, setSearch] = useState("");
   const permissions = usePermissions();

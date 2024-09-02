@@ -6,7 +6,6 @@ import { BrowserRouter as Router } from "react-router-dom";
 import UserHubPage from "./index";
 import "@testing-library/jest-dom";
 
-
 vi.mock("../../../../Utils/permission", () => ({
   usePermissions: () => ({
     somePermission: true,

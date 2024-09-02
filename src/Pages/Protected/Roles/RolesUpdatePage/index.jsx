@@ -13,7 +13,6 @@ import {
 import CheckboxRow from "../../../../Components/CheckboxRow";
 import { checkAction, usePermissions } from "../../../../Utils/permission";
 
-
 export default function RolesUpdatePage() {
   const permissions = usePermissions();
   const [showSaveModal, setShowSaveModal] = useState(false);
@@ -32,8 +31,6 @@ export default function RolesUpdatePage() {
 
   const canDelete = checkAction(permissions, "users", "delete");
   const canUpdate = checkAction(permissions, "users", "update");
-
-
 
   useEffect(() => {
     const fetchRole = async () => {
