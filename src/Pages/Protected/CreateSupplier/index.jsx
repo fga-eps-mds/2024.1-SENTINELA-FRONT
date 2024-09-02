@@ -331,7 +331,7 @@ export default function CreateSupplier() {
             onChange={(e) => setCep(mascaraCEP(e.target.value))}
           />
 
-          <div className="double-box">
+          <div className="double-box-supplier">
             <FieldText
               label="Cidade"
               value={cidade}
