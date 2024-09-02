@@ -83,7 +83,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<UserUpdatePage />}
             moduleName="users"
-            action="update"
+            action="read"
           />
         }
       />

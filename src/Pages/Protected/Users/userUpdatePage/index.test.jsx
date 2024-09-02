@@ -27,6 +27,10 @@ vi.mock("react-router-dom", async (importOriginal) => {
   };
 });
 
+vi.mock("../../../../Utils/permission", () => ({
+  checkAction: () => true,
+}));
+
 describe("UserUpdatePage", () => {
   const setup = () => {
     localStorage.setItem("@App:user", JSON.stringify({ token: "mock-token" }));
