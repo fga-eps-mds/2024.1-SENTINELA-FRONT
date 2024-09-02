@@ -38,7 +38,15 @@ export default function UserListPage() {
   };
 
   const handleItemClick = (user) => {
-    navigate(`/usuarios/editar/${user.name}`, { state: { userId: user._id } });
+    if (user?.role?.name == "sindicalizado") {
+      navigate(`/filiados/${user.name}`, {
+        state: { membershipId: user._id },
+      });
+    } else {
+      navigate(`/usuarios/editar/${user.name}`, {
+        state: { userId: user._id },
+      });
+    }
   };
 
   const filteredUsers = users.filter((user) =>

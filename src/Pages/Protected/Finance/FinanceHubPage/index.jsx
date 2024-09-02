@@ -9,12 +9,18 @@ export default function Finance() {
   const { user } = useAuth();
   const navigate = useNavigate();
 
+  const handleFornecedoresListaClick = () => {
+    navigate("/fornecedores");
+  };
+
   const handleListaClick = () => {
     navigate("/finance/list");
   };
-  const handleCadastroClick = () => {
-    navigate("/finance/criar");
+
+  const handleMovimentacoesClick = () => {
+    navigate("/movimentacoes/lista");
   };
+
   return (
     user && (
       <section className="containerFinance">
@@ -26,15 +32,17 @@ export default function Finance() {
               src={sentinelaLogo}
               alt="Sentinela Logo"
             />
-            <SecondaryButton text="Cadastro de Fornecedores" onClick="#" />
-            <SecondaryButton text="Lista de forncedores" onClick="#" />
             <SecondaryButton
-              text="Cadastro de conta bancária"
-              onClick={handleCadastroClick}
+              text="Lista de Fornecedores"
+              onClick={handleFornecedoresListaClick}
             />
             <SecondaryButton
-              text="Lista de contas bancárias"
+              text="Lista de Contas Bancárias"
               onClick={handleListaClick}
+            />
+            <SecondaryButton
+              text="Lista de Movimentações Financeiras"
+              onClick={handleMovimentacoesClick}
             />
           </div>
         </div>

@@ -31,16 +31,13 @@ describe("Finance", () => {
     expect(screen.getByAltText("Sindpol Logo")).toBeInTheDocument();
     expect(screen.getByAltText("Sentinela Logo")).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "Cadastro de Fornecedores" })
+      screen.getByRole("button", { name: "Lista de Fornecedores" })
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "Lista de forncedores" })
-    ).toBeInTheDocument(); // Corrigido para o nome correto
-    expect(
-      screen.getByRole("button", { name: "Cadastro de conta bancária" })
+      screen.getByRole("button", { name: "Lista de Contas Bancárias" })
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "Lista de contas bancárias" })
+      screen.getByRole("button", { name: "Lista de Movimentações Financeiras" })
     ).toBeInTheDocument();
   });
 });

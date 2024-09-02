@@ -15,31 +15,27 @@ export const createSupplierForm = async (supplierData) => {
   try {
     await APIBank.post(`/SupplierForm/create`, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${storagedToken}`,
       },
       supplierData: supplierData,
     });
 
     return false;
   } catch (error) {
-    alert("Erro ao cadastrar fornecedor");
     return true;
   }
 };
 
 export const getSupplierForm = async () => {
   try {
-    if (!token) {
-      throw new Error("No token found");
-    }
-    const response = await APIBank.get("/supplierForm", {
+    const response = await APIBank.get(`/SupplierForm`, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${storagedToken}`,
       },
     });
     return response.data;
   } catch (error) {
-    console.error("Erro ao buscar fornecedor:", error);
+    console.error("Erro ao buscar fornecedores:", error);
   }
 };
 

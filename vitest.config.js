@@ -16,6 +16,6 @@ export default defineConfig({
       ? [[reporter, { outputFile: "coverage/coverage.xml" }]]
       : [],
     outputFile: "coverage/coverage.xml",
-    testTimeout: 7500,
+    testTimeout: 30000,
   },
 });

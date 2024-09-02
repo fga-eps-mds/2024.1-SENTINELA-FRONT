@@ -209,7 +209,7 @@ const MemberShip = () => {
   };
 
   const handleAddDependent = () => {
-    setShowDependentForm(true);
+    setShowDependentForm((prevState) => !prevState);
   };
 
   const handleDependentChange = (field, value) => {
@@ -302,41 +302,40 @@ const MemberShip = () => {
     const erros = {};
 
     if (!email) erros.email = 1;
-    if (!sexo) erros.sexo = 1;
-    if (!estadoCivil) erros.estadoCivil = 1;
-    if (!tipoSanguineo) erros.tipoSanguineo = 1;
-    if (!uf_naturalidade) erros.uf_naturalidade = 1;
-    if (!uf_orgao) erros.uf_orgao = 1;
-    if (!uf_endereco) erros.uf_endereco = 1;
-    if (!escolaridade) erros.escolaridade = 1;
-    if (!dataContratacao) erros.dataContratacao = 1;
-    if (!dataDeNascimento) erros.dataDeNascimento = 1;
-    if (!dataExpedicao) erros.dataExpedicao = 1;
-    if (!cargo) erros.cargo = 1;
-    if (!lotacao) erros.lotacao = 1;
+    //if (!sexo) erros.sexo = 1;
+    //if (!estadoCivil) erros.estadoCivil = 1;
+    //if (!tipoSanguineo) erros.tipoSanguineo = 1;
+    //if (!uf_naturalidade) erros.uf_naturalidade = 1;
+    //if (!uf_orgao) erros.uf_orgao = 1;
+    //if (!uf_endereco) erros.uf_endereco = 1;
+    //if (!escolaridade) erros.escolaridade = 1;
+    //if (!dataContratacao) erros.dataContratacao = 1;
+    //if (!dataDeNascimento) erros.dataDeNascimento = 1;
+    //if (!dataExpedicao) erros.dataExpedicao = 1;
+    //if (!cargo) erros.cargo = 1;
+    //if (!lotacao) erros.lotacao = 1;
     if (!matricula) erros.matricula = 1;
     if (!nomeCompleto) erros.nomeCompleto = 1;
-    if (!naturalidade) erros.naturalidade = 1;
+    //if (!naturalidade) erros.naturalidade = 1;
     if (!rg) erros.rg = 1;
-    if (!orgao) erros.orgao = 1;
+    //if (!orgao) erros.orgao = 1;
     if (!cpf) erros.cpf = 1;
-    if (!nomeDaMae) erros.nomeDaMae = 1;
-    if (!nomeDoPai) erros.nomeDoPai = 1;
-    if (!cep) erros.cep = 1;
-    if (!cidade) erros.cidade = 1;
-    if (!logradouro) erros.logradouro = 1;
-    if (!complemento) erros.complemento = 1;
-    if (!telefone) erros.telefone = 1;
+    //if (!nomeDaMae) erros.nomeDaMae = 1;
+    //if (!nomeDoPai) erros.nomeDoPai = 1;
+    //if (!cep) erros.cep = 1;
+    //if (!cidade) erros.cidade = 1;
+    //if (!logradouro) erros.logradouro = 1;
+    //if (!complemento) erros.complemento = 1;
+    //if (!telefone) erros.telefone = 1;
     if (!celular) erros.celular = 1;
-    if (!postoDeTrabalho) erros.postoDeTrabalho = 1;
-    if (!orgaoExpedidor) erros.orgaoExpedidor = 1;
-    //if (!situacaoAtual) erros.situacaoAtual = 1;
-    if (!religiao) erros.religiao = 1;
+    //if (!postoDeTrabalho) erros.postoDeTrabalho = 1;
+    //if (!orgaoExpedidor) erros.orgaoExpedidor = 1;
+    //if (!religiao) erros.religiao = 1;
     if (isValidEmail(email) === false) erros.email = 1;
     if (cpf.length < 14) erros.cpf = 1;
     if (rg.length < 7) erros.rg = 1;
-    if (cep.length < 9) erros.cep = 1;
-    if (telefone.length < 14) erros.telefone = 1;
+    //if (cep.length < 9) erros.cep = 1;
+    //if (telefone.length < 14) erros.telefone = 1;
     if (celular.length < 15) erros.celular = 1;
 
     if (Object.keys(erros).length > 0) {
@@ -360,7 +359,7 @@ const MemberShip = () => {
       uf_naturalidade,
       uf_orgao,
       uf_address: uf_endereco,
-      marialStatus: estadoCivil,
+      maritalStatus: estadoCivil,
       education: escolaridade,
       rg,
       orgao,
@@ -391,8 +390,8 @@ const MemberShip = () => {
     }
   };
   return (
-    <section className="container">
-      <div className="forms-container">
+    <section className="section">
+      <div className="forms-container-benefits">
         <h1>Formulário de Filiação</h1>
 
         <h3> Dados Pessoais </h3>
@@ -405,9 +404,9 @@ const MemberShip = () => {
           erro={erro("nomeCompleto")}
         />
 
-        <div className="section-form">
+        <div className="section-form-benefits">
           <FieldText
-            label="Religião *"
+            label="Religião"
             value={religiao}
             onChange={(e) => setReligiao(e.target.value)}
             onBlur={(e) => handleBlur(e, "religiao")}
@@ -415,7 +414,7 @@ const MemberShip = () => {
           />
 
           <FieldSelect
-            label="Tipo Sanguíneo *"
+            label="Tipo Sanguíneo"
             value={tipoSanguineo}
             onChange={handleChangeTipoSanguineo}
             options={tipoSanguineoList}
@@ -432,7 +431,7 @@ const MemberShip = () => {
           />
 
           <DataSelect
-            label="Data de Nascimento *"
+            label="Data de Nascimento"
             value={dataDeNascimento}
             onChange={(newValue) => setdataDeNascimento(newValue)}
             onBlur={(e) => handleBlur(e, "dataDeNascimento")}
@@ -450,7 +449,7 @@ const MemberShip = () => {
 
           <div className="double-box" style={{ marginLeft: "0px" }}>
             <FieldText
-              label="Naturalidade *"
+              label="Naturalidade"
               value={naturalidade}
               onChange={(e) => setNaturalidade(e.target.value)}
               onBlur={(e) => handleBlur(e, "naturalidade")}
@@ -458,7 +457,7 @@ const MemberShip = () => {
             />
 
             <FieldSelect
-              label="UF *"
+              label="UF"
               value={uf_naturalidade}
               onChange={handleChangeUf}
               options={ufList}
@@ -468,7 +467,7 @@ const MemberShip = () => {
           </div>
 
           <FieldSelect
-            label="Estado Civil *"
+            label="Estado Civil"
             value={estadoCivil}
             onChange={handleChangeEstadoCivil}
             options={estadoCivilList}
@@ -477,7 +476,7 @@ const MemberShip = () => {
           />
 
           <FieldSelect
-            label="Escolaridade *"
+            label="Escolaridade"
             value={escolaridade}
             onChange={handleChangeEscolaridade}
             options={escolaridadeList}
@@ -495,7 +494,7 @@ const MemberShip = () => {
 
           <div className="double-box" style={{ marginLeft: "0px" }}>
             <FieldText
-              label="Órgão Expeditor *"
+              label="Órgão Expeditor"
               value={orgaoExpedidor}
               onChange={(e) => setOrgaoExpedidor(e.target.value)}
               onBlur={(e) => handleBlur(e, "orgaoExpedidor")}
@@ -503,7 +502,7 @@ const MemberShip = () => {
             />
 
             <FieldSelect
-              label="UF *"
+              label="UF"
               value={uf_orgao}
               onChange={handleChangeUfOrgao}
               options={ufList}
@@ -521,7 +520,7 @@ const MemberShip = () => {
           />
 
           <DataSelect
-            label="Data de Expedição *"
+            label="Data de Expedição"
             value={dataExpedicao}
             onChange={(newValue) => setDataExpedicao(newValue)}
             onBlur={(e) => handleBlur(e, "dataExpedicao")}
@@ -529,7 +528,7 @@ const MemberShip = () => {
           />
 
           <FieldText
-            label="Nome do Pai *"
+            label="Nome do Pai"
             value={nomeDoPai}
             onChange={(e) => setnomeDoPai(e.target.value)}
             onBlur={(e) => handleBlur(e, "nomeDoPai")}
@@ -537,7 +536,7 @@ const MemberShip = () => {
           />
 
           <FieldText
-            label="Nome da Mãe *"
+            label="Nome da Mãe"
             value={nomeDaMae}
             onChange={(e) => setnomeDaMae(e.target.value)}
             onBlur={(e) => handleBlur(e, "nomeDaMae")}
@@ -555,7 +554,7 @@ const MemberShip = () => {
           erro={erro("email")}
         />
 
-        <div className="section-form">
+        <div className="section-form-benefits">
           <FieldText
             label="Celular *"
             value={celular}
@@ -565,7 +564,7 @@ const MemberShip = () => {
           />
 
           <FieldText
-            label="Telefone *"
+            label="Telefone"
             value={telefone}
             onChange={(e) => setTelefone(mascaraTelefone(e.target.value))}
             onBlur={(e) => handleBlur(e, "telefone")}
@@ -574,9 +573,9 @@ const MemberShip = () => {
         </div>
 
         <h3> Endereço </h3>
-        <div className="section-form">
+        <div className="section-form-benefits">
           <FieldText
-            label="CEP *"
+            label="CEP"
             value={cep}
             onChange={(e) => setCep(mascaraCEP(e.target.value))}
             onBlur={(e) => handleBlur(e, "cep")}
@@ -584,7 +583,7 @@ const MemberShip = () => {
           />
           <div className="double-box" style={{ marginLeft: "0px" }}>
             <FieldText
-              label="Cidade *"
+              label="Cidade"
               value={cidade}
               onChange={(e) => setCidade(e.target.value)}
               onBlur={(e) => handleBlur(e, "cidade")}
@@ -602,7 +601,7 @@ const MemberShip = () => {
           </div>
 
           <FieldText
-            label="Logradouro *"
+            label="Logradouro"
             value={logradouro}
             onChange={(e) => setLogradouro(e.target.value)}
             onBlur={(e) => handleBlur(e, "logradouro")}
@@ -610,7 +609,7 @@ const MemberShip = () => {
           />
 
           <FieldText
-            label="Complemento *"
+            label="Complemento"
             value={complemento}
             onChange={(e) => setComplemento(e.target.value)}
             onBlur={(e) => handleBlur(e, "complemento")}
@@ -619,9 +618,9 @@ const MemberShip = () => {
         </div>
 
         <h3> Dados de Contratação </h3>
-        <div className="section-form">
+        <div className="section-form-benefits">
           <FieldText
-            label="Cargo *"
+            label="Cargo"
             value={cargo}
             onChange={(e) => setCargo(e.target.value)}
             onBlur={(e) => handleBlur(e, "cargo")}
@@ -629,14 +628,14 @@ const MemberShip = () => {
           />
 
           <DataSelect
-            label="Data de Contratação *"
+            label="Data de Contratação"
             value={dataContratacao}
             onChange={(newValue) => setDataContratacao(newValue)}
             onBlur={(e) => handleBlur(e, "dataContratacao")}
             erro={erro("dataContratacao")}
           />
           <FieldText
-            label="Lotação *"
+            label="Lotação"
             value={lotacao}
             onChange={(e) => setlotacao(e.target.value)}
             onBlur={(e) => handleBlur(e, "lotacao")}
@@ -644,14 +643,14 @@ const MemberShip = () => {
           />
 
           <FieldText
-            label="Órgão *"
+            label="Órgão"
             value={orgao}
             onChange={(e) => setOrgao(e.target.value)}
             onBlur={(e) => handleBlur(e, "orgao")}
             erro={erro("orgao")}
           />
           <FieldText
-            label="Posto de Trabalho *"
+            label="Posto de Trabalho"
             value={postoDeTrabalho}
             onChange={(e) => setpostoDeTrabalho(e.target.value)}
             onBlur={(e) => handleBlur(e, "postoDeTrabalho")}
@@ -660,12 +659,8 @@ const MemberShip = () => {
         </div>
         <div>
           <div>
-            <h3>
-              Adicionar Dependente{" "}
-              <AddCircleOutlineIcon
-                id="addDependentBttn"
-                onClick={handleAddDependent}
-              />
+            <h3 id="addDependentBttn" onClick={handleAddDependent}>
+              Adicionar Dependente <AddCircleOutlineIcon />
             </h3>
           </div>
           {showDependentForm && (
@@ -782,7 +777,7 @@ const MemberShip = () => {
           <Alert onClose={() => setOpenError(false)} severity="error">
             {missingList.length <= 5 && missingList.length != 0
               ? `Os seguintes campos estão faltando: ${missingList.map((key) => fieldNames[key]).join(", ")}`
-              : "Certifique-se de que todos os campos estão preenchidos"}
+              : "Certifique-se de que todos os campos obrigatórios estão preenchidos"}
             {unfilledDependent && (
               <>
                 <br />
@@ -805,7 +800,15 @@ const MemberShip = () => {
           show={openSuccessDialog}
           width="608px"
           alertTitle="Ao confirmar essa solicitação, você estará concordando com a declaração a seguir:"
-          alert="Declaro que, ao filiar-me nesta data ao SINDPOL-DF, concordo e ratifico com todas as minhas obrigações previstas no Estatuto Social, regime interno e deliberação das assembleias gerais do Sindicato dos Policiais Penais do Distrito Federal. Ao tempo que comprometo-me em contribuir mensalmente com o valor de 1,5% vencimento básico, conforme Art. 105 do Estatuto APROVADO pela assembleia geral, o qual AUTORIZO que consignado em folha de pagamento junto ao órgão competente em favor do SINDPOL-DF, bem como outras contribuições de caráter extraordinário - desde que aprovadas em assembleia específica - Reconheço ainda que tais contribuições têm o condão de manter a entidade de representação sindical forte e independente no intuito de garantir melhores condições de trabalho para toda a categoria. Fico ciente que, ao desejar afastar-me do quadro social do sindicato, devo manifestar-me por escrito, em formulário específico, com antecedência de 60 (sessenta) dias. Pela presente, solicito minha admissão no quadro de filiados do SINDICATO DOS POLICIAIS PENAIS DO DISTRITO FEDERAL."
+          alert="Por meio desta, declaro que, ao filiar-me na presente data ao Sindicato dos Policiais Penais do Distrito Federal (SINDPOL-DF), estou plenamente ciente e de acordo com todas as obrigações previstas no Estatuto Social, no regime interno e nas deliberações das assembleias gerais do sindicato.
+
+                Comprometo-me a contribuir mensalmente com o valor equivalente a 1% do subsídio para os policiais penais ativos e 0,50% para aposentados e pensionistas, calculado com base no Padrão I da Terceira Classe da tabela de subsídio, conforme estabelece o Art. 105 do Estatuto, aprovado em assembleia geral. Autorizo que essa contribuição seja descontada em folha de pagamento junto ao órgão competente, em favor do SINDPOL-DF. Concordo também com a possibilidade de contribuições extraordinárias, desde que aprovadas em assembleia específica.
+
+                Reconheço que essas contribuições são fundamentais para manter a força e independência do sindicato, garantindo melhores condições de trabalho para toda a categoria.
+
+                Estou ciente de que, caso deseje solicitar meu desligamento do quadro de filiados do sindicato, devo fazê-lo por escrito, utilizando o formulário específico, com antecedência mínima de 60 (sessenta) dias.
+
+                Por meio desta, solicito formalmente minha admissão no quadro de filiados do SINDPOL-DF. Declaro, ainda, que todas as informações fornecidas nesta ficha estão protegidas pela Lei nº 13.709, de 14 de agosto de 2018 (Lei Geral de Proteção de Dados - LGPD)."
         >
           {" "}
           <SecondaryButton
@@ -819,7 +822,6 @@ const MemberShip = () => {
             width="608px"
           />
         </Modal>
-        <footer style={{ height: "100px" }} />
       </div>
     </section>
   );
