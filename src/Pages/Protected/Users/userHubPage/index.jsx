@@ -3,9 +3,33 @@ import SecondaryButton from "../../../../Components/SecondaryButton";
 import sindpol_logo from "../../../../assets/sindpol-logo.png";
 import sentinela_logo from "../../../../assets/sentinela-logo.png";
 import "./index.css";
+import { useContext, useEffect, useState } from "react";
+import { checkAction } from "../../../../Utils/permission";
+import AuthContext from "../../../../Context/auth";
+import { getRoleById } from "../../../../Services/RoleService/roleService";
 
 export default function UserHubPage() {
   const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
+  const [userPermissions, setUserPermissions] = useState([]);
+  const canAprove = checkAction(userPermissions, "users", "create");
+  const canRead = checkAction(userPermissions, "users", "read");
+
+  useEffect(() => {
+    const fetchRolePermissions = async () => {
+      if (user?.role) {
+        try {
+          const role = await getRoleById(user.role);
+          setUserPermissions(role?.permissions || []);
+        } catch (error) {
+          console.error("Erro ao buscar permissões do papel:", error);
+          setUserPermissions([]);
+        }
+      }
+    };
+
+    fetchRolePermissions();
+  }, [user]);
 
   const handleListaClick = () => {
     navigate("/usuarios");
@@ -30,22 +54,30 @@ export default function UserHubPage() {
             alt="Sentinela Logo"
           />
           {/* <SecondaryButton text="SOLICITAÇÕES DE FILIAÇÃO" onClick={""} /> */}
-          <SecondaryButton
-            text="Filiações pendentes"
-            onClick={() => navigate("filiacoes-pendentes/")}
-          />
-          <SecondaryButton
-            text="LISTA DE USUÁRIOS"
-            onClick={handleListaClick}
-          />
-          <SecondaryButton
-            text="LISTA DE PERFIL"
-            onClick={handleListaPerfilClick}
-          />
-          <SecondaryButton
-            text="LISTA DE ÓRGÃOS"
-            onClick={handleListaOrgaosClick}
-          />
+          {canAprove && (
+            <SecondaryButton
+              text="Filiações pendentes"
+              onClick={() => navigate("filiacoes-pendentes/")}
+            />
+          )}
+          {canRead && (
+            <SecondaryButton
+              text="LISTA DE USUÁRIOS"
+              onClick={handleListaClick}
+            />
+          )}
+          {canRead && (
+            <SecondaryButton
+              text="LISTA DE PERFIL"
+              onClick={handleListaPerfilClick}
+            />
+          )}
+          {canRead && (
+            <SecondaryButton
+              text="LISTA DE ÓRGÃOS"
+              onClick={handleListaOrgaosClick}
+            />
+          )}
         </div>
       </div>
     </section>

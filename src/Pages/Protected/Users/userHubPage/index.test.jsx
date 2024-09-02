@@ -4,6 +4,10 @@ import { BrowserRouter as Router } from "react-router-dom";
 import UserHubPage from "./index";
 import "@testing-library/jest-dom";
 
+vi.mock("../../../../Utils/permission", () => ({
+  checkAction: () => true,
+}));
+
 describe("UserHubPage", () => {
   beforeEach(() => {
     // Renderiza o componente antes de cada teste
