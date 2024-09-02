@@ -179,6 +179,7 @@ export default function RolesUpdatePage() {
             />
           )}
           <Modal
+            alertTitle="Confirmação de exclusão"
             width="338px"
             alert="Deseja excluir este perfil? Usuários que os possuem perderão suas permissões!"
             show={showDeleteModal}
@@ -204,6 +205,7 @@ export default function RolesUpdatePage() {
             />
           )}
           <Modal
+            alertTitle=""
             width="338px"
             alert="DESEJA CONTINUAR COM AS ALTERAÇÕES FEITAS NO PERFIL?"
             show={showSaveModal}
@@ -222,6 +224,7 @@ export default function RolesUpdatePage() {
             />
           </Modal>
           <Modal
+            alertTitle=""
             width="338px"
             alert="PERFIL ALTERADO COM SUCESSO"
             show={showSuccessModal}
@@ -234,6 +237,7 @@ export default function RolesUpdatePage() {
             />
           </Modal>
           <Modal
+            alertTitle=""
             width="338px"
             alert="PERFIL DELETADO COM SUCESSO"
             show={showSuccessDelModal}

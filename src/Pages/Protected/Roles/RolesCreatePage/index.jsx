@@ -94,6 +94,7 @@ export default function RolesCreatePage() {
 
         <PrimaryButton text="Cadastrar" onClick={handleSubmit} />
         <Modal
+          alertTitle=""
           width="338px"
           alert="Cadastro de usuário concluído"
           show={showModal}

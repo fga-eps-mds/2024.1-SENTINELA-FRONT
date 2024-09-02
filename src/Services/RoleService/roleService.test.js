@@ -23,9 +23,11 @@ describe("Role Service", () => {
   const mockToken = "mockToken";
   const roleData = { name: "Admin" };
   const roleId = "123";
+  const mockUser = { _id: "123456" };
 
   beforeEach(() => {
     localStorage.setItem("@App:token", mockToken);
+    localStorage.setItem("@App:user", JSON.stringify(mockUser));
   });
 
   it("should create a role", async () => {
@@ -34,6 +36,11 @@ describe("Role Service", () => {
     const result = await createRole(roleData);
 
     expect(APIUsers.post).toHaveBeenCalledWith("/role/create", roleData, {
+      params: {
+        userId: "123456", // Use o mockUserId aqui
+        moduleName: "users",
+        action: "create",
+      },
       headers: { Authorization: `Bearer ${mockToken}` },
     });
     expect(result).toEqual({ id: roleId, ...roleData });
@@ -73,6 +80,11 @@ describe("Role Service", () => {
       `/role/patch/${roleId}`,
       updatedRole,
       {
+        params: {
+          userId: "123456", // Use o mockUserId aqui
+          moduleName: "users",
+          action: "update",
+        },
         headers: { Authorization: `Bearer ${mockToken}` },
       }
     );
@@ -86,6 +98,11 @@ describe("Role Service", () => {
     const result = await deleteRole(roleId);
 
     expect(APIUsers.delete).toHaveBeenCalledWith(`/role/delete/${roleId}`, {
+      params: {
+        userId: "123456", // Use o mockUserId aqui
+        moduleName: "users",
+        action: "delete",
+      },
       headers: { Authorization: `Bearer ${mockToken}` },
     });
     expect(result).toEqual(mockResponse);
