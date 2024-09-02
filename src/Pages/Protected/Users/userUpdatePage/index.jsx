@@ -110,7 +110,8 @@ export default function UserUpdatePage() {
 
   const handleSave = async () => {
     const trimmedCelular = removeMask(celular);
-    const isValidNumber = /^\d+$/.test(trimmedCelular) && trimmedCelular.length > 10;
+    const isValidNumber =
+      /^\d+$/.test(trimmedCelular) && trimmedCelular.length > 10;
     const isValidEmailAddress = isValidEmail(email);
 
     setIsCelularValid(isValidNumber);
@@ -134,7 +135,8 @@ export default function UserUpdatePage() {
   };
 
   const handleChangeLogin = (event) => setLogin(event.target.value);
-  const handlePerfilChange = (event) => setPerfilSelecionado(event.target.value);
+  const handlePerfilChange = (event) =>
+    setPerfilSelecionado(event.target.value);
 
   const handleSaveModal = () => setShowSaveModal(true);
   const handleDeleteModal = () => setShowDeleteModal(true);
@@ -169,7 +171,9 @@ export default function UserUpdatePage() {
         <FieldText
           label="Nome Completo"
           value={nomeCompleto}
-          onChange={(e) => setNomeCompleto(e.target.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, ""))}
+          onChange={(e) =>
+            setNomeCompleto(e.target.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, ""))
+          }
         />
         <div className="double-box-user">
           <FieldNumber
@@ -223,9 +227,7 @@ export default function UserUpdatePage() {
           {canDelete && (
             <SecondaryButton text="Deletar" onClick={handleDeleteModal} />
           )}
-          {canUpdate && (
-            <PrimaryButton text="Salvar" onClick={handleSave} />
-          )}
+          {canUpdate && <PrimaryButton text="Salvar" onClick={handleSave} />}
         </div>
 
         <Modal alertTitle="Alterações Salvas" show={showSaveModal}>
