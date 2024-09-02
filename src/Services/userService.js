@@ -34,11 +34,6 @@ export const getUsers = async () => {
       throw new Error("No token found");
     }
     const response = await APIUsers.get("/users", {
-      params: {
-        userId: `${user._id}`,
-        moduleName: "users",
-        action: "read",
-      },
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -70,6 +65,11 @@ export const createUser = async (userData) => {
       phone: userData.phone,
       status: userData.status,
       role: userData.role,
+      params: {
+        userId: `${user._id}`,
+        moduleName: "users",
+        action: "create",
+      },
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -103,6 +103,11 @@ export const patchUserById = async (id, updatedUser) => {
       `/users/patch/${id}`,
       { updatedUser },
       {
+        params: {
+          userId: `${user._id}`,
+          moduleName: "users",
+          action: "update",
+        },
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -133,6 +138,11 @@ export const sendRecoveryPassword = async (email) => {
 export const deleteUserById = async (id) => {
   try {
     await APIUsers.delete(`/users/delete/${id}`, {
+      params: {
+        userId: `${user._id}`,
+        moduleName: "users",
+        action: "delete",
+      },
       headers: {
         Authorization: `Bearer ${token}`,
       },

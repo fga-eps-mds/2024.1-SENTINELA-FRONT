@@ -1,11 +1,15 @@
 import { APIBenefits, APIUsers } from "./BaseService";
 
 const storagedToken = localStorage.getItem("@App:token");
+const storagedUser = localStorage.getItem("@App:user");
+
 let token = null;
+let user = null;
 
 if (storagedToken) {
   try {
     token = JSON.parse(storagedToken);
+    user = JSON.parse(storagedUser);
   } catch (error) {
     console.error("O token armazenado não é um JSON válido:", error);
   }
@@ -31,6 +35,11 @@ export const createBenefitsForm = async (benefitsData) => {
     }
 
     await APIBenefits.post(`/benefits/create/`, benefitsData, {
+      params: {
+        userId: `${user._id}`,
+        moduleName: "benefits",
+        action: "create",
+      },
       headers: {
         Authorization: `Bearer ${token}`,
       },

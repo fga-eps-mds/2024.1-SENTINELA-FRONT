@@ -1,5 +1,16 @@
 import { APIUsers } from "../BaseService";
 
+const storagedUser = localStorage.getItem("@App:user");
+let user = null;
+
+if (storagedUser) {
+  try {
+    user = JSON.parse(storagedUser);
+  } catch (error) {
+    console.error("Erro ao armazenar usuário: ", error);
+  }
+}
+
 export const createRole = async (roleData) => {
   try {
     const token = localStorage.getItem("@App:token");
@@ -7,6 +18,11 @@ export const createRole = async (roleData) => {
       throw new Error("No token found");
     }
     const response = await APIUsers.post("/role/create", roleData, {
+      params: {
+        userId: `${user._id}`,
+        moduleName: "users",
+        action: "create",
+      },
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -61,6 +77,11 @@ export const updateRole = async (id, roleData) => {
       throw new Error("No token found");
     }
     const response = await APIUsers.patch(`/role/patch/${id}`, roleData, {
+      params: {
+        userId: `${user._id}`,
+        moduleName: "users",
+        action: "update",
+      },
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -79,6 +100,11 @@ export const deleteRole = async (id) => {
       throw new Error("No token found");
     }
     const response = await APIUsers.delete(`/role/delete/${id}`, {
+      params: {
+        userId: `${user._id}`,
+        moduleName: "users",
+        action: "delete",
+      },
       headers: {
         Authorization: `Bearer ${token}`,
       },
