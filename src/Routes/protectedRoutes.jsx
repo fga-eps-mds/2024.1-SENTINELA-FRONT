@@ -17,6 +17,7 @@ import Benefits from "../Pages/Protected/Benefit/Benefits";
 import BenefitsList from "../Pages/Protected/Benefit/BenefitsList";
 import BenefitsCreate from "../Pages/Protected/Benefit/BenefitsCreate";
 import BenefitsUpdate from "../Pages/Protected/Benefit/BenefitsUpdate";
+import ViewMembershipPage from "../Pages/Protected/Users/ViewMembershipPage";
 import FinanceHubPage from "../Pages/Protected/Finance/FinanceHubPage";
 import FinanceBankAccount from "../Pages/Protected/Finance/BankAccountCreate";
 import FinanceUpdate from "../Pages/Protected/Finance/BankAccountUpdate";
@@ -28,7 +29,8 @@ import FinancialMovements from "../Pages/Protected/FinancialMovements/FinancialC
 import FinancialList from "../Pages/Protected/FinancialMovements/FinancialList";
 import FinancialUpdate from "../Pages/Protected/FinancialMovements/FinancialUpdate";
 import ContributionHistoric from "../Pages/Protected/FinancialMovements/ContributionHistoric";
-import Unauthorized from "../Pages/Protected/Unauthorized";
+import Unauthorized from "../Pages/Protected/Unauthorized";import GenerateFinancialReport from "../Pages/Protected/FinancialMovements/GenerateFinancialReport";
+
 const ProtectedRoutes = () => {
   return (
     <Routes>
@@ -94,6 +96,7 @@ const ProtectedRoutes = () => {
           />
         }
       />
+      <Route path="/filiados/:id" element={<ViewMembershipPage />} />
       <Route
         path="/usuarios/hub"
         element={
@@ -136,7 +139,7 @@ const ProtectedRoutes = () => {
       />
       <Route path="/perfil" element={<ProfileUpdate />} />
       <Route
-        path="usuarios/hub/membershipRequests"
+        path="usuarios/hub/filiacoes-pendentes"
         element={
           <PermissionProtect
             element={<MembershipRequest />}
@@ -294,6 +297,14 @@ const ProtectedRoutes = () => {
             action="read"
           />
         }
+      />
+      <Route
+        path="/movimentacoes/relatorio"
+        element={<GenerateFinancialReport />}
+      />
+      <Route
+        path="/movimentacoes/relatorio"
+        element={<GenerateFinancialReport />}
       />
     </Routes>
   );

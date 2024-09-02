@@ -54,7 +54,7 @@ export default function FieldText({
 
 FieldText.propTypes = {
   label: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.any.isRequired,
   onChange: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
   onBlur: PropTypes.func, // Added prop type for onBlur
