@@ -129,7 +129,7 @@ const BankAccountId = () => {
   return user ? (
     <div className="container-benefits">
       <div className="forms-container-benefits">
-        <h1>Visualização de benefícios</h1>
+        <h1>Visualização de Conta Bancária</h1>
 
         <h3>Dados do benefício</h3>
 

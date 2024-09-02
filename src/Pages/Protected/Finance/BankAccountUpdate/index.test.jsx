@@ -1,11 +1,18 @@
 import { describe, it, expect, vi, afterEach, beforeEach } from "vitest";
-import { render, screen, cleanup, waitFor } from "@testing-library/react";
+import {
+  render,
+  screen,
+  cleanup,
+  waitFor,
+  fireEvent,
+} from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import BankAccountId from "./index";
 import "@testing-library/jest-dom";
 import {
   getBankAccount,
   updateBankAccount,
+  deleteBankAccount,
 } from "../../../../Services/bankAccountService";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 import { useAuth } from "../../../../Context/auth";
@@ -50,7 +57,9 @@ describe("BankAccountId", () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByText("Visualização de benefícios")).toBeInTheDocument();
+    expect(
+      screen.getByText("Visualização de Conta Bancária")
+    ).toBeInTheDocument();
   });
 
   it("não deve renderizar o componente quando o usuário não está autenticado", () => {
@@ -158,6 +167,21 @@ describe("BankAccountId", () => {
     // Espera a chamada do fetch
     await waitFor(() => {
       expect(getBankAccount).toHaveBeenCalledWith("123");
+    });
+  });
+  it.only("should delete bank account", async () => {
+    useAuth.mockReturnValue({ user: { id: "user123" } });
+
+    render(
+      <MemoryRouter>
+        <BankAccountId />
+      </MemoryRouter>
+    );
+
+    fireEvent.click(screen.getByText("Deletar"));
+    fireEvent.click(screen.getByText("Excluir Conta bancária"));
+    await waitFor(() => {
+      expect(deleteBankAccount).toHaveBeenCalled();
     });
   });
 });
