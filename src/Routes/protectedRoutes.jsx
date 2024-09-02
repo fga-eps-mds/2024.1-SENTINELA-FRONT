@@ -134,7 +134,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<RolesUpdatePage />}
             moduleName="users"
-            action="update"
+            action="read"
           />
         }
       />

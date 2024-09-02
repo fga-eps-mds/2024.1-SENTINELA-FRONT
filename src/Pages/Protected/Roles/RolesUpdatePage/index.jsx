@@ -11,8 +11,12 @@ import {
   deleteRole,
 } from "../../../../Services/RoleService/roleService";
 import CheckboxRow from "../../../../Components/CheckboxRow";
+import { checkAction } from "../../../../Utils/permission";
+import AuthContext from "../../../../Context/auth";
+import { useContext } from "react";
 
 export default function RolesUpdatePage() {
+  const [userPermissions, setUserPermissions] = useState([]);
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -26,6 +30,26 @@ export default function RolesUpdatePage() {
   const navigate = useNavigate();
   const location = useLocation();
   const { roleId } = location.state;
+
+  const canDelete = checkAction(userPermissions, "users", "delete");
+  const canUpdate = checkAction(userPermissions, "users", "update");
+  const { user } = useContext(AuthContext);
+
+  useEffect(() => {
+    const fetchRolePermissions = async () => {
+      if (user?.role) {
+        try {
+          const role = await getRoleById(user.role);
+          setUserPermissions(role?.permissions || []);
+        } catch (error) {
+          console.error("Erro ao buscar permissões do papel:", error);
+          setUserPermissions([]);
+        }
+      }
+    };
+
+    fetchRolePermissions();
+  }, [user]);
 
   useEffect(() => {
     const fetchRole = async () => {
@@ -167,10 +191,12 @@ export default function RolesUpdatePage() {
         </div>
 
         <div className="double-buttons-roles">
-          <SecondaryButton
-            text="DELETAR"
-            onClick={() => setShowDeleteModal(true)}
-          />
+          {canDelete && (
+            <SecondaryButton
+              text="DELETAR"
+              onClick={() => setShowDeleteModal(true)}
+            />
+          )}
           <Modal
             width="338px"
             alert="Deseja excluir este perfil? Usuários que os possuem perderão suas permissões!"
@@ -190,7 +216,12 @@ export default function RolesUpdatePage() {
             />
           </Modal>
 
-          <PrimaryButton text="SALVAR" onClick={() => setShowSaveModal(true)} />
+          {canUpdate && (
+            <PrimaryButton
+              text="SALVAR"
+              onClick={() => setShowSaveModal(true)}
+            />
+          )}
           <Modal
             width="338px"
             alert="DESEJA CONTINUAR COM AS ALTERAÇÕES FEITAS NO PERFIL?"

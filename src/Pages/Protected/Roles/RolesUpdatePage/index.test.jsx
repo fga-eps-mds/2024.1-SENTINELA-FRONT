@@ -16,6 +16,10 @@ vi.mock("../../../../Services/RoleService/roleService", () => ({
   getRoleById: vi.fn(),
 }));
 
+vi.mock("../../../../Utils/permission", () => ({
+  checkAction: () => true,
+}));
+
 describe("RolesUpdatePage", () => {
   beforeEach(() => {
     localStorage.setItem("@App:user", JSON.stringify({ token: "mock-token" }));
