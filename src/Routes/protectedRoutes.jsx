@@ -28,6 +28,7 @@ import FinancialMovements from "../Pages/Protected/FinancialMovements/FinancialC
 import FinancialList from "../Pages/Protected/FinancialMovements/FinancialList";
 import FinancialUpdate from "../Pages/Protected/FinancialMovements/FinancialUpdate";
 import ContributionHistoric from "../Pages/Protected/FinancialMovements/ContributionHistoric";
+import GenerateFinancialReport from "../Pages/Protected/FinancialMovements/GenerateFinancialReport";
 
 const ProtectedRoutes = () => {
   return (
@@ -69,6 +70,10 @@ const ProtectedRoutes = () => {
       <Route
         path="/movimentacoes/contribuicoes/:name"
         element={<ContributionHistoric />}
+      />
+      <Route
+        path="/movimentacoes/relatorio"
+        element={<GenerateFinancialReport />}
       />
     </Routes>
   );
