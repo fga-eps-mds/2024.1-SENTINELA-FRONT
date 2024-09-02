@@ -169,7 +169,7 @@ describe("BankAccountId", () => {
       expect(getBankAccount).toHaveBeenCalledWith("123");
     });
   });
-  it.only("should delete bank account", async () => {
+  it("should delete bank account", async () => {
     useAuth.mockReturnValue({ user: { id: "user123" } });
 
     render(
