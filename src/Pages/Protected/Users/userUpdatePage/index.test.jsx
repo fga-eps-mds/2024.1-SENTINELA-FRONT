@@ -28,6 +28,9 @@ vi.mock("react-router-dom", async (importOriginal) => {
 });
 
 vi.mock("../../../../Utils/permission", () => ({
+  usePermissions: () => ({
+    somePermission: true,
+  }),
   checkAction: () => true,
 }));
 

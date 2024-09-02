@@ -1,16 +1,22 @@
-import { describe, it, expect, beforeEach } from "vitest";
+// src/Pages/Protected/Users/userHubPage/index.test.jsx
+
+import { describe, it, expect, beforeEach, vi } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import UserHubPage from "./index";
 import "@testing-library/jest-dom";
 
+// Mock para o módulo de permissões
 vi.mock("../../../../Utils/permission", () => ({
+  usePermissions: () => ({
+    // Retorne um objeto com permissões fictícias para os testes
+    somePermission: true,
+  }),
   checkAction: () => true,
 }));
 
 describe("UserHubPage", () => {
   beforeEach(() => {
-    // Renderiza o componente antes de cada teste
     render(
       <Router>
         <UserHubPage />

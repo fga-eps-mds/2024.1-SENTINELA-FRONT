@@ -16,6 +16,10 @@ vi.mock("../../../../Services/RoleService/roleService", () => ({
 }));
 
 vi.mock("../../../../Utils/permission", () => ({
+  usePermissions: () => ({
+    // Retorne um objeto com permissões fictícias para os testes
+    somePermission: true,
+  }),
   checkAction: () => true,
 }));
 

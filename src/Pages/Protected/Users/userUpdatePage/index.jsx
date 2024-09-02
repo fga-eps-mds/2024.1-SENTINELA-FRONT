@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button, FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import FieldNumber from "../../../../Components/FieldNumber";
@@ -13,14 +13,11 @@ import {
   getUserById,
   patchUserById,
 } from "../../../../Services/userService";
-import { checkAction } from "../../../../Utils/permission";
-import AuthContext from "../../../../Context/auth";
+import { checkAction, usePermissions } from "../../../../Utils/permission";
 import "./index.css";
-import { getRoleById } from "../../../../Services/RoleService/roleService";
 
 export default function UserUpdatePage() {
-  const { user } = useContext(AuthContext);
-  const [userPermissions, setUserPermissions] = useState([]);
+  const permissions = usePermissions();
   const { state } = useLocation();
   const navigate = useNavigate();
   const userId = state?.userId;
@@ -37,24 +34,8 @@ export default function UserUpdatePage() {
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isCelularValid, setIsCelularValid] = useState(true);
 
-  useEffect(() => {
-    const fetchRolePermissions = async () => {
-      if (user?.role) {
-        try {
-          const role = await getRoleById(user.role);
-          setUserPermissions(role?.permissions || []);
-        } catch (error) {
-          console.error("Erro ao buscar permissões do papel:", error);
-          setUserPermissions([]);
-        }
-      }
-    };
-
-    fetchRolePermissions();
-  }, [user]);
-
-  const canDelete = checkAction(userPermissions, "users", "delete");
-  const canUpdate = checkAction(userPermissions, "users", "update");
+  const canDelete = checkAction(permissions, "users", "delete");
+  const canUpdate = checkAction(permissions, "users", "update");
 
   useEffect(() => {
     const loadRoles = async () => {
