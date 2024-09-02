@@ -3,11 +3,25 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import UserListPage from "./index";
 import { getUsers } from "../../../../Services/userService";
+import { getRoleById } from "../../../../Services/RoleService/roleService";
+import AuthContext from "../../../../Context/auth";
 import "@testing-library/jest-dom";
 
 vi.mock("../../../../Services/userService", () => ({
   getUsers: vi.fn(),
 }));
+
+vi.mock("../../../../Services/RoleService/roleService", () => ({
+  getRoleById: vi.fn(),
+}));
+
+vi.mock("../../../../Utils/permission", () => ({
+  checkAction: () => true,
+}));
+
+const mockContextValue = {
+  user: { role: "mock-role" },
+};
 
 describe("UserListPage", () => {
   beforeEach(() => {
@@ -19,16 +33,40 @@ describe("UserListPage", () => {
     localStorage.clear();
   });
 
-  it("renders correctly", () => {
+  it("renders correctly with the 'Cadastrar Usuário' button visible", async () => {
+    vi.mocked(getRoleById).mockResolvedValue({ permissions: ["create"] });
+
     render(
-      <Router>
-        <UserListPage />
-      </Router>
+      <AuthContext.Provider value={mockContextValue}>
+        <Router>
+          <UserListPage />
+        </Router>
+      </AuthContext.Provider>
     );
 
-    expect(screen.getByText("Lista de Usuários")).toBeInTheDocument();
-    expect(screen.getByText("Cadastrar Usuário")).toBeInTheDocument();
-    expect(screen.getByLabelText("Pesquisar Usuário")).toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          (content, element) =>
+            element.tagName.toLowerCase() === "h1" &&
+            content.includes("Lista de Usuários")
+        )
+      ).toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          (content, element) =>
+            element.tagName.toLowerCase() === "button" &&
+            content.includes("Cadastrar Usuário")
+        )
+      ).toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(screen.getByLabelText("Pesquisar Usuário")).toBeInTheDocument();
+    });
   });
 
   it("fetches and displays users", async () => {
@@ -39,9 +77,11 @@ describe("UserListPage", () => {
     getUsers.mockResolvedValueOnce(users);
 
     render(
-      <Router>
-        <UserListPage />
-      </Router>
+      <AuthContext.Provider value={mockContextValue}>
+        <Router>
+          <UserListPage />
+        </Router>
+      </AuthContext.Provider>
     );
 
     await waitFor(() => {
@@ -58,9 +98,11 @@ describe("UserListPage", () => {
     getUsers.mockResolvedValueOnce(users);
 
     render(
-      <Router>
-        <UserListPage />
-      </Router>
+      <AuthContext.Provider value={mockContextValue}>
+        <Router>
+          <UserListPage />
+        </Router>
+      </AuthContext.Provider>
     );
 
     await waitFor(() => {
@@ -73,16 +115,26 @@ describe("UserListPage", () => {
     });
   });
 
-  it("navigates to user creation page on button click", () => {
+  it("navigates to user creation page on button click", async () => {
     render(
-      <Router>
-        <UserListPage />
-      </Router>
+      <AuthContext.Provider value={mockContextValue}>
+        <Router>
+          <UserListPage />
+        </Router>
+      </AuthContext.Provider>
     );
 
-    fireEvent.click(screen.getByText(/Cadastrar Usuário/i));
+    await waitFor(() => {
+      fireEvent.click(
+        screen.getByText(
+          (content, element) =>
+            element.tagName.toLowerCase() === "button" &&
+            content.includes("Cadastrar Usuário")
+        )
+      );
 
-    expect(window.location.pathname).toBe("/usuarios/criar");
+      expect(window.location.pathname).toBe("/usuarios/criar");
+    });
   });
 
   it("navigates to user edit page on list item click", async () => {
@@ -93,9 +145,11 @@ describe("UserListPage", () => {
     getUsers.mockResolvedValueOnce(users);
 
     render(
-      <Router>
-        <UserListPage />
-      </Router>
+      <AuthContext.Provider value={mockContextValue}>
+        <Router>
+          <UserListPage />
+        </Router>
+      </AuthContext.Provider>
     );
 
     await waitFor(() => {

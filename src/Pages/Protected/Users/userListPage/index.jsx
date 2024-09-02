@@ -3,17 +3,23 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import FieldText from "../../../../Components/FieldText";
 import PrimaryButton from "../../../../Components/PrimaryButton";
 import "../userHubPage/index.css";
 import "./index.css";
 import { getUsers } from "../../../../Services/userService";
+import { checkAction } from "../../../../Utils/permission";
+import AuthContext from "../../../../Context/auth";
+import { getRoleById } from "../../../../Services/RoleService/roleService";
 
 export default function UserListPage() {
+  const { user } = useContext(AuthContext);
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [userPermissions, setUserPermissions] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,12 +39,38 @@ export default function UserListPage() {
     fetchUsers();
   }, []);
 
+  useEffect(() => {
+    const fetchRolePermissions = async () => {
+      if (user?.role) {
+        try {
+          const role = await getRoleById(user.role);
+          setUserPermissions(role?.permissions || []);
+        } catch (error) {
+          console.error("Erro ao buscar permissões do papel:", error);
+          setUserPermissions([]);
+        }
+        setLoading(false);
+      } else {
+        setLoading(false);
+      }
+    };
+
+    fetchRolePermissions();
+  }, [user]);
+
+  if (loading) {
+    // Renderizar um spinner ou algum placeholder enquanto as permissões estão sendo carregadas
+    return <div>Carregando...</div>;
+  }
+
+  const hasPermission = checkAction(userPermissions, "users", "create");
+
   const handleRegisterClick = () => {
     navigate("/usuarios/criar");
   };
 
   const handleItemClick = (user) => {
-    if (user?.role?.name == "sindicalizado") {
+    if (user?.role?.name === "sindicalizado") {
       navigate(`/filiados/${user.name}`, {
         state: { membershipId: user._id },
       });
@@ -58,10 +90,12 @@ export default function UserListPage() {
       <div className="forms-container-list">
         <div className="double-box-list">
           <h1>Lista de Usuários</h1>
-          <PrimaryButton
-            text="Cadastrar Usuário"
-            onClick={handleRegisterClick}
-          />
+          {hasPermission && (
+            <PrimaryButton
+              text="Cadastrar Usuário"
+              onClick={handleRegisterClick}
+            />
+          )}
         </div>
         <FieldText
           label="Pesquisar Usuário"
