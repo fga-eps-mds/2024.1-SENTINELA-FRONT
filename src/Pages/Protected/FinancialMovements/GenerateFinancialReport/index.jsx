@@ -232,7 +232,7 @@ export default function GenerateFinancialReport() {
           onClose={() => setOpenGenerateError(false)}
         >
           <Alert onClose={() => setOpenGenerateError(false)} severity="error">
-            Não foram encontradas movimentações nesse período
+            Não foram encontradas movimentações para o filtro selecionado
           </Alert>
         </Snackbar>
       </div>
