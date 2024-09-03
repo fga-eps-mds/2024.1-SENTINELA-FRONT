@@ -255,7 +255,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<OrganUpdate />}
             moduleName="users"
-            action="create"
+            action="read"
           />
         }
       />
