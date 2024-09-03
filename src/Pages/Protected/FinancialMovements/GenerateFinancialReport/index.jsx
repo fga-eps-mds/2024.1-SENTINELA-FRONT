@@ -249,7 +249,7 @@ export default function GenerateFinancialReport() {
           />
         </div>
         <div className="checkbox-container">
-          <h3>filtro de selecao</h3>
+          <h3>Filtro de seleção</h3>
           <CheckboxRow
             label="Tipo de documento"
             state={selectedTipoDocumento}
