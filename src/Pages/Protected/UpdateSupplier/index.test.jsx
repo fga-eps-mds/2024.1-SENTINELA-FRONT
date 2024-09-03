@@ -16,6 +16,13 @@ import {
   updateSupplierFormById,
 } from "../../../Services/supplierService";
 
+vi.mock("../../../Utils/permission", () => ({
+  usePermissions: () => ({
+    somePermission: true,
+  }),
+  checkAction: () => true,
+}));
+
 function mockValidators() {
   // mocka funções de validação do service
   vi.mock("../../../Utils/validators", () => {
