@@ -10,6 +10,7 @@ export const generateFinancialReport = async ({
   formArquivo,
   dataInicio,
   dataFinal,
+  includeFields,
 }) => {
   const reportData = {
     contaOrigem,
@@ -21,6 +22,7 @@ export const generateFinancialReport = async ({
     formArquivo,
     dataInicio,
     dataFinal,
+    includeFields,
   };
   const fileName = `financial_report.${formArquivo.toLowerCase()}`;
   return generateReport(reportData, formArquivo.toLowerCase(), fileName);
