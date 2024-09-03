@@ -228,6 +228,10 @@ export default function FinancialUpdate() {
     setPagamento(event.target.value);
   };
 
+  const handleChangeTipoDocumento = (event) => {
+    setTipoDocumento(event.target.value);
+  };
+
   const handleChangeDescricao = (event) => {
     const { value } = event.target;
     if (value.length <= maxDescricaoLength) {
@@ -271,10 +275,55 @@ export default function FinancialUpdate() {
             onChange={handleChangeNomeDestino}
             options={nomesDestino}
           />
-          <FieldText
-            label="Tipo documento"
+          <FieldSelect
+            label="Tipo documento *"
+            onChange={handleChangeTipoDocumento}
             value={tipoDocumento}
-            onChange={(e) => setTipoDocumento(e.target.value)}
+            options={[
+              "",
+              "AÇÃO JUDICIAL",
+              "ACORDO EXTRAJUDICIAL",
+              "ADVOGADO",
+              "ALUGUEL",
+              "APLICAÇÃO FINANCEIRA",
+              "ASSEMBLEIA",
+              "ASSESSORIA COMUNICAÇÃO",
+              "CARTÓRIO",
+              "CELULAR",
+              "COMBUSTÍVEL",
+              "CONDOMÍNO",
+              "CONTABILIDADE",
+              "CONVÊNIO",
+              "CUSTAS JUDICIAIS",
+              "DARF",
+              "DAR-GDF",
+              "DIVERSOS",
+              "DOAÇÕES",
+              "DPVAT",
+              "ENERGIA",
+              "ESTÁGIO",
+              "EVENTOS",
+              "EXPEDIENTE",
+              "FGTS",
+              "FIXO/INTERNET",
+              "FUNCIONÁRIO",
+              "GPS (INSS)",
+              "IMÓVEL - SEDE SINDPEN",
+              "INDENIZAÇÃO",
+              "IPTU",
+              "IPVA",
+              "LAZER",
+              "LICENCIAMENTO",
+              "MULTA",
+              "PAPELARIA",
+              "PATROCÍNIO",
+              "REEMBOLSO",
+              "RESCISÃO CONTRATO TRAB.",
+              "RESTAURANTE",
+              "SEGURO VIDA",
+              "TARIFAS BANCÁRIAS",
+              "PUBLICIDADE",
+            ]}
           />
           <FieldText
             label="CPF/CNPJ"
