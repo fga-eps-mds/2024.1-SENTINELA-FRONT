@@ -46,7 +46,9 @@ export default function BenefitsList() {
       <div className="forms-container-list-benefits">
         <div className="double-box-list-benefits">
           <h1> Lista de benefícios</h1>
-          {canCreate && (<PrimaryButton text="Cadastrar benefício" onClick={handleSubmit} />)}
+          {canCreate && (
+            <PrimaryButton text="Cadastrar benefício" onClick={handleSubmit} />
+          )}
         </div>
         <div className="search-box-benefits">
           <FieldText

@@ -396,12 +396,16 @@ export default function BenefitsUpdate() {
         />
 
         <div className="double-buttons">
-          {canDelete && (<SecondaryButton text="Deletar" onClick={handleDeleteModal} />)}
+          {canDelete && (
+            <SecondaryButton text="Deletar" onClick={handleDeleteModal} />
+          )}
 
-          {canUpdate && (<PrimaryButton
-            text="Salvar"
-            onClick={() => handleUpdateBenefitsButton()}
-          />)}
+          {canUpdate && (
+            <PrimaryButton
+              text="Salvar"
+              onClick={() => handleUpdateBenefitsButton()}
+            />
+          )}
         </div>
 
         <Snackbar
