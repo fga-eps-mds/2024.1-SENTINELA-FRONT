@@ -4,6 +4,13 @@ import { BrowserRouter as Router } from "react-router-dom";
 import Benefits from "./index";
 import "@testing-library/jest-dom";
 
+vi.mock("../../../../Utils/permission", () => ({
+  usePermissions: () => ({
+    somePermission: true,
+  }),
+  checkAction: () => true,
+}));
+
 describe("Benefits", () => {
   it("renders buttons correctly", () => {
     render(
