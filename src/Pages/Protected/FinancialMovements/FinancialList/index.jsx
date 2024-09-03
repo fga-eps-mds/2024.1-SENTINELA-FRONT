@@ -75,11 +75,11 @@ export default function FinancialList() {
     <section className="container">
       <div className="forms-container">
         <div className="double-box">
-          <h1>Lista de movimentações</h1>
+          <h1 className="title-fm">Lista de movimentações</h1>
           <PrimaryButton text="Cadastrar movimentação" onClick={handleSubmit} />
         </div>
 
-        <div className="search-box">
+        <div className="search">
           <FieldText
             label="Pesquisar movimentação"
             value={search}
@@ -89,17 +89,16 @@ export default function FinancialList() {
 
         <div className="date-box">
           <DataSelect
-            label="Data Inicial"
+            label="Data inicial"
             value={dataInicio}
             onChange={(newValue) => setDataInicio(newValue)}
           />
           <DataSelect
-            label="Data Final"
+            label="Data final"
             value={dataFinal}
             onChange={(newValue) => setDataFinal(newValue)}
           />
         </div>
-
         <List>
           {filteredMovements.map((movement, index) => (
             <div key={movement._id}>

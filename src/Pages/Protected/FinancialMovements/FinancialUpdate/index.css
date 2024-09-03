@@ -26,21 +26,27 @@
     grid-template-columns: 0.5fr 0.3fr;
   }
 
-  h1 {
-    font-weight: 800;
-    margin-bottom: 3rem;
-    color: #332117 !important;
+  .title-fm-update {
+    text-align: center;
+    margin: 0 auto;
+    justify-content: center;
+    margin-top: 4rem;
+    margin-bottom: 1rem;
   }
 
-  h3 {
+  .title-fm-updatemenor {
     font-weight: 400;
     margin-left: 1rem;
     margin-top: 3rem;
     color: #332117 !important;
   }
 
-  #addDependentBttn {
-    cursor: pointer;
+  .small-update {
+    font-size: 1rem;
+    margin-left: 1rem;
+    margin-top: 0px;
+    margin-bottom: 1rem;
+    color: #332117 !important;
   }
 }
 
@@ -89,13 +95,13 @@
     color: #332117 !important;
   }
 
-  h1 {
+  .title-fm-update {
     font-weight: 800;
     margin-bottom: 3rem;
     color: #332117 !important;
   }
 
-  h3 {
+  .title-fm-updatemenor {
     font-weight: 400;
     margin-left: 1rem;
     margin-top: 3rem;
@@ -107,9 +113,7 @@
     margin-top: 10px;
     color: red !important;
   }
-  #addDependentBttn {
-    cursor: pointer;
-  }
+
   .double-buttons-mov {
     display: flex;
     justify-content: space-between; /* Distribui os botões igualmente no espaço disponível */
@@ -122,5 +126,13 @@
     margin-top: 0;
     margin-bottom: 0;
     height: 40px;
+  }
+
+  .small-update {
+    font-size: 1rem;
+    margin-left: 1rem;
+    margin-top: 0px;
+    margin-bottom: 1rem;
+    color: #332117 !important;
   }
 }

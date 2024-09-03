@@ -238,8 +238,13 @@ export default function FinancialUpdate() {
   return (
     <section className="container">
       <div className="forms-container">
-        <h1> Visualização de Movimentações Financeiras </h1>
-        <h3>Dados da movimentação financeira</h3>
+        <h1 className="title-fm-update">
+          {" "}
+          Visualização de Movimentações Financeiras{" "}
+        </h1>
+        <h3 className="title-fm-updatemenor">
+          Dados da movimentação financeira
+        </h3>
 
         <div className="double-box-fin">
           <FieldSelect
@@ -337,7 +342,7 @@ export default function FinancialUpdate() {
           value={descricao}
           onChange={handleChangeDescricao}
         />
-        <div>
+        <div className="small-update">
           <small>
             {descricao.length}/{maxDescricaoLength} caracteres
           </small>

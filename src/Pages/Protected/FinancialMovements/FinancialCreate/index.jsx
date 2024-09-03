@@ -218,8 +218,11 @@ export default function FinancialCreate() {
   return (
     <section className="container">
       <div className="forms-container">
-        <h1> Cadastro de Movimentações Financeiras </h1>
-        <h3>Dados da Movimentação</h3>
+        <h1 className="title-fm-create">
+          {" "}
+          Cadastro de Movimentações Financeiras{" "}
+        </h1>
+        <h3 className="title-fm-menor">Dados da Movimentação</h3>
 
         <div className="double-box-fin">
           <FieldSelect
@@ -363,11 +366,13 @@ export default function FinancialCreate() {
           onChange={handleChangeDescricao}
           value={descricao}
         />
-        <div>
+
+        <div className="small-container">
           <small>
             {descricao.length}/{maxDescricaoLength} caracteres
           </small>
         </div>
+
         <PrimaryButton text="Cadastrar" onClick={handleSubmit} />
         <Modal
           width="338px"
