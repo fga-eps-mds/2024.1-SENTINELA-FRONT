@@ -8,6 +8,7 @@ import { generateCSVReport } from "../../../../Services/csvService";
 import { getUsers } from "../../../../Services/userService";
 import { Snackbar } from "@mui/material";
 import Alert from "@mui/material/Alert";
+import CheckboxRow from "../../../../Components/CheckboxRow";
 import "./index.css";
 
 const fetchNomes = async (conta, setNomes) => {
@@ -54,6 +55,16 @@ export default function GenerateFinancialReport() {
   const [openError, setOpenError] = useState(false);
   const [openGenerateError, setOpenGenerateError] = useState(false);
 
+  // Estados para os checkboxes
+  const [selectedTipoDocumento, setSelectedTipoDocumento] = useState([true]);
+  const [selectedValorBruto, setSelectedValorBruto] = useState([true]);
+  const [selectedValorLiquido, setSelectedValorLiquido] = useState([true]);
+  const [selectedFormaPagamento, setSelectedFormaPagamento] = useState([true]);
+  const [selectedDataVencimento, setSelectedDataVencimento] = useState([true]);
+  const [selectedDataPagamento, setSelectedDataPagamento] = useState([true]);
+  const [selectedSitPagamento, setSelectedSitPagamento] = useState([true]);
+  const [selectedDescricao, setSelectedDescricao] = useState([true]);
+
   useEffect(() => {
     if (contaOrigem) fetchNomes(contaOrigem, setNomesOrigem);
   }, [contaOrigem]);
@@ -73,6 +84,17 @@ export default function GenerateFinancialReport() {
         return;
       }
 
+      const includeFields = {
+        tipoDocumento: selectedTipoDocumento[0],
+        valorBruto: selectedValorBruto[0],
+        valorLiquido: selectedValorLiquido[0],
+        formaPagamento: selectedFormaPagamento[0],
+        dataVencimento: selectedDataVencimento[0],
+        dataPagamento: selectedDataPagamento[0],
+        sitPagamento: selectedSitPagamento[0],
+        descricao: selectedDescricao[0],
+      };
+
       const reportParams = {
         contaOrigem,
         contaDestino,
@@ -83,18 +105,21 @@ export default function GenerateFinancialReport() {
         formArquivo,
         dataInicio,
         dataFinal,
+        includeFields,
       };
-      let reportGenerated;
+
       if (!formArquivo) {
         setOpenError("Selecione o formato de arquivo");
         return;
       }
 
+      let reportGenerated;
       if (formArquivo === "CSV") {
         reportGenerated = await generateCSVReport(reportParams);
       } else {
         reportGenerated = await generateFinancialReport(reportParams);
       }
+
       if (!reportGenerated) {
         console.log("Relatório gerado e baixado com sucesso!");
       } else {
@@ -208,6 +233,49 @@ export default function GenerateFinancialReport() {
             value={formArquivo}
             onChange={(e) => setFormArquivo(e.target.value)}
             options={["CSV", "PDF"]}
+          />
+        </div>
+        <div className="checkbox-container">
+          <h3>filtro de selecao</h3>
+          <CheckboxRow
+            label="Tipo de documento"
+            state={selectedTipoDocumento}
+            setState={setSelectedTipoDocumento}
+          />
+          <CheckboxRow
+            label="Valor Bruto"
+            state={selectedValorBruto}
+            setState={setSelectedValorBruto}
+          />
+          <CheckboxRow
+            label="Valor Líquido"
+            state={selectedValorLiquido}
+            setState={setSelectedValorLiquido}
+          />
+          <CheckboxRow
+            label="Forma de Pagamento"
+            state={selectedFormaPagamento}
+            setState={setSelectedFormaPagamento}
+          />
+          <CheckboxRow
+            label="Data de Vencimento"
+            state={selectedDataVencimento}
+            setState={setSelectedDataVencimento}
+          />
+          <CheckboxRow
+            label="Data de Pagamento"
+            state={selectedDataPagamento}
+            setState={setSelectedDataPagamento}
+          />
+          <CheckboxRow
+            label="Situação de Pagamento"
+            state={selectedSitPagamento}
+            setState={setSelectedSitPagamento}
+          />
+          <CheckboxRow
+            label="Descrição"
+            state={selectedDescricao}
+            setState={setSelectedDescricao}
           />
         </div>
         <div>
