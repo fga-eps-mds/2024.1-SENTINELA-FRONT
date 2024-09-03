@@ -185,7 +185,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<BenefitsUpdate />}
             moduleName="benefits"
-            action="update"
+            action="read"
           />
         }
       />

@@ -7,6 +7,12 @@ import { getBenefitsForm } from "../../../../Services/benefitsService";
 import "@testing-library/jest-dom";
 
 vi.mock("../../../../Services/benefitsService");
+vi.mock("../../../../Utils/permission", () => ({
+  usePermissions: () => ({
+    somePermission: true,
+  }),
+  checkAction: () => true,
+}));
 
 describe("BenefitsList", () => {
   beforeEach(() => {

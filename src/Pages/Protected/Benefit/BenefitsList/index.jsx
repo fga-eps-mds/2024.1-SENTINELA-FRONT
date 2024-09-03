@@ -9,11 +9,14 @@ import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import "./index.css";
 import { getBenefitsForm } from "../../../../Services/benefitsService";
+import { checkAction, usePermissions } from "../../../../Utils/permission";
 
 export default function BenefitsList() {
   const [search, setSearch] = useState("");
   const [benefits, setBenefits] = useState([]);
   const navigate = useNavigate();
+  const permissions = usePermissions();
+  const canCreate = checkAction(permissions, "benefits", "create");
 
   const handleSubmit = () => {
     navigate("/beneficios/criar");
@@ -43,7 +46,7 @@ export default function BenefitsList() {
       <div className="forms-container-list-benefits">
         <div className="double-box-list-benefits">
           <h1> Lista de benefícios</h1>
-          <PrimaryButton text="Cadastrar benefício" onClick={handleSubmit} />
+          {canCreate && (<PrimaryButton text="Cadastrar benefício" onClick={handleSubmit} />)}
         </div>
         <div className="search-box-benefits">
           <FieldText
