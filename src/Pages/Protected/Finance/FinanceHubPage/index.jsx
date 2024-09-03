@@ -21,6 +21,10 @@ export default function Finance() {
     navigate("/movimentacoes/lista");
   };
 
+  const handleGeradorRelatorio = () => {
+    navigate("/movimentacoes/relatorio");
+  };
+
   return (
     user && (
       <section className="containerFinance">
@@ -43,6 +47,10 @@ export default function Finance() {
             <SecondaryButton
               text="Lista de Movimentações Financeiras"
               onClick={handleMovimentacoesClick}
+            />
+            <SecondaryButton
+              text="Gerar relatório"
+              onClick={handleGeradorRelatorio}
             />
           </div>
         </div>

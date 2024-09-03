@@ -39,5 +39,8 @@ describe("Finance", () => {
     expect(
       screen.getByRole("button", { name: "Lista de Movimentações Financeiras" })
     ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Gerar relatório" })
+    ).toBeInTheDocument();
   });
 });

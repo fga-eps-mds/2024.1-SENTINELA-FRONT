@@ -359,7 +359,7 @@ const MemberShip = () => {
       uf_naturalidade,
       uf_orgao,
       uf_address: uf_endereco,
-      marialStatus: estadoCivil,
+      maritalStatus: estadoCivil,
       education: escolaridade,
       rg,
       orgao,
@@ -380,8 +380,6 @@ const MemberShip = () => {
       religion: religiao,
       dependents: dependentes,
     };
-
-    console.log(formData);
 
     const message = await createMemberShip(formData);
     if (message != 201) {
@@ -441,7 +439,7 @@ const MemberShip = () => {
           />
 
           <FieldSelect
-            label="Sexo"
+            label="Sexo *"
             value={sexo}
             onChange={handleChangeSexo}
             options={sexoList}
@@ -449,7 +447,7 @@ const MemberShip = () => {
             erro={erro("sexo")}
           />
 
-          <div className="double-box" style={{ marginLeft: "0px" }}>
+          <div className="double-box-supplier" style={{ marginLeft: "0px" }}>
             <FieldText
               label="Naturalidade"
               value={naturalidade}
@@ -494,7 +492,7 @@ const MemberShip = () => {
             erro={erro("rg")}
           />
 
-          <div className="double-box" style={{ marginLeft: "0px" }}>
+          <div className="double-box-supplier" style={{ marginLeft: "0px" }}>
             <FieldText
               label="Órgão Expeditor"
               value={orgaoExpedidor}
@@ -583,7 +581,7 @@ const MemberShip = () => {
             onBlur={(e) => handleBlur(e, "cep")}
             erro={erro("cep")}
           />
-          <div className="double-box" style={{ marginLeft: "0px" }}>
+          <div className="double-box-supplier" style={{ marginLeft: "0px" }}>
             <FieldText
               label="Cidade"
               value={cidade}

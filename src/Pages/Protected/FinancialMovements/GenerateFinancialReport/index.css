@@ -1,0 +1,95 @@
+@media screen and (max-width: 1080px) {
+  .bar-container-financial-report {
+    display: flex;
+    height: 100%;
+    position: fixed;
+  }
+
+  .container-financial-report {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+  }
+
+  .forms-container-financial-report {
+    margin: 1rem;
+    width: 90%;
+    display: inherit;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .double-box-gfr {
+    display: grid;
+    justify-content: start;
+    grid-template-columns: 1fr;
+    margin: 0;
+  }
+
+  .forms-container-financial-report h1 {
+    font-size: 22px;
+    font-weight: 800;
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .box-format-pdfcsv {
+    display: grid;
+    justify-content: start;
+    grid-template-columns: 1fr;
+    margin: 0;
+  }
+
+  .forms-container-financial-report button {
+    margin-top: 1rem;
+    width: 95%;
+    margin-left: 0.5rem;
+  }
+}
+
+@media screen and (min-width: 1080px) {
+  .bar-container-financial-report {
+    display: flex;
+    height: 100%;
+    position: fixed;
+  }
+
+  .container-financial-report {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+  }
+
+  .forms-container-financial-report {
+    margin: 1rem;
+    width: 90%;
+    display: inherit;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .double-box-gfr {
+    display: grid;
+    justify-content: start;
+    grid-template-columns: 0.5fr 0.5fr;
+    margin: 0;
+  }
+
+  .forms-container-financial-report h1 {
+    font-size: 34px;
+    font-weight: 800;
+    margin-bottom: 1rem;
+  }
+
+  .box-format-pdfcsv {
+    display: grid;
+    justify-content: start;
+    grid-template-columns: 3fr;
+    margin: 0;
+  }
+  .forms-container-financial-report button {
+    margin-top: 1rem;
+    width: 98.5%;
+    margin-left: 0.5rem;
+  }
+}
