@@ -8,7 +8,7 @@ import {
 } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import CreateSupplier from "./index";
-import { createSupplierForm } from "../../../Services/supplierService";
+import { createSupplierForm } from "../../../../Services/supplierService";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
 
@@ -21,7 +21,7 @@ async function fillUpRequiredFields() {
 
 describe("CreateSupplier", () => {
   beforeEach(() => {
-    vi.mock("../../../Services/supplierService");
+    vi.mock("../../../../Services/supplierService");
   });
 
   afterEach(() => {

@@ -3,6 +3,11 @@
     display: none;
   }
 
+  .double-box-supplier {
+    display: grid;
+    grid-template-columns: 2.5fr 1.5fr;
+  }
+
   .container {
     display: flex;
   }
@@ -83,9 +88,9 @@
     grid-template-columns: 1fr 1fr;
   }
 
-  .double-box {
+  .double-box-supplier {
     display: grid;
-    grid-template-columns: 2.3fr 0.7fr;
+    grid-template-columns: 2.5fr 1.5fr;
   }
 
   h1 {

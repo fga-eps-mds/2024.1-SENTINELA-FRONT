@@ -18,6 +18,18 @@ export default function SideBar({ fullHeight = true }) {
   const context = useContext(AuthContext);
   const { user } = useAuth();
 
+  const handleItemClick = (user) => {
+    if (user?.role?.name == "sindicalizado") {
+      navigate(`/filiados/${user.name}`, {
+        state: { membershipId: user._id },
+      });
+    } else {
+      navigate(`/usuarios/editar/${user.name}`, {
+        state: { userId: user._id },
+      });
+    }
+  };
+
   const buttons = [
     <SideButton
       hidden={user ? "flex" : "none"}
@@ -110,6 +122,10 @@ export default function SideBar({ fullHeight = true }) {
           <AiOutlineUser
             style={{
               fontSize: "50px",
+              cursor: "pointer",
+            }}
+            onClick={() => {
+              handleItemClick(user);
             }}
           />
           <h2
