@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import DataSelect from "../../../../Components/DataSelect";
 import FieldSelect from "../../../../Components/FieldSelect";
 import PrimaryButton from "../../../../Components/PrimaryButton";
+import SecondaryButton from "../../../../Components/SecondaryButton";
 import { getSupplierForm } from "../../../../Services/supplierService";
 import { generateFinancialReport } from "../../../../Services/pdfService";
 import { generateCSVReport } from "../../../../Services/csvService";
@@ -129,6 +130,18 @@ export default function GenerateFinancialReport() {
     } catch (error) {
       console.error("Erro ao gerar o relatório:", error);
     }
+  };
+
+  const clearFilters = () => {
+    setContaOrigem("");
+    setContaDestino("");
+    setNomeOrigem("");
+    setNomeDestino("");
+    setTipoDocumento("");
+    setSitPagamento("");
+    setDataInicio("");
+    setDataFinal("");
+    setFormArquivo("");
   };
 
   return (
@@ -283,6 +296,8 @@ export default function GenerateFinancialReport() {
             text="Gerar relatório"
             onClick={handleGenerateReport}
           />
+
+          <SecondaryButton text="Limpar Filtros" onClick={clearFilters} />
         </div>
         <Snackbar
           open={openError}
