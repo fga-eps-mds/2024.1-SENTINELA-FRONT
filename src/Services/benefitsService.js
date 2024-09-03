@@ -1,20 +1,5 @@
 import { APIBenefits, APIUsers } from "./BaseService";
 
-const storagedToken = localStorage.getItem("@App:token");
-const storagedUser = localStorage.getItem("@App:user");
-
-let token = null;
-let user = null;
-
-if (storagedToken) {
-  try {
-    token = JSON.parse(storagedToken);
-    user = JSON.parse(storagedUser);
-  } catch (error) {
-    console.error("O token armazenado não é um JSON válido:", error);
-  }
-}
-
 export async function userLogin(email, password) {
   try {
     const response = await APIUsers.post("login", {
@@ -30,16 +15,36 @@ export async function userLogin(email, password) {
 
 export const createBenefitsForm = async (benefitsData) => {
   try {
+    const storagedUser = localStorage.getItem("@App:user");
+    const storagedToken = localStorage.getItem("@App:token");
+    let user = null;
+    let token = null;
+
+    if (storagedUser) {
+      try {
+        user = JSON.parse(storagedUser);
+      } catch (error) {
+        console.error("Erro ao armazenar usuário: ", error);
+      }
+    }
+
+    if (storagedToken) {
+      try {
+        token = JSON.parse(storagedToken);
+      } catch (error) {
+        console.error("O token armazenado não é um JSON válido:", error);
+      }
+    }
+
+    if (!user || !user._id) {
+      throw new Error("Usuário não encontrado ou sem ID.");
+    }
+
     if (!token) {
       throw new Error("Token não encontrado");
     }
 
     await APIBenefits.post(`/benefits/create/`, benefitsData, {
-      params: {
-        userId: `${user._id}`,
-        moduleName: "benefits",
-        action: "create",
-      },
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -58,6 +63,16 @@ export const createBenefitsForm = async (benefitsData) => {
 
 export const getBenefitsForm = async () => {
   try {
+    const storagedToken = localStorage.getItem("@App:token");
+    let token = null;
+
+    if (storagedToken) {
+      try {
+        token = JSON.parse(storagedToken);
+      } catch (error) {
+        console.error("O token armazenado não é um JSON válido:", error);
+      }
+    }
     if (!token) {
       throw new Error("No token found");
     }
@@ -83,6 +98,19 @@ export const getBenefitsFormById = async (id) => {
 
 export const updateBenefitsFormById = async (id, benefitsData) => {
   try {
+    const storagedToken = localStorage.getItem("@App:token");
+    let token = null;
+
+    if (storagedToken) {
+      try {
+        token = JSON.parse(storagedToken);
+      } catch (error) {
+        console.error("O token armazenado não é um JSON válido:", error);
+      }
+    }
+    if (!token) {
+      throw new Error("No token found");
+    }
     const response = await APIBenefits.patch(`/benefits/update/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
