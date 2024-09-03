@@ -1,19 +1,18 @@
 import { useEffect, useState } from "react";
 import "./index.css";
-import "../../../index.css";
-import FieldText from "../../../Components/FieldText";
-import FieldSelect from "../../../Components/FieldSelect";
-import PrimaryButton from "../../../Components/PrimaryButton";
-import SecondaryButton from "../../../Components/SecondaryButton";
+import FieldText from "../../../../Components/FieldText";
+import FieldSelect from "../../../../Components/FieldSelect";
+import PrimaryButton from "../../../../Components/PrimaryButton";
+import SecondaryButton from "../../../../Components/SecondaryButton";
 import {
   getSupplierFormById,
   updateSupplierFormById,
   deleteSupplierFormById,
-} from "../../../Services/supplierService";
+} from "../../../../Services/supplierService";
 import { useLocation, useNavigate } from "react-router-dom";
-import Modal from "../../../Components/Modal";
+import Modal from "../../../../Components/Modal";
 import { Alert, Snackbar } from "@mui/material";
-import { isValidEmail } from "../../../Utils/validators";
+import { isValidEmail } from "../../../../Utils/validators";
 
 export default function UpdateSupplier() {
   const [nome, setNome] = useState("");

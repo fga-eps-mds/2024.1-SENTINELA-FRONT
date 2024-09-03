@@ -1,15 +1,15 @@
 import { useState } from "react";
 import "./index.css";
 import { useNavigate } from "react-router-dom";
-import FieldText from "../../../Components/FieldText";
-import FieldSelect from "../../../Components/FieldSelect";
-import PrimaryButton from "../../../Components/PrimaryButton";
-import SecondaryButton from "../../../Components/SecondaryButton";
-import Modal from "../../../Components/Modal";
-import { createSupplierForm } from "../../../Services/supplierService";
+import FieldText from "../../../../Components/FieldText";
+import FieldSelect from "../../../../Components/FieldSelect";
+import PrimaryButton from "../../../../Components/PrimaryButton";
+import SecondaryButton from "../../../../Components/SecondaryButton";
+import Modal from "../../../../Components/Modal";
+import { createSupplierForm } from "../../../../Services/supplierService";
 import { Snackbar } from "@mui/material";
 import Alert from "@mui/material/Alert";
-import { isValidEmail } from "../../../Utils/validators";
+import { isValidEmail } from "../../../../Utils/validators";
 
 export default function CreateSupplier() {
   const navigate = useNavigate();
