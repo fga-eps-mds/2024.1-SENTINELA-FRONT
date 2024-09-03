@@ -45,6 +45,22 @@ describe("Organ Service", () => {
     expect(result).toBe(201);
   });
 
+  it("should throw an error when API call fails", async () => {
+    APIUsers.post.mockRejectedValueOnce(new Error("API error"));
+
+    await expect(createOrgan("Financeiro", "Setor 1")).rejects.toThrow(
+      "API error"
+    );
+  });
+
+  it("should throw an error when user is not found", async () => {
+    localStorage.removeItem("@App:user");
+
+    await expect(createOrgan("Financeiro", "Setor 1")).rejects.toThrow(
+      "Usuário não encontrado ou sem ID."
+    );
+  });
+
   it("should list all organs", async () => {
     const mockOrgans = [
       { id: organId, orgao: "Financeiro", lotacao: "Setor 1" },
@@ -100,6 +116,46 @@ describe("Organ Service", () => {
       },
     });
     expect(result).toBe(200);
+  });
+
+  it("should throw an error when API call fails", async () => {
+    const errorResponse = { response: { data: { error: "Update error" } } };
+    APIUsers.patch.mockRejectedValueOnce(errorResponse);
+
+    const result = await updateOrgan("789", { orgao: "Financeiro" });
+    expect(result).toBe("Update error");
+  });
+
+  it("should throw an error when user is not found", async () => {
+    localStorage.removeItem("@App:user");
+
+    await expect(updateOrgan("789", { orgao: "Financeiro" })).rejects.toThrow(
+      "Usuário não encontrado ou sem ID."
+    );
+  });
+
+  it("should throw an error when API call fails", async () => {
+    const errorResponse = { response: { data: { error: "Delete error" } } };
+    APIUsers.delete.mockRejectedValueOnce(errorResponse);
+
+    const result = await deleteOrganById("789");
+    expect(result).toBe("Delete error");
+  });
+
+  it("should throw an error when user is not found", async () => {
+    localStorage.removeItem("@App:user");
+
+    await expect(deleteOrganById("789")).rejects.toThrow(
+      "Usuário não encontrado ou sem ID."
+    );
+  });
+
+  it("should return error message when API call fails", async () => {
+    const errorResponse = { response: { data: { error: "List error" } } };
+    APIUsers.get.mockRejectedValueOnce(errorResponse);
+
+    const result = await listOrgans();
+    expect(result).toBe("List error");
   });
 
   afterEach(() => {
