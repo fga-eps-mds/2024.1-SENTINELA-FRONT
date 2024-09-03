@@ -1,19 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./index.css";
-import { useNavigate } from "react-router-dom";
-import FieldText from "../../../Components/FieldText";
-import FieldSelect from "../../../Components/FieldSelect";
-import PrimaryButton from "../../../Components/PrimaryButton";
-import SecondaryButton from "../../../Components/SecondaryButton";
-import Modal from "../../../Components/Modal";
-import { createSupplierForm } from "../../../Services/supplierService";
-import { Snackbar } from "@mui/material";
-import Alert from "@mui/material/Alert";
-import { isValidEmail } from "../../../Utils/validators";
+import FieldText from "../../../../Components/FieldText";
+import FieldSelect from "../../../../Components/FieldSelect";
+import PrimaryButton from "../../../../Components/PrimaryButton";
+import SecondaryButton from "../../../../Components/SecondaryButton";
+import {
+  getSupplierFormById,
+  updateSupplierFormById,
+  deleteSupplierFormById,
+} from "../../../../Services/supplierService";
+import { useLocation, useNavigate } from "react-router-dom";
+import Modal from "../../../../Components/Modal";
+import { Alert, Snackbar } from "@mui/material";
+import { isValidEmail } from "../../../../Utils/validators";
 
-export default function CreateSupplier() {
-  const navigate = useNavigate();
-
+export default function UpdateSupplier() {
   const [nome, setNome] = useState("");
   const [tipoPessoa, setTipoPessoa] = useState("");
   const [cpfCnpj, setCpfCnpj] = useState("");
@@ -33,8 +34,15 @@ export default function CreateSupplier() {
   const [numeroBanco, setNumeroBanco] = useState("");
   const [dv, setDv] = useState("");
   const [chavePix, setChavePix] = useState("");
-  const [showModal, setShowModal] = useState(false);
+  const [showSaveModal, setShowSaveModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showDeletedModal, setShowDeletedModal] = useState(false);
   const [openError, setOpenError] = useState(false);
+
+  const navigate = useNavigate();
+
+  const { state } = useLocation();
+  const supplierId = state?.supplierId;
 
   const tipoPessoaList = ["Jurídica", "Física"];
   const statusFornecedorList = ["Ativo", "Inativo"];
@@ -100,11 +108,6 @@ export default function CreateSupplier() {
       .replace(/(\d{5})(\d{4})$/, "$1-$2");
   };
 
-  const mascaraNumericos = (numerico) => {
-    let res = numerico.replace(/\D/g, "");
-    return res;
-  };
-
   const mascaraTelefone = (telefone) => {
     let formattedTelefone = telefone.replace(/\D/g, "");
     if (formattedTelefone.length > 10) {
@@ -121,6 +124,11 @@ export default function CreateSupplier() {
       formattedCEP = formattedCEP.slice(0, 8);
     }
     return formattedCEP.replace(/(\d{5})(\d)/, "$1-$2");
+  };
+
+  const mascaraNumericos = (numerico) => {
+    let res = numerico.replace(/\D/g, "");
+    return res;
   };
 
   const handleChangeTipoPessoa = (event) => {
@@ -186,82 +194,129 @@ export default function CreateSupplier() {
     return { isValid: true };
   };
 
-  const handleCheck = async () => {
-    if (!nome) {
-      setOpenError(
-        "Certifique-se de que todos os campos obrigatórios estão preenchidos"
-      );
-      return;
-    }
-
+  const validateInputs = () => {
     const emailValidation = isValidEmail(email);
     if (!emailValidation.isValid) {
       setOpenError(emailValidation.message);
-      return;
-    }
-
-    const telefoneValidation = isValidTelefone(telefone);
-    if (!telefoneValidation.isValid) {
-      setOpenError(telefoneValidation.message);
-      return;
-    }
-
-    const cpfCnpjValidation = isValidCPForCNPJ(cpfCnpj);
-    if (!cpfCnpjValidation.isValid) {
-      setOpenError(cpfCnpjValidation.message);
-      return;
+      return false;
     }
 
     const celularValidation = isValidCelular(celular);
     if (!celularValidation.isValid) {
       setOpenError(celularValidation.message);
-      return;
+      return false;
     }
 
-    const supplierData = {
-      nome,
-      tipoPessoa,
-      cpfCnpj,
-      statusFornecedor,
-      naturezaTransacao,
-      email,
-      nomeContato,
-      celular,
-      telefone,
-      cep,
-      cidade,
-      uf_endereco,
-      logradouro,
-      complemento,
-      nomeBanco,
-      agencia,
-      numeroBanco,
-      dv,
-      chavePix,
+    const telefoneValidation = isValidTelefone(telefone);
+    if (!telefoneValidation.isValid) {
+      setOpenError(telefoneValidation.message);
+      return false;
+    }
+
+    const cpfCnpjValidation = isValidCPForCNPJ(cpfCnpj);
+    if (!cpfCnpjValidation.isValid) {
+      setOpenError(cpfCnpjValidation.message);
+      return false;
+    }
+
+    return true;
+  };
+
+  useEffect(() => {
+    const loadSupplier = async () => {
+      const supplier = await getSupplierFormById(supplierId);
+      setNome(supplier.nome);
+      setTipoPessoa(supplier.tipoPessoa);
+      setCpfCnpj(supplier.cpfCnpj);
+      setStatusFornecedor(supplier.statusFornecedor);
+      setNaturezaTransacao(supplier.naturezaTransacao);
+      setEmail(supplier.email);
+      setNomeContato(supplier.nomeContato);
+      setCelular(supplier.celular);
+      setTelefone(supplier.telefone);
+      setCep(supplier.cep);
+      setCidade(supplier.cidade);
+      setUfEndereco(supplier.uf_endereco);
+      setLogradouro(supplier.logradouro);
+      setComplemento(supplier.complemento);
+      setNomeBanco(supplier.nomeBanco);
+      setAgencia(supplier.agencia);
+      setNumeroBanco(supplier.numeroBanco);
+      setDv(supplier.dv);
+      setChavePix(supplier.chavePix);
     };
-    const erro = await createSupplierForm(supplierData);
-    if (!erro) {
-      setShowModal(true);
+    loadSupplier();
+  }, [supplierId]);
+
+  const handleUpdateSupplierButton = async () => {
+    if (validateInputs()) {
+      const supplierData = {
+        nome,
+        tipoPessoa,
+        cpfCnpj,
+        statusFornecedor,
+        naturezaTransacao,
+        email,
+        nomeContato,
+        celular,
+        telefone,
+        cep,
+        cidade,
+        uf_endereco,
+        logradouro,
+        complemento,
+        nomeBanco,
+        agencia,
+        numeroBanco,
+        dv,
+        chavePix,
+      };
+      try {
+        await updateSupplierFormById(supplierId, supplierData);
+        setShowSaveModal(true);
+      } catch (error) {
+        console.error(
+          `Erro ao atualizar beneficios com ID ${supplierId}`,
+          error
+        );
+      }
     }
   };
 
-  const handleCloseDialog = () => {
-    setShowModal(false);
+  const handleDeleteSupplierButton = async () => {
+    await deleteSupplierFormById(supplierId);
+    navigate("/fornecedores");
+  };
+
+  const handleSaveModal = () => {
+    setShowSaveModal(false);
+    navigate("/fornecedores");
+  };
+
+  const handleDeleteModal = () => {
+    setShowDeleteModal(true);
+  };
+
+  const handleDeleteCloseDialog = () => {
+    setShowDeleteModal(false);
+  };
+
+  const handleDeletedCloseDialog = () => {
+    setShowDeletedModal(false);
     navigate("/fornecedores");
   };
 
   return (
-    <div className="container-benefits">
+    <section className="container-benefits">
       <div className="forms-container-benefits">
-        <h1>Cadastro de fornecedor</h1>
+        <h1>Visualização de fornecedor</h1>
 
         <h3>Dados pessoais</h3>
-
         <FieldText
-          label="Nome/Razão Social *"
+          label="Nome/Razão social"
           value={nome}
           onChange={(e) => setNome(e.target.value)}
-          required
+          disabled={true}
         />
 
         <div className="section-form-benefits">
@@ -300,7 +355,6 @@ export default function CreateSupplier() {
             label="E-mail"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            name="email"
           />
 
           <FieldText
@@ -331,7 +385,7 @@ export default function CreateSupplier() {
             onChange={(e) => setCep(mascaraCEP(e.target.value))}
           />
 
-          <div className="double-box">
+          <div className="double-box-supplier">
             <FieldText
               label="Cidade"
               value={cidade}
@@ -386,15 +440,16 @@ export default function CreateSupplier() {
             onChange={(e) => setDv(mascaraNumericos(e.target.value))}
           />
         </div>
-
         <FieldText
           label="Chave Pix"
           value={chavePix}
           onChange={(e) => setChavePix(e.target.value)}
         />
 
-        <div id="envio">
-          <PrimaryButton text="CADASTRAR" onClick={handleCheck} />
+        <div className="double-buttons">
+          <SecondaryButton text="Deletar" onClick={handleDeleteModal} />
+
+          <PrimaryButton text="Salvar" onClick={handleUpdateSupplierButton} />
         </div>
 
         <Snackbar
@@ -407,19 +462,41 @@ export default function CreateSupplier() {
           </Alert>
         </Snackbar>
 
+        <Modal alertTitle="Alterações Salvas" show={showSaveModal}>
+          <SecondaryButton
+            key={"saveButtons"}
+            text="OK"
+            onClick={() => handleSaveModal()}
+          />
+        </Modal>
+
         <Modal
-          width="338px"
-          alertTitle="Cadastro de fornecedor concluído"
-          show={showModal}
+          alertTitle="Deseja deletar o fornecedor do sistema?"
+          show={showDeleteModal}
         >
           <SecondaryButton
+            key={"deleteButtons"}
+            text="EXCLUIR FORNECEDOR"
+            onClick={() => handleDeleteSupplierButton()}
+            width="338px"
+          />
+          <SecondaryButton
             key={"modalButtons"}
+            text="CANCELAR E MANTER O CADASTRO"
+            onClick={() => handleDeleteCloseDialog()}
+            width="338px"
+          />
+        </Modal>
+
+        <Modal alertTitle="Fornecedor Deletado" show={showDeletedModal}>
+          <SecondaryButton
+            key={"okButtons"}
             text="OK"
-            onClick={handleCloseDialog}
+            onClick={() => handleDeletedCloseDialog()}
             width="338px"
           />
         </Modal>
       </div>
-    </div>
+    </section>
   );
 }

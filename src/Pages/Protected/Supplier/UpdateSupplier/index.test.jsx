@@ -14,7 +14,7 @@ import userEvent from "@testing-library/user-event";
 import {
   deleteSupplierFormById,
   updateSupplierFormById,
-} from "../../../Services/supplierService";
+} from "../../../../Services/supplierService";
 
 vi.mock("../../../Utils/permission", () => ({
   usePermissions: () => ({
@@ -25,7 +25,7 @@ vi.mock("../../../Utils/permission", () => ({
 
 function mockValidators() {
   // mocka funções de validação do service
-  vi.mock("../../../Utils/validators", () => {
+  vi.mock("../../../../Utils/validators", () => {
     return {
       isValidEmail: (email) =>
         !email || email === "valid@email.com"
@@ -61,7 +61,7 @@ function mockValidators() {
 
 describe("SupplierUpdate", () => {
   beforeEach(() => {
-    vi.mock("../../../Services/supplierService", () => {
+    vi.mock("../../../../Services/supplierService", () => {
       return {
         updateSupplierFormById: vi.fn(),
         deleteSupplierFormById: vi.fn(),
