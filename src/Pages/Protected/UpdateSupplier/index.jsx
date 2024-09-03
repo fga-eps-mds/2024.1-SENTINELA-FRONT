@@ -14,6 +14,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Modal from "../../../Components/Modal";
 import { Alert, Snackbar } from "@mui/material";
 import { isValidEmail } from "../../../Utils/validators";
+import { checkAction, usePermissions } from "../../../Utils/permission";
 
 export default function UpdateSupplier() {
   const [nome, setNome] = useState("");
@@ -39,6 +40,10 @@ export default function UpdateSupplier() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showDeletedModal, setShowDeletedModal] = useState(false);
   const [openError, setOpenError] = useState(false);
+
+  const permissions = usePermissions();
+  const canUpdate = checkAction(permissions, "finance", "update");
+  const canDelete = checkAction(permissions, "finance", "delete");
 
   const navigate = useNavigate();
 
@@ -448,9 +453,13 @@ export default function UpdateSupplier() {
         />
 
         <div className="double-buttons">
-          <SecondaryButton text="Deletar" onClick={handleDeleteModal} />
+          {canDelete && (
+            <SecondaryButton text="Deletar" onClick={handleDeleteModal} />
+          )}
 
-          <PrimaryButton text="Salvar" onClick={handleUpdateSupplierButton} />
+          {canUpdate && (
+            <PrimaryButton text="Salvar" onClick={handleUpdateSupplierButton} />
+          )}
         </div>
 
         <Snackbar

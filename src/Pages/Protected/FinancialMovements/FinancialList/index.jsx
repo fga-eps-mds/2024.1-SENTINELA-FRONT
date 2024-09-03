@@ -10,6 +10,7 @@ import ListItemText from "@mui/material/ListItemText";
 import DataSelect from "../../../../Components/DataSelect";
 import FieldText from "../../../../Components/FieldText";
 import { APIBank } from "../../../../Services/BaseService";
+import { checkAction, usePermissions } from "../../../../Utils/permission";
 
 export default function FinancialList() {
   const [movements, setMovements] = useState([]);
@@ -17,6 +18,8 @@ export default function FinancialList() {
   const navigate = useNavigate();
   const [dataInicio, setDataInicio] = useState(null);
   const [dataFinal, setDataFinal] = useState(null);
+  const permissions = usePermissions();
+  const canCreate = checkAction(permissions, "finance", "create");
 
   const storagedUser = JSON.parse(localStorage.getItem("@App:user"));
 
@@ -76,7 +79,12 @@ export default function FinancialList() {
       <div className="forms-container">
         <div className="double-box">
           <h1>Lista de movimentações</h1>
-          <PrimaryButton text="Cadastrar movimentação" onClick={handleSubmit} />
+          {canCreate && (
+            <PrimaryButton
+              text="Cadastrar movimentação"
+              onClick={handleSubmit}
+            />
+          )}
         </div>
 
         <div className="search-box">

@@ -285,7 +285,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<FinancialUpdate />}
             moduleName="finance"
-            action="update"
+            action="read"
           />
         }
       />

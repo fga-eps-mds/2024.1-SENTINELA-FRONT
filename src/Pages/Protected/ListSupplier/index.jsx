@@ -9,11 +9,14 @@ import ListItemText from "@mui/material/ListItemText";
 import PrimaryButton from "../../../Components/PrimaryButton";
 import FieldText from "../../../Components/FieldText";
 import { getSupplierForm } from "../../../Services/supplierService";
+import { checkAction, usePermissions } from "../../../Utils/permission";
 
 export default function ListSupplier() {
   const [suppliers, setSuppliers] = useState([]);
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
+  const permissions = usePermissions();
+  const canCreate = checkAction(permissions, "finance", "create");
 
   useEffect(() => {
     const fetchSupplierForm = async () => {
@@ -46,7 +49,9 @@ export default function ListSupplier() {
       <div className="forms-container-list-benefits">
         <div className="double-box-list-benefits">
           <h1> Lista de fornecedores</h1>
-          <PrimaryButton text="Cadastrar fornecedor" onClick={handleSubmit} />
+          {canCreate && (
+            <PrimaryButton text="Cadastrar fornecedor" onClick={handleSubmit} />
+          )}
         </div>
         <div className="search-box-benefits">
           <FieldText
