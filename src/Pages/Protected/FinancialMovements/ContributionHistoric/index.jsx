@@ -63,11 +63,11 @@ export default function UserHistoric() {
   return (
     <section className="container">
       <div className="forms-container">
-        <div className="double-box">
+        <div className="title">
           <h1>Histórico de Contribuições</h1>
         </div>
 
-        <div className="search-box">
+        <div className="search">
           <FieldText
             label="Pesquisar movimentação"
             value={search}

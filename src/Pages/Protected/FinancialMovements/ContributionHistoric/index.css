@@ -17,6 +17,29 @@
     grid-template-columns: 1fr 1fr;
     margin: 0;
   }
+
+  .title{
+    text-align: center;
+    margin: 0 auto;
+    justify-content: center;  
+    align-items: center;
+    place-items: center;
+    }
+
+  .search{
+    display: grid;
+    width: 100%;
+    margin-top: 1rem;
+    position: relative;
+  }
+
+  .forms-container {
+    margin: 3.5rem;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
 }
 
 @media screen and (min-width: 1080px) {
@@ -26,10 +49,6 @@
     margin-top: 1rem;
     text-align: right !important;
     margin-right: 1rem !important;
-  }
-
-  .double-box h1 {
-    font-size: 34px;
   }
 
   .valor-gasto {
@@ -47,5 +66,20 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     margin: 0;
+  }
+
+  .title{
+    text-align: center;
+    margin: 0;
+    justify-content: center; 
+    align-items: center;
+    place-items: center;
+    }
+
+  .search {
+    display: grid;
+    width: 100%;
+    margin-top: 1rem;
+    position: relative;
   }
 }
