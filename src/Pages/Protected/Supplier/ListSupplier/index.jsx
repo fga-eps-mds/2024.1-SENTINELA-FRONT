@@ -6,9 +6,9 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
-import PrimaryButton from "../../../Components/PrimaryButton";
-import FieldText from "../../../Components/FieldText";
-import { getSupplierForm } from "../../../Services/supplierService";
+import PrimaryButton from "../../../../Components/PrimaryButton";
+import FieldText from "../../../../Components/FieldText";
+import { getSupplierForm } from "../../../../Services/supplierService";
 
 export default function ListSupplier() {
   const [suppliers, setSuppliers] = useState([]);

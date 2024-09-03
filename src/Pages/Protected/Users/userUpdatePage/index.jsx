@@ -49,6 +49,7 @@ export default function UserUpdatePage() {
     loadRoles();
   }, []);
 
+  //Puxa os dados ded usuário para atualizar a página
   useEffect(() => {
     const fetchUser = async () => {
       if (userId) {
