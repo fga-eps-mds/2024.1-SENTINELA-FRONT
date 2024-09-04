@@ -1,5 +1,13 @@
 // benefitsService.test.js
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import {
+  describe,
+  it,
+  expect,
+  vi,
+  beforeEach,
+  afterEach,
+  beforeAll,
+} from "vitest";
 import { APIBenefits, APIUsers } from "./BaseService";
 import {
   userLogin,
@@ -22,6 +30,10 @@ vi.mock("./BaseService", () => ({
     post: vi.fn(),
   },
 }));
+
+beforeAll(() => {
+  vi.spyOn(window, "alert").mockImplementation(() => {});
+});
 
 describe("Benefits Service", () => {
   const mockToken = "mockToken";
