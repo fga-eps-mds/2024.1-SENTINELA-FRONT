@@ -30,6 +30,7 @@ export async function userLogin(email, password) {
 
 export const getUsers = async () => {
   try {
+    const token = JSON.parse(localStorage.getItem("@App:token"));
     if (!token) {
       throw new Error("No token found");
     }
@@ -59,6 +60,13 @@ export const getUserById = async (id) => {
 
 export const createUser = async (userData) => {
   try {
+    const token = JSON.parse(localStorage.getItem("@App:token"));
+    const storagedUser = JSON.parse(localStorage.getItem("@App:user"));
+
+    if (!storagedUser || !storagedUser._id) {
+      throw new Error("Usuário não encontrado ou sem ID.");
+    }
+
     await APIUsers.post("/signup", {
       name: userData.name,
       email: userData.email,
@@ -66,7 +74,7 @@ export const createUser = async (userData) => {
       status: userData.status,
       role: userData.role,
       params: {
-        userId: `${user._id}`,
+        userId: `${storagedUser._id}`,
         moduleName: "users",
         action: "create",
       },
@@ -137,9 +145,15 @@ export const sendRecoveryPassword = async (email) => {
 
 export const deleteUserById = async (id) => {
   try {
+    const token = JSON.parse(localStorage.getItem("@App:token"));
+    const storagedUser = JSON.parse(localStorage.getItem("@App:user"));
+
+    if (!storagedUser || !storagedUser._id) {
+      throw new Error("Usuário não encontrado ou sem ID.");
+    }
     await APIUsers.delete(`/users/delete/${id}`, {
       params: {
-        userId: `${user._id}`,
+        userId: `${storagedUser._id}`,
         moduleName: "users",
         action: "delete",
       },
@@ -149,6 +163,7 @@ export const deleteUserById = async (id) => {
     });
   } catch (error) {
     console.error(`Erro ao deletar usuário com ID ${id}:`, error);
+    throw error;
   }
 };
 
