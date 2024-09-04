@@ -8,7 +8,13 @@ vi.mock("../../../../Utils/permission", () => ({
   usePermissions: () => ({
     somePermission: true,
   }),
-  checkAction: () => true,
+  checkAction: () => (permissions, entity, action) => action === "create",
+}));
+
+vi.mock("../../../../Context/auth", () => ({
+  useAuth: () => ({
+    user: { name: "Test User" }, // Mocking a user
+  }),
 }));
 
 describe("Benefits", () => {
@@ -54,6 +60,29 @@ describe("Benefits", () => {
     });
     waitFor(() => {
       expect(window.location.pathname).toBe("/beneficios/lista");
+    });
+  });
+
+  it("does not render the 'CADASTRO DE BENEFÍCIOS' button when canCreate is false", async () => {
+    vi.mock("../../../../Utils/permission", () => ({
+      usePermissions: () => ({}),
+      checkAction: () => false, // Simulate no permission to create
+    }));
+
+    render(
+      <Router>
+        <Benefits />
+      </Router>
+    );
+
+    await waitFor(() => {
+      // Verify the "CADASTRO DE BENEFÍCIOS" button is not rendered
+      expect(
+        screen.queryByText("CADASTRO DE BENEFÍCIOS")
+      ).not.toBeInTheDocument();
+
+      // "LISTA DE BENEFÍCIOS" should still be there
+      expect(screen.getByText("LISTA DE BENEFÍCIOS")).toBeInTheDocument();
     });
   });
 });
