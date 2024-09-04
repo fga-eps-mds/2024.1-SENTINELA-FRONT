@@ -123,6 +123,8 @@ export default function GenerateFinancialReport() {
 
       if (!reportGenerated) {
         console.log("Relatório gerado e baixado com sucesso!");
+        clearFilters(); // Limpa os campos após a geração do relatório
+        clearCheckboxes(); // Limpa os checkboxes após a geração do relatório
       } else {
         console.error("Erro ao gerar o relatório.");
         setOpenGenerateError(true);
@@ -130,6 +132,17 @@ export default function GenerateFinancialReport() {
     } catch (error) {
       console.error("Erro ao gerar o relatório:", error);
     }
+  };
+
+  const clearCheckboxes = () => {
+    setSelectedTipoDocumento([true]);
+    setSelectedValorBruto([true]);
+    setSelectedValorLiquido([true]);
+    setSelectedFormaPagamento([true]);
+    setSelectedDataVencimento([true]);
+    setSelectedDataPagamento([true]);
+    setSelectedSitPagamento([true]);
+    setSelectedDescricao([true]);
   };
 
   const clearFilters = () => {
@@ -142,6 +155,7 @@ export default function GenerateFinancialReport() {
     setDataInicio("");
     setDataFinal("");
     setFormArquivo("");
+    clearCheckboxes("");
   };
 
   return (
@@ -249,7 +263,7 @@ export default function GenerateFinancialReport() {
           />
         </div>
         <div className="checkbox-container">
-          <h3>Filtro de seleção</h3>
+          <h3>Informações no relatório</h3>
           <CheckboxRow
             label="Tipo de documento"
             state={selectedTipoDocumento}
