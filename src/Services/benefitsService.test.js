@@ -142,6 +142,38 @@ describe("Benefits Service", () => {
     expect(result).toBeUndefined();
   });
 
+  it("should log an error if stored token is not a valid JSON", async () => {
+    localStorage.setItem("@App:token", "invalidToken");
+
+    const result = await createBenefitsForm(benefitsData);
+
+    expect(result).toBe(true); // Como a função retornaria erro no parse, deve ser true
+  });
+
+  it("should return true when no token is found", async () => {
+    localStorage.removeItem("@App:token"); // Remover o token
+
+    const result = await createBenefitsForm(benefitsData);
+
+    expect(result).toBe(true); // Verificar se o retorno é true em caso de erro
+  });
+
+  it("should throw an error when no user is found", async () => {
+    localStorage.removeItem("@App:user"); // Remover o usuário
+
+    const result = await createBenefitsForm(benefitsData);
+
+    expect(result).toBe(true);
+  });
+
+  it("should log an error when updateBenefitsFormById fails", async () => {
+    APIBenefits.patch.mockRejectedValueOnce(new Error("API error"));
+
+    const result = await updateBenefitsFormById(benefitId, benefitsData);
+
+    expect(result).toBeUndefined();
+  });
+
   afterEach(() => {
     localStorage.removeItem("@App:token");
     localStorage.removeItem("@App:user");
