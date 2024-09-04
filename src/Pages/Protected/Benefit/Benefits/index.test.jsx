@@ -4,11 +4,13 @@ import { BrowserRouter as Router } from "react-router-dom";
 import Benefits from "./index";
 import "@testing-library/jest-dom";
 
+let canCreatePermission = true;
+
 vi.mock("../../../../Utils/permission", () => ({
   usePermissions: () => ({
     somePermission: true,
   }),
-  checkAction: () => (permissions, entity, action) => action === "create",
+  checkAction: () => canCreatePermission,
 }));
 
 vi.mock("../../../../Context/auth", () => ({
@@ -64,10 +66,8 @@ describe("Benefits", () => {
   });
 
   it("does not render the 'CADASTRO DE BENEFÍCIOS' button when canCreate is false", async () => {
-    vi.mock("../../../../Utils/permission", () => ({
-      usePermissions: () => ({}),
-      checkAction: () => false, // Simulate no permission to create
-    }));
+    // Ajustar a variável global para simular ausência de permissão de criação
+    canCreatePermission = false;
 
     render(
       <Router>
@@ -76,13 +76,29 @@ describe("Benefits", () => {
     );
 
     await waitFor(() => {
-      // Verify the "CADASTRO DE BENEFÍCIOS" button is not rendered
+      // Verificar que o botão CADASTRO DE BENEFÍCIOS não está presente
       expect(
         screen.queryByText("CADASTRO DE BENEFÍCIOS")
       ).not.toBeInTheDocument();
 
-      // "LISTA DE BENEFÍCIOS" should still be there
+      // O botão LISTA DE BENEFÍCIOS ainda deve estar presente
       expect(screen.getByText("LISTA DE BENEFÍCIOS")).toBeInTheDocument();
+    });
+  });
+
+  it("renders buttons correctly when user has create permission", async () => {
+    // Ajustar a variável global para simular permissão de criação
+    canCreatePermission = true;
+
+    render(
+      <Router>
+        <Benefits />
+      </Router>
+    );
+
+    await waitFor(() => {
+      // Verificar se o botão de CADASTRO DE BENEFÍCIOS está presente
+      expect(screen.getByText("CADASTRO DE BENEFÍCIOS")).toBeInTheDocument();
     });
   });
 });
