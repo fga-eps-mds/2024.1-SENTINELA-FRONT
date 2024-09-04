@@ -7,7 +7,7 @@
     position: relative;
   }
 
-  .double-box {
+  .financialList-double-box {
     display: contents;
     font-size: 20px;
     color: #332117 !important;
@@ -15,19 +15,17 @@
     white-space: nowrap;
   }
 
-  .double-box .MuiButton-root {
-    margin-left: 0.8rem;
-    margin-bottom: 0.25rem;
+  .financialList-double-box .MuiButton-root {
+    margin-left: 1.2rem;
+    margin-bottom: 0.5rem;
     width: 90%;
-    height: 30%;
   }
 
   .title-fm {
     text-align: center;
     margin: 0 auto;
     justify-content: center;
-    margin-top: 4rem;
-    margin-bottom: 2rem;
+    margin: 4rem 1rem;
   }
 
   .date-box {
@@ -36,21 +34,20 @@
     margin: 0;
   }
 
-  .forms-container {
-    margin: 3.5rem;
-    width: 80%;
-    display: flex;
+  .financialList-forms-container {
+    display: grid;
+    margin: 1vw;
     justify-content: center;
     flex-direction: column;
   }
 }
 
-@media screen and (min-width: 700px) {
+@media screen and (min-width: 1080px) {
   label {
     color: #332117 !important;
   }
 
-  .container {
+  .financialList-container {
     display: flex;
     align-items: flex-start;
   }
@@ -62,19 +59,25 @@
     position: relative;
   }
 
-  .double-box {
+  .financialList-forms-container {
+    margin: 3.5rem;
+    width: 80%;
+    display: inherit;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .financialList-double-box {
     display: grid;
     grid-template-columns: 2.3fr 2fr;
     font-size: 24px;
   }
 
-  .double-box button {
-    display: grid;
-    margin-top: 0px;
-    margin-bottom: 40px;
-    width: 334px;
+  .financialList-double-box button {
+    margin-left: 1rem;
+    margin-right: 10px;
+    width: auto;
     height: 44px;
-    position: relative;
   }
 
   .list-item {

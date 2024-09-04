@@ -29,8 +29,7 @@
     text-align: center;
     margin: 0 auto;
     justify-content: center;
-    margin-top: 4rem;
-    margin-bottom: 1rem;
+    margin: 4rem 1rem;
   }
   .small-container {
     font-size: 1rem;

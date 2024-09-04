@@ -72,9 +72,9 @@ export default function FinancialList() {
   });
 
   return (
-    <section className="container">
-      <div className="forms-container">
-        <div className="double-box">
+    <section className="financialList-container">
+      <div className="financialList-forms-container">
+        <div className="financialList-double-box">
           <h1 className="title-fm">Lista de movimentações</h1>
           <PrimaryButton text="Cadastrar movimentação" onClick={handleSubmit} />
         </div>
