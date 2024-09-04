@@ -154,12 +154,24 @@ describe("Benefits Service", () => {
     expect(result).toBeUndefined();
   });
 
-  it("should log an error if stored token is not a valid JSON", async () => {
-    localStorage.setItem("@App:token", "invalidToken");
+  it("should log an error when stored user is not a valid JSON", async () => {
+    // Colocando um valor inválido no localStorage para simular o erro de parse
+    localStorage.setItem("@App:user", "invalidUser");
+
+    const consoleErrorSpy = vi
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
 
     const result = await createBenefitsForm(benefitsData);
 
-    expect(result).toBe(true); // Como a função retornaria erro no parse, deve ser true
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      "Erro ao armazenar usuário: ",
+      expect.any(SyntaxError) // Verifica se foi lançada uma exceção de sintaxe do JSON
+    );
+
+    expect(result).toBe(true); // Como ocorreu erro, a função deve retornar true
+
+    consoleErrorSpy.mockRestore(); // Limpa o mock
   });
 
   it("should return true when no token is found", async () => {
@@ -184,6 +196,115 @@ describe("Benefits Service", () => {
     const result = await updateBenefitsFormById(benefitId, benefitsData);
 
     expect(result).toBeUndefined();
+  });
+
+  it("should log error response data when API call fails and error.response exists", async () => {
+    const mockErrorResponse = {
+      response: {
+        data: "Detalhes do erro da API",
+      },
+    };
+
+    APIBenefits.post.mockRejectedValueOnce(mockErrorResponse);
+
+    const consoleErrorSpy = vi
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+
+    const result = await createBenefitsForm(benefitsData);
+
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      "Erro ao cadastrar benefício:",
+      "Detalhes do erro da API" // Espera que os dados da resposta de erro sejam logados
+    );
+
+    expect(result).toBe(true); // A função retorna true ao encontrar um erro
+
+    consoleErrorSpy.mockRestore(); // Limpa o mock
+  });
+
+  it("should log error message when API call fails and error.response does not exist", async () => {
+    const mockErrorMessage = new Error("Erro de rede");
+
+    APIBenefits.post.mockRejectedValueOnce(mockErrorMessage);
+
+    const consoleErrorSpy = vi
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+
+    const result = await createBenefitsForm(benefitsData);
+
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      "Erro ao cadastrar benefício:",
+      "Erro de rede" // Espera que a mensagem de erro seja logada
+    );
+
+    expect(result).toBe(true); // A função retorna true ao encontrar um erro
+
+    consoleErrorSpy.mockRestore(); // Limpa o mock
+  });
+
+  it("should log an error when stored token is not a valid JSON", async () => {
+    // Colocando um valor inválido no localStorage para simular o erro de parse
+    localStorage.setItem("@App:token", "invalidToken");
+
+    const consoleErrorSpy = vi
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+
+    const result = await createBenefitsForm(benefitsData);
+
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      "O token armazenado não é um JSON válido:",
+      expect.any(SyntaxError) // Verifica se foi lançada uma exceção de sintaxe do JSON
+    );
+
+    expect(result).toBe(true); // Como ocorreu erro, a função deve retornar true
+
+    consoleErrorSpy.mockRestore(); // Limpa o mock
+  });
+
+  it("should log an error when fetching benefits fails", async () => {
+    // Simulando uma rejeição na chamada da API (exemplo de falha de rede ou erro no servidor)
+    APIBenefits.get.mockRejectedValueOnce(new Error("Erro de rede"));
+
+    const consoleErrorSpy = vi
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+
+    const result = await getBenefitsForm(); // Função que faz a busca dos benefícios
+
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      "Erro ao buscar benefício:",
+      expect.any(Error) // Verifica que um erro foi passado para o console.error
+    );
+
+    expect(result).toBeUndefined(); // Função retorna undefined em caso de erro
+
+    consoleErrorSpy.mockRestore(); // Limpa o mock
+  });
+
+  it("should log an error when fetching benefit by ID fails", async () => {
+    const benefitId = "123";
+    const mockError = new Error("Erro de rede");
+
+    // Simula a rejeição na chamada da API ao buscar o benefício por ID
+    APIBenefits.get.mockRejectedValueOnce(mockError);
+
+    const consoleErrorSpy = vi
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+
+    const result = await getBenefitsFormById(benefitId);
+
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      `Erro ao buscar benefício com ID ${benefitId}:`,
+      mockError // Verifica que o erro foi passado corretamente para o console.error
+    );
+
+    expect(result).toBeUndefined(); // Função retorna undefined em caso de erro
+
+    consoleErrorSpy.mockRestore(); // Limpa o mock
   });
 
   afterEach(() => {
