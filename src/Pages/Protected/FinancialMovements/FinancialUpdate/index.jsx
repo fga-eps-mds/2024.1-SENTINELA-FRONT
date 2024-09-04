@@ -274,10 +274,55 @@ export default function FinancialUpdate() {
             onChange={handleChangeNomeDestino}
             options={nomesDestino}
           />
-          <FieldText
+          <FieldSelect
             label="Tipo Documento"
             value={tipoDocumento}
             onChange={(e) => setTipoDocumento(e.target.value)}
+            options={[
+              "",
+              "AÇÃO JUDICIAL",
+              "ACORDO EXTRAJUDICIAL",
+              "ADVOGADO",
+              "ALUGUEL",
+              "APLICAÇÃO FINANCEIRA",
+              "ASSEMBLEIA",
+              "ASSESSORIA COMUNICAÇÃO",
+              "CARTÓRIO",
+              "CELULAR",
+              "COMBUSTÍVEL",
+              "CONDOMÍNO",
+              "CONTABILIDADE",
+              "CONVÊNIO",
+              "CUSTAS JUDICIAIS",
+              "DARF",
+              "DAR-GDF",
+              "DIVERSOS",
+              "DOAÇÕES",
+              "DPVAT",
+              "ENERGIA",
+              "ESTÁGIO",
+              "EVENTOS",
+              "EXPEDIENTE",
+              "FGTS",
+              "FIXO/INTERNET",
+              "FUNCIONÁRIO",
+              "GPS (INSS)",
+              "IMÓVEL - SEDE SINDPEN",
+              "INDENIZAÇÃO",
+              "IPTU",
+              "IPVA",
+              "LAZER",
+              "LICENCIAMENTO",
+              "MULTA",
+              "PAPELARIA",
+              "PATROCÍNIO",
+              "REEMBOLSO",
+              "RESCISÃO CONTRATO TRAB.",
+              "RESTAURANTE",
+              "SEGURO VIDA",
+              "TARIFAS BANCÁRIAS",
+              "PUBLICIDADE",
+            ]}
           />
           <FieldText
             label="CPF/CNPJ"
