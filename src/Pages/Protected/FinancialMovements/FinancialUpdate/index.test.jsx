@@ -102,7 +102,7 @@ describe("FinancialUpdate", () => {
       </Router>
     );
 
-    const valorBrutoInput = screen.getByLabelText("Valor Bruto *");
+    const valorBrutoInput = screen.getByLabelText("Valor bruto *");
     const acrescimoInput = screen.getByLabelText("Acréscimo");
     const descontoInput = screen.getByLabelText("Desconto");
 
@@ -126,7 +126,7 @@ describe("FinancialUpdate", () => {
     await userEvent.click(screen.getByText("Salvar"));
 
     expect(updateFinancialMovementsById).toHaveBeenCalledTimes(1);
-    expect(screen.getByText("Alterações Salvas")).toBeInTheDocument();
+    expect(screen.getByText("Alterações salvas")).toBeInTheDocument();
   });
 
   it("should render labels correctly", () => {

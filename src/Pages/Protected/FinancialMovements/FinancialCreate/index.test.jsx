@@ -18,13 +18,13 @@ async function fillUpRequiredFields() {
   );
   const nomeOrigemSelect = selects.find((s) => s.id === "select-Nome origem *");
   const nomeDestinoSelect = selects.find(
-    (s) => s.id === "select-Nome Destino *"
+    (s) => s.id === "select-Nome destino *"
   );
   const tipoDocumentoSelect = selects.find(
     (s) => s.id === "select-Tipo documento *"
   );
   const pagamentoSelect = selects.find(
-    (s) => s.id === "select-Forma de Pagamento *"
+    (s) => s.id === "select-Forma de pagamento *"
   );
   const dataVencimentoInput = screen.getByLabelText("Data de vencimento *");
   const dataPagamentoInput = screen.getByLabelText("Data de pagamento *");
@@ -47,7 +47,7 @@ async function fillUpRequiredFields() {
   await userEvent.click(pagamentoSelect);
   await userEvent.click(screen.getByRole("option", { name: "PIX" }));
 
-  await userEvent.type(screen.getByLabelText("Valor Bruto *"), "1000");
+  await userEvent.type(screen.getByLabelText("Valor bruto *"), "1000");
   await userEvent.type(
     screen.getByLabelText("Descrição"),
     "Descrição de exemplo"
