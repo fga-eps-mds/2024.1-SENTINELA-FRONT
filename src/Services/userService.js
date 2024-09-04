@@ -10,6 +10,7 @@ if (storagedToken) {
   try {
     token = JSON.parse(storagedToken);
     user = JSON.parse(storagedUser);
+    console.log(token, user);
   } catch (error) {
     console.error("O token armazenado não é um JSON válido:", error);
   }
@@ -47,6 +48,7 @@ export const getUsers = async () => {
 
 export const getUserById = async (id) => {
   try {
+    const token = JSON.parse(localStorage.getItem("@App:token"));
     const response = await APIUsers.get(`/users/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -107,6 +109,13 @@ export const loginUser = async (credentials) => {
 
 export const patchUserById = async (id, updatedUser) => {
   try {
+    const token = JSON.parse(localStorage.getItem("@App:token"));
+    const user = JSON.parse(localStorage.getItem("@App:user"));
+
+    if (!user || !user._id) {
+      throw new Error("Usuário não encontrado ou sem ID.");
+    }
+
     const response = await APIUsers.patch(
       `/users/patch/${id}`,
       { updatedUser },

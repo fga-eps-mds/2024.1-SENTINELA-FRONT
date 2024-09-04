@@ -1,6 +1,18 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { APIUsers } from "./BaseService";
-import { userLogin, getUsers, createUser, deleteUserById } from "./userService"; // ajuste os imports conforme necessário
+import {
+  getUserById,
+  userLogin,
+  getUsers,
+  createUser,
+  deleteUserById,
+  getRoles,
+  loginUser,
+  patchUserById,
+  sendRecoveryPassword,
+  changePasswordById,
+  verifyToken,
+} from "./userService"; // ajuste os imports conforme necessário
 
 // Mock das APIs
 vi.mock("./BaseService", () => ({
@@ -220,5 +232,401 @@ describe("User Service", () => {
     );
 
     consoleErrorSpy.mockRestore();
+  });
+
+  it("should parse token and user from localStorage when JSON is valid", () => {
+    // Mock do token e do usuário no localStorage
+    const validToken = "mockToken";
+    const validUser = { _id: "123", name: "Mock User" };
+
+    localStorage.setItem("@App:token", JSON.stringify(validToken)); // Armazena o token como JSON válido
+    localStorage.setItem("@App:user", JSON.stringify(validUser)); // Armazena o usuário como JSON válido
+
+    let token = null;
+    let user = null;
+
+    const storagedToken = localStorage.getItem("@App:token");
+    const storagedUser = localStorage.getItem("@App:user");
+
+    if (storagedToken) {
+      try {
+        token = JSON.parse(storagedToken); // Deve ser convertido corretamente
+        user = JSON.parse(storagedUser); // Deve ser convertido corretamente
+      } catch (error) {
+        // Não deve entrar aqui no caso de sucesso
+      }
+    }
+
+    expect(token).toBe(validToken); // Verifica que o token foi corretamente convertido
+    expect(user).toEqual(validUser); // Verifica que o usuário foi corretamente convertido
+  });
+
+  it("should log an error when token or user is not a valid JSON", () => {
+    // Armazena valores inválidos no localStorage para o token e usuário
+    localStorage.setItem("@App:token", "invalidToken"); // Não é JSON válido
+    localStorage.setItem("@App:user", "invalidUser"); // Não é JSON válido
+
+    const consoleErrorSpy = vi
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+
+    let token = null;
+    let user = null;
+
+    const storagedToken = localStorage.getItem("@App:token");
+    const storagedUser = localStorage.getItem("@App:user");
+
+    if (storagedToken) {
+      try {
+        token = JSON.parse(storagedToken); // Vai lançar um erro
+        user = JSON.parse(storagedUser); // Vai lançar um erro
+      } catch (error) {
+        console.error("O token armazenado não é um JSON válido:", error);
+      }
+    }
+
+    // Verifica que o console.error foi chamado com a mensagem correta
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      "O token armazenado não é um JSON válido:",
+      expect.any(SyntaxError)
+    );
+
+    expect(token).toBeNull(); // O token não deve ser atribuído
+    expect(user).toBeNull(); // O usuário não deve ser atribuído
+
+    consoleErrorSpy.mockRestore(); // Limpa o mock do console.error
+  });
+
+  it("should return user data when API call succeeds", async () => {
+    const mockUser = { id: "123", name: "John Doe" }; // Mock do usuário que a API retornará
+
+    // Simula a chamada bem-sucedida da API, retornando o mockUser como resposta
+    APIUsers.get.mockResolvedValueOnce({ data: mockUser });
+
+    // Chama a função com um ID de exemplo
+    const result = await getUserById("123");
+
+    // Verifica se a API foi chamada com o ID correto e o header esperado
+    expect(APIUsers.get).toHaveBeenCalledWith("/users/123", {
+      headers: { Authorization: `Bearer ${mockToken}` },
+    });
+
+    // Verifica se o resultado retornado é o dado correto do usuário
+    expect(result).toEqual(mockUser); // Aqui estamos verificando se o return response.data; está funcionando
+  });
+
+  it("should log an error when no user is found in localStorage on createUser", async () => {
+    // Simula a ausência de usuário no localStorage
+    localStorage.removeItem("@App:user");
+
+    const consoleErrorSpy = vi
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+
+    // Chama a função, mas não esperamos que ela rejeite
+    const result = await createUser({
+      name: "John Doe",
+      email: "john@example.com",
+      phone: "12345",
+      status: "active",
+      role: "admin",
+    });
+
+    // Verifica se o erro foi registrado no console
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      "Erro ao criar usuário:",
+      expect.any(Error)
+    );
+
+    // Verifica que a função não retorna nada (undefined)
+    expect(result).toBeUndefined();
+
+    consoleErrorSpy.mockRestore(); // Limpa o mock
+  });
+
+  it("should log an error when user in localStorage has no ID on createUser", async () => {
+    // Simula o usuário no localStorage sem o campo _id
+    const invalidUser = { name: "John Doe" };
+    localStorage.setItem("@App:user", JSON.stringify(invalidUser));
+
+    const consoleErrorSpy = vi
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+
+    // Chama a função, mas não esperamos que ela rejeite
+    const result = await createUser({
+      name: "John Doe",
+      email: "john@example.com",
+      phone: "12345",
+      status: "active",
+      role: "admin",
+    });
+
+    // Verifica se o erro foi registrado no console
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      "Erro ao criar usuário:",
+      expect.any(Error)
+    );
+
+    // Verifica que a função não retorna nada (undefined)
+    expect(result).toBeUndefined();
+
+    consoleErrorSpy.mockRestore(); // Limpa o mock
+  });
+
+  it("should return roles data when API call succeeds", async () => {
+    const mockRoles = [
+      { id: "1", name: "Admin" },
+      { id: "2", name: "User" },
+    ];
+
+    // Simula o comportamento da API com sucesso
+    APIUsers.get.mockResolvedValueOnce({ data: mockRoles });
+
+    const result = await getRoles();
+
+    // Verifica se a API foi chamada corretamente
+    expect(APIUsers.get).toHaveBeenCalledWith("/role");
+
+    // Verifica se os dados corretos foram retornados
+    expect(result).toEqual(mockRoles);
+  });
+
+  it("should log an error when API call fails", async () => {
+    const mockError = new Error("API error");
+
+    // Simula uma falha na chamada da API
+    APIUsers.get.mockRejectedValueOnce(mockError);
+
+    const consoleErrorSpy = vi
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+
+    const result = await getRoles();
+
+    // Verifica se o erro foi registrado no console
+    expect(consoleErrorSpy).toHaveBeenCalledWith(mockError);
+
+    // Verifica se a função retorna undefined em caso de erro
+    expect(result).toBeUndefined();
+
+    consoleErrorSpy.mockRestore(); // Limpa o mock
+  });
+
+  it("should return user data when API call succeeds", async () => {
+    const mockCredentials = {
+      email: "user@example.com",
+      password: "password123",
+    };
+    const mockResponseData = {
+      token: "mockToken",
+      user: { id: "1", name: "John Doe" },
+    };
+
+    // Simula a resposta bem-sucedida da API
+    APIUsers.post.mockResolvedValueOnce({ data: mockResponseData });
+
+    const result = await loginUser(mockCredentials);
+
+    // Verifica se a chamada da API foi feita corretamente com as credenciais
+    expect(APIUsers.post).toHaveBeenCalledWith("/login", mockCredentials);
+
+    // Verifica se o resultado retornado é o esperado
+    expect(result).toEqual(mockResponseData);
+  });
+
+  it("should log an error when API call fails", async () => {
+    const mockCredentials = {
+      email: "user@example.com",
+      password: "password123",
+    };
+    const mockError = new Error("Login failed");
+
+    // Simula uma falha na chamada da API
+    APIUsers.post.mockRejectedValueOnce(mockError);
+
+    const consoleErrorSpy = vi
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+
+    const result = await loginUser(mockCredentials);
+
+    // Verifica se o erro foi registrado no console
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      "Erro ao fazer login:",
+      mockError
+    );
+
+    // Verifica se a função retorna undefined em caso de erro
+    expect(result).toBeUndefined();
+
+    consoleErrorSpy.mockRestore(); // Limpa o mock
+  });
+
+  it("should update user data when API call succeeds", async () => {
+    const updatedUser = { name: "Jane Doe", email: "jane@example.com" };
+    const mockResponse = { data: { ...updatedUser, id: "123456" } };
+
+    // Simula a resposta bem-sucedida da API
+    APIUsers.patch.mockResolvedValueOnce(mockResponse);
+
+    const result = await patchUserById("123456", updatedUser);
+
+    // Verifica se a chamada da API foi feita corretamente
+    expect(APIUsers.patch).toHaveBeenCalledWith(
+      "/users/patch/123456",
+      { updatedUser },
+      {
+        params: {
+          userId: `${mockUser._id}`,
+          moduleName: "users",
+          action: "update",
+        },
+        headers: {
+          Authorization: `Bearer ${mockToken}`,
+        },
+      }
+    );
+
+    // Verifica se o resultado retornado é o esperado
+    expect(result).toEqual(mockResponse.data);
+  });
+
+  it("should log and throw an error when API call fails", async () => {
+    const updatedUser = { name: "Jane Doe", email: "jane@example.com" };
+    const mockError = new Error("API error");
+
+    // Simula uma falha na chamada da API
+    APIUsers.patch.mockRejectedValueOnce(mockError);
+
+    const consoleErrorSpy = vi
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+
+    // Verifica se a função lança o erro corretamente
+    await expect(patchUserById("123456", updatedUser)).rejects.toThrow(
+      "API error"
+    );
+
+    // Verifica se o erro foi registrado no console
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      "Erro ao atualizar usuário com ID 123456:",
+      mockError
+    );
+
+    consoleErrorSpy.mockRestore(); // Limpa o mock do console
+  });
+
+  it("should send recovery password email successfully", async () => {
+    const mockEmail = "user@example.com";
+    const mockResponse = { message: "Recovery email sent" };
+
+    // Simula a resposta bem-sucedida da API
+    APIUsers.post.mockResolvedValueOnce(mockResponse);
+
+    const result = await sendRecoveryPassword(mockEmail);
+
+    // Verifica se a chamada da API foi feita corretamente
+    expect(APIUsers.post).toHaveBeenCalledWith(`/users/recover-password`, {
+      data: { email: mockEmail },
+    });
+
+    // Verifica se a função retorna a resposta esperada
+    expect(result).toEqual(mockResponse);
+  });
+
+  it("should throw an error when user is not found in localStorage", async () => {
+    // Remove o usuário do localStorage para simular a ausência
+    localStorage.removeItem("@App:user");
+
+    await expect(deleteUserById("123")).rejects.toThrow(
+      "Usuário não encontrado ou sem ID."
+    );
+  });
+
+  it("should throw an error when user in localStorage has no ID", async () => {
+    // Simula o usuário no localStorage sem o campo _id
+    const invalidUser = { name: "John Doe" };
+    localStorage.setItem("@App:user", JSON.stringify(invalidUser));
+
+    await expect(deleteUserById("123")).rejects.toThrow(
+      "Usuário não encontrado ou sem ID."
+    );
+  });
+
+  it("should change the user's password successfully", async () => {
+    const mockId = "123456";
+    const mockPassword = "newPassword123";
+
+    // Simula uma resposta bem-sucedida da API
+    APIUsers.patch.mockResolvedValueOnce({ status: 200 });
+
+    // Chama a função e espera que a senha seja alterada
+    const result = await changePasswordById(mockPassword, mockId);
+
+    // Verifica se a chamada da API foi feita corretamente
+    expect(APIUsers.patch).toHaveBeenCalledWith(
+      `/users/change-password/${mockId}`,
+      {
+        newPassword: mockPassword,
+      }
+    );
+
+    // Verifica que a função não retorna nada em caso de sucesso
+    expect(result).toBeUndefined();
+  });
+
+  it("should return an error when API call fails", async () => {
+    const mockId = "123456";
+    const mockPassword = "newPassword123";
+    const mockError = new Error("API error");
+
+    // Simula uma falha na chamada da API
+    APIUsers.patch.mockRejectedValueOnce(mockError);
+
+    // Chama a função e espera que o erro seja retornado
+    const result = await changePasswordById(mockPassword, mockId);
+
+    // Verifica se o erro foi retornado corretamente
+    expect(result).toBe(mockError);
+  });
+
+  it("should return response data when token verification succeeds", async () => {
+    const mockToken = "validToken";
+    const mockResponse = { data: { valid: true } };
+
+    // Simula uma resposta bem-sucedida da API
+    APIUsers.post.mockResolvedValueOnce(mockResponse);
+
+    // Chama a função para verificar o token
+    const result = await verifyToken(mockToken);
+
+    // Verifica se a chamada da API foi feita corretamente
+    expect(APIUsers.post).toHaveBeenCalledWith(`/verify-token`, {
+      token: mockToken,
+    });
+
+    // Verifica se o resultado retornado é o esperado
+    expect(result).toEqual(mockResponse.data);
+  });
+
+  it("should log an error and throw when token verification fails", async () => {
+    const mockToken = "invalidToken";
+    const mockError = new Error("Token verification failed");
+
+    // Simula uma falha na chamada da API
+    APIUsers.post.mockRejectedValueOnce(mockError);
+
+    const consoleErrorSpy = vi
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+
+    // Verifica se a função lança o erro corretamente
+    await expect(verifyToken(mockToken)).rejects.toThrow(mockError);
+
+    // Verifica se o erro foi registrado no console
+    expect(consoleErrorSpy).toHaveBeenCalledWith("Token inválido", mockError);
+
+    consoleErrorSpy.mockRestore(); // Limpa o mock do console.error
   });
 });
