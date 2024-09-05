@@ -131,6 +131,45 @@ describe("MemberShip Component", () => {
     expect(motherNameInput.value).toBe("Mary Popins");
   });
 
+  it("should update the mother's name field correctly", () => {
+    render(
+      <BrowserRouter>
+        <MemberShip />
+      </BrowserRouter>
+    );
+
+    const motherNameInput = screen.getByLabelText(/Nome da Mãe/i);
+    fireEvent.change(motherNameInput, { target: { value: "Mary Popins" } });
+
+    expect(motherNameInput.value).toBe("Mary Popins");
+  });
+
+  it("should update the phone number field correctly", () => {
+    render(
+      <BrowserRouter>
+        <MemberShip />
+      </BrowserRouter>
+    );
+
+    const phoneInput = screen.getByLabelText(/Celular */i);
+    fireEvent.change(phoneInput, { target: { value: "(99) 99999-9999" } });
+
+    expect(phoneInput.value).toBe("(99) 99999-9999");
+  });
+
+  it("should update the cellular number field correctly", () => {
+    render(
+      <BrowserRouter>
+        <MemberShip />
+      </BrowserRouter>
+    );
+
+    const phoneInput = screen.getByLabelText(/Telefone/i);
+    fireEvent.change(phoneInput, { target: { value: "(99) 99999-9999" } });
+
+    expect(phoneInput.value).toBe("(99) 99999-9999");
+  });
+
   it("should show an error if required fields are empty", () => {
     render(
       <BrowserRouter>
