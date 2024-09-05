@@ -719,12 +719,7 @@ const MemberShip = () => {
                   <FieldText
                     label="Nome Completo *"
                     value={currentDependent.nomeCompletoDependente}
-                    onChange={(e) =>
-                      handleDependentChange(
-                        "nomeCompletoDependente",
-                        e.target.value
-                      )
-                    }
+                    onChange={(e) => handleDependentChange("nomeCompletoDependente", e.target.value)}
                   />
 
                   <DataSelect
@@ -746,12 +741,7 @@ const MemberShip = () => {
                   <FieldText
                     label="CPF *"
                     value={currentDependent.cpfDependente}
-                    onChange={(e) =>
-                      handleDependentChange(
-                        "cpfDependente",
-                        mascaraCPF(e.target.value)
-                      )
-                    }
+                    onChange={(e) => handleDependentChange("cpfDependente",mascaraCPF(e.target.value))}
                   />
 
                   <FieldText
