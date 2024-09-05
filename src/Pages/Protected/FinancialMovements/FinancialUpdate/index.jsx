@@ -7,7 +7,6 @@ import PrimaryButton from "../../../../Components/PrimaryButton";
 import SecondaryButton from "../../../../Components/SecondaryButton";
 import "./index.css";
 import DataSelect from "../../../../Components/DataSelect";
-import CheckField from "../../../../Components/Checkfield";
 import {
   getFinancialMovementsById,
   updateFinancialMovementsById,
@@ -31,7 +30,6 @@ export default function FinancialUpdate() {
   const [pagamento, setPagamento] = useState("");
   const [dataVencimento, setDataVencimento] = useState(null);
   const [dataPagamento, setDataPagamento] = useState(null);
-  const [baixada, setBaixada] = useState(false);
   const [descricao, setDescricao] = useState("");
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -62,7 +60,6 @@ export default function FinancialUpdate() {
           setPagamento(data.formadePagamento || "");
           setDataVencimento(dayjs(data.datadeVencimento || null));
           setDataPagamento(dayjs(data.datadePagamento || null));
-          setBaixada(data.baixada || false);
           setDescricao(data.descricao || "");
         } catch (error) {
           console.error("Erro ao buscar dados da movimentação:", error);
@@ -164,7 +161,6 @@ export default function FinancialUpdate() {
         formadePagamento: pagamento,
         datadeVencimento: dataVencimento,
         datadePagamento: dataPagamento,
-        baixada,
         descricao,
       };
       await updateFinancialMovementsById(movementId, updatedData);
@@ -229,11 +225,6 @@ export default function FinancialUpdate() {
   const handleChangePagamento = (event) => {
     console.log("Forma de Pagamento:", event.target.value);
     setPagamento(event.target.value);
-  };
-
-  const handleChangeBaixada = (newChecked) => {
-    console.log("Baixada:", newChecked);
-    setBaixada(newChecked);
   };
 
   const handleChangeDescricao = (event) => {
@@ -351,8 +342,18 @@ export default function FinancialUpdate() {
             value={desconto}
             onChange={(e) => setDesconto(handleCurrencyInput(e.target.value))}
           />
+          <DataSelect
+            label="Data de vencimento *"
+            value={dataVencimento}
+            onChange={(newValue) => setDataVencimento(newValue)}
+          />
+          <DataSelect
+            label="Data de pagamento"
+            value={dataPagamento}
+            onChange={(newValue) => setDataPagamento(newValue)}
+          />
           <FieldSelect
-            label="Forma de Pagamento *"
+            label="Forma de Pagamento"
             value={pagamento}
             onChange={handleChangePagamento}
             options={[
@@ -365,28 +366,13 @@ export default function FinancialUpdate() {
               "Depósito",
             ]}
           />
-          <DataSelect
-            label="Data de vencimento *"
-            value={dataVencimento}
-            onChange={(newValue) => setDataVencimento(newValue)}
-          />
-          <DataSelect
-            label="Data de pagamento *"
-            value={dataPagamento}
-            onChange={(newValue) => setDataPagamento(newValue)}
-          />
-          <CheckField
-            label="Baixada"
-            value={baixada}
-            onChange={handleChangeBaixada}
+          <FieldText
+            label="Descrição *"
+            value={descricao}
+            onChange={handleChangeDescricao}
           />
         </div>
 
-        <FieldText
-          label="Descrição *"
-          value={descricao}
-          onChange={handleChangeDescricao}
-        />
         <div>
           <small>
             {descricao.length}/{maxDescricaoLength} caracteres
