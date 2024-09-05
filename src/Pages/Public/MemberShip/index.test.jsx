@@ -92,6 +92,45 @@ describe("MemberShip Component", () => {
     expect(issuingBodyInput.value).toBe("SSP");
   });
 
+  it("should update the CPF field correctly", () => {
+    render(
+      <BrowserRouter>
+        <MemberShip />
+      </BrowserRouter>
+    );
+
+    const cpfInput = screen.getByLabelText(/CPF */i);
+    fireEvent.change(cpfInput, { target: { value: "999.999.999-99" } });
+
+    expect(cpfInput.value).toBe("999.999.999-99");
+  });
+
+  it("should update the father's name field correctly", () => {
+    render(
+      <BrowserRouter>
+        <MemberShip />
+      </BrowserRouter>
+    );
+
+    const fatherNameInput = screen.getByLabelText(/Nome do Pai/i);
+    fireEvent.change(fatherNameInput, { target: { value: "Jhon Popins" } });
+
+    expect(fatherNameInput.value).toBe("Jhon Popins");
+  });
+
+  it("should update the mother's name field correctly", () => {
+    render(
+      <BrowserRouter>
+        <MemberShip />
+      </BrowserRouter>
+    );
+
+    const motherNameInput = screen.getByLabelText(/Nome da Mãe/i);
+    fireEvent.change(motherNameInput, { target: { value: "Mary Popins" } });
+
+    expect(motherNameInput.value).toBe("Mary Popins");
+  });
+
   it("should show an error if required fields are empty", () => {
     render(
       <BrowserRouter>
