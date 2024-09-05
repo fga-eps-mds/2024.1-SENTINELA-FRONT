@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./index.css";
 import "../../../index.css";
 import dayjs from "dayjs";
@@ -13,6 +13,7 @@ import Alert from "@mui/material/Alert";
 import SecondaryButton from "../../../Components/SecondaryButton";
 import Modal from "../../../Components/Modal";
 import { useNavigate } from "react-router-dom";
+import { listOrgans } from "../../../Services/organService";
 
 const MemberShip = () => {
   const [email, setEmail] = useState("");
@@ -54,6 +55,8 @@ const MemberShip = () => {
   const [errors, setErrors] = useState({});
   const [touchedFields, setTouchedFields] = useState({});
   const [unfilledDependent, setUnfilledDependent] = useState(false);
+  const [orgaosList, setOrgaosList] = useState([]);
+  const [lotacaoList, setLotacaoList] = useState([]);
 
   const navigate = useNavigate();
   // Function to validate a field
@@ -297,6 +300,41 @@ const MemberShip = () => {
 
     return emailRegex.test(email);
   };
+
+  //FUNÇÕES UTILIZADAS
+  useEffect(() => {
+    const getOrgaos = async () => {
+      try {
+        const orgaos = await listOrgans(); // Presumindo que listOrgans faz a requisição ao backend
+
+        if (Array.isArray(orgaos)) {
+          // Extraindo valores únicos de órgãos
+          const uniqueOrgaos = [...new Set(orgaos.map((orgao) => orgao.orgao))];
+
+          // Extraindo valores únicos de lotações
+          const uniqueLotacoes = [
+            ...new Set(
+              orgaos.flatMap((orgao) =>
+                orgao.lotacao.map((lotacao) => lotacao.nomeLotacao)
+              )
+            ),
+          ];
+
+          setOrgaosList(uniqueOrgaos);
+          setLotacaoList(uniqueLotacoes);
+
+          console.log("Lista de Órgãos:", uniqueOrgaos);
+          console.log("Lista de Lotações:", uniqueLotacoes);
+        } else {
+          console.error("Os dados recebidos não são um array.");
+        }
+      } catch (error) {
+        console.error("Erro ao buscar órgãos:", error);
+      }
+    };
+
+    getOrgaos();
+  }, []);
 
   const handleSubmit = () => {
     const erros = {};
