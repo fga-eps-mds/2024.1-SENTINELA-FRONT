@@ -10,6 +10,7 @@ import { AiOutlineUser } from "react-icons/ai";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import AuthContext, { useAuth } from "../../Context/auth";
+import { usePermissions, checkAction } from "../../Utils/permission";
 
 export default function SideBar({ fullHeight = true }) {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
@@ -17,6 +18,7 @@ export default function SideBar({ fullHeight = true }) {
   const navigate = useNavigate();
   const context = useContext(AuthContext);
   const { user } = useAuth();
+  const permissions = usePermissions();
 
   const handleItemClick = (user) => {
     if (user?.role?.name == "sindicalizado") {
@@ -40,7 +42,7 @@ export default function SideBar({ fullHeight = true }) {
       }}
     />,
     <SideButton
-      hidden={user ? "flex" : "none"}
+      hidden={checkAction(permissions, "users", "read") ? "flex" : "none"}
       key="filiacao"
       text="CADASTROS"
       onClick={() => {
@@ -48,7 +50,7 @@ export default function SideBar({ fullHeight = true }) {
       }}
     />,
     <SideButton
-      hidden={user ? "flex" : "none"}
+      hidden={checkAction(permissions, "finance", "read") ? "flex" : "none"}
       key="financeiro"
       text="FINANCEIRO"
       onClick={() => {
@@ -56,7 +58,7 @@ export default function SideBar({ fullHeight = true }) {
       }}
     />,
     <SideButton
-      hidden={user ? "flex" : "none"}
+      hidden={checkAction(permissions, "benefits", "read") ? "flex" : "none"}
       key="beneficios"
       text="BENEFÍCIOS"
       onClick={() => {
