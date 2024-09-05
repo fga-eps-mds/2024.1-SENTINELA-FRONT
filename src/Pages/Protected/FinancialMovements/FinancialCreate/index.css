@@ -52,6 +52,11 @@
     grid-template-columns: 2.5fr;
     margin: 0;
   }
+  .forms-container button {
+    width: 98%;
+    align-self: center;
+    margin-bottom: 2rem;
+  }
 }
 
 @media screen and (min-width: 700px) {
@@ -80,6 +85,7 @@
   .forms-container button {
     width: 98%;
     align-self: center;
+    margin-bottom: 2rem;
   }
 
   .double-box-fin {
