@@ -349,7 +349,7 @@ const MemberShip = () => {
     if (!celular) erros.celular = 1;
     if (!orgao) erros.orgao = 1;
     if (!lotacao) erros.lotacao = 1;
-    
+
     //CAMPOS OPCIONAIS
     //if (!estadoCivil) erros.estadoCivil = 1;
     //if (!tipoSanguineo) erros.tipoSanguineo = 1;
@@ -372,7 +372,7 @@ const MemberShip = () => {
     //if (!postoDeTrabalho) erros.postoDeTrabalho = 1;
     //if (!orgaoExpedidor) erros.orgaoExpedidor = 1;
     //if (!religiao) erros.religiao = 1;
-    
+
     //VALIDAÇÕES
     if (isValidEmail(email) === false) erros.email = 1;
     if (cpf.length < 14) erros.cpf = 1;
