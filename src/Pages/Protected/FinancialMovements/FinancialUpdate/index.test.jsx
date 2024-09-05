@@ -145,7 +145,7 @@ describe("FinancialUpdate", () => {
       </Router>
     );
 
-    const descricaoInput = screen.getByLabelText("Descrição *");
+    const descricaoInput = screen.getByLabelText("Descrição");
 
     await userEvent.clear(descricaoInput);
     await userEvent.type(descricaoInput, "Descrição alterada");

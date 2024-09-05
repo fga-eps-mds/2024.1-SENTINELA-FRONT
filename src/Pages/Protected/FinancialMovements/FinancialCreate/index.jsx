@@ -338,6 +338,8 @@ export default function FinancialCreate() {
             value={dataVencimento}
             onChange={(newValue) => setDataVencimento(newValue)}
           />
+        </div>
+        <div className="descricao-fin">
           <FieldSelect
             label="Forma de Pagamento *"
             value={pagamento}
@@ -352,6 +354,8 @@ export default function FinancialCreate() {
               "Depósito",
             ]}
           />
+        </div>
+        <div className="descricao-fin">
           <FieldText
             label="Descrição"
             onChange={handleChangeDescricao}

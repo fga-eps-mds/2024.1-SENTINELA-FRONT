@@ -6,7 +6,7 @@ import { createFinancialMovements } from "../../../../Services/FinancialMovement
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
 
-// Função auxiliar para preencher campos obrigatórios
+// Função auxiliar para preencher campos obrigatórioss
 async function fillUpRequiredFields() {
   const selects = screen.getAllByRole("combobox");
 

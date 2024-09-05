@@ -352,6 +352,8 @@ export default function FinancialUpdate() {
             value={dataPagamento}
             onChange={(newValue) => setDataPagamento(newValue)}
           />
+        </div>
+        <div className="descricao-fin">
           <FieldSelect
             label="Forma de Pagamento"
             value={pagamento}
@@ -366,8 +368,10 @@ export default function FinancialUpdate() {
               "Depósito",
             ]}
           />
+        </div>
+        <div className="descricao-fin">
           <FieldText
-            label="Descrição *"
+            label="Descrição"
             value={descricao}
             onChange={handleChangeDescricao}
           />
