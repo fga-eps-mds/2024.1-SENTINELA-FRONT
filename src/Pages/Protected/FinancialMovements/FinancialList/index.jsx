@@ -62,10 +62,14 @@ export default function FinancialList() {
       .toLowerCase()
       .includes(search.toLowerCase());
 
-    const movementDate = new Date(movement.datadePagamento);
+    const movementDate = new Date(movement.datadeVencimento);
+    const startDate = dataInicio ? new Date(dataInicio) : null;
+    const finalDate = dataFinal ? new Date(dataFinal) : null;
+
     const isDateInRange =
-      (!dataInicio || movementDate >= new Date(dataInicio)) &&
-      (!dataInicio || movementDate <= new Date(dataFinal));
+      (!startDate || movementDate >= startDate) &&
+      (!finalDate || movementDate <= finalDate);
+
     console.log(dataInicio, dataFinal, movementDate, isDateInRange);
 
     return isDocumentTypeMatch && isDateInRange;
@@ -120,8 +124,8 @@ export default function FinancialList() {
                 >
                   <ListItemText
                     primary={movement.tipoDocumento}
-                    secondary={`Data de pagamento: ${new Date(
-                      movement.datadePagamento
+                    secondary={`Data de vencimento: ${new Date(
+                      movement.datadeVencimento
                     ).toLocaleDateString()}`}
                   />
                   <ListItemText secondary={movement.descricao} />

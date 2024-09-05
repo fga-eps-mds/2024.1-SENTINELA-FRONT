@@ -1,6 +1,6 @@
 @media screen and (max-width: 1080px) {
   .container {
-    display: flex;
+    display: grid;
     flex-direction: row;
   }
 
@@ -26,13 +26,13 @@
     grid-template-columns: 0.5fr 0.3fr;
   }
 
-  h1 {
+  .forms-container h1 {
     font-weight: 800;
     margin-bottom: 3rem;
     color: #332117 !important;
   }
 
-  h3 {
+  .forms-container h3 {
     font-weight: 400;
     margin-left: 1rem;
     margin-top: 3rem;
@@ -42,11 +42,11 @@
   #addDependentBttn {
     cursor: pointer;
   }
-}
-
-@media screen and (max-width: 500px) {
-  .container {
+  .descricao-fin {
     display: grid;
+    justify-content: start;
+    grid-template-columns: 2.5fr;
+    margin: 0;
   }
 }
 
@@ -89,13 +89,13 @@
     color: #332117 !important;
   }
 
-  h1 {
+  .forms-container h1 {
     font-weight: 800;
     margin-bottom: 3rem;
     color: #332117 !important;
   }
 
-  h3 {
+  .forms-container h3 {
     font-weight: 400;
     margin-left: 1rem;
     margin-top: 3rem;
@@ -109,5 +109,11 @@
   }
   #addDependentBttn {
     cursor: pointer;
+  }
+  .descricao-fin {
+    display: grid;
+    justify-content: start;
+    grid-template-columns: 2.5fr;
+    margin: 0;
   }
 }

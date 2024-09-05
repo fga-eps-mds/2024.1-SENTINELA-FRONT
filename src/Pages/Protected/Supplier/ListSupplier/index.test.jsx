@@ -2,11 +2,11 @@ import { describe, it, expect, beforeEach, vi, afterEach } from "vitest";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import ListSupplier from ".";
-import { getSupplierForm } from "../../../Services/supplierService";
+import { getSupplierForm } from "../../../../Services/supplierService";
 
 import "@testing-library/jest-dom";
 
-vi.mock("../../../Services/supplierService");
+vi.mock("../../../../Services/supplierService");
 
 describe("ListSupplier", () => {
   beforeEach(() => {
