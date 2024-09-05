@@ -48,10 +48,15 @@ export default function UserHistoric() {
       .toLowerCase()
       .includes(search.toLowerCase());
 
-    const movementDate = new Date(movement.datadePagamento);
+    const movementDate = new Date(movement.datadeVencimento);
+    const startDate = dataInicio ? new Date(dataInicio) : null;
+    const finalDate = dataFinal ? new Date(dataFinal) : null;
+
     const isDateInRange =
-      (!dataInicio || movementDate >= new Date(dataInicio)) &&
-      (!dataFinal || movementDate <= new Date(dataFinal));
+      (!startDate || movementDate >= startDate) &&
+      (!finalDate || movementDate <= finalDate);
+
+    console.log(dataInicio, dataFinal, movementDate, isDateInRange);
 
     return isDocumentTypeMatch && isDateInRange;
   });
@@ -117,9 +122,9 @@ export default function UserHistoric() {
                     className="pag-sind"
                     secondary={
                       <>
-                        Data de pagamento: <br />
+                        Data de vencimento: <br />
                         {new Date(
-                          movement.datadePagamento
+                          movement.datadeVencimento
                         ).toLocaleDateString()}
                       </>
                     }
