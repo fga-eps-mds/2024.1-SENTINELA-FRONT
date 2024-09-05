@@ -27,7 +27,7 @@ async function fillUpRequiredFields() {
     (s) => s.id === "select-Forma de Pagamento *"
   );
   const dataVencimentoInput = screen.getByLabelText("Data de vencimento *");
-  const dataPagamentoInput = screen.getByLabelText("Data de pagamento *");
+  const dataPagamentoInput = screen.getByLabelText("Data de pagamento");
 
   await userEvent.click(contaOrigemSelect);
   await userEvent.click(screen.getByRole("option", { name: "Fornecedor" }));
