@@ -29,6 +29,17 @@ describe("MemberShip Component", () => {
     expect(screen.getByText(/Formulário de Filiação/i)).toBeInTheDocument();
   });
 
+  it("should call the service: listOrgans", () => {
+    render(
+      <BrowserRouter>
+        <MemberShip />
+      </BrowserRouter>
+    );
+
+    expect(screen.getByText(/Formulário de Filiação/i)).toBeInTheDocument();
+    expect(listOrgans).toHaveBeenCalled();
+  });
+
   it("should update the name field correctly", () => {
     render(
       <BrowserRouter>
@@ -42,15 +53,43 @@ describe("MemberShip Component", () => {
     expect(nameInput.value).toBe("John Doe");
   });
 
-  it("should call the service: listOrgans", () => {
+  it("should update the religion field correctly", () => {
     render(
       <BrowserRouter>
         <MemberShip />
       </BrowserRouter>
     );
 
-    expect(screen.getByText(/Formulário de Filiação/i)).toBeInTheDocument();
-    expect(listOrgans).toHaveBeenCalled();
+    const religionInput = screen.getByLabelText(/Religião/i);
+    fireEvent.change(religionInput, { target: { value: "Umbanda" } });
+
+    expect(religionInput.value).toBe("Umbanda");
+  });
+
+  it("should update the city field correctly", () => {
+    render(
+      <BrowserRouter>
+        <MemberShip />
+      </BrowserRouter>
+    );
+
+    const cityInput = screen.getByLabelText(/Naturalidade/i);
+    fireEvent.change(cityInput, { target: { value: "Brasília" } });
+
+    expect(cityInput.value).toBe("Brasília");
+  });
+
+  it("should update the issuing body field correctly", () => {
+    render(
+      <BrowserRouter>
+        <MemberShip />
+      </BrowserRouter>
+    );
+
+    const issuingBodyInput = screen.getByLabelText(/Órgão Expeditor/i);
+    fireEvent.change(issuingBodyInput, { target: { value: "SSP" } });
+
+    expect(issuingBodyInput.value).toBe("SSP");
   });
 
   it("should show an error if required fields are empty", () => {
