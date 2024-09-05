@@ -3,10 +3,19 @@
     display: contents;
     grid-template-columns: 0.5fr 0.5fr;
   }
+  .forms-container-user {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 2rem; /* Adiciona uma margem de 2rem na parte de baixo */
+  }
 
   .double-buttons-user {
-    display: contents;
-    grid-template-columns: 0.5fr 0.3fr;
+    display: flex; /* Use flex para organizar os botões */
+    flex-direction: column; /* Alinha os botões verticalmente */
+    gap: 1rem; /* Adiciona espaçamento vertical entre os botões */
+    margin-bottom: 3rem;
+    padding: 1rem; /* Adiciona preenchimento interno para visualizar melhor a div */
   }
 
   .contribution-btn {
@@ -38,6 +47,7 @@
   .double-buttons-user button {
     flex: 1; /* Faz com que os botões ocupem o espaço disponível igualmente */
     height: 40px;
+    margin-bottom: 3rem;
   }
 
   .contribution-btn {
