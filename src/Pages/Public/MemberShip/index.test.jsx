@@ -55,7 +55,9 @@ describe("MemberShip Component", () => {
     fireEvent.click(screen.getByText(/ENVIAR SOLICITAÇÃO/i));
 
     expect(
-      screen.getByText(/Os seguintes campos estão faltando: /i)
+      screen.getByText(
+        /Certifique-se de que todos os campos obrigatórios estão preenchidos/i
+      )
     ).toBeInTheDocument();
   });
 
