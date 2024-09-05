@@ -10,6 +10,7 @@ export const generateCSVReport = async ({
   formArquivo,
   dataInicio,
   dataFinal,
+  includeFields, // adicionar includeFields aqui
 }) => {
   const reportData = {
     contaOrigem,
@@ -21,6 +22,7 @@ export const generateCSVReport = async ({
     formArquivo,
     dataInicio,
     dataFinal,
+    includeFields, // adicionar includeFields aqui
   };
   const fileName = "financial_report.csv";
   return generateReport(reportData, "csv", fileName);

@@ -42,9 +42,10 @@ export const generateReport = async (reportData, fileType, fileName) => {
     console.log(`Relatório ${fileType.toUpperCase()} gerado com sucesso`);
     return false;
   } catch (error) {
+    console.error("Erro completo:", error);
     const errorMessage = error?.response?.data?.text
       ? await error.response.data.text()
-      : "Unknown error";
+      : error.message || "Unknown error";
     console.error(
       `Erro ao gerar relatório ${fileType.toUpperCase()}:`,
       errorMessage

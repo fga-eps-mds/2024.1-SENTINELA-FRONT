@@ -6,7 +6,6 @@ import PrimaryButton from "../../../../Components/PrimaryButton";
 import SecondaryButton from "../../../../Components/SecondaryButton";
 import "./index.css";
 import DataSelect from "../../../../Components/DataSelect";
-import CheckField from "../../../../Components/Checkfield";
 import { createFinancialMovements } from "../../../../Services/FinancialMovementsService";
 import { getUsers } from "../../../../Services/userService";
 import { getSupplierForm } from "../../../../Services/supplierService";
@@ -26,7 +25,6 @@ export default function FinancialCreate() {
   const [pagamento, setPagamento] = useState("");
   const [dataVencimento, setDataVencimento] = useState(null);
   const [dataPagamento, setDataPagamento] = useState(null);
-  const [baixada, setBaixada] = useState(false);
   const [descricao, setDescricao] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [nomesOrigem, setNomesOrigem] = useState([]);
@@ -160,11 +158,6 @@ export default function FinancialCreate() {
     setPagamento(event.target.value);
   };
 
-  const handleChangeBaixada = (newChecked) => {
-    console.log("Baixada:", newChecked);
-    setBaixada(newChecked);
-  };
-
   const handleChangeDescricao = (event) => {
     const { value } = event.target;
     if (value.length <= maxDescricaoLength) {
@@ -191,10 +184,9 @@ export default function FinancialCreate() {
       valorLiquido: parseFloat(valorLiquido),
       acrescimo: parseFloat(acrescimo),
       desconto: parseFloat(desconto),
-      formadePagamento: pagamento,
+      pagamento,
       datadeVencimento: dataVencimento,
       datadePagamento: dataPagamento,
-      baixada,
       descricao,
     };
 
@@ -336,9 +328,20 @@ export default function FinancialCreate() {
             value={desconto}
             onChange={(e) => setDesconto(handleCurrencyInput(e.target.value))}
           />
-
+          <DataSelect
+            label="Data de pagamento"
+            value={dataPagamento}
+            onChange={(newValue) => setDataPagamento(newValue)}
+          />
+          <DataSelect
+            label="Data de vencimento *"
+            value={dataVencimento}
+            onChange={(newValue) => setDataVencimento(newValue)}
+          />
+        </div>
+        <div className="descricao-fin">
           <FieldSelect
-            label="Forma de Pagamento *"
+            label="Forma de Pagamento"
             value={pagamento}
             onChange={handleChangePagamento}
             options={[
@@ -351,28 +354,15 @@ export default function FinancialCreate() {
               "Depósito",
             ]}
           />
-          <DataSelect
-            label="Data de vencimento *"
-            value={dataVencimento}
-            onChange={(newValue) => setDataVencimento(newValue)}
-          />
-          <DataSelect
-            label="Data de pagamento *"
-            value={dataPagamento}
-            onChange={(newValue) => setDataPagamento(newValue)}
-          />
-          <CheckField
-            label="Baixada"
-            value={baixada}
-            onChange={handleChangeBaixada}
+        </div>
+        <div className="descricao-fin">
+          <FieldText
+            label="Descrição"
+            onChange={handleChangeDescricao}
+            value={descricao}
           />
         </div>
 
-        <FieldText
-          label="Descrição"
-          onChange={handleChangeDescricao}
-          value={descricao}
-        />
         <div>
           <small>
             {descricao.length}/{maxDescricaoLength} caracteres
