@@ -27,8 +27,12 @@
   }
 
   .forms-container h1 {
+    font-size: 20px;
     font-weight: 800;
-    margin-bottom: 3rem;
+    margin-left: 8px;
+    margin-right: 50px;
+    margin-top: 1rem;
+    margin-bottom: -1rem;
     color: #332117 !important;
   }
 

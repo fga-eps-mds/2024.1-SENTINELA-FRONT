@@ -184,7 +184,7 @@ export default function FinancialCreate() {
       valorLiquido: parseFloat(valorLiquido),
       acrescimo: parseFloat(acrescimo),
       desconto: parseFloat(desconto),
-      formadePagamento: pagamento,
+      pagamento,
       datadeVencimento: dataVencimento,
       datadePagamento: dataPagamento,
       descricao,
@@ -341,7 +341,7 @@ export default function FinancialCreate() {
         </div>
         <div className="descricao-fin">
           <FieldSelect
-            label="Forma de Pagamento *"
+            label="Forma de Pagamento"
             value={pagamento}
             onChange={handleChangePagamento}
             options={[
