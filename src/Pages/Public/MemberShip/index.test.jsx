@@ -8,10 +8,15 @@ import {
 } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
 import MemberShip from "./";
+import { listOrgans } from "../../../Services/organService";
 import { BrowserRouter } from "react-router-dom";
 
 vi.mock("../../../Services/memberShipService", () => ({
   createMemberShip: vi.fn().mockResolvedValue("Success"),
+}));
+
+vi.mock("../../../Services/organService.js", () => ({
+  listOrgans: vi.fn(),
 }));
 
 describe("MemberShip Component", () => {
@@ -30,9 +35,22 @@ describe("MemberShip Component", () => {
         <MemberShip />
       </BrowserRouter>
     );
+
     const nameInput = screen.getByLabelText(/Nome Completo/i);
     fireEvent.change(nameInput, { target: { value: "John Doe" } });
+
     expect(nameInput.value).toBe("John Doe");
+  });
+
+  it("should call the service: listOrgans", () => {
+    render(
+      <BrowserRouter>
+        <MemberShip />
+      </BrowserRouter>
+    );
+
+    expect(screen.getByText(/Formulário de Filiação/i)).toBeInTheDocument();
+    expect(listOrgans).toHaveBeenCalled();
   });
 
   it("should show an error if required fields are empty", () => {
