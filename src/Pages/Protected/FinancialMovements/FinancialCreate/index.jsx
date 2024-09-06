@@ -186,7 +186,7 @@ export default function FinancialCreate() {
       valorLiquido: numericValorLiquido,
       acrescimo: numericAcrescimo,
       desconto: numericDesconto,
-      pagamento,
+      formadePagamento: pagamento,
       datadeVencimento: dataVencimento,
       datadePagamento: dataPagamento,
       descricao,
