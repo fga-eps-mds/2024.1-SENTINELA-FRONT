@@ -8,13 +8,71 @@ import {
 } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
 import MemberShip from "./";
+import userEvent from "@testing-library/user-event";
 import { BrowserRouter } from "react-router-dom";
-
+import { createMemberShip } from "../../../Services/memberShipService";
+// Ajuste o caminho conforme necessário
 vi.mock("../../../Services/memberShipService", () => ({
   createMemberShip: vi.fn().mockResolvedValue("Success"),
 }));
 
 describe("MemberShip Component", () => {
+  // // Mock da função createMemberShip
+  // vi.mock("../../../Services/memberShipService", () => {
+  //   const createMemberShip = vi.fn();
+  //   return { createMemberShip };
+  // });
+
+  it("should submit form successfully and navigate", async () => {
+    // Renderiza o componente com o roteador
+    render(
+      <BrowserRouter>
+        <MemberShip />
+      </BrowserRouter>
+    );
+
+    // Preenche os campos do formulário
+    fireEvent.change(screen.getByLabelText(/Nome Completo/i), {
+      target: { value: "John Doe" },
+    });
+    fireEvent.change(screen.getByLabelText(/Matrícula/i), {
+      target: { value: "123456" },
+    });
+
+    const selects = screen.getAllByRole("combobox");
+
+    const sexoSelect = selects.find((s) => s.id === "select-Sexo *");
+    await userEvent.click(sexoSelect);
+    await userEvent.click(screen.getByRole("option", { name: "Masculino" }));
+
+    const rgFields = screen.getAllByLabelText(/RG/i);
+    // Seleciona o primeiro campo RG encontrado
+    fireEvent.change(rgFields[0], { target: { value: "12345678" } });
+
+    fireEvent.change(screen.getByLabelText(/CPF/i), {
+      target: { value: "12345678901" },
+    });
+    fireEvent.change(screen.getByLabelText(/E-mail/i), {
+      target: { value: "coco@gmail.com" },
+    });
+    fireEvent.change(screen.getByLabelText(/Celular/i), {
+      target: { value: "(11) 11111-1111" },
+    });
+
+    // Simula o clique no botão de enviar
+    fireEvent.click(screen.getByText(/Enviar Solicitação/i));
+
+    // Aguarda a chamada da função e verifica se foi chamada com os argumentos corretos
+    await waitFor(() => {
+      createMemberShip();
+    });
+
+    // Verifica a navegação
+    await waitFor(() => {
+      expect(window.location.pathname).toBe("/");
+    });
+  });
+
   it("should render without crashing", () => {
     render(
       <BrowserRouter>
