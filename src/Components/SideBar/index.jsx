@@ -11,6 +11,7 @@ import { RiLogoutCircleRLine } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import AuthContext, { useAuth } from "../../Context/auth";
 import { usePermissions, checkAction } from "../../Utils/permission";
+import { getRoleById } from "../../Services/RoleService/roleService";
 
 export default function SideBar({ fullHeight = true }) {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
@@ -19,16 +20,24 @@ export default function SideBar({ fullHeight = true }) {
   const context = useContext(AuthContext);
   const { user } = useAuth();
   const permissions = usePermissions();
+  const [role, setRole] = useState("");
 
-  const handleItemClick = (user) => {
-    if (user?.role?.name == "sindicalizado") {
-      navigate(`/filiados/${user.name}`, {
-        state: { membershipId: user._id },
-      });
-    } else {
+  const handleItemClick = async (user) => {
+    if (user) {
+      try {
+        const result = await getRoleById(user.role);
+        setRole(result.name);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    if (role == "administrador") {
       navigate(`/usuarios/editar/${user.name}`, {
         state: { userId: user._id },
       });
+    } else {
+      navigate("/perfil");
     }
   };
 
