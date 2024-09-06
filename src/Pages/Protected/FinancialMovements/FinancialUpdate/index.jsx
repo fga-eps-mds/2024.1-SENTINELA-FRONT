@@ -154,10 +154,10 @@ export default function FinancialUpdate() {
         nomeDestino,
         tipoDocumento,
         cpFCnpj,
-        valorBruto,
-        valorLiquido,
-        acrescimo,
-        desconto,
+        valorBruto: parseCurrency(valorBruto),
+        valorLiquido: parseCurrency(valorLiquido),
+        acrescimo: parseCurrency(acrescimo),
+        desconto: parseCurrency(desconto),
         formadePagamento: pagamento,
         datadeVencimento: dataVencimento,
         datadePagamento: dataPagamento,
@@ -179,9 +179,23 @@ export default function FinancialUpdate() {
     }
   };
 
+  const parseCurrency = (value) => {
+    if (typeof value !== "string") return "";
+    const numericValue = value.replace(/[\D]/g, "");
+    return numericValue ? (parseFloat(numericValue) / 100).toFixed(2) : "";
+  };
+
   const handleCurrencyInput = (value) => {
-    const numericValue = value.replace(/\D/g, "");
-    return numericValue ? (parseFloat(numericValue) / 100).toFixed(2) : ""; // Converte para valor monetário
+    const stringValue = String(value);
+
+    if (!stringValue) return "";
+    const numericValue = stringValue.replace(/\D/g, "");
+    return numericValue
+      ? (parseFloat(numericValue) / 100).toLocaleString("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        })
+      : "";
   };
 
   const handleCpfCnpjInput = (value) => {
@@ -203,27 +217,22 @@ export default function FinancialUpdate() {
   };
 
   const handleChangeNomeOrigem = (event) => {
-    console.log("Nome Origem:", event.target.value);
     setNomeOrigem(event.target.value);
   };
 
   const handleChangeNomeDestino = (event) => {
-    console.log("Nome Destino:", event.target.value);
     setNomeDestino(event.target.value);
   };
 
   const handleChangeContaOrigem = (event) => {
-    console.log("Conta Origem:", event.target.value);
     setContaOrigem(event.target.value);
   };
 
   const handleChangeContaDestino = (event) => {
-    console.log("Conta Destino:", event.target.value);
     setContaDestino(event.target.value);
   };
 
   const handleChangePagamento = (event) => {
-    console.log("Forma de Pagamento:", event.target.value);
     setPagamento(event.target.value);
   };
 
