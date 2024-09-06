@@ -220,12 +220,12 @@ export default function FinancialCreate() {
   };
 
   return (
-    <section className="financialMovements-container">
-      <div className="financialMovements-forms-container">
+    <section className="container">
+      <div className="forms-container">
         <h1> Cadastro de Movimentações Financeiras </h1>
         <h3>Dados da Movimentação</h3>
 
-        <div className="financialMovements-section-box">
+        <div className="double-box-fin">
           <FieldSelect
             label="Conta origem *"
             value={contaOrigem}

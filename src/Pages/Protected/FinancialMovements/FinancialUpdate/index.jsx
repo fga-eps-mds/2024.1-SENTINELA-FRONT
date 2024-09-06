@@ -53,10 +53,10 @@ export default function FinancialUpdate() {
           setNomeDestino(data.nomeDestino || "");
           setTipoDocumento(data.tipoDocumento || "");
           setcpFCnpj(data.cpFCnpj || "");
-          setValorBruto(data.valorBruto || "");
-          setValorLiquido(data.valorLiquido || "");
-          setAcrescimo(data.acrescimo || "");
-          setDesconto(data.desconto || "");
+          setValorBruto(handleCurrencyInput(data.valorBruto) || "");
+          setValorLiquido(handleCurrencyInput(data.valorLiquido) || "");
+          setAcrescimo(handleCurrencyInput(data.acrescimo) || "");
+          setDesconto(handleCurrencyInput(data.desconto) || "");
           setPagamento(data.formadePagamento || "");
           setDataVencimento(dayjs(data.datadeVencimento || null));
           setDataPagamento(dayjs(data.datadePagamento || null));
@@ -244,12 +244,12 @@ export default function FinancialUpdate() {
   };
 
   return (
-    <section className="financialUpdate-container">
-      <div className="financialUpdate-forms-container">
+    <section className="container">
+      <div className="forms-container">
         <h1> Visualização de Movimentações Financeiras </h1>
         <h3>Dados da movimentação financeira</h3>
 
-        <div className="financialUpdate-section-box">
+        <div className="double-box-fin">
           <FieldSelect
             label="Conta origem"
             value={contaOrigem}
@@ -378,18 +378,17 @@ export default function FinancialUpdate() {
             ]}
           />
         </div>
-        <div className="descricao-finUpdate">
+        <div className="descricao-fin">
           <FieldText
             label="Descrição"
             value={descricao}
             onChange={handleChangeDescricao}
           />
-
-          <div className="descricao-countUpdate">
-            <small>
-              {descricao.length}/{maxDescricaoLength} caracteres
-            </small>
-          </div>
+        </div>
+        <div className="descricao-countUpdate">
+          <small>
+            {descricao.length}/{maxDescricaoLength} caracteres
+          </small>
         </div>
 
         <div className="double-buttons-mov">
