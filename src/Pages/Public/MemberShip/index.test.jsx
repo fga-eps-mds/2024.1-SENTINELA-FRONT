@@ -211,6 +211,21 @@ describe("MemberShip Component", () => {
     expect(screen.getByLabelText(/Parentesco/i)).toBeInTheDocument();
   });
 
+  it("should handle close add a dependent correctly", async () => {
+    render(
+      <BrowserRouter>
+        <MemberShip />
+      </BrowserRouter>
+    );
+
+    const icon = screen.getByTestId("AddCircleOutlineIcon");
+    fireEvent.click(icon);
+    expect(screen.getByLabelText(/Parentesco/i)).toBeInTheDocument();
+
+    fireEvent.click(icon);
+    expect(screen.queryByLabelText(/Parentesco/i)).not.toBeInTheDocument();
+  });
+
   it("should handle adding a dependent correctly", async () => {
     const { container } = render(
       <BrowserRouter>
