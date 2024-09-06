@@ -191,7 +191,9 @@ describe("MemberShip Component", () => {
     );
 
     const adressInput = screen.getByLabelText(/Logradouro/i);
-    fireEvent.change(adressInput, { target: { value: "St. Leste, Gama Leste Projeção A" } });
+    fireEvent.change(adressInput, {
+      target: { value: "St. Leste, Gama Leste Projeção A" },
+    });
 
     expect(adressInput.value).toBe("St. Leste, Gama Leste Projeção A");
   });
@@ -204,7 +206,9 @@ describe("MemberShip Component", () => {
     );
 
     const addAdressInput = screen.getByLabelText(/Complemento/i);
-    fireEvent.change(addAdressInput, { target: { value: "Próximo à estação do BRT Gama" } });
+    fireEvent.change(addAdressInput, {
+      target: { value: "Próximo à estação do BRT Gama" },
+    });
 
     expect(addAdressInput.value).toBe("Próximo à estação do BRT Gama");
   });
