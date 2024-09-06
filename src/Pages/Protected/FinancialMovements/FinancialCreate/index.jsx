@@ -220,12 +220,12 @@ export default function FinancialCreate() {
   };
 
   return (
-    <section className="container">
-      <div className="forms-container">
+    <section className="financialMovements-container">
+      <div className="financialMovements-forms-container">
         <h1> Cadastro de Movimentações Financeiras </h1>
         <h3>Dados da Movimentação</h3>
 
-        <div className="double-box-fin">
+        <div className="financialMovements-section-box">
           <FieldSelect
             label="Conta origem *"
             value={contaOrigem}
@@ -382,12 +382,12 @@ export default function FinancialCreate() {
             onChange={handleChangeDescricao}
             value={descricao}
           />
-        </div>
 
-        <div>
-          <small>
-            {descricao.length}/{maxDescricaoLength} caracteres
-          </small>
+          <div className="descricao-count">
+            <small>
+              {descricao.length}/{maxDescricaoLength} caracteres
+            </small>
+          </div>
         </div>
         <PrimaryButton text="Cadastrar" onClick={handleSubmit} />
         <Modal

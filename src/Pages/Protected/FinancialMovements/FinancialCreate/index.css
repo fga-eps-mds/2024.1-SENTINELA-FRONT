@@ -1,68 +1,87 @@
 @media screen and (max-width: 1080px) {
-  .container {
+  .bar-container-financialMovements {
     display: grid;
-    flex-direction: row;
+  }
+
+  .financialMovements-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
   }
 
   label {
     color: #332117 !important;
   }
-  .forms-container {
-    display: grid;
-    margin: 1vw;
+
+  .financialMovements-forms-container {
+    margin: 1rem;
+    width: 90%;
+    display: inherit;
     justify-content: center;
     flex-direction: column;
   }
-  .perfil-radiogroup {
-    margin: 10vw;
+
+  .financialMovements-section-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 0;
   }
-  .double-box-fin {
-    display: contents;
-    grid-template-columns: 0.5fr 0.5fr;
-  }
+
   .double-buttons {
     display: contents;
     width: 100%;
     grid-template-columns: 0.5fr 0.3fr;
   }
 
-  .forms-container h1 {
-    font-size: 20px;
-    font-weight: 800;
-    margin-left: 8px;
-    margin-right: 50px;
-    margin-top: 1rem;
-    margin-bottom: -1rem;
-    color: #332117 !important;
+  .financialMovements-forms-container h1 {
+    text-align: center;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    place-items: center;
   }
 
-  .forms-container h3 {
+  .financialMovements-forms-container h3 {
     font-weight: 400;
     margin-left: 1rem;
     margin-top: 3rem;
     color: #332117 !important;
   }
 
-  #addDependentBttn {
-    cursor: pointer;
-  }
   .descricao-fin {
     display: grid;
     justify-content: start;
     grid-template-columns: 2.5fr;
     margin: 0;
   }
-  .forms-container button {
+
+  .financialMovements-forms-container button {
     width: 98%;
     align-self: center;
     margin-bottom: 2rem;
   }
+
+  .descricao-count {
+    margin-bottom: 12px;
+    margin-left: 13px;
+    font-size: 0.885rem;
+    color: #332117;
+  }
 }
 
-@media screen and (min-width: 700px) {
-  .container {
+@media screen and (min-width: 1080px) {
+  .bar-container-financialMovements {
     display: flex;
+    height: 100%;
+    position: fixed;
   }
+
+  .financialMovements-container {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+  }
+
   .profile-status {
     font-size: 18px;
     font-weight: 600;
@@ -70,25 +89,21 @@
     margin-left: 8rem;
     margin-top: 12rem;
   }
-  .forms-container {
-    margin: 5rem;
-    width: 100%;
+
+  .financialMovements-forms-container {
+    margin: 1rem;
+    width: 90%;
     display: inherit;
     justify-content: center;
-
     flex-direction: column;
   }
 
-  .perfil-radiogroup {
-    margin: 2vw;
-  }
-  .forms-container button {
-    width: 98%;
-    align-self: center;
-    margin-bottom: 2rem;
+  .financialMovements-forms-container button {
+    width: 100%;
+    margin-top: auto;
   }
 
-  .double-box-fin {
+  .financialMovements-section-box {
     display: grid;
     justify-content: start;
     grid-template-columns: 0.5fr 0.5fr;
@@ -99,31 +114,38 @@
     color: #332117 !important;
   }
 
-  .forms-container h1 {
+  .financialMovements-forms-container h1 {
+    font-size: 34px;
     font-weight: 800;
-    margin-bottom: 3rem;
-    color: #332117 !important;
+    margin-bottom: -0.5rem;
+    margin-top: 2rem;
   }
 
-  .forms-container h3 {
+  .financialMovements-forms-container h3 {
     font-weight: 400;
     margin-left: 1rem;
     margin-top: 3rem;
     color: #332117 !important;
   }
+
   .isEmailValid {
     font-weight: 400;
     margin-left: 1rem;
     margin-top: 10px;
     color: red !important;
   }
-  #addDependentBttn {
-    cursor: pointer;
-  }
+
   .descricao-fin {
     display: grid;
     justify-content: start;
     grid-template-columns: 2.5fr;
     margin: 0;
+  }
+
+  .descricao-count {
+    margin-bottom: 12px;
+    margin-left: 13px;
+    font-size: 0.885rem;
+    color: #332117;
   }
 }
