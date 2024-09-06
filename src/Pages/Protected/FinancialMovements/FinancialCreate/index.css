@@ -13,6 +13,8 @@
     margin: 1vw;
     justify-content: center;
     flex-direction: column;
+    padding-bottom: 2rem;
+    height: unset;
   }
   .perfil-radiogroup {
     margin: 10vw;
@@ -44,9 +46,6 @@
     color: #332117 !important;
   }
 
-  #addDependentBttn {
-    cursor: pointer;
-  }
   .descricao-fin {
     display: grid;
     justify-content: start;
@@ -56,11 +55,11 @@
   .forms-container button {
     width: 98%;
     align-self: center;
-    margin-bottom: 20px !important;
+    /* margin-bottom: 20px !important;*/
   }
 
   .descricao-count {
-    margin-bottom: 12px;
+    /* margin-bottom: 12px;*/
     margin-left: 13px;
     font-size: 0.885rem;
     color: #332117;
@@ -83,17 +82,16 @@
     width: 100%;
     display: inherit;
     justify-content: center;
-
+    padding-bottom: 5rem;
     flex-direction: column;
   }
 
   .perfil-radiogroup {
     margin: 2vw;
   }
-  .forms-container button {
+  .forms-container > button {
     width: 98%;
     align-self: center;
-    margin-bottom: 2rem;
   }
 
   .double-box-fin {
@@ -135,7 +133,7 @@
   }
 
   .descricao-count {
-    margin-bottom: 12px;
+    /*margin-bottom: 12px;*/
     margin-left: 13px;
     font-size: 0.885rem;
     color: #332117;
