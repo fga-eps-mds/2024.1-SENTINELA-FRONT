@@ -14,6 +14,7 @@ import SecondaryButton from "../../../Components/SecondaryButton";
 import Modal from "../../../Components/Modal";
 import { useNavigate } from "react-router-dom";
 import { listOrgans } from "../../../Services/organService";
+import { isValidEmail } from "../../../Utils/validators";
 
 const MemberShip = () => {
   const [email, setEmail] = useState("");
@@ -274,31 +275,6 @@ const MemberShip = () => {
 
   const handleCloseSuccessDialog = () => {
     setOpenSuccessDialog(false);
-  };
-  const isValidEmail = (email) => {
-    const allowedDomains = [
-      "com",
-      "net",
-      "org",
-      "com.br",
-      "org.br",
-      "edu",
-      "gov",
-    ];
-
-    const domainPattern = allowedDomains
-      .map((domain) => {
-        const escapedDomain = domain.replace(/\./g, "\\.");
-        return `(?:[a-zA-Z0-9.-]+\\.)?${escapedDomain}`;
-      })
-      .join("|");
-
-    const emailRegex = new RegExp(
-      `^[a-zA-Z0-9._%+-]+@(?:[a-zA-Z0-9.-]+\\.)?(${domainPattern})$`,
-      "i"
-    );
-
-    return emailRegex.test(email);
   };
 
   //FUNÇÕES UTILIZADAS
