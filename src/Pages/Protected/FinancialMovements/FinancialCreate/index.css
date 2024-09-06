@@ -2,6 +2,7 @@
   .container {
     display: grid;
     flex-direction: row;
+    height: unset;
   }
 
   label {
@@ -12,6 +13,8 @@
     margin: 1vw;
     justify-content: center;
     flex-direction: column;
+    padding-bottom: 2rem;
+    height: unset;
   }
   .perfil-radiogroup {
     margin: 10vw;
@@ -43,9 +46,6 @@
     color: #332117 !important;
   }
 
-  #addDependentBttn {
-    cursor: pointer;
-  }
   .descricao-fin {
     display: grid;
     justify-content: start;
@@ -55,7 +55,14 @@
   .forms-container button {
     width: 98%;
     align-self: center;
-    margin-bottom: 2rem;
+    /* margin-bottom: 20px !important;*/
+  }
+
+  .descricao-count {
+    /* margin-bottom: 12px;*/
+    margin-left: 13px;
+    font-size: 0.885rem;
+    color: #332117;
   }
 }
 
@@ -75,17 +82,16 @@
     width: 100%;
     display: inherit;
     justify-content: center;
-
+    padding-bottom: 5rem;
     flex-direction: column;
   }
 
   .perfil-radiogroup {
     margin: 2vw;
   }
-  .forms-container button {
+  .forms-container > button {
     width: 98%;
     align-self: center;
-    margin-bottom: 2rem;
   }
 
   .double-box-fin {
@@ -99,10 +105,11 @@
     color: #332117 !important;
   }
 
-  .forms-container h1 {
+  .forms-container > h1 {
     font-weight: 800;
-    margin-bottom: 3rem;
+    margin-top: 10rem;
     color: #332117 !important;
+    margin-left: -3px !important;
   }
 
   .forms-container h3 {
@@ -117,13 +124,18 @@
     margin-top: 10px;
     color: red !important;
   }
-  #addDependentBttn {
-    cursor: pointer;
-  }
+
   .descricao-fin {
     display: grid;
     justify-content: start;
     grid-template-columns: 2.5fr;
     margin: 0;
+  }
+
+  .descricao-count {
+    /*margin-bottom: 12px;*/
+    margin-left: 13px;
+    font-size: 0.885rem;
+    color: #332117;
   }
 }

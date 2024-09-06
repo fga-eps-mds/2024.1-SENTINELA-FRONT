@@ -20,27 +20,33 @@
     display: contents;
     grid-template-columns: 0.5fr 0.5fr;
   }
-  .double-buttons {
-    display: contents;
-    width: 100%;
-    grid-template-columns: 0.5fr 0.3fr;
+  .double-buttons-mov button {
+    flex: 1; /* Faz com que os botões ocupem o espaço disponível igualmente */
+    margin-top: 0;
+    margin-bottom: 0.7rem;
+    height: 40px;
   }
 
-  h1 {
+  .forms-container > h1 {
     font-weight: 800;
-    margin-bottom: 3rem;
+    margin-bottom: 0.5rem;
+    margin-top: 2rem;
     color: #332117 !important;
+    margin-left: -3px !important;
   }
 
-  h3 {
+  .forms-container h3 {
     font-weight: 400;
     margin-left: 1rem;
     margin-top: 3rem;
     color: #332117 !important;
   }
 
-  #addDependentBttn {
-    cursor: pointer;
+  .descricao-countUpdate {
+    margin-bottom: 12px;
+    margin-left: 13px;
+    font-size: 0.885rem;
+    color: #332117;
   }
 }
 
@@ -107,9 +113,7 @@
     margin-top: 10px;
     color: red !important;
   }
-  #addDependentBttn {
-    cursor: pointer;
-  }
+
   .double-buttons-mov {
     display: flex;
     justify-content: space-between; /* Distribui os botões igualmente no espaço disponível */
@@ -122,5 +126,12 @@
     margin-top: 0;
     margin-bottom: 0;
     height: 40px;
+  }
+
+  .descricao-countUpdate {
+    margin-bottom: 12px;
+    margin-left: 13px;
+    font-size: 0.885rem;
+    color: #332117;
   }
 }

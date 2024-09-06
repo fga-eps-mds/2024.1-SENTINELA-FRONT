@@ -26,7 +26,6 @@ export default function FinancialList() {
   useEffect(() => {
     const fetchMovements = async () => {
       try {
-        console.log("Fetching movements...");
         const response = await APIBank.get(`/financialMovements`, {
           headers: {
             Authorization: `Bearer ${storagedUser.token}`,
@@ -34,7 +33,6 @@ export default function FinancialList() {
         });
 
         const data = response.data;
-        console.log("Movements fetched:", data);
         if (Array.isArray(data)) {
           setMovements(data);
         } else {
@@ -49,12 +47,10 @@ export default function FinancialList() {
   }, []);
 
   const handleSubmit = () => {
-    console.log("Navigating to create page");
     navigate("/movimentacoes/criar");
   };
 
   const handleItemClick = (movement) => {
-    console.log("Item clicked:", movement);
     navigate(`/movimentacoes/visualizar/${movement._id}`, {
       state: { movementId: movement._id },
     });
@@ -73,15 +69,13 @@ export default function FinancialList() {
       (!startDate || movementDate >= startDate) &&
       (!finalDate || movementDate <= finalDate);
 
-    console.log(dataInicio, dataFinal, movementDate, isDateInRange);
-
     return isDocumentTypeMatch && isDateInRange;
   });
 
   return (
-    <section className="container">
-      <div className="forms-container">
-        <div className="double-box">
+    <section className="container-financialist">
+      <div className="forms-container-financialList">
+        <div className="double-box-financialList">
           <h1>Lista de movimentações</h1>
           {canCreate && (
             <PrimaryButton
@@ -91,7 +85,7 @@ export default function FinancialList() {
           )}
         </div>
 
-        <div className="search-box">
+        <div className="search-box-financialList">
           <FieldText
             label="Pesquisar movimentação"
             value={search}
@@ -99,14 +93,14 @@ export default function FinancialList() {
           />
         </div>
 
-        <div className="date-box">
+        <div className="date-box-financialList">
           <DataSelect
-            label="Data Inicial"
+            label="Data inicial"
             value={dataInicio}
             onChange={(newValue) => setDataInicio(newValue)}
           />
           <DataSelect
-            label="Data Final"
+            label="Data final"
             value={dataFinal}
             onChange={(newValue) => setDataFinal(newValue)}
           />
@@ -117,7 +111,7 @@ export default function FinancialList() {
             <div key={movement._id}>
               <ListItem>
                 <ListItemButton
-                  className="list-item"
+                  className="list-item-financialList"
                   style={{
                     transition: "background-color 0.3s ease",
                   }}
