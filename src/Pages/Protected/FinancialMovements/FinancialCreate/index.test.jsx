@@ -18,7 +18,7 @@ async function fillUpRequiredFields() {
   );
   const nomeOrigemSelect = selects.find((s) => s.id === "select-Nome origem *");
   const nomeDestinoSelect = selects.find(
-    (s) => s.id === "select-Nome Destino *"
+    (s) => s.id === "select-Nome destino *"
   );
   const tipoDocumentoSelect = selects.find(
     (s) => s.id === "select-Tipo documento *"
@@ -41,7 +41,7 @@ async function fillUpRequiredFields() {
   await userEvent.click(tipoDocumentoSelect);
   await userEvent.click(screen.getByRole("option", { name: "AÇÃO JUDICIAL" }));
 
-  await userEvent.type(screen.getByLabelText("Valor Bruto *"), "1000");
+  await userEvent.type(screen.getByLabelText("Valor bruto *"), "1000");
   await userEvent.type(
     screen.getByLabelText("Descrição"),
     "Descrição de exemplo"

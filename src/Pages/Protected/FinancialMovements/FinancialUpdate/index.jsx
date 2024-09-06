@@ -53,10 +53,10 @@ export default function FinancialUpdate() {
           setNomeDestino(data.nomeDestino || "");
           setTipoDocumento(data.tipoDocumento || "");
           setcpFCnpj(data.cpFCnpj || "");
-          setValorBruto(data.valorBruto || "");
-          setValorLiquido(data.valorLiquido || "");
-          setAcrescimo(data.acrescimo || "");
-          setDesconto(data.desconto || "");
+          setValorBruto(handleCurrencyInput(data.valorBruto) || "");
+          setValorLiquido(handleCurrencyInput(data.valorLiquido) || "");
+          setAcrescimo(handleCurrencyInput(data.acrescimo) || "");
+          setDesconto(handleCurrencyInput(data.desconto) || "");
           setPagamento(data.formadePagamento || "");
           setDataVencimento(dayjs(data.datadeVencimento || null));
           setDataPagamento(dayjs(data.datadePagamento || null));
@@ -154,10 +154,10 @@ export default function FinancialUpdate() {
         nomeDestino,
         tipoDocumento,
         cpFCnpj,
-        valorBruto,
-        valorLiquido,
-        acrescimo,
-        desconto,
+        valorBruto: parseCurrency(valorBruto),
+        valorLiquido: parseCurrency(valorLiquido),
+        acrescimo: parseCurrency(acrescimo),
+        desconto: parseCurrency(desconto),
         formadePagamento: pagamento,
         datadeVencimento: dataVencimento,
         datadePagamento: dataPagamento,
@@ -179,9 +179,23 @@ export default function FinancialUpdate() {
     }
   };
 
+  const parseCurrency = (value) => {
+    if (typeof value !== "string") return "";
+    const numericValue = value.replace(/[\D]/g, "");
+    return numericValue ? (parseFloat(numericValue) / 100).toFixed(2) : "";
+  };
+
   const handleCurrencyInput = (value) => {
-    const numericValue = value.replace(/\D/g, "");
-    return numericValue ? (parseFloat(numericValue) / 100).toFixed(2) : ""; // Converte para valor monetário
+    const stringValue = String(value);
+
+    if (!stringValue) return "";
+    const numericValue = stringValue.replace(/\D/g, "");
+    return numericValue
+      ? (parseFloat(numericValue) / 100).toLocaleString("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        })
+      : "";
   };
 
   const handleCpfCnpjInput = (value) => {
@@ -203,27 +217,22 @@ export default function FinancialUpdate() {
   };
 
   const handleChangeNomeOrigem = (event) => {
-    console.log("Nome Origem:", event.target.value);
     setNomeOrigem(event.target.value);
   };
 
   const handleChangeNomeDestino = (event) => {
-    console.log("Nome Destino:", event.target.value);
     setNomeDestino(event.target.value);
   };
 
   const handleChangeContaOrigem = (event) => {
-    console.log("Conta Origem:", event.target.value);
     setContaOrigem(event.target.value);
   };
 
   const handleChangeContaDestino = (event) => {
-    console.log("Conta Destino:", event.target.value);
     setContaDestino(event.target.value);
   };
 
   const handleChangePagamento = (event) => {
-    console.log("Forma de Pagamento:", event.target.value);
     setPagamento(event.target.value);
   };
 
@@ -260,13 +269,13 @@ export default function FinancialUpdate() {
             options={nomesOrigem}
           />
           <FieldSelect
-            label="Nome Destino *"
+            label="Nome destino *"
             value={nomeDestino}
             onChange={handleChangeNomeDestino}
             options={nomesDestino}
           />
           <FieldSelect
-            label="Tipo Documento"
+            label="Tipo documento"
             value={tipoDocumento}
             onChange={(e) => setTipoDocumento(e.target.value)}
             options={[
@@ -321,12 +330,12 @@ export default function FinancialUpdate() {
             onChange={(e) => setcpFCnpj(handleCpfCnpjInput(e.target.value))}
           />
           <FieldText
-            label="Valor Bruto *"
+            label="Valor bruto *"
             value={valorBruto}
             onChange={(e) => setValorBruto(handleCurrencyInput(e.target.value))}
           />
           <FieldText
-            label="Valor Liquído"
+            label="Valor líquido"
             value={valorLiquido}
             onChange={(e) =>
               setValorLiquido(handleCurrencyInput(e.target.value))
@@ -355,7 +364,7 @@ export default function FinancialUpdate() {
         </div>
         <div className="descricao-fin">
           <FieldSelect
-            label="Forma de Pagamento"
+            label="Forma de pagamento"
             value={pagamento}
             onChange={handleChangePagamento}
             options={[
@@ -376,12 +385,12 @@ export default function FinancialUpdate() {
             onChange={handleChangeDescricao}
           />
         </div>
-
-        <div>
+        <div className="descricao-countUpdate">
           <small>
             {descricao.length}/{maxDescricaoLength} caracteres
           </small>
         </div>
+
         <div className="double-buttons-mov">
           <SecondaryButton
             text="Deletar"
@@ -390,7 +399,7 @@ export default function FinancialUpdate() {
           <PrimaryButton text="Salvar" onClick={handleSave} />
         </div>
 
-        <Modal alertTitle="Alterações Salvas" show={showSaveModal}>
+        <Modal alertTitle="Alterações salvas" show={showSaveModal}>
           <SecondaryButton
             key={"saveButtons"}
             text="OK"
@@ -420,7 +429,7 @@ export default function FinancialUpdate() {
           />
         </Modal>
 
-        <Modal alertTitle="Movimentação Deletada" show={showDeletedModal}>
+        <Modal alertTitle="Movimentação deletada" show={showDeletedModal}>
           <SecondaryButton
             key={"okButtons"}
             text="OK"
