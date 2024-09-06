@@ -1,15 +1,30 @@
 @media screen and (max-width: 1080px) {
   /*celular*/
+  .btn-contribution {
+    background-color: transparent !important;
+
+    margin-top: 1.5rem !important;
+    margin-left: 0.8rem !important;
+
+    color: #332117 !important;
+    text-decoration: underline !important;
+    font-size: 13px !important;
+    text-align: left !important;
+    justify-content: flex-start !important;
+  }
 
   .container {
     display: flex;
     font-family: "Noto Sans";
     color: #341f14;
+    flex-direction: column;
+    align-items: center;
+    /* padding: 1rem; */
   }
 
   .profile-view {
-    margin-top: -23rem;
-    margin-left: -3.5rem;
+    /* margin-top: 1rem; */
+    /* margin-left: -3.5rem; */
     font-size: 26px;
 
     font-weight: bold;
@@ -17,15 +32,15 @@
 
   .personal-data {
     font-size: 18px;
-    margin-left: -3.5rem;
+    margin-left: 1rem;
   }
 
   .campos-container {
-    margin: 3.5rem;
+    /* margin: 3.5rem; */
     line-height: 2;
-    height: 350px;
+    /* height: 350px; */
     width: 100%;
-    margin-top: 20rem;
+    /* margin-top: 4rem; */
     display: inherit;
     justify-content: center;
     flex-direction: column;
@@ -33,9 +48,10 @@
 
   .section-campo {
     display: grid;
-    margin-left: -4.2rem;
-    margin-right: 9rem;
+    margin-left: 0.5rem;
+    /* margin-right: 9rem; */
     font-size: 16px;
+    width: 100%;
   }
 
   .section-campo input:disabled {
@@ -60,8 +76,9 @@
 
   .double-box {
     display: grid;
-    margin-left: -4.2rem;
-    margin-right: 9rem;
+    margin-left: 0.5rem;
+    /* margin-right: 9rem; */
+    width: 100%;
 
     grid-template-columns: 1fr;
     color: #eae3d7;
@@ -79,19 +96,23 @@
     font-weight: thin;
   }
 
-  .section-doublebtn {
+  /* .section-doublebtn {
     align-items: center;
     flex-direction: column;
     flex-direction: column;
     align-items: stretch;
     margin-left: -3.2rem;
     margin-right: 50rem;
-  }
+    margin-top: 1rem;
+  } */
 
-  .section-doublebtn button {
-    width: 300px;
-    flex: 1;
-    height: 44px;
+  .section-doublebtn {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+    width: 100%;
+    margin-left: 1rem;
   }
 
   .profile-status {
@@ -217,7 +238,21 @@
   }
 }
 
-@media screen and (min-width: 700px) {
+@media screen and (min-width: 1080px) {
+  .btn-contribution {
+    background-color: transparent !important;
+
+    margin-top: 1.5rem !important;
+    margin-left: 0.8rem !important;
+    margin-bottom: 1rem !important;
+
+    color: #332117 !important;
+    text-decoration: underline !important;
+    font-size: 13px !important;
+    text-align: left !important;
+    justify-content: flex-start !important;
+  }
+
   .container {
     display: flex;
     font-family: "Noto Sans";

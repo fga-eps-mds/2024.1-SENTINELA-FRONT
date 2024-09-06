@@ -131,7 +131,7 @@ export default function UserCreatePage() {
           onChange={handlePerfilChange}
         >
           {roles
-            ?.filter((perfil) => perfil?.name !== "sindicalizado") // Filtra para remover "sindicalizado"
+            ?.filter((perfil) => perfil?.name !== "sindicalizado")
             .map((perfil) => (
               <FormControlLabel
                 key={perfil?.name}
