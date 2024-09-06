@@ -1,84 +1,109 @@
 @media screen and (max-width: 1080px) {
-  .container {
+  .bar-container-financialUpdate {
+    display: grid;
+  }
+
+  .financialUpdate-container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    margin-bottom: 20px;
   }
 
   label {
     color: #332117 !important;
   }
-  .forms-container {
-    display: grid;
-    margin: 1vw;
+
+  .financialUpdate-forms-container {
+    margin: 1rem;
+    width: 90%;
+    display: inherit;
     justify-content: center;
     flex-direction: column;
   }
-  .perfil-radiogroup {
-    margin: 10vw;
+
+  .financialUpdate-section-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 0;
   }
-  .double-box-fin {
-    display: contents;
-    grid-template-columns: 0.5fr 0.5fr;
-  }
+
   .double-buttons {
     display: contents;
     width: 100%;
     grid-template-columns: 0.5fr 0.3fr;
   }
 
-  h1 {
-    font-weight: 800;
-    margin-bottom: 3rem;
-    color: #332117 !important;
+  .financialUpdate-forms-container h1 {
+    text-align: center;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    place-items: center;
   }
 
-  h3 {
+  .financialUpdate-forms-container h3 {
     font-weight: 400;
     margin-left: 1rem;
     margin-top: 3rem;
     color: #332117 !important;
   }
 
-  #addDependentBttn {
-    cursor: pointer;
-  }
-}
-
-@media screen and (max-width: 500px) {
-  .container {
-    display: grid;
-  }
-}
-
-@media screen and (min-width: 700px) {
-  .container {
+  .double-buttons-mov {
     display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 20px;
   }
-  .profile-status {
-    font-size: 18px;
-    font-weight: 600;
-    font-size: medium;
-    margin-left: 8rem;
-    margin-top: 12rem;
+
+  .double-buttons-mov button {
+    flex: 1;
+    margin-top: 0;
+    margin-bottom: 0;
+    height: 40px;
   }
-  .forms-container {
-    margin: 5rem;
-    width: 100%;
+
+  .descricao-finUpdate {
+    display: grid;
+    justify-content: start;
+    grid-template-columns: 2.5fr;
+    margin: 0;
+  }
+
+  .descricao-countUpdate {
+    margin-bottom: 12px;
+    margin-left: 13px;
+    font-size: 0.885rem;
+    color: #332117;
+  }
+}
+
+@media screen and (min-width: 1080px) {
+  .bar-container-financialUpdate {
+    display: grid;
+    height: 100%;
+    position: fixed;
+  }
+
+  .financialUpdate-container {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+  }
+
+  .financialUpdate-forms-container {
+    margin: 1rem;
+    width: 90%;
     display: inherit;
     justify-content: center;
-
     flex-direction: column;
   }
 
-  .perfil-radiogroup {
-    margin: 2vw;
-  }
-  .forms-container button {
-    width: 98%;
-    align-self: center;
+  .financialUpdate-forms-container button {
+    width: 100%;
+    margin-top: auto;
   }
 
-  .double-box-fin {
+  .financialUpdate-section-box {
     display: grid;
     justify-content: start;
     grid-template-columns: 0.5fr 0.5fr;
@@ -89,38 +114,52 @@
     color: #332117 !important;
   }
 
-  h1 {
+  .financialUpdate-forms-container h1 {
+    font-size: 34px;
     font-weight: 800;
-    margin-bottom: 3rem;
-    color: #332117 !important;
+    margin-bottom: -0.5rem;
+    margin-top: 2rem;
   }
 
-  h3 {
+  .financialUpdate-forms-container h3 {
     font-weight: 400;
     margin-left: 1rem;
     margin-top: 3rem;
     color: #332117 !important;
   }
+
   .isEmailValid {
     font-weight: 400;
     margin-left: 1rem;
     margin-top: 10px;
     color: red !important;
   }
-  #addDependentBttn {
-    cursor: pointer;
-  }
+
   .double-buttons-mov {
     display: flex;
-    justify-content: space-between; /* Distribui os botões igualmente no espaço disponível */
-    align-items: end; /* Alinha os botões verticalmente */
+    justify-content: space-between;
+    align-items: end;
     gap: 20px;
   }
 
   .double-buttons-mov button {
-    flex: 1; /* Faz com que os botões ocupem o espaço disponível igualmente */
+    flex: 1;
     margin-top: 0;
     margin-bottom: 0;
     height: 40px;
+  }
+
+  .descricao-finUpdate {
+    display: grid;
+    justify-content: start;
+    grid-template-columns: 2.5fr;
+    margin: 0;
+  }
+
+  .descricao-countUpdate {
+    margin-bottom: 12px;
+    margin-left: 13px;
+    font-size: 0.885rem;
+    color: #332117;
   }
 }

@@ -244,12 +244,12 @@ export default function FinancialUpdate() {
   };
 
   return (
-    <section className="container">
-      <div className="forms-container">
+    <section className="financialUpdate-container">
+      <div className="financialUpdate-forms-container">
         <h1> Visualização de Movimentações Financeiras </h1>
         <h3>Dados da movimentação financeira</h3>
 
-        <div className="double-box-fin">
+        <div className="financialUpdate-section-box">
           <FieldSelect
             label="Conta origem"
             value={contaOrigem}
@@ -378,19 +378,20 @@ export default function FinancialUpdate() {
             ]}
           />
         </div>
-        <div className="descricao-fin">
+        <div className="descricao-finUpdate">
           <FieldText
             label="Descrição"
             value={descricao}
             onChange={handleChangeDescricao}
           />
+
+          <div className="descricao-countUpdate">
+            <small>
+              {descricao.length}/{maxDescricaoLength} caracteres
+            </small>
+          </div>
         </div>
 
-        <div>
-          <small>
-            {descricao.length}/{maxDescricaoLength} caracteres
-          </small>
-        </div>
         <div className="double-buttons-mov">
           <SecondaryButton
             text="Deletar"
