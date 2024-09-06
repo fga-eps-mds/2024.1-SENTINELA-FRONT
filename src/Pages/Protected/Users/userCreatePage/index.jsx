@@ -130,15 +130,18 @@ export default function UserCreatePage() {
           value={perfilSelecionado}
           onChange={handlePerfilChange}
         >
-          {roles?.map((perfil) => (
-            <FormControlLabel
-              key={perfil?.name}
-              value={perfil?._id}
-              control={<Radio />}
-              label={perfil?.name}
-            />
-          ))}
+          {roles
+            ?.filter((perfil) => perfil?.name !== "sindicalizado") // Filtra para remover "sindicalizado"
+            .map((perfil) => (
+              <FormControlLabel
+                key={perfil?.name}
+                value={perfil?._id}
+                control={<Radio />}
+                label={perfil?.name}
+              />
+            ))}
         </RadioGroup>
+
         <PrimaryButton text="Cadastrar" onClick={handleSubmit} />
         <Modal
           width="338px"

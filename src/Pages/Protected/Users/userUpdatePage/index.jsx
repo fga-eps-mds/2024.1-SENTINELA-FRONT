@@ -195,15 +195,18 @@ export default function UserUpdatePage() {
           value={perfilSelecionado}
           onChange={handlePerfilChange}
         >
-          {roles.map((perfil) => (
-            <FormControlLabel
-              key={perfil._id}
-              value={perfil._id}
-              control={<Radio />}
-              label={perfil.name}
-            />
-          ))}
+          {roles
+            ?.filter((perfil) => perfil?.name !== "sindicalizado") // Filtra para remover "sindicalizado"
+            .map((perfil) => (
+              <FormControlLabel
+                key={perfil?.name}
+                value={perfil?._id}
+                control={<Radio />}
+                label={perfil?.name}
+              />
+            ))}
         </RadioGroup>
+
         <div className="double-buttons-user">
           {canDelete && (
             <SecondaryButton text="Deletar" onClick={handleDeleteModal} />
