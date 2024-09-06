@@ -12,6 +12,7 @@ export const isValidEmail = (email) => {
     "edu",
     "gov",
   ];
+  console.log[allowedDomains];
 
   const domainPattern = allowedDomains
     .map((domain) => {
@@ -60,4 +61,22 @@ export const isValidSite = (site) => {
   return isValid
     ? { isValid: true }
     : { isValid: false, message: "O site fornecido não é válido." };
+};
+
+export const mascaraTelefone = (telefone) => {
+  let formattedTelefone = telefone.replace(/\D/g, "");
+  if (formattedTelefone.length > 11) {
+    formattedTelefone = formattedTelefone.slice(0, 11);
+  }
+  return formattedTelefone
+    .replace(/^(\d{2})(\d)/g, "($1) $2")
+    .replace(/(\d{4,5})(\d{4})$/, "$1-$2");
+};
+
+export const mascaraCEP = (cep) => {
+  let formattedCEP = cep.replace(/\D/g, "");
+  if (formattedCEP.length > 8) {
+    formattedCEP = formattedCEP.slice(0, 8);
+  }
+  return formattedCEP.replace(/(\d{5})(\d)/, "$1-$2");
 };
