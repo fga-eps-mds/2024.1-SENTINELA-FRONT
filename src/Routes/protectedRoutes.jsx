@@ -77,16 +77,7 @@ const ProtectedRoutes = () => {
           />
         }
       />
-      <Route
-        path="/usuarios/editar/:nome"
-        element={
-          <PermissionProtect
-            element={<UserUpdatePage />}
-            moduleName="users"
-            action="read"
-          />
-        }
-      />
+      <Route path="/usuarios/editar/:nome" element={<UserUpdatePage />} />
       <Route
         path="/usuarios"
         element={
@@ -291,13 +282,7 @@ const ProtectedRoutes = () => {
       />
       <Route
         path="/movimentacoes/contribuicoes/:name"
-        element={
-          <PermissionProtect
-            element={<ContributionHistoric />}
-            moduleName="finance"
-            action="read"
-          />
-        }
+        element={<ContributionHistoric />}
       />
       <Route
         path="/movimentacoes/relatorio"
