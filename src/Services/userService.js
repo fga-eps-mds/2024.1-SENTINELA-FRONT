@@ -1,20 +1,6 @@
 // import { checkModule, checkAction } from "../Utils/permission";
 import { APIUsers } from "./BaseService";
-
-const storagedToken = localStorage.getItem("@App:token");
-const storagedUser = localStorage.getItem("@App:user");
-let token = null;
-let user = null;
-
-if (storagedToken) {
-  try {
-    token = JSON.parse(storagedToken);
-    user = JSON.parse(storagedUser);
-    console.log(token, user);
-  } catch (error) {
-    console.error("O token armazenado não é um JSON válido:", error);
-  }
-}
+import { getToken, getUser } from "./Functions/loader";
 
 export async function userLogin(email, password) {
   try {
@@ -31,7 +17,7 @@ export async function userLogin(email, password) {
 
 export const getUsers = async () => {
   try {
-    const token = JSON.parse(localStorage.getItem("@App:token"));
+    const token = getToken();
     if (!token) {
       throw new Error("No token found");
     }
@@ -48,7 +34,7 @@ export const getUsers = async () => {
 
 export const getUserById = async (id) => {
   try {
-    const token = JSON.parse(localStorage.getItem("@App:token"));
+    const token = getToken();
     const response = await APIUsers.get(`/users/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -62,8 +48,8 @@ export const getUserById = async (id) => {
 
 export const createUser = async (userData) => {
   try {
-    const token = JSON.parse(localStorage.getItem("@App:token"));
-    const storagedUser = JSON.parse(localStorage.getItem("@App:user"));
+    const token = getToken();
+    const storagedUser = getUser();
 
     if (!storagedUser || !storagedUser._id) {
       throw new Error("Usuário não encontrado ou sem ID.");
@@ -109,8 +95,8 @@ export const loginUser = async (credentials) => {
 
 export const patchUserById = async (id, updatedUser) => {
   try {
-    const token = JSON.parse(localStorage.getItem("@App:token"));
-    const user = JSON.parse(localStorage.getItem("@App:user"));
+    const token = getToken();
+    const user = getUser();
 
     if (!user || !user._id) {
       throw new Error("Usuário não encontrado ou sem ID.");
@@ -154,8 +140,8 @@ export const sendRecoveryPassword = async (email) => {
 
 export const deleteUserById = async (id) => {
   try {
-    const token = JSON.parse(localStorage.getItem("@App:token"));
-    const storagedUser = JSON.parse(localStorage.getItem("@App:user"));
+    const token = getToken();
+    const storagedUser = getUser();
 
     if (!storagedUser || !storagedUser._id) {
       throw new Error("Usuário não encontrado ou sem ID.");

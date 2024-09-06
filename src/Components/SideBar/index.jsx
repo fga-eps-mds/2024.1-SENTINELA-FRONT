@@ -4,7 +4,7 @@ import { AiOutlineMenu } from "react-icons/ai";
 import sindpol_logo from "../../assets/sindpol-logo.png";
 import sentinela_logo from "../../assets/sentinela-logo.png";
 import { ButtonGroup } from "@mui/material";
-import { useContext, useState } from "react";
+import { useEffect, useContext, useState } from "react";
 import SideButton from "../SideButton";
 import { AiOutlineUser } from "react-icons/ai";
 import { RiLogoutCircleRLine } from "react-icons/ri";
@@ -21,6 +21,8 @@ export default function SideBar({ fullHeight = true }) {
   const { user } = useAuth();
   const permissions = usePermissions();
   const [role, setRole] = useState("");
+
+  useEffect(() => {}, [navigate]);
 
   const handleItemClick = async (user) => {
     if (user) {
@@ -155,6 +157,7 @@ export default function SideBar({ fullHeight = true }) {
               onClick={() => {
                 context.Logout();
                 navigate("/");
+                window.location.reload();
               }}
             >
               LOGOUT <RiLogoutCircleRLine className="logout-icon" />
