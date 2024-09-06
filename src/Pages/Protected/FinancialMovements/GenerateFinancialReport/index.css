@@ -45,6 +45,16 @@
     width: 95%;
     margin-left: 0.5rem;
   }
+  .checkbox-container {
+    margin-left: 1rem;
+    font-size: 16px;
+  }
+  .checkbox-container h3 {
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    margin-left: 0rem;
+  }
 }
 
 @media screen and (min-width: 1080px) {
@@ -91,5 +101,15 @@
     margin-top: 1rem;
     width: 98.5%;
     margin-left: 0.5rem;
+  }
+  .checkbox-container {
+    margin-left: 1rem;
+    font-size: 16px;
+  }
+  .checkbox-container h3 {
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    margin-left: 0rem;
   }
 }

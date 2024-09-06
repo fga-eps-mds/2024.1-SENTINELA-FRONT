@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { render, screen, cleanup } from "@testing-library/react";
+import { render, screen, cleanup, waitFor } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import FinancialCreate from "./index";
 import { createFinancialMovements } from "../../../../Services/FinancialMovementsService";
@@ -23,11 +23,8 @@ async function fillUpRequiredFields() {
   const tipoDocumentoSelect = selects.find(
     (s) => s.id === "select-Tipo documento *"
   );
-  const pagamentoSelect = selects.find(
-    (s) => s.id === "select-Forma de Pagamento *"
-  );
   const dataVencimentoInput = screen.getByLabelText("Data de vencimento *");
-  const dataPagamentoInput = screen.getByLabelText("Data de pagamento *");
+  const dataPagamentoInput = screen.getByLabelText("Data de pagamento");
 
   await userEvent.click(contaOrigemSelect);
   await userEvent.click(screen.getByRole("option", { name: "Fornecedor" }));
@@ -43,9 +40,6 @@ async function fillUpRequiredFields() {
 
   await userEvent.click(tipoDocumentoSelect);
   await userEvent.click(screen.getByRole("option", { name: "AÇÃO JUDICIAL" }));
-
-  await userEvent.click(pagamentoSelect);
-  await userEvent.click(screen.getByRole("option", { name: "PIX" }));
 
   await userEvent.type(screen.getByLabelText("Valor Bruto *"), "1000");
   await userEvent.type(
@@ -129,7 +123,9 @@ describe("FinancialCreate", () => {
     await userEvent.click(screen.getByText("Cadastrar"));
 
     // Espera que a função de criação seja chamada após preencher os campos obrigatórios
-    expect(createFinancialMovements).toHaveBeenCalledTimes(1);
+    await waitFor(() => {
+      expect(createFinancialMovements).toHaveBeenCalledTimes(1);
+    });
   });
 
   it("navigates to the list page after successful submission", async () => {
@@ -145,8 +141,10 @@ describe("FinancialCreate", () => {
     await userEvent.click(screen.getByText("Cadastrar"));
 
     // Espera que a navegação para a página de lista ocorra após o sucesso
-    expect(
-      await screen.findByText("Cadastro de movimentação concluído")
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.getByText("Cadastro de movimentação concluído")
+      ).toBeInTheDocument();
+    });
   });
 });

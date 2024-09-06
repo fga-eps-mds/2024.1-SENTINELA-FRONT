@@ -32,7 +32,6 @@ function mockServices() {
         formadePagamento: "PIX",
         datadeVencimento: dayjs("2024-01-01"),
         datadePagamento: dayjs("2024-02-01"),
-        baixada: false,
         descricao: "Descrição de exemplo",
       })
     ),
@@ -153,7 +152,7 @@ describe("FinancialUpdate", () => {
       </Router>
     );
 
-    const descricaoInput = screen.getByLabelText("Descrição *");
+    const descricaoInput = screen.getByLabelText("Descrição");
 
     await userEvent.clear(descricaoInput);
     await userEvent.type(descricaoInput, "Descrição alterada");
