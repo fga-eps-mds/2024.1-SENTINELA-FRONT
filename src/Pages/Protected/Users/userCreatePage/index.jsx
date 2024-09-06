@@ -1,7 +1,6 @@
 import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import FieldNumber from "../../../../Components/FieldNumber";
 import FieldSelect from "../../../../Components/FieldSelect";
 import FieldText from "../../../../Components/FieldText";
 import Modal from "../../../../Components/Modal";
@@ -9,6 +8,11 @@ import PrimaryButton from "../../../../Components/PrimaryButton";
 import SecondaryButton from "../../../../Components/SecondaryButton";
 import { createUser, getRoles } from "../../../../Services/userService";
 import "./index.css";
+import {
+  isValidCelular,
+  isValidEmail,
+  mascaraTelefone,
+} from "../../../../Utils/validators";
 
 export default function UserCreatePage() {
   const navigate = useNavigate();
@@ -42,23 +46,36 @@ export default function UserCreatePage() {
     navigate("/usuarios");
   };
 
+  const handleCelularChange = (e) => {
+    const value = e.target.value;
+    const formattedValue = mascaraTelefone(value);
+    setCelular(formattedValue);
+  };
+
   const handleSubmit = async () => {
-    const trimmedCelular = removeMask(celular);
-    const isValidNumber =
-      /^\d+$/.test(trimmedCelular) && trimmedCelular.length > 10;
-    const isValidEmailAddress = isValidEmail(email);
+    const trimmedCelular = celular.replace(/\D/g, "");
+    const { isValid: isValidNumber, message: celularMessage } =
+      isValidCelular(trimmedCelular);
+    const { isValid: isValidEmailAddress, message: emailMessage } =
+      isValidEmail(email);
 
     setIsCelularValid(isValidNumber);
     setIsEmailValid(isValidEmailAddress);
 
     if (!isValidNumber || !isValidEmailAddress) {
+      if (!isValidNumber) {
+        console.error(celularMessage);
+      }
+      if (!isValidEmailAddress) {
+        console.error(emailMessage);
+      }
       return;
     }
 
     const userData = {
       name: nomeCompleto,
       email: email,
-      phone: celular,
+      phone: trimmedCelular,
       status: login === "Ativo",
       role: perfilSelecionado,
     };
@@ -70,13 +87,6 @@ export default function UserCreatePage() {
       console.error("Erro ao criar usuário", error);
     }
   };
-
-  const isValidEmail = (email) => {
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
-    return emailRegex.test(email);
-  };
-
-  const removeMask = (celular) => celular.replace(/\D/g, "");
 
   useEffect(() => {
     const loadRoles = async () => {
@@ -98,11 +108,10 @@ export default function UserCreatePage() {
         />
 
         <div className="double-box-user">
-          <FieldNumber
+          <FieldText
             label="Celular*"
             value={celular}
-            onChange={(e) => setCelular(e.target.value)}
-            format="(##) ##### ####"
+            onChange={handleCelularChange}
           />
           <FieldSelect
             label="Status*"
