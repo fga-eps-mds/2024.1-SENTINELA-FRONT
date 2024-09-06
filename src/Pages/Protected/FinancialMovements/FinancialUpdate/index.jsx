@@ -53,10 +53,18 @@ export default function FinancialUpdate() {
           setNomeDestino(data.nomeDestino || "");
           setTipoDocumento(data.tipoDocumento || "");
           setcpFCnpj(data.cpFCnpj || "");
-          setValorBruto(handleCurrencyInput(data.valorBruto) || "");
-          setValorLiquido(handleCurrencyInput(data.valorLiquido) || "");
-          setAcrescimo(handleCurrencyInput(data.acrescimo) || "");
-          setDesconto(handleCurrencyInput(data.desconto) || "");
+          setValorBruto(
+            handleCurrencyInput(reverseCurrencyFormat(data.valorBruto)) || ""
+          );
+          setValorLiquido(
+            handleCurrencyInput(reverseCurrencyFormat(data.valorLiquido)) || ""
+          );
+          setAcrescimo(
+            handleCurrencyInput(reverseCurrencyFormat(data.acrescimo)) || ""
+          );
+          setDesconto(
+            handleCurrencyInput(reverseCurrencyFormat(data.desconto)) || ""
+          );
           setPagamento(data.formadePagamento || "");
           setDataVencimento(dayjs(data.datadeVencimento || null));
           setDataPagamento(dayjs(data.datadePagamento || null));
@@ -196,6 +204,12 @@ export default function FinancialUpdate() {
           currency: "BRL",
         })
       : "";
+  };
+
+  const reverseCurrencyFormat = (value) => {
+    if (typeof value !== "string") return value;
+    const numericValue = value.replace(/[^\d]/g, "");
+    return numericValue ? parseFloat(numericValue) * 100 : "";
   };
 
   const handleCpfCnpjInput = (value) => {
