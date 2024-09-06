@@ -131,19 +131,6 @@ describe("MemberShip Component", () => {
     expect(motherNameInput.value).toBe("Mary Popins");
   });
 
-  it("should update the mother's name field correctly", () => {
-    render(
-      <BrowserRouter>
-        <MemberShip />
-      </BrowserRouter>
-    );
-
-    const motherNameInput = screen.getByLabelText(/Nome da Mãe/i);
-    fireEvent.change(motherNameInput, { target: { value: "Mary Popins" } });
-
-    expect(motherNameInput.value).toBe("Mary Popins");
-  });
-
   it("should update the phone number field correctly", () => {
     render(
       <BrowserRouter>
@@ -168,6 +155,84 @@ describe("MemberShip Component", () => {
     fireEvent.change(phoneInput, { target: { value: "(99) 99999-9999" } });
 
     expect(phoneInput.value).toBe("(99) 99999-9999");
+  });
+
+  it("should update the CEP number field correctly", () => {
+    render(
+      <BrowserRouter>
+        <MemberShip />
+      </BrowserRouter>
+    );
+
+    const cepInput = screen.getByLabelText(/CEP/i);
+    fireEvent.change(cepInput, { target: { value: "99999-999" } });
+
+    expect(cepInput.value).toBe("99999-999");
+  });
+
+  it("should update the town field correctly", () => {
+    render(
+      <BrowserRouter>
+        <MemberShip />
+      </BrowserRouter>
+    );
+
+    const townInput = screen.getByLabelText(/Cidade/i);
+    fireEvent.change(townInput, { target: { value: "Gama" } });
+
+    expect(townInput.value).toBe("Gama");
+  });
+
+  it("should update the adress field correctly", () => {
+    render(
+      <BrowserRouter>
+        <MemberShip />
+      </BrowserRouter>
+    );
+
+    const adressInput = screen.getByLabelText(/Logradouro/i);
+    fireEvent.change(adressInput, { target: { value: "St. Leste, Gama Leste Projeção A" } });
+
+    expect(adressInput.value).toBe("St. Leste, Gama Leste Projeção A");
+  });
+
+  it("should update the additional adress field correctly", () => {
+    render(
+      <BrowserRouter>
+        <MemberShip />
+      </BrowserRouter>
+    );
+
+    const addAdressInput = screen.getByLabelText(/Complemento/i);
+    fireEvent.change(addAdressInput, { target: { value: "Próximo à estação do BRT Gama" } });
+
+    expect(addAdressInput.value).toBe("Próximo à estação do BRT Gama");
+  });
+
+  it("should update the title field correctly", () => {
+    render(
+      <BrowserRouter>
+        <MemberShip />
+      </BrowserRouter>
+    );
+
+    const titleInput = screen.getByLabelText(/Cargo/i);
+    fireEvent.change(titleInput, { target: { value: "Policial Penal" } });
+
+    expect(titleInput.value).toBe("Policial Penal");
+  });
+
+  it("should update the workstation field correctly", () => {
+    render(
+      <BrowserRouter>
+        <MemberShip />
+      </BrowserRouter>
+    );
+
+    const workstationInput = screen.getByLabelText(/Posto de Trabalho/i);
+    fireEvent.change(workstationInput, { target: { value: "Policial Penal" } });
+
+    expect(workstationInput.value).toBe("Policial Penal");
   });
 
   it("should show an error if required fields are empty", () => {
