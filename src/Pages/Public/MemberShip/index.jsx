@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./index.css";
 import "../../../index.css";
 import dayjs from "dayjs";
@@ -13,6 +13,7 @@ import Alert from "@mui/material/Alert";
 import SecondaryButton from "../../../Components/SecondaryButton";
 import Modal from "../../../Components/Modal";
 import { useNavigate } from "react-router-dom";
+import { listOrgans } from "../../../Services/organService";
 
 const MemberShip = () => {
   const [email, setEmail] = useState("");
@@ -54,6 +55,8 @@ const MemberShip = () => {
   const [errors, setErrors] = useState({});
   const [touchedFields, setTouchedFields] = useState({});
   const [unfilledDependent, setUnfilledDependent] = useState(false);
+  const [orgaosList, setOrgaosList] = useState([]);
+  const [lotacaoList, setLotacaoList] = useState([]);
 
   const navigate = useNavigate();
   // Function to validate a field
@@ -298,11 +301,56 @@ const MemberShip = () => {
     return emailRegex.test(email);
   };
 
+  //FUNÇÕES UTILIZADAS
+  useEffect(() => {
+    const getOrgaos = async () => {
+      try {
+        const orgaos = await listOrgans(); // Presumindo que listOrgans faz a requisição ao backend
+
+        if (Array.isArray(orgaos)) {
+          // Extraindo valores únicos de órgãos
+          const uniqueOrgaos = [...new Set(orgaos.map((orgao) => orgao.orgao))];
+
+          // Extraindo valores únicos de lotações
+          const uniqueLotacoes = [
+            ...new Set(
+              orgaos.flatMap((orgao) =>
+                orgao.lotacao.map((lotacao) => lotacao.nomeLotacao)
+              )
+            ),
+          ];
+
+          setOrgaosList(uniqueOrgaos);
+          setLotacaoList(uniqueLotacoes);
+
+          console.log("Lista de Órgãos:", uniqueOrgaos);
+          console.log("Lista de Lotações:", uniqueLotacoes);
+        } else {
+          console.error("Os dados recebidos não são um array.");
+        }
+      } catch (error) {
+        console.error("Erro ao buscar órgãos:", error);
+      }
+    };
+
+    getOrgaos();
+  }, []);
+
   const handleSubmit = () => {
     const erros = {};
 
+    //CAMPOS OBRIGATÓRIOS
+    if (!nomeCompleto) erros.nomeCompleto = 1;
+    if (!matricula) erros.matricula = 1;
+    if (!sexo) erros.sexo = 1;
+    if (!rg) erros.rg = 1;
+    if (!cpf) erros.cpf = 1;
     if (!email) erros.email = 1;
-    //if (!sexo) erros.sexo = 1;
+    if (!celular) erros.celular = 1;
+    if (!orgao) erros.orgao = 1;
+    if (!lotacao) erros.lotacao = 1;
+
+    //CAMPOS OPCIONAIS
     //if (!estadoCivil) erros.estadoCivil = 1;
     //if (!tipoSanguineo) erros.tipoSanguineo = 1;
     //if (!uf_naturalidade) erros.uf_naturalidade = 1;
@@ -313,13 +361,7 @@ const MemberShip = () => {
     //if (!dataDeNascimento) erros.dataDeNascimento = 1;
     //if (!dataExpedicao) erros.dataExpedicao = 1;
     //if (!cargo) erros.cargo = 1;
-    //if (!lotacao) erros.lotacao = 1;
-    if (!matricula) erros.matricula = 1;
-    if (!nomeCompleto) erros.nomeCompleto = 1;
     //if (!naturalidade) erros.naturalidade = 1;
-    if (!rg) erros.rg = 1;
-    //if (!orgao) erros.orgao = 1;
-    if (!cpf) erros.cpf = 1;
     //if (!nomeDaMae) erros.nomeDaMae = 1;
     //if (!nomeDoPai) erros.nomeDoPai = 1;
     //if (!cep) erros.cep = 1;
@@ -327,10 +369,11 @@ const MemberShip = () => {
     //if (!logradouro) erros.logradouro = 1;
     //if (!complemento) erros.complemento = 1;
     //if (!telefone) erros.telefone = 1;
-    if (!celular) erros.celular = 1;
     //if (!postoDeTrabalho) erros.postoDeTrabalho = 1;
     //if (!orgaoExpedidor) erros.orgaoExpedidor = 1;
     //if (!religiao) erros.religiao = 1;
+
+    //VALIDAÇÕES
     if (isValidEmail(email) === false) erros.email = 1;
     if (cpf.length < 14) erros.cpf = 1;
     if (rg.length < 7) erros.rg = 1;
@@ -591,7 +634,7 @@ const MemberShip = () => {
             />
 
             <FieldSelect
-              label="UF *"
+              label="UF"
               value={uf_endereco}
               onChange={handleChangeUfEndereco}
               options={ufList}
@@ -634,21 +677,25 @@ const MemberShip = () => {
             onBlur={(e) => handleBlur(e, "dataContratacao")}
             erro={erro("dataContratacao")}
           />
-          <FieldText
-            label="Lotação"
+
+          <FieldSelect
+            label="Lotação *"
             value={lotacao}
             onChange={(e) => setlotacao(e.target.value)}
+            options={lotacaoList}
             onBlur={(e) => handleBlur(e, "lotacao")}
             erro={erro("lotacao")}
           />
 
-          <FieldText
-            label="Órgão"
+          <FieldSelect
+            label="Órgão *"
             value={orgao}
             onChange={(e) => setOrgao(e.target.value)}
+            options={orgaosList}
             onBlur={(e) => handleBlur(e, "orgao")}
             erro={erro("orgao")}
           />
+
           <FieldText
             label="Posto de Trabalho"
             value={postoDeTrabalho}
