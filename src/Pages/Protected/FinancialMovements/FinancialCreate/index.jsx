@@ -245,7 +245,7 @@ export default function FinancialCreate() {
             options={nomesOrigem}
           />
           <FieldSelect
-            label="Nome Destino *"
+            label="Nome destino *"
             value={nomeDestino}
             onChange={handleChangeNomeDestino}
             options={nomesDestino}
@@ -306,7 +306,7 @@ export default function FinancialCreate() {
             value={cpFCnpj}
           />
           <FieldText
-            label="Valor Bruto *"
+            label="Valor bruto *"
             onChange={(e) =>
               handleCurrencyInput(
                 e.target.value,
@@ -317,7 +317,7 @@ export default function FinancialCreate() {
             value={valorBruto}
           />
           <FieldText
-            label="Valor Liquído"
+            label="Valor líquido"
             onChange={(e) =>
               handleCurrencyInput(
                 e.target.value,
@@ -362,7 +362,7 @@ export default function FinancialCreate() {
         </div>
         <div className="descricao-fin">
           <FieldSelect
-            label="Forma de Pagamento"
+            label="Forma de pagamento"
             value={pagamento}
             onChange={handleChangePagamento}
             options={[
