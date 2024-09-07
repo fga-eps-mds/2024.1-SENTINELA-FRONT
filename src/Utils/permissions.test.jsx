@@ -1,76 +1,67 @@
-// src/hooks/usePermissions.test.js
+// usePermissions.test.js
+import { describe, it, expect } from "vitest";
+import { checkAction, checkModule } from "./permission";
 
-import { describe, it, expect, beforeEach, vi } from "vitest";
-import { useContext, useState, useEffect } from "react";
-import { AuthContext } from "../Context/auth";
-import { getRoleById } from "../Services/RoleService/roleService";
+// Test data
+const permissions = [
+  {
+    module: "users",
+    access: ["read", "write"],
+  },
+  {
+    module: "settings",
+    access: ["read"],
+  },
+  {
+    module: "dashboard",
+    access: ["view", "edit"],
+  },
+];
 
-// Funções que serão testadas
-export const checkModule = (permissions, module) => {
-  return permissions.some((permission) => permission.module === module);
-};
-
-export const checkAction = (permissions, module, action) => {
-  return (
-    checkModule(permissions, module) &&
-    permissions.some(
-      (permission) =>
-        permission.module === module && permission.access.includes(action)
-    )
-  );
-};
-
-export const usePermissions = () => {
-  const { user } = useContext(AuthContext);
-  const [permissions, setPermissions] = useState([]);
-
-  useEffect(() => {
-    const fetchRolePermissions = async () => {
-      if (user?.role) {
-        try {
-          const role = await getRoleById(user.role);
-          setPermissions(role?.permissions || []);
-        } catch (error) {
-          console.error("Erro ao buscar permissões do papel:", error);
-          setPermissions([]);
-        }
-      }
-    };
-
-    fetchRolePermissions();
-  }, [user]);
-
-  return permissions;
-};
-
-// Mock da função getRoleById
-vi.mock("../Services/RoleService/roleService", () => ({
-  getRoleById: vi.fn(),
-}));
-
-describe("Permission Utilities and usePermissions Hook", () => {
-  const mockPermissions = [
-    { module: "users", access: ["read", "write"] },
-    { module: "roles", access: ["read"] },
-  ];
-
-  beforeEach(() => {
-    vi.clearAllMocks();
+describe("checkModule", () => {
+  it('should return true for existing module "users"', () => {
+    expect(checkModule(permissions, "users")).toBe(true);
   });
 
-  // Testando checkModule e checkAction
-  describe("Permission Utilities", () => {
-    it("should check if a module is present in permissions", () => {
-      expect(checkModule(mockPermissions, "users")).toBe(true);
-      expect(checkModule(mockPermissions, "unknown")).toBe(false);
-    });
+  it('should return true for existing module "settings"', () => {
+    expect(checkModule(permissions, "settings")).toBe(true);
+  });
 
-    it("should check if an action is allowed on a module", () => {
-      expect(checkAction(mockPermissions, "users", "write")).toBe(true);
-      expect(checkAction(mockPermissions, "users", "delete")).toBe(false);
-      expect(checkAction(mockPermissions, "roles", "read")).toBe(true);
-      expect(checkAction(mockPermissions, "roles", "write")).toBe(false);
-      expect(checkAction(mockPermissions, "unknown", "read")).toBe(false);
-    });
+  it('should return true for existing module "dashboard"', () => {
+    expect(checkModule(permissions, "dashboard")).toBe(true);
+  });
+
+  it('should return false for non-existing module "profile"', () => {
+    expect(checkModule(permissions, "profile")).toBe(false);
+  });
+});
+
+describe("checkAction", () => {
+  it('should return true for action "read" in module "users"', () => {
+    expect(checkAction(permissions, "users", "read")).toBe(true);
+  });
+
+  it('should return true for action "write" in module "users"', () => {
+    expect(checkAction(permissions, "users", "write")).toBe(true);
+  });
+
+  it('should return true for action "read" in module "settings"', () => {
+    expect(checkAction(permissions, "settings", "read")).toBe(true);
+  });
+
+  it('should return false for action "write" in module "settings"', () => {
+    expect(checkAction(permissions, "settings", "write")).toBe(false);
+  });
+
+  it('should return true for action "view" in module "dashboard"', () => {
+    expect(checkAction(permissions, "dashboard", "view")).toBe(true);
+  });
+
+  it('should return true for action "edit" in module "dashboard"', () => {
+    expect(checkAction(permissions, "dashboard", "edit")).toBe(true);
+  });
+
+  it('should return false for action "delete" in module "dashboard"', () => {
+    expect(checkAction(permissions, "dashboard", "delete")).toBe(false);
   });
 });
