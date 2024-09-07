@@ -5,6 +5,7 @@ import {
   isValidSite,
   isValidTelefone,
   mascaraCelular,
+  mascaraCEP,
 } from "./validators";
 
 describe("Validators", () => {
@@ -80,6 +81,29 @@ describe("Validators", () => {
 
       expect(validation.isValid).toBeTruthy();
       expect(validation.message).not.toBeDefined();
+    });
+  });
+
+  //teste de cep
+  describe("formats CEP correctly", () => {
+    it("formats valid CEP with 8 digits", () => {
+      const formattedCEP = mascaraCEP("12345678");
+      expect(formattedCEP).toBe("12345-678");
+    });
+
+    it("trims and formats CEP with more than 8 digits", () => {
+      const formattedCEP = mascaraCEP("1234567890");
+      expect(formattedCEP).toBe("12345-678");
+    });
+
+    it("removes non-numeric characters from the CEP", () => {
+      const formattedCEP = mascaraCEP("12.345-678");
+      expect(formattedCEP).toBe("12345-678");
+    });
+
+    it("returns empty string for empty input", () => {
+      const formattedCEP = mascaraCEP("");
+      expect(formattedCEP).toBe("");
     });
   });
 
