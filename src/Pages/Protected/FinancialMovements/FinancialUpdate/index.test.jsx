@@ -1,9 +1,11 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { render, screen, cleanup } from "@testing-library/react";
+import { render, screen, cleanup, waitFor } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 import FinancialUpdate from "./index";
-import { deleteFinancialMovementsById } from "../../../../Services/FinancialMovementsService";
-import { updateFinancialMovementsById } from "../../../../Services/FinancialMovementsService";
+import {
+  deleteFinancialMovementsById,
+  updateFinancialMovementsById,
+} from "../../../../Services/FinancialMovementsService";
 import userEvent from "@testing-library/user-event";
 import dayjs from "dayjs";
 import "@testing-library/jest-dom";
@@ -70,11 +72,16 @@ describe("FinancialUpdate", () => {
       </Router>
     );
 
+    // Open delete modal
     await userEvent.click(screen.getByText("Deletar"));
 
+    // Click the confirm delete button
     await userEvent.click(screen.getByText("EXCLUIR MOVIMENTAÇÃO"));
 
-    expect(deleteFinancialMovementsById).toHaveBeenCalledTimes(1);
+    await waitFor(() => {
+      expect(deleteFinancialMovementsById).toHaveBeenCalledTimes(1);
+      expect(screen.getByText("Movimentação Deletada")).toBeInTheDocument();
+    });
   });
 
   it("should format CPF/CNPJ correctly", async () => {
@@ -94,27 +101,6 @@ describe("FinancialUpdate", () => {
     expect(cpfCnpjInput.value).toBe("12.345.678/0001-99");
   });
 
-  /*it("should format currency inputs correctly", async () => {
-    render(
-      <Router>
-        <FinancialUpdate />
-      </Router>
-    );
-
-    const valorBrutoInput = screen.getByLabelText("Valor bruto *");
-    const acrescimoInput = screen.getByLabelText("Acréscimo");
-    const descontoInput = screen.getByLabelText("Desconto");
-
-    await userEvent.type(valorBrutoInput, "123456");
-    expect(valorBrutoInput.value).toBe("1234.56");
-
-    await userEvent.type(acrescimoInput, "789");
-    expect(acrescimoInput.value).toBe("7.89");
-
-    await userEvent.type(descontoInput, "456");
-    expect(descontoInput.value).toBe("4.56");
-  });
-*/
   it("should handle save button click and call updateFinancialMovementsById", async () => {
     render(
       <Router>
@@ -124,8 +110,10 @@ describe("FinancialUpdate", () => {
 
     await userEvent.click(screen.getByText("Salvar"));
 
-    expect(updateFinancialMovementsById).toHaveBeenCalledTimes(1);
-    expect(screen.getByText("Alterações salvas")).toBeInTheDocument();
+    await waitFor(() => {
+      expect(updateFinancialMovementsById).toHaveBeenCalledTimes(1);
+      expect(screen.getByText("Alterações Salvas")).toBeInTheDocument();
+    });
   });
 
   it("should render labels correctly", () => {
