@@ -308,7 +308,7 @@ export default function UpdateSupplier() {
 
   return (
     <section className="container-benefits">
-      <div className="forms-container-benefits">
+      <div className="forms-container-supplier">
         <h1>Visualização de fornecedor</h1>
 
         <h3>Dados pessoais</h3>
@@ -319,7 +319,7 @@ export default function UpdateSupplier() {
           disabled={true}
         />
 
-        <div className="section-form-benefits">
+        <div className="db-supplier">
           <FieldSelect
             label="Classificação de pessoa"
             value={tipoPessoa}
@@ -350,7 +350,7 @@ export default function UpdateSupplier() {
 
         <h3>Dados de Contato</h3>
 
-        <div className="section-form-benefits">
+        <div className="db-supplier">
           <FieldText
             label="E-mail"
             value={email}
@@ -446,7 +446,7 @@ export default function UpdateSupplier() {
           onChange={(e) => setChavePix(e.target.value)}
         />
 
-        <div className="double-buttons">
+        <div>
           <SecondaryButton text="Deletar" onClick={handleDeleteModal} />
 
           <PrimaryButton text="Salvar" onClick={handleUpdateSupplierButton} />
