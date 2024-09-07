@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, cleanup, waitFor } from "@testing-library/react";
-import { BrowserRouter as Router, useNavigate } from "react-router-dom"; // Importando useNavigate
+import { BrowserRouter as Router, useNavigate } from "react-router-dom";
 import FinancialCreate from "./index";
 import { createFinancialMovements } from "../../../../Services/FinancialMovementsService";
 import "@testing-library/jest-dom";
@@ -14,6 +14,20 @@ vi.mock("react-router-dom", async () => {
     useNavigate: vi.fn(),
   };
 });
+
+function mockServices() {
+  vi.mock("../../../../Services/FinancialMovementsService", () => ({
+    createFinancialMovements: vi.fn(),
+  }));
+
+  vi.mock("../../../../Services/userService", () => ({
+    getUsers: vi.fn(() => Promise.resolve([{ name: "Nome Exemplo" }])),
+  }));
+
+  vi.mock("../../../../Services/supplierService", () => ({
+    getSupplierForm: vi.fn(() => Promise.resolve([{ nome: "Nome Exemplo" }])),
+  }));
+}
 
 // Função auxiliar para preencher campos obrigatórios
 async function fillUpRequiredFields() {
@@ -48,21 +62,6 @@ async function fillUpRequiredFields() {
   } catch (error) {
     console.error("Erro ao preencher campos:", error);
   }
-}
-
-// Mock dos serviços para serem reutilizados em todos os testes
-function mockServices() {
-  vi.mock("../../../../Services/FinancialMovementsService", () => ({
-    createFinancialMovements: vi.fn(),
-  }));
-
-  vi.mock("../../../../Services/userService", () => ({
-    getUsers: vi.fn(() => Promise.resolve([{ name: "Nome Exemplo" }])),
-  }));
-
-  vi.mock("../../../../Services/supplierService", () => ({
-    getSupplierForm: vi.fn(() => Promise.resolve([{ nome: "Nome Exemplo" }])),
-  }));
 }
 
 describe("FinancialCreate Component", () => {
@@ -113,6 +112,19 @@ describe("FinancialCreate Component", () => {
 
     await waitFor(() => {
       expect(createFinancialMovements).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  it("should alert if mandatory fields are not filled", async () => {
+    const alertMock = vi.spyOn(window, "alert").mockImplementation(() => {});
+
+    // Tentando submeter sem preencher os campos obrigatórios
+    await userEvent.click(screen.getByText("Cadastrar"));
+
+    await waitFor(() => {
+      expect(alertMock).toHaveBeenCalledWith(
+        "Preencha todos os campos obrigatórios!"
+      );
     });
   });
 });
