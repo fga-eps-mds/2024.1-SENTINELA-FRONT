@@ -15,6 +15,7 @@ import {
 import { getUsers } from "../../../../Services/userService";
 import { getSupplierForm } from "../../../../Services/supplierService";
 import dayjs from "dayjs";
+import { handleCpfCnpjInput } from "../../../../Utils/validators";
 
 export default function FinancialUpdate() {
   const [contaOrigem, setContaOrigem] = useState("");
@@ -212,22 +213,9 @@ export default function FinancialUpdate() {
     return numericValue ? parseFloat(numericValue) * 100 : "";
   };
 
-  const handleCpfCnpjInput = (value) => {
-    const numericValue = value.replace(/\D/g, "");
-    if (numericValue.length <= 11) {
-      return numericValue
-        .replace(/(\d{3})(\d)/, "$1.$2")
-        .replace(/(\d{3})(\d)/, "$1.$2")
-        .replace(/(\d{3})(\d{1,2})$/, "$1-$2")
-        .slice(0, 14); // CPF formatado
-    } else {
-      return numericValue
-        .replace(/^(\d{2})(\d)/, "$1.$2")
-        .replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3")
-        .replace(/\.(\d{3})(\d)/, ".$1/$2")
-        .replace(/(\d{4})(\d{1,2})$/, "$1-$2")
-        .slice(0, 18); // CNPJ formatado
-    }
+  const handleCpfCnpjChange = (value) => {
+    const formattedValue = handleCpfCnpjInput(value);
+    setcpFCnpj(formattedValue);
   };
 
   const handleChangeNomeOrigem = (event) => {
@@ -341,7 +329,7 @@ export default function FinancialUpdate() {
           <FieldText
             label="CPF/CNPJ"
             value={cpFCnpj}
-            onChange={(e) => setcpFCnpj(handleCpfCnpjInput(e.target.value))}
+            onChange={(e) => handleCpfCnpjChange(e.target.value)}
           />
           <FieldText
             label="Valor bruto *"

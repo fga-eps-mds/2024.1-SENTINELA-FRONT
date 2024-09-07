@@ -10,6 +10,7 @@ import { createFinancialMovements } from "../../../../Services/FinancialMovement
 import { getUsers } from "../../../../Services/userService";
 import { getSupplierForm } from "../../../../Services/supplierService";
 import { useNavigate } from "react-router-dom";
+import { handleCpfCnpjInput } from "../../../../Utils/validators";
 
 export default function FinancialCreate() {
   const [contaOrigem, setContaOrigem] = useState("");
@@ -118,26 +119,13 @@ export default function FinancialCreate() {
     setNumericValue(numericValue ? parseFloat(numericValue) / 100 : 0);
   };
 
-  const handleCpfCnpjInput = (value) => {
-    const numericValue = value.replace(/\D/g, "");
-    if (numericValue.length <= 11) {
-      return numericValue
-        .replace(/(\d{3})(\d)/, "$1.$2")
-        .replace(/(\d{3})(\d)/, "$1.$2")
-        .replace(/(\d{3})(\d{1,2})$/, "$1-$2")
-        .slice(0, 14);
-    } else {
-      return numericValue
-        .replace(/^(\d{2})(\d)/, "$1.$2")
-        .replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3")
-        .replace(/\.(\d{3})(\d)/, ".$1/$2")
-        .replace(/(\d{4})(\d{1,2})$/, "$1-$2")
-        .slice(0, 18);
-    }
-  };
-
   const handleChangeContaOrigem = (event) => {
     setContaOrigem(event.target.value);
+  };
+
+  const handleCpfCnpjChange = (value) => {
+    const formattedValue = handleCpfCnpjInput(value);
+    setCpFCnpj(formattedValue);
   };
 
   const handleChangeContaDestino = (event) => {
@@ -302,7 +290,7 @@ export default function FinancialCreate() {
           />
           <FieldText
             label="CPF/CNPJ"
-            onChange={(e) => setCpFCnpj(handleCpfCnpjInput(e.target.value))}
+            onChange={(e) => handleCpfCnpjChange(e.target.value)}
             value={cpFCnpj}
           />
           <FieldText
