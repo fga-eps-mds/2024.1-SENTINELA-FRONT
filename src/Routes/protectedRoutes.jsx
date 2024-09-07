@@ -291,7 +291,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<GenerateFinancialReport />}
             moduleName="finance"
-            actions={["read"]}
+            actions={["read", "create", "update"]}
           />
         }
       />

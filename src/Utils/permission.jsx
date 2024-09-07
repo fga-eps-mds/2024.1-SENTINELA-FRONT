@@ -5,7 +5,11 @@ import AuthContext from "../Context/auth";
 import { getRoleById } from "../Services/RoleService/roleService";
 
 export const checkModule = (permissions, module) => {
-  return permissions.some((permission) => permission.module === module);
+  const modulePermissions = permissions.find(
+    (permission) => permission.module === module
+  );
+
+  return modulePermissions && modulePermissions.access.length > 0;
 };
 
 export const checkAction = (permissions, module, action) => {

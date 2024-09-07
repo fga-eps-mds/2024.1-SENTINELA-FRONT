@@ -11,7 +11,6 @@ export default function UserHubPage() {
   const navigate = useNavigate();
   const permissions = usePermissions();
   const canAprove = checkAction(permissions, "users", "create");
-  const canRead = checkAction(permissions, "users", "read");
 
   const handleListaClick = () => {
     navigate("/usuarios");
@@ -41,22 +40,20 @@ export default function UserHubPage() {
               onClick={() => navigate("filiacoes-pendentes/")}
             />
           )}
-          {canRead && (
-            <>
-              <SecondaryButton
-                text="LISTA DE USUÁRIOS"
-                onClick={handleListaClick}
-              />
-              <SecondaryButton
-                text="LISTA DE PERFIL"
-                onClick={handleListaPerfilClick}
-              />
-              <SecondaryButton
-                text="LISTA DE ÓRGÃOS"
-                onClick={handleListaOrgaosClick}
-              />
-            </>
-          )}
+          <>
+            <SecondaryButton
+              text="LISTA DE USUÁRIOS"
+              onClick={handleListaClick}
+            />
+            <SecondaryButton
+              text="LISTA DE PERFIL"
+              onClick={handleListaPerfilClick}
+            />
+            <SecondaryButton
+              text="LISTA DE ÓRGÃOS"
+              onClick={handleListaOrgaosClick}
+            />
+          </>
         </div>
       </div>
     </section>
