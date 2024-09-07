@@ -9,10 +9,10 @@ export const checkModule = (permissions, module) => {
 };
 
 export const checkAction = (permissions, module, action) => {
-  return (
-    checkModule(permissions, module) &&
-    permissions.some((permission) => permission.access.includes(action))
+  const modulePermissions = permissions.find(
+    (permission) => permission.module === module
   );
+  return modulePermissions && modulePermissions.access.includes(action);
 };
 
 export const usePermissions = () => {
