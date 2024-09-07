@@ -3,11 +3,25 @@ import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import "dayjs/locale/pt-br"; // Importa a localização desejada para o dayjs
 import PropTypes from "prop-types";
 
-function FieldSelect({ label, value, onChange, options, onBlur, erro }) {
+function FieldSelect({
+  label,
+  value,
+  onChange,
+  options,
+  onBlur,
+  erro,
+  width,
+  name,
+  disable,
+}) {
   return (
     <FormControl
       variant="filled"
-      sx={{ margin: ".7rem", borderRadius: "5px", width: "inherit" }}
+      sx={{
+        margin: ".7rem",
+        borderRadius: "5px",
+        width: width ? "inherit" : width,
+      }}
     >
       <InputLabel id={`label-${label}`}>{label}</InputLabel>
       <Select
@@ -17,6 +31,8 @@ function FieldSelect({ label, value, onChange, options, onBlur, erro }) {
         onChange={onChange}
         label={label}
         onBlur={onBlur}
+        name={name}
+        disabled={disable}
         error={erro}
         sx={{
           backgroundColor: "#EAE3D7",
@@ -70,6 +86,9 @@ FieldSelect.propTypes = {
   ).isRequired,
   onBlur: PropTypes.func, // Added prop type for onBlur
   erro: PropTypes.bool, // Added prop type for erro
+  width: PropTypes.any,
+  name: PropTypes.any,
+  disable: PropTypes.any,
 };
 
 export default FieldSelect;

@@ -64,15 +64,20 @@ export default function Filiacao() {
     phone: { value: phone, setter: setPhone },
     landline: { value: landline, setter: setLandline },
     workPlace: { value: workPlace, setter: setWorkPlace },
-    shipperOrganization: { value: shipperOrganization, setter: setShipperOrganization },
+    shipperOrganization: {
+      value: shipperOrganization,
+      setter: setShipperOrganization,
+    },
     religion: { value: religion, setter: setReligion },
     dependents: { value: dependents, setter: setDependents },
   };
 
+  console.log("teste", education);
+
   return (
     <div>
       FORMULÁRIO DE FILIAÇÃO
-      <MembershipForm formData = {formData} />
+      <MembershipForm formData={formData} />
     </div>
   );
 }

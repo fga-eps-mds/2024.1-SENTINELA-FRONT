@@ -5,10 +5,18 @@ import TextField from "@mui/material/TextField";
 import PropTypes from "prop-types";
 import dayjs from "dayjs";
 
-export default function DataSelect({ label, value, onChange, onBlur, erro }) {
+export default function DataSelect({
+  label,
+  value,
+  onChange,
+  onBlur,
+  erro,
+  name,
+}) {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DatePicker
+        name={name}
         label={label}
         value={dayjs(value)}
         onChange={onChange}
@@ -41,4 +49,5 @@ DataSelect.propTypes = {
   onChange: PropTypes.func.isRequired,
   onBlur: PropTypes.func, // Added prop type for onBlur
   erro: PropTypes.bool, // Added prop type for erro
+  name: PropTypes.any,
 };
