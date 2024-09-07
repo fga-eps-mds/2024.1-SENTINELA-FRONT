@@ -54,18 +54,12 @@ export default function FinancialUpdate() {
           setNomeDestino(data.nomeDestino || "");
           setTipoDocumento(data.tipoDocumento || "");
           setcpFCnpj(data.cpFCnpj || "");
-          setValorBruto(
-            handleCurrencyInput(reverseCurrencyFormat(data.valorBruto)) || ""
-          );
+          setValorBruto(data.valorBruto ? data.valorBruto.toString() : "0.00");
           setValorLiquido(
-            handleCurrencyInput(reverseCurrencyFormat(data.valorLiquido)) || ""
+            data.valorLiquido ? data.valorLiquido.toString() : "0.00"
           );
-          setAcrescimo(
-            handleCurrencyInput(reverseCurrencyFormat(data.acrescimo)) || ""
-          );
-          setDesconto(
-            handleCurrencyInput(reverseCurrencyFormat(data.desconto)) || ""
-          );
+          setAcrescimo(data.acrescimo ? data.acrescimo.toString() : "0.00");
+          setDesconto(data.desconto ? data.desconto.toString() : "0.00");
           setPagamento(data.formadePagamento || "");
           setDataVencimento(dayjs(data.datadeVencimento || null));
           setDataPagamento(dayjs(data.datadePagamento || null));
@@ -163,10 +157,10 @@ export default function FinancialUpdate() {
         nomeDestino,
         tipoDocumento,
         cpFCnpj,
-        valorBruto: parseCurrency(valorBruto),
-        valorLiquido: parseCurrency(valorLiquido),
-        acrescimo: parseCurrency(acrescimo),
-        desconto: parseCurrency(desconto),
+        valorBruto,
+        valorLiquido,
+        acrescimo,
+        desconto,
         formadePagamento: pagamento,
         datadeVencimento: dataVencimento,
         datadePagamento: dataPagamento,
@@ -188,29 +182,21 @@ export default function FinancialUpdate() {
     }
   };
 
-  const parseCurrency = (value) => {
-    if (typeof value !== "string") return "";
-    const numericValue = value.replace(/[\D]/g, "");
-    return numericValue ? (parseFloat(numericValue) / 100).toFixed(2) : "";
-  };
+  const handleCurrencyInput = (value, setValue) => {
+    // Remove qualquer caractere que não seja número
+    const numericValue = value.replace(/\D/g, "");
+    // Converte para número com duas casas decimais
+    const parsedValue = numericValue
+      ? (parseFloat(numericValue) / 100).toFixed(2)
+      : "0.00";
 
-  const handleCurrencyInput = (value) => {
-    const stringValue = String(value);
+    // Atualiza o estado com o valor numérico real
+    setValue(parsedValue);
 
-    if (!stringValue) return "";
-    const numericValue = stringValue.replace(/\D/g, "");
+    // Retorna o valor formatado para exibição
     return numericValue
-      ? (parseFloat(numericValue) / 100).toLocaleString("pt-BR", {
-          style: "currency",
-          currency: "BRL",
-        })
-      : "";
-  };
-
-  const reverseCurrencyFormat = (value) => {
-    if (typeof value !== "string") return value;
-    const numericValue = value.replace(/[^\d]/g, "");
-    return numericValue ? parseFloat(numericValue) * 100 : "";
+      ? `R$ ${parseFloat(parsedValue).toFixed(2).replace(".", ",")}` // Formatação com vírgula
+      : "R$ 0,00";
   };
 
   const handleCpfCnpjChange = (value) => {
@@ -219,22 +205,27 @@ export default function FinancialUpdate() {
   };
 
   const handleChangeNomeOrigem = (event) => {
+    console.log("Nome Origem:", event.target.value);
     setNomeOrigem(event.target.value);
   };
 
   const handleChangeNomeDestino = (event) => {
+    console.log("Nome Destino:", event.target.value);
     setNomeDestino(event.target.value);
   };
 
   const handleChangeContaOrigem = (event) => {
+    console.log("Conta Origem:", event.target.value);
     setContaOrigem(event.target.value);
   };
 
   const handleChangeContaDestino = (event) => {
+    console.log("Conta Destino:", event.target.value);
     setContaDestino(event.target.value);
   };
 
   const handleChangePagamento = (event) => {
+    console.log("Forma de Pagamento:", event.target.value);
     setPagamento(event.target.value);
   };
 
@@ -271,13 +262,13 @@ export default function FinancialUpdate() {
             options={nomesOrigem}
           />
           <FieldSelect
-            label="Nome destino *"
+            label="Nome Destino *"
             value={nomeDestino}
             onChange={handleChangeNomeDestino}
             options={nomesDestino}
           />
           <FieldSelect
-            label="Tipo documento"
+            label="Tipo Documento"
             value={tipoDocumento}
             onChange={(e) => setTipoDocumento(e.target.value)}
             options={[
@@ -332,41 +323,58 @@ export default function FinancialUpdate() {
             onChange={(e) => handleCpfCnpjChange(e.target.value)}
           />
           <FieldText
-            label="Valor bruto *"
-            value={valorBruto}
-            onChange={(e) => setValorBruto(handleCurrencyInput(e.target.value))}
+            label="Valor Bruto *"
+            value={
+              typeof valorBruto === "string"
+                ? `R$ ${valorBruto.replace(".", ",")}`
+                : "R$ 0,00"
+            }
+            onChange={(e) => handleCurrencyInput(e.target.value, setValorBruto)}
           />
           <FieldText
-            label="Valor líquido"
-            value={valorLiquido}
+            label="Valor Liquído"
+            value={
+              typeof valorLiquido === "string"
+                ? `R$ ${valorLiquido.replace(".", ",")}`
+                : "R$ 0,00"
+            }
             onChange={(e) =>
-              setValorLiquido(handleCurrencyInput(e.target.value))
+              handleCurrencyInput(e.target.value, setValorLiquido)
             }
           />
           <FieldText
             label="Acréscimo"
-            value={acrescimo}
-            onChange={(e) => setAcrescimo(handleCurrencyInput(e.target.value))}
+            value={
+              typeof acrescimo === "string"
+                ? `R$ ${acrescimo.replace(".", ",")}`
+                : "R$ 0,00"
+            }
+            onChange={(e) => handleCurrencyInput(e.target.value, setAcrescimo)}
           />
           <FieldText
             label="Desconto"
-            value={desconto}
-            onChange={(e) => setDesconto(handleCurrencyInput(e.target.value))}
+            value={
+              typeof desconto === "string"
+                ? `R$ ${desconto.replace(".", ",")}`
+                : "R$ 0,00"
+            }
+            onChange={(e) => handleCurrencyInput(e.target.value, setDesconto)}
+          />
+
+          <DataSelect
+            label="Data de pagamento"
+            value={dataPagamento}
+            onChange={(newValue) => setDataPagamento(newValue)}
           />
           <DataSelect
             label="Data de vencimento *"
             value={dataVencimento}
             onChange={(newValue) => setDataVencimento(newValue)}
           />
-          <DataSelect
-            label="Data de pagamento"
-            value={dataPagamento}
-            onChange={(newValue) => setDataPagamento(newValue)}
-          />
         </div>
         <div className="descricao-fin">
           <FieldSelect
-            label="Forma de pagamento"
+            label="Forma de Pagamento"
             value={pagamento}
             onChange={handleChangePagamento}
             options={[
@@ -387,12 +395,12 @@ export default function FinancialUpdate() {
             onChange={handleChangeDescricao}
           />
         </div>
-        <div className="descricao-countUpdate">
+
+        <div>
           <small>
             {descricao.length}/{maxDescricaoLength} caracteres
           </small>
         </div>
-
         <div className="double-buttons-mov">
           <SecondaryButton
             text="Deletar"
@@ -401,7 +409,7 @@ export default function FinancialUpdate() {
           <PrimaryButton text="Salvar" onClick={handleSave} />
         </div>
 
-        <Modal alertTitle="Alterações salvas" show={showSaveModal}>
+        <Modal alertTitle="Alterações Salvas" show={showSaveModal}>
           <SecondaryButton
             key={"saveButtons"}
             text="OK"
@@ -431,7 +439,7 @@ export default function FinancialUpdate() {
           />
         </Modal>
 
-        <Modal alertTitle="Movimentação deletada" show={showDeletedModal}>
+        <Modal alertTitle="Movimentação Deletada" show={showDeletedModal}>
           <SecondaryButton
             key={"okButtons"}
             text="OK"

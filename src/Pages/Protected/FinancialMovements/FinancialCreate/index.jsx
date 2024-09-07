@@ -30,10 +30,6 @@ export default function FinancialCreate() {
   const [showModal, setShowModal] = useState(false);
   const [nomesOrigem, setNomesOrigem] = useState([]);
   const [nomesDestino, setNomesDestino] = useState([]);
-  const [numericValorBruto, setNumericValorBruto] = useState(0);
-  const [numericValorLiquido, setNumericValorLiquido] = useState(0);
-  const [numericAcrescimo, setNumericAcrescimo] = useState(0);
-  const [numericDesconto, setNumericDesconto] = useState(0);
   const maxDescricaoLength = 130;
 
   useEffect(() => {
@@ -110,17 +106,21 @@ export default function FinancialCreate() {
     if (contaDestino) fetchNomesDestino();
   }, [contaDestino]);
 
-  const handleCurrencyInput = (value, setValue, setNumericValue) => {
+  const handleCurrencyInput = (value, setValue) => {
+    // Remove qualquer caractere que não seja número
     const numericValue = value.replace(/\D/g, "");
-    const formattedValue = numericValue
-      ? `R$ ${(parseFloat(numericValue) / 100).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}`
-      : "";
-    setValue(formattedValue);
-    setNumericValue(numericValue ? parseFloat(numericValue) / 100 : 0);
-  };
+    // Converte para número com duas casas decimais
+    const parsedValue = numericValue
+      ? (parseFloat(numericValue) / 100).toFixed(2)
+      : "0.00";
 
-  const handleChangeContaOrigem = (event) => {
-    setContaOrigem(event.target.value);
+    // Atualiza o estado com o valor numérico real
+    setValue(parsedValue);
+
+    // Retorna o valor formatado para exibição
+    return numericValue
+      ? `R$ ${parseFloat(parsedValue).toFixed(2).replace(".", ",")}` // Formatação com vírgula
+      : "R$ 0,00";
   };
 
   const handleCpfCnpjChange = (value) => {
@@ -128,23 +128,33 @@ export default function FinancialCreate() {
     setCpFCnpj(formattedValue);
   };
 
+  const handleChangeContaOrigem = (event) => {
+    console.log("Conta Origem:", event.target.value);
+    setContaOrigem(event.target.value);
+  };
+
   const handleChangeContaDestino = (event) => {
+    console.log("Conta Destino:", event.target.value);
     setContaDestino(event.target.value);
   };
 
   const handleChangeNomeOrigem = (event) => {
+    console.log("Nome Origem:", event.target.value);
     setNomeOrigem(event.target.value);
   };
 
   const handleChangeNomeDestino = (event) => {
+    console.log("Nome Destino:", event.target.value);
     setNomeDestino(event.target.value);
   };
 
   const handleChangeTipoDocumento = (event) => {
+    console.log("Tipo Documento:", event.target.value);
     setTipoDocumento(event.target.value);
   };
 
   const handleChangePagamento = (event) => {
+    console.log("Forma de Pagamento:", event.target.value);
     setPagamento(event.target.value);
   };
 
@@ -170,15 +180,17 @@ export default function FinancialCreate() {
       nomeDestino,
       tipoDocumento,
       cpFCnpj,
-      valorBruto: numericValorBruto,
-      valorLiquido: numericValorLiquido,
-      acrescimo: numericAcrescimo,
-      desconto: numericDesconto,
-      formadePagamento: pagamento,
+      valorBruto: parseFloat(valorBruto),
+      valorLiquido: parseFloat(valorLiquido),
+      acrescimo: parseFloat(acrescimo),
+      desconto: parseFloat(desconto),
+      pagamento,
       datadeVencimento: dataVencimento,
       datadePagamento: dataPagamento,
       descricao,
     };
+
+    console.log("Dados enviados ao backend:", financialData);
 
     const error = await createFinancialMovements(financialData);
 
@@ -201,6 +213,7 @@ export default function FinancialCreate() {
     }
 
     if (!error) {
+      console.log("Cadastro realizado com sucesso.");
       setShowModal(true);
     } else {
       console.error("Erro ao cadastrar movimentação financeira:", error);
@@ -233,7 +246,7 @@ export default function FinancialCreate() {
             options={nomesOrigem}
           />
           <FieldSelect
-            label="Nome destino *"
+            label="Nome Destino *"
             value={nomeDestino}
             onChange={handleChangeNomeDestino}
             options={nomesDestino}
@@ -294,49 +307,32 @@ export default function FinancialCreate() {
             value={cpFCnpj}
           />
           <FieldText
-            label="Valor bruto *"
-            onChange={(e) =>
-              handleCurrencyInput(
-                e.target.value,
-                setValorBruto,
-                setNumericValorBruto
-              )
+            label="Valor Bruto *"
+            value={
+              valorBruto ? `R$ ${valorBruto.replace(".", ",")}` : "R$ 0,00"
             }
-            value={valorBruto}
+            onChange={(e) => handleCurrencyInput(e.target.value, setValorBruto)}
           />
           <FieldText
-            label="Valor líquido"
-            onChange={(e) =>
-              handleCurrencyInput(
-                e.target.value,
-                setValorLiquido,
-                setNumericValorLiquido
-              )
+            label="Valor Liquído"
+            value={
+              valorLiquido ? `R$ ${valorLiquido.replace(".", ",")}` : "R$ 0,00"
             }
-            value={valorLiquido}
+            onChange={(e) =>
+              handleCurrencyInput(e.target.value, setValorLiquido)
+            }
           />
           <FieldText
             label="Acréscimo"
-            onChange={(e) =>
-              handleCurrencyInput(
-                e.target.value,
-                setAcrescimo,
-                setNumericAcrescimo
-              )
-            }
-            value={acrescimo}
+            value={acrescimo ? `R$ ${acrescimo.replace(".", ",")}` : "R$ 0,00"}
+            onChange={(e) => handleCurrencyInput(e.target.value, setAcrescimo)}
           />
           <FieldText
             label="Desconto"
-            value={desconto}
-            onChange={(e) =>
-              handleCurrencyInput(
-                e.target.value,
-                setDesconto,
-                setNumericDesconto
-              )
-            }
+            value={desconto ? `R$ ${desconto.replace(".", ",")}` : "R$ 0,00"}
+            onChange={(e) => handleCurrencyInput(e.target.value, setDesconto)}
           />
+
           <DataSelect
             label="Data de pagamento"
             value={dataPagamento}
@@ -350,7 +346,7 @@ export default function FinancialCreate() {
         </div>
         <div className="descricao-fin">
           <FieldSelect
-            label="Forma de pagamento"
+            label="Forma de Pagamento"
             value={pagamento}
             onChange={handleChangePagamento}
             options={[
@@ -370,12 +366,12 @@ export default function FinancialCreate() {
             onChange={handleChangeDescricao}
             value={descricao}
           />
+        </div>
 
-          <div className="descricao-count">
-            <small>
-              {descricao.length}/{maxDescricaoLength} caracteres
-            </small>
-          </div>
+        <div>
+          <small>
+            {descricao.length}/{maxDescricaoLength} caracteres
+          </small>
         </div>
         <PrimaryButton text="Cadastrar" onClick={handleSubmit} />
         <Modal
