@@ -53,7 +53,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<ListSupplier />}
             moduleName="finance"
-            actions={["read", "create", "update"]}
+            actions={["read", "create", "update", "delete"]}
           />
         }
       />
@@ -63,7 +63,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<ViewSupplier />}
             moduleName="finance"
-            actions={["read"]}
+            actions={["read", "update", "delete"]}
           />
         }
       />
@@ -84,7 +84,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<UserListPage />}
             moduleName="users"
-            actions={["read", "create", "update"]}
+            actions={["read", "create", "update", "delete"]}
           />
         }
       />
@@ -95,7 +95,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<UserHubPage />}
             moduleName="users"
-            actions={["read"]}
+            actions={["read", "update", "delete"]}
           />
         }
       />
@@ -105,7 +105,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<RolesListPage />}
             moduleName="users"
-            actions={["read", "create", "update"]}
+            actions={["read", "create", "update", "delete"]}
           />
         }
       />
@@ -126,7 +126,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<RolesUpdatePage />}
             moduleName="users"
-            actions={["read"]}
+            actions={["read", "update", "delete"]}
           />
         }
       />
@@ -147,7 +147,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<Benefits />}
             moduleName="benefits"
-            actions={["read"]}
+            actions={["read", "update", "delete", "create"]}
           />
         }
       />
@@ -157,7 +157,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<BenefitsList />}
             moduleName="benefits"
-            actions={["read", "create", "update"]}
+            actions={["read", "create", "update", "delete"]}
           />
         }
       />
@@ -177,7 +177,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<BenefitsUpdate />}
             moduleName="benefits"
-            actions={["read"]}
+            actions={["read", "update", "delete"]}
           />
         }
       />
@@ -187,7 +187,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<FinanceHubPage />}
             moduleName="finance"
-            actions={["read"]}
+            actions={["read", "create", "update", "delete"]}
           />
         }
       />
@@ -207,7 +207,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<FinanceUpdate />}
             moduleName="finance"
-            actions={["update"]}
+            actions={["update", "delete", "read"]}
           />
         }
       />
@@ -217,7 +217,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<FinanceList />}
             moduleName="finance"
-            actions={["read", "create", "update"]}
+            actions={["read", "create", "update", "delete"]}
           />
         }
       />
@@ -237,7 +237,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<OrganList />}
             moduleName="users"
-            actions={["read", "create", "update"]}
+            actions={["read", "create", "update", "delete"]}
           />
         }
       />
@@ -247,7 +247,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<OrganUpdate />}
             moduleName="users"
-            actions={["read"]}
+            actions={["read", "update", "delete"]}
           />
         }
       />
@@ -267,7 +267,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<FinancialList />}
             moduleName="finance"
-            actions={["read", "create", "update"]}
+            actions={["read", "create", "update", "delete"]}
           />
         }
       />
@@ -277,7 +277,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<FinancialUpdate />}
             moduleName="finance"
-            actions={["read"]}
+            actions={["update", "read", "delete"]}
           />
         }
       />
