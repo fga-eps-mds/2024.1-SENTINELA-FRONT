@@ -9,7 +9,7 @@ export const checkModule = (permissions, module) => {
     (permission) => permission.module === module
   );
 
-  return modulePermissions && modulePermissions.access.length > 0;
+  return modulePermissions ? modulePermissions.access.length > 0 : false;
 };
 
 export const checkAction = (permissions, module, action) => {
