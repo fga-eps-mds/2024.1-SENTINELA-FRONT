@@ -43,7 +43,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<Supplier />}
             moduleName="finance"
-            action="create"
+            actions={["create"]}
           />
         }
       />
@@ -53,7 +53,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<ListSupplier />}
             moduleName="finance"
-            action="read"
+            actions={["read", "create", "update"]}
           />
         }
       />
@@ -63,7 +63,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<ViewSupplier />}
             moduleName="finance"
-            action="read"
+            actions={["read"]}
           />
         }
       />
@@ -73,7 +73,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<UserCreatePage />}
             moduleName="users"
-            action="create"
+            actions={["create"]}
           />
         }
       />
@@ -84,7 +84,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<UserListPage />}
             moduleName="users"
-            action="read"
+            actions={["read", "create", "update"]}
           />
         }
       />
@@ -95,7 +95,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<UserHubPage />}
             moduleName="users"
-            action="read"
+            actions={["read"]}
           />
         }
       />
@@ -105,17 +105,18 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<RolesListPage />}
             moduleName="users"
-            action="read"
+            actions={["read", "create", "update"]}
           />
         }
       />
+
       <Route
         path="/perfis/criar"
         element={
           <PermissionProtect
             element={<RolesCreatePage />}
             moduleName="users"
-            action="create"
+            actions={["create"]}
           />
         }
       />
@@ -125,7 +126,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<RolesUpdatePage />}
             moduleName="users"
-            action="read"
+            actions={["read"]}
           />
         }
       />
@@ -136,7 +137,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<MembershipRequest />}
             moduleName="users"
-            action="create"
+            actions={["create"]}
           />
         }
       />
@@ -146,7 +147,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<Benefits />}
             moduleName="benefits"
-            action="read"
+            actions={["read"]}
           />
         }
       />
@@ -156,7 +157,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<BenefitsList />}
             moduleName="benefits"
-            action="read"
+            actions={["read", "create", "update"]}
           />
         }
       />
@@ -166,7 +167,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<BenefitsCreate />}
             moduleName="benefits"
-            action="create"
+            actions={["create"]}
           />
         }
       />
@@ -176,7 +177,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<BenefitsUpdate />}
             moduleName="benefits"
-            action="read"
+            actions={["read"]}
           />
         }
       />
@@ -186,7 +187,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<FinanceHubPage />}
             moduleName="finance"
-            action="read"
+            actions={["read"]}
           />
         }
       />
@@ -196,7 +197,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<FinanceBankAccount />}
             moduleName="finance"
-            action="create"
+            actions={["create"]}
           />
         }
       />
@@ -206,7 +207,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<FinanceUpdate />}
             moduleName="finance"
-            action="update"
+            actions={["update"]}
           />
         }
       />
@@ -216,7 +217,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<FinanceList />}
             moduleName="finance"
-            action="read"
+            actions={["read", "create", "update"]}
           />
         }
       />
@@ -226,7 +227,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<OrganCreate />}
             moduleName="users"
-            action="create"
+            actions={["create"]}
           />
         }
       />
@@ -236,7 +237,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<OrganList />}
             moduleName="users"
-            action="read"
+            actions={["read", "create", "update"]}
           />
         }
       />
@@ -246,7 +247,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<OrganUpdate />}
             moduleName="users"
-            action="read"
+            actions={["read"]}
           />
         }
       />
@@ -256,7 +257,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<FinancialMovements />}
             moduleName="finance"
-            action="create"
+            actions={["create"]}
           />
         }
       />
@@ -266,7 +267,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<FinancialList />}
             moduleName="finance"
-            action="read"
+            actions={["read", "create", "update"]}
           />
         }
       />
@@ -276,7 +277,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<FinancialUpdate />}
             moduleName="finance"
-            action="read"
+            actions={["read"]}
           />
         }
       />
@@ -290,7 +291,7 @@ const ProtectedRoutes = () => {
           <PermissionProtect
             element={<GenerateFinancialReport />}
             moduleName="finance"
-            action="read"
+            actions={["read"]}
           />
         }
       />

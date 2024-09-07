@@ -5,7 +5,7 @@ import { checkAction } from "../Utils/permission";
 import { Navigate } from "react-router-dom";
 import { getRoleById } from "../Services/RoleService/roleService";
 
-const PermissionProtect = ({ element, moduleName, action }) => {
+const PermissionProtect = ({ element, moduleName, actions }) => {
   const { user } = useContext(AuthContext);
   const [userPermissions, setUserPermissions] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -30,11 +30,14 @@ const PermissionProtect = ({ element, moduleName, action }) => {
   }, [user]);
 
   if (loading) {
-    // Optionally render a loading spinner or a placeholder while permissions are being fetched
+    // Exibe um carregando enquanto as permissões estão sendo buscadas
     return <div>Loading...</div>;
   }
 
-  const hasPermission = checkAction(userPermissions, moduleName, action);
+  // Verifica se o usuário possui pelo menos uma das ações necessárias
+  const hasPermission = actions.some((action) =>
+    checkAction(userPermissions, moduleName, action)
+  );
 
   if (hasPermission) {
     return element;
@@ -46,7 +49,7 @@ const PermissionProtect = ({ element, moduleName, action }) => {
 PermissionProtect.propTypes = {
   element: PropTypes.element.isRequired,
   moduleName: PropTypes.string.isRequired,
-  action: PropTypes.string.isRequired,
+  actions: PropTypes.arrayOf(PropTypes.string).isRequired, // Alterado para um array de strings
 };
 
 export default PermissionProtect;
