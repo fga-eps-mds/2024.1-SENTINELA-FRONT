@@ -1,77 +1,86 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
+import { describe, it, expect, beforeEach, vi, afterEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
-import "@testing-library/jest-dom";
 import ProfileUpdate from "./index";
-import { AuthProvider } from "../../../Context/auth";
+import { getUserById } from "../../../Services/userService";
+import "@testing-library/jest-dom";
 
-vi.mock("../../../Context/auth", async (importOriginal) => {
+vi.mock("../../../Services/userService", () => ({
+  getUserById: vi.fn(),
+}));
+
+vi.mock("react-router-dom", async (importOriginal) => {
   const actual = await importOriginal();
   return {
     ...actual,
-    useAuth: () => ({
-      user: {
-        _id: "123",
-        name: "John Doe",
-        phone: "1234567890",
-        email: "john@example.com",
-        status: true,
-      },
+    useLocation: () => ({
+      state: { userId: "123" },
     }),
+    useNavigate: vi.fn(),
   };
 });
 
-describe("ProfileUpdate", () => {
+describe("ProfileUpdate Page", () => {
+  const setup = () => {
+    return render(
+      <Router>
+        <ProfileUpdate />
+      </Router>
+    );
+  };
+
   beforeEach(() => {
     localStorage.setItem(
       "@App:user",
-      JSON.stringify({
-        _id: "123",
-        name: "John Doe",
-        phone: "1234567890",
-        email: "john@example.com",
-        status: true,
-      })
+      JSON.stringify({ _id: "user123", token: "mock-token" })
     );
   });
 
   afterEach(() => {
-    localStorage.clear();
     vi.clearAllMocks();
+    localStorage.clear();
   });
 
-  it("renders the form correctly", async () => {
-    render(
-      <Router>
-        <AuthProvider>
-          <ProfileUpdate />
-        </AuthProvider>
-      </Router>
-    );
+  it("renders ProfileUpdate page correctly", async () => {
+    getUserById.mockResolvedValue({
+      name: "Test User",
+      phone: "(12) 34567-8910",
+      email: "testuser@example.com",
+      status: true,
+      role: { _id: "admin" },
+    });
 
-    // Aguarda até que o texto "Visualização de usuário" esteja disponível
-    expect(
-      await screen.findByText(/Visualização de usuário/i)
-    ).toBeInTheDocument();
-    expect(screen.getByText(/Dados pessoais/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Celular/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Nome/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/E-mail/i)).toBeInTheDocument();
-    expect(screen.getByText(/Salvar/i)).toBeInTheDocument();
-  });
+    setup();
 
-  it("navigates to home on cancel", async () => {
-    render(
-      <Router>
-        <AuthProvider>
-          <ProfileUpdate />
-        </AuthProvider>
-      </Router>
-    );
+    expect(screen.getByText("Visualização de usuário")).toBeInTheDocument();
+    expect(screen.getByLabelText("Nome*")).toBeInTheDocument();
+    expect(screen.getByLabelText("Celular")).toBeInTheDocument();
+    expect(screen.getByLabelText("E-mail")).toBeInTheDocument();
 
-    fireEvent.click(screen.getByText(/Cancelar/i));
     await waitFor(() => {
-      expect(window.location.pathname).toBe("/home");
+      expect(screen.getByDisplayValue("Test User")).toBeInTheDocument();
+      expect(screen.getByDisplayValue("(12) 34567-8910")).toBeInTheDocument();
+      expect(
+        screen.getByDisplayValue("testuser@example.com")
+      ).toBeInTheDocument();
+    });
+  });
+
+  it("should display validation errors for invalid email and phone number", async () => {
+    setup();
+
+    fireEvent.change(screen.getByLabelText("Celular"), {
+      target: { value: "123" },
+    });
+    fireEvent.change(screen.getByLabelText("E-mail"), {
+      target: { value: "invalidemail" },
+    });
+
+    fireEvent.click(screen.getByText("Salvar"));
+
+    await waitFor(() => {
+      expect(screen.getByText("*Insira um celular válido")).toBeInTheDocument();
+      expect(screen.getByText("*Insira um email válido")).toBeInTheDocument();
     });
   });
 });

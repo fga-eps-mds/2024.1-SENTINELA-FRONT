@@ -4,15 +4,13 @@ import FieldText from "../../../Components/FieldText";
 import FieldNumber from "../../../Components/FieldNumber";
 import PrimaryButton from "../../../Components/PrimaryButton";
 import SecondaryButton from "../../../Components/SecondaryButton";
-import { useAuth } from "../../../Context/auth";
 import Modal from "../../../Components/Modal";
 import { Button } from "@mui/material";
 import "./index.css";
 import { getUserById, patchUserById } from "../../../Services/userService";
 
-const ProfileUpdate = () => {
+export default function ProfileUpdate() {
   const navigate = useNavigate();
-  const { user } = useAuth();
   const { state } = useLocation();
   const userId = state?.userId;
   const storagedUserString = localStorage.getItem("@App:user");
@@ -22,8 +20,8 @@ const ProfileUpdate = () => {
   const [celular, setCelular] = useState("");
   const [login, setLogin] = useState("");
   const [email, setEmail] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [celularError, setCelularError] = useState("");
+  const [isEmailValid, setIsEmailValid] = useState(true);
+  const [isValidNumber, setIsValidNumber] = useState(true);
   const [openDialog, setOpenDialog] = useState(false);
   const [perfilSelecionado, setPerfilSelecionado] = useState("");
 
@@ -38,7 +36,15 @@ const ProfileUpdate = () => {
     };
 
     getUser();
-  }, []);
+  });
+
+  useEffect(() => {
+    setIsEmailValid(isValidEmail(email));
+  }, [email]);
+
+  useEffect(() => {
+    setIsValidNumber(validatePhoneNumber(removeMask(celular)));
+  }, [celular]);
 
   const handleNavigateToContributions = () => {
     navigate(`/movimentacoes/contribuicoes/${nome}`, {
@@ -54,7 +60,12 @@ const ProfileUpdate = () => {
   };
 
   const isValidEmail = (email) => {
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
+    const allowedDomains = ["com", "net", "org", "com.br", "org.br"];
+    const domainPattern = allowedDomains.join("|");
+    const emailRegex = new RegExp(
+      `^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.${domainPattern}$`,
+      "i"
+    );
     return emailRegex.test(email);
   };
 
@@ -65,35 +76,17 @@ const ProfileUpdate = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let isValid = true;
-
-    // Validate email
-    if (!isValidEmail(email)) {
-      setEmailError("*Insira um email válido");
-      isValid = false;
-    } else {
-      setEmailError("");
-    }
-
-    // Validate phone number
-    const unmaskedCelular = removeMask(celular);
-    if (!validatePhoneNumber(unmaskedCelular)) {
-      setCelularError("*Insira um celular válido");
-      isValid = false;
-    } else {
-      setCelularError("");
-    }
-
-    if (!isValid) {
+    if (!isValidNumber || !isEmailValid) {
       return;
     }
-
     try {
       const updatedUser = {
         phone: celular,
         email: email,
       };
       await patchUserById(storagedUser._id, updatedUser);
+      setCelular(celular);
+      setEmail(email);
       setOpenDialog(true);
     } catch (error) {
       console.error(error);
@@ -110,65 +103,63 @@ const ProfileUpdate = () => {
   };
 
   return (
-    user && (
-      <section className="container">
-        <div className="campos-container">
-          <h3 className="profile-view">Visualização de usuário</h3>
-          <h4 className="personal-data">Dados pessoais</h4>
-          <div className="section-campo">
-            <FieldText
-              label="Nome*"
-              value={nome}
-              onChange={(e) => setNome(e.target.value)}
-              disabled={true}
-            />
-          </div>
-          <div className="double-box-pu">
-            <FieldNumber
-              label="Celular"
-              value={celular}
-              onChange={(e) => setCelular(e.target.value)}
-              format="(##) #####-####"
-            />
-            {celularError && (
-              <label className="isValidNumber">{celularError}</label>
-            )}
-            <FieldText
-              label="Login*"
-              value={login}
-              onChange={(e) => setLogin(e.target.value)}
-              disabled
-            />
-          </div>
-          <div className="section-campo">
-            <FieldText
-              label="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            {emailError && <label className="isValid">{emailError}</label>}
-          </div>
-          <div>
-            <Button
-              className="btn-contribution"
-              onClick={handleNavigateToContributions}
-            >
-              Histórico de Contribuições
-            </Button>
-          </div>
-          <div className="section-doublebtn">
-            <SecondaryButton text="Cancelar" onClick={handleCancel} />
-            <PrimaryButton text="Salvar" onClick={handleSubmit} />
-          </div>
+    <section className="container">
+      <div className="campos-container">
+        <h3 className="profile-view">Visualização de usuário</h3>
+        <h4 className="personal-data">Dados pessoais</h4>
+        <div className="section-campo">
+          <FieldText
+            label="Nome*"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
+            disabled={true}
+          />
         </div>
-        <Modal show={openDialog} alertTitle="Alterações Salvas">
-          <Button onClick={handleCloseDialog} className="custom-dialog-button">
-            OK
+        <div className="double-box">
+          <FieldNumber
+            label="Celular"
+            value={celular}
+            onChange={(e) => setCelular(e.target.value)}
+            format="(##) #####-####"
+          />
+          {!isValidNumber && (
+            <label className="isValidNumber">*Insira um celular válido</label>
+          )}
+          <FieldText
+            label="Login*"
+            value={login}
+            onChange={(e) => setLogin(e.target.value)}
+            disabled
+          />
+        </div>
+        <div className="section-campo">
+          <FieldText
+            label="E-mail"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          {!isEmailValid && (
+            <label className="isEmailValid">*Insira um email válido</label>
+          )}
+        </div>
+        <div>
+          <Button
+            className="btn-contribution"
+            onClick={handleNavigateToContributions}
+          >
+            Histórico de Contribuições
           </Button>
-        </Modal>
-      </section>
-    )
+        </div>
+        <div className="section-doublebtn">
+          <SecondaryButton text="Cancelar" onClick={handleCancel} />
+          <PrimaryButton text="Salvar" onClick={handleSubmit} />
+        </div>
+      </div>
+      <Modal show={openDialog} alertTitle="Alterações Salvas">
+        <Button onClick={handleCloseDialog} className="custom-dialog-button">
+          OK
+        </Button>
+      </Modal>
+    </section>
   );
-};
-
-export default ProfileUpdate;
+}
