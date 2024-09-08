@@ -8,6 +8,13 @@ import "@testing-library/jest-dom";
 
 vi.mock("../../../../Services/supplierService");
 
+vi.mock("../../../../Utils/permission", () => ({
+  usePermissions: () => ({
+    somePermission: true,
+  }),
+  checkAction: () => true,
+}));
+
 describe("ListSupplier", () => {
   beforeEach(() => {
     localStorage.setItem("@App:user", JSON.stringify({ token: "mock-tocken" }));

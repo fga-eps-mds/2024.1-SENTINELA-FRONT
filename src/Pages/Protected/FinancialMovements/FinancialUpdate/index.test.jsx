@@ -10,6 +10,13 @@ import userEvent from "@testing-library/user-event";
 import dayjs from "dayjs";
 import "@testing-library/jest-dom";
 
+vi.mock("../../../../Utils/permission", () => ({
+  usePermissions: () => ({
+    somePermission: true,
+  }),
+  checkAction: () => true,
+}));
+
 function mockServices() {
   vi.mock("../../../../Services/FinancialMovementsService", () => ({
     getFinancialMovementsById: vi.fn(() =>

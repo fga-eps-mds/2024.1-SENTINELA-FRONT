@@ -5,8 +5,10 @@
   }
 
   .double-buttons-user {
-    display: contents;
-    grid-template-columns: 0.5fr 0.3fr;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
   }
 
   .contribution-btn {
@@ -20,6 +22,22 @@
     font-size: 13px !important;
     text-align: left !important;
     justify-content: flex-start !important;
+  }
+
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh; /* Para que o conteúdo ocupe toda a altura da tela */
+    padding: 20px; /* Um pouco de padding para dar espaço interno */
+  }
+
+  .forms-container-user {
+    width: 100%;
+    max-width: 500px; /* Limite máximo da largura do formulário */
+    padding: 20px;
+    border-radius: 10px;
   }
 
   #addDependentBttn {
@@ -55,6 +73,9 @@
     cursor: pointer;
     padding-left: 10px !important;
     width: 48% !important;
+  }
+  .forms-container-user {
+    padding-bottom: 40px; /* Garante um espaçamento ao final da página */
   }
 
   #addDependentBttn {

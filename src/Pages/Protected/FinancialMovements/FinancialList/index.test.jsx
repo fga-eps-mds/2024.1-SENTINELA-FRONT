@@ -8,6 +8,13 @@ import "@testing-library/jest-dom";
 
 vi.mock("../../../../Services/BaseService");
 
+vi.mock("../../../../Utils/permission", () => ({
+  usePermissions: () => ({
+    somePermission: true,
+  }),
+  checkAction: () => true,
+}));
+
 describe("FinancialList", () => {
   beforeEach(() => {
     localStorage.setItem("@App:user", JSON.stringify({ token: "mock-token" }));

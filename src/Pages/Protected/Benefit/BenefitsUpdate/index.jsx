@@ -22,6 +22,7 @@ import {
 } from "../../../../Utils/validators";
 import { Snackbar } from "@mui/material";
 import Alert from "@mui/material/Alert";
+import { checkAction, usePermissions } from "../../../../Utils/permission";
 
 export default function BenefitsUpdate() {
   const navigate = useNavigate();
@@ -53,6 +54,9 @@ export default function BenefitsUpdate() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showDeletedModal, setShowDeletedModal] = useState(false);
   const [openError, setOpenError] = useState(false);
+  const permissions = usePermissions();
+  const canUpdate = checkAction(permissions, "benefits", "update");
+  const canDelete = checkAction(permissions, "benefits", "delete");
 
   const tipoPessoaList = ["Jurídica", "Física"];
   const categoriaList = [
@@ -392,12 +396,16 @@ export default function BenefitsUpdate() {
         />
 
         <div className="double-buttons">
-          <SecondaryButton text="Deletar" onClick={handleDeleteModal} />
+          {canDelete && (
+            <SecondaryButton text="Deletar" onClick={handleDeleteModal} />
+          )}
 
-          <PrimaryButton
-            text="Salvar"
-            onClick={() => handleUpdateBenefitsButton()}
-          />
+          {canUpdate && (
+            <PrimaryButton
+              text="Salvar"
+              onClick={() => handleUpdateBenefitsButton()}
+            />
+          )}
         </div>
 
         <Snackbar

@@ -17,6 +17,13 @@ import {
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 import { useAuth } from "../../../../Context/auth";
 
+vi.mock("../../../../Utils/permission", () => ({
+  usePermissions: () => ({
+    somePermission: true,
+  }),
+  checkAction: () => true,
+}));
+
 function mockServices() {
   vi.mock("../../../../Services/bankAccountService", () => ({
     getBankAccount: vi.fn(),

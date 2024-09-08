@@ -1,10 +1,10 @@
-import { Button, FormControlLabel, Radio, RadioGroup } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Button, FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import FieldSelect from "../../../../Components/FieldSelect";
 import FieldText from "../../../../Components/FieldText";
 import Modal from "../../../../Components/Modal";
-import PrimaryButton from "../../../..//Components/PrimaryButton";
+import PrimaryButton from "../../../../Components/PrimaryButton";
 import SecondaryButton from "../../../../Components/SecondaryButton";
 import {
   deleteUserById,
@@ -12,6 +12,7 @@ import {
   getUserById,
   patchUserById,
 } from "../../../../Services/userService";
+import { checkAction, usePermissions } from "../../../../Utils/permission";
 import "./index.css";
 import {
   isValidCelular,
@@ -20,13 +21,14 @@ import {
 } from "../../../../Utils/validators";
 
 export default function UserUpdatePage() {
+  const permissions = usePermissions();
   const { state } = useLocation();
   const navigate = useNavigate();
   const userId = state?.userId;
 
   const [nomeCompleto, setNomeCompleto] = useState("");
   const [celular, setCelular] = useState("");
-  const [login, setLogin] = useState("");
+  const [login, setLogin] = useState("Ativo");
   const [email, setEmail] = useState("");
   const [perfilSelecionado, setPerfilSelecionado] = useState("");
   const [roles, setRoles] = useState([]);
@@ -36,10 +38,8 @@ export default function UserUpdatePage() {
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isCelularValid, setIsCelularValid] = useState(true);
 
-  const handleNomeCompletoChange = (e) => {
-    const value = e.target.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, "");
-    setNomeCompleto(value);
-  };
+  const canDelete = checkAction(permissions, "users", "delete");
+  const canUpdate = checkAction(permissions, "users", "update");
 
   useEffect(() => {
     const loadRoles = async () => {
@@ -53,7 +53,6 @@ export default function UserUpdatePage() {
     loadRoles();
   }, []);
 
-  // Puxa os dados do usuário para atualizar a página
   useEffect(() => {
     const fetchUser = async () => {
       if (userId) {
@@ -124,32 +123,17 @@ export default function UserUpdatePage() {
     }
   };
 
-  const loginOptions = ["Ativo", "Inativo"];
-  const handleChangeLogin = (event) => {
-    setLogin(event.target.value);
-  };
-
-  const handlePerfilChange = (event) => {
+  const handleChangeLogin = (event) => setLogin(event.target.value);
+  const handlePerfilChange = (event) =>
     setPerfilSelecionado(event.target.value);
-  };
 
-  const handleSaveModal = () => {
-    setShowSaveModal(true);
-  };
-
-  const handleDeleteModal = () => {
-    setShowDeleteModal(true);
-  };
-
+  const handleSaveModal = () => setShowSaveModal(true);
+  const handleDeleteModal = () => setShowDeleteModal(true);
   const handleSaveCloseDialog = () => {
     setShowSaveModal(false);
     navigate("/usuarios");
   };
-
-  const handleDeleteCloseDialog = () => {
-    setShowDeleteModal(false);
-  };
-
+  const handleDeleteCloseDialog = () => setShowDeleteModal(false);
   const handleDeletedCloseDialog = () => {
     setShowDeletedModal(false);
     navigate("/usuarios");
@@ -176,7 +160,9 @@ export default function UserUpdatePage() {
         <FieldText
           label="Nome Completo"
           value={nomeCompleto}
-          onChange={handleNomeCompletoChange}
+          onChange={(e) =>
+            setNomeCompleto(e.target.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, ""))
+          }
         />
         <div className="double-box-user">
           <FieldText
@@ -188,7 +174,7 @@ export default function UserUpdatePage() {
             label="Status"
             value={login}
             onChange={handleChangeLogin}
-            options={loginOptions}
+            options={["Ativo", "Inativo"]}
           />
         </div>
         {!isCelularValid && (
@@ -216,23 +202,27 @@ export default function UserUpdatePage() {
           value={perfilSelecionado}
           onChange={handlePerfilChange}
         >
-          {roles.map((perfil) => (
-            <FormControlLabel
-              key={perfil?.name}
-              value={perfil?._id}
-              control={<Radio />}
-              label={perfil?.name}
-            />
-          ))}
+          {roles
+            ?.filter((perfil) => perfil?.name !== "sindicalizado")
+            .map((perfil) => (
+              <FormControlLabel
+                key={perfil?.name}
+                value={perfil?._id}
+                control={<Radio />}
+                label={perfil?.name}
+              />
+            ))}
         </RadioGroup>
+
         <div className="double-buttons-user">
-          <SecondaryButton text="Deletar" onClick={handleDeleteModal} />
-          <PrimaryButton text="Salvar" onClick={handleSave} />
+          {canDelete && (
+            <SecondaryButton text="Deletar" onClick={handleDeleteModal} />
+          )}
+          {canUpdate && <PrimaryButton text="Salvar" onClick={handleSave} />}
         </div>
 
         <Modal alertTitle="Alterações Salvas" show={showSaveModal}>
           <SecondaryButton
-            key={"saveButtons"}
             text="OK"
             onClick={handleSaveCloseDialog}
             width="338px"
@@ -243,7 +233,6 @@ export default function UserUpdatePage() {
           show={showDeleteModal}
         >
           <SecondaryButton
-            key={"deleteButtons"}
             text="EXCLUIR USUÁRIO"
             onClick={handleDelete}
             width="338px"
