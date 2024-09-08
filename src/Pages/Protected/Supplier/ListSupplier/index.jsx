@@ -44,15 +44,15 @@ export default function ListSupplier() {
   );
 
   return (
-    <section className="container-list-benefits">
-      <div className="forms-container-list-benefits">
-        <div className="double-box-list-benefits">
+    <section className="container-list-suppliers">
+      <div className="forms-container-list-suppliers">
+        <div className="double-box-list-suppliers">
           <h1> Lista de fornecedores</h1>
           {canCreate && (
             <PrimaryButton text="Cadastrar fornecedor" onClick={handleSubmit} />
           )}
         </div>
-        <div className="search-box-benefits">
+        <div className="search-box-suppliers">
           <FieldText
             label="Pesquisar fornecedor"
             value={search}
@@ -63,7 +63,7 @@ export default function ListSupplier() {
               <div key={supplier._id}>
                 <ListItem>
                   <ListItemButton
-                    className="list-item-benefits"
+                    className="list-item-suppliers"
                     style={{
                       transition: "background-color 0.3s ease",
                     }}
