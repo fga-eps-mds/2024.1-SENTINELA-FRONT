@@ -7,6 +7,7 @@ import "./index.css";
 import { Snackbar } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import Modal from "../../../../Components/Modal";
+import { checkAction, usePermissions } from "../../../../Utils/permission";
 import {
   getOrganById,
   deleteOrganById,
@@ -21,6 +22,9 @@ export const OrganId = () => {
   const { state } = useLocation();
   const organsId = state?.organsId;
   const navigate = useNavigate();
+  const permissions = usePermissions();
+  const canUpdate = checkAction(permissions, "users", "update");
+  const canDelete = checkAction(permissions, "users", "delete");
 
   const [openSave, setOpenSave] = useState(false);
   const [openDeleteOrgan, setOpenDeleteOrgan] = useState(false);
@@ -179,21 +183,25 @@ export const OrganId = () => {
           </div>
         ))}
 
-        <div className="adition-button">
-          <PrimaryButton
-            text="Adicionar Nova Lotação"
-            onClick={handleAddLotacao}
-          />
-        </div>
+        {canUpdate && (
+          <div className="adition-button">
+            <PrimaryButton
+              text="Adicionar Nova Lotação"
+              onClick={handleAddLotacao}
+            />
+          </div>
+        )}
 
         <div className="edit-buttons">
-          <SecondaryButton
-            text="Deletar"
-            onClick={() => {
-              setOpenVerificationDelete(true);
-            }}
-          />
-          <PrimaryButton text="Salvar" onClick={handleUpdate} />
+          {canDelete && (
+            <SecondaryButton
+              text="Deletar"
+              onClick={() => {
+                setOpenVerificationDelete(true);
+              }}
+            />
+          )}
+          {canUpdate && <PrimaryButton text="Salvar" onClick={handleUpdate} />}
         </div>
       </div>
 

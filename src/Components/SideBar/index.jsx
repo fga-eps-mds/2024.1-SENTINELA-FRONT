@@ -4,12 +4,14 @@ import { AiOutlineMenu } from "react-icons/ai";
 import sindpol_logo from "../../assets/sindpol-logo.png";
 import sentinela_logo from "../../assets/sentinela-logo.png";
 import { ButtonGroup } from "@mui/material";
-import { useContext, useState } from "react";
+import { useEffect, useContext, useState } from "react";
 import SideButton from "../SideButton";
 import { AiOutlineUser } from "react-icons/ai";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import AuthContext, { useAuth } from "../../Context/auth";
+import { usePermissions, checkModule } from "../../Utils/permission";
+import { getRoleById } from "../../Services/RoleService/roleService";
 
 export default function SideBar({ fullHeight = true }) {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
@@ -17,16 +19,27 @@ export default function SideBar({ fullHeight = true }) {
   const navigate = useNavigate();
   const context = useContext(AuthContext);
   const { user } = useAuth();
+  const permissions = usePermissions();
+  const [role, setRole] = useState("");
 
-  const handleItemClick = (user) => {
-    if (user?.role?.name == "sindicalizado") {
-      navigate(`/filiados/${user.name}`, {
-        state: { membershipId: user._id },
-      });
-    } else {
+  useEffect(() => {}, [navigate]);
+
+  const handleItemClick = async (user) => {
+    if (user) {
+      try {
+        const result = await getRoleById(user.role);
+        setRole(result.name);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    if (role == "administrador") {
       navigate(`/usuarios/editar/${user.name}`, {
         state: { userId: user._id },
       });
+    } else {
+      navigate("/perfil");
     }
   };
 
@@ -40,7 +53,7 @@ export default function SideBar({ fullHeight = true }) {
       }}
     />,
     <SideButton
-      hidden={user ? "flex" : "none"}
+      hidden={checkModule(permissions, "users") ? "flex" : "none"}
       key="filiacao"
       text="CADASTROS"
       onClick={() => {
@@ -48,7 +61,7 @@ export default function SideBar({ fullHeight = true }) {
       }}
     />,
     <SideButton
-      hidden={user ? "flex" : "none"}
+      hidden={checkModule(permissions, "finance") ? "flex" : "none"}
       key="financeiro"
       text="FINANCEIRO"
       onClick={() => {
@@ -56,7 +69,7 @@ export default function SideBar({ fullHeight = true }) {
       }}
     />,
     <SideButton
-      hidden={user ? "flex" : "none"}
+      hidden={checkModule(permissions, "benefits") ? "flex" : "none"}
       key="beneficios"
       text="BENEFÍCIOS"
       onClick={() => {
@@ -144,6 +157,7 @@ export default function SideBar({ fullHeight = true }) {
               onClick={() => {
                 context.Logout();
                 navigate("/");
+                window.location.reload();
               }}
             >
               LOGOUT <RiLogoutCircleRLine className="logout-icon" />

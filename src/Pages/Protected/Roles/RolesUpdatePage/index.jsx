@@ -11,8 +11,10 @@ import {
   deleteRole,
 } from "../../../../Services/RoleService/roleService";
 import CheckboxRow from "../../../../Components/CheckboxRow";
+import { checkAction, usePermissions } from "../../../../Utils/permission";
 
 export default function RolesUpdatePage() {
+  const permissions = usePermissions();
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -26,6 +28,9 @@ export default function RolesUpdatePage() {
   const navigate = useNavigate();
   const location = useLocation();
   const { roleId } = location.state;
+
+  const canDelete = checkAction(permissions, "users", "delete");
+  const canUpdate = checkAction(permissions, "users", "update");
 
   useEffect(() => {
     const fetchRole = async () => {
@@ -167,11 +172,14 @@ export default function RolesUpdatePage() {
         </div>
 
         <div className="double-buttons-roles">
-          <SecondaryButton
-            text="DELETAR"
-            onClick={() => setShowDeleteModal(true)}
-          />
+          {canDelete && (
+            <SecondaryButton
+              text="DELETAR"
+              onClick={() => setShowDeleteModal(true)}
+            />
+          )}
           <Modal
+            alertTitle="Confirmação de exclusão"
             width="338px"
             alert="Deseja excluir este perfil? Usuários que os possuem perderão suas permissões!"
             show={showDeleteModal}
@@ -190,8 +198,14 @@ export default function RolesUpdatePage() {
             />
           </Modal>
 
-          <PrimaryButton text="SALVAR" onClick={() => setShowSaveModal(true)} />
+          {canUpdate && (
+            <PrimaryButton
+              text="SALVAR"
+              onClick={() => setShowSaveModal(true)}
+            />
+          )}
           <Modal
+            alertTitle=""
             width="338px"
             alert="DESEJA CONTINUAR COM AS ALTERAÇÕES FEITAS NO PERFIL?"
             show={showSaveModal}
@@ -210,6 +224,7 @@ export default function RolesUpdatePage() {
             />
           </Modal>
           <Modal
+            alertTitle=""
             width="338px"
             alert="PERFIL ALTERADO COM SUCESSO"
             show={showSuccessModal}
@@ -222,6 +237,7 @@ export default function RolesUpdatePage() {
             />
           </Modal>
           <Modal
+            alertTitle=""
             width="338px"
             alert="PERFIL DELETADO COM SUCESSO"
             show={showSuccessDelModal}

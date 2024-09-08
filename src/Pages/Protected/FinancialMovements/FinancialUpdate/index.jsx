@@ -15,6 +15,7 @@ import {
 import { getUsers } from "../../../../Services/userService";
 import { getSupplierForm } from "../../../../Services/supplierService";
 import dayjs from "dayjs";
+import { checkAction, usePermissions } from "../../../../Utils/permission";
 
 export default function FinancialUpdate() {
   const [contaOrigem, setContaOrigem] = useState("");
@@ -37,6 +38,9 @@ export default function FinancialUpdate() {
   const [nomesOrigem, setNomesOrigem] = useState([]);
   const [nomesDestino, setNomesDestino] = useState([]);
   const maxDescricaoLength = 130;
+  const permissions = usePermissions();
+  const canUpdate = checkAction(permissions, "finance", "update");
+  const canDelete = checkAction(permissions, "finance", "delete");
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -392,11 +396,13 @@ export default function FinancialUpdate() {
         </div>
 
         <div className="double-buttons-mov">
-          <SecondaryButton
-            text="Deletar"
-            onClick={() => setShowDeleteModal(true)}
-          />
-          <PrimaryButton text="Salvar" onClick={handleSave} />
+          {canDelete && (
+            <SecondaryButton
+              text="Deletar"
+              onClick={() => setShowDeleteModal(true)}
+            />
+          )}
+          {canUpdate && <PrimaryButton text="Salvar" onClick={handleSave} />}
         </div>
 
         <Modal alertTitle="Alterações salvas" show={showSaveModal}>

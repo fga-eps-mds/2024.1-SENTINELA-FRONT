@@ -6,7 +6,7 @@ const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-
+  const [flag, setFlag] = useState(true);
   useEffect(() => {
     const storagedUser = localStorage.getItem("@App:user");
     const storagedToken = localStorage.getItem("@App:token");
@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
     if (storagedToken && storagedUser) {
       setUser(JSON.parse(storagedUser));
     }
-  }, []);
+  }, [flag]);
 
   const Login = async (email, password) => {
     try {
@@ -22,6 +22,7 @@ export const AuthProvider = ({ children }) => {
       setUser(response.data);
       localStorage.setItem("@App:user", JSON.stringify(response.data.user));
       localStorage.setItem("@App:token", JSON.stringify(response.data.token));
+      setFlag(!flag);
       return false;
     } catch (err) {
       return true;
@@ -33,6 +34,7 @@ export const AuthProvider = ({ children }) => {
 
     localStorage.removeItem("@App:user");
     localStorage.removeItem("App:token");
+    setFlag(!flag);
   };
 
   // ### Auth return

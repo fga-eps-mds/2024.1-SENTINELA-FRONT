@@ -16,8 +16,24 @@ import {
   updateSupplierFormById,
 } from "../../../../Services/supplierService";
 
+// Mock da função checkAction e usePermissions
+vi.mock("../../../../Utils/permission", () => {
+  return {
+    ...vi.importActual("../../../../Utils/permission"), // Importa o módulo real
+    checkAction: vi.fn((permissions, module, action) => {
+      if (
+        module === "finance" &&
+        (action === "update" || action === "delete")
+      ) {
+        return true;
+      }
+      return false;
+    }),
+    usePermissions: () => ({}),
+  };
+});
+
 function mockValidators() {
-  // mocka funções de validação do service
   vi.mock("../../../../Utils/validators", () => {
     return {
       isValidEmail: (email) =>
@@ -97,7 +113,7 @@ describe("SupplierUpdate", () => {
 
       await userEvent.click(screen.getByText("Salvar"));
 
-      expect(updateSupplierFormById).not.toHaveBeenCalled(); // Não chamar função por conta de email inválido
+      expect(updateSupplierFormById).not.toHaveBeenCalled();
 
       fireEvent.change(emailInput, {
         target: { value: "valid@email.com" },
@@ -111,7 +127,7 @@ describe("SupplierUpdate", () => {
 
       await userEvent.click(screen.getByText("Salvar"));
 
-      expect(updateSupplierFormById).not.toHaveBeenCalled(); // Não chamar função por conta de email inválido
+      expect(updateSupplierFormById).not.toHaveBeenCalled();
 
       fireEvent.change(celInput, {
         target: { value: "(61) 91234-1234" },
@@ -125,7 +141,7 @@ describe("SupplierUpdate", () => {
 
       await userEvent.click(screen.getByText("Salvar"));
 
-      expect(updateSupplierFormById).not.toHaveBeenCalled(); // Não chamar função por conta de email inválido
+      expect(updateSupplierFormById).not.toHaveBeenCalled();
 
       fireEvent.change(phoneInput, {
         target: { value: "(61) 991234-1234" },
@@ -139,7 +155,7 @@ describe("SupplierUpdate", () => {
 
       await userEvent.click(screen.getByText("Salvar"));
 
-      expect(updateSupplierFormById).not.toHaveBeenCalled(); // Não chamar função por conta de email inválido
+      expect(updateSupplierFormById).not.toHaveBeenCalled();
 
       fireEvent.change(cpfCNPJInput, {
         target: { value: "123.456.789-10" },

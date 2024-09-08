@@ -4,10 +4,16 @@ import { MemoryRouter, Route, Routes } from "react-router-dom";
 import ListBankAccount from "./index";
 import { getAll } from "../../../../../src/Services/bankAccountService";
 import "@testing-library/jest-dom";
-
 // Mockar o serviço getAll
 vi.mock("../../../../../src/Services/bankAccountService", () => ({
   getAll: vi.fn(),
+}));
+
+vi.mock("../../../../Utils/permission", () => ({
+  usePermissions: () => ({
+    somePermission: true,
+  }),
+  checkAction: () => true,
 }));
 
 // Mockar o contexto de autenticação

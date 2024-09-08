@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import PermissionProtect from "./permissionProtect";
 import Home from "../Pages/Protected/Home";
 import ProfileUpdate from "../Pages/Protected/ProfileUpdate";
 import UserCreatePage from "../Pages/Protected/Users/userCreatePage";
@@ -28,44 +29,257 @@ import FinancialMovements from "../Pages/Protected/FinancialMovements/FinancialC
 import FinancialList from "../Pages/Protected/FinancialMovements/FinancialList";
 import FinancialUpdate from "../Pages/Protected/FinancialMovements/FinancialUpdate";
 import ContributionHistoric from "../Pages/Protected/FinancialMovements/ContributionHistoric";
+import Unauthorized from "../Pages/Protected/Unauthorized";
 import GenerateFinancialReport from "../Pages/Protected/FinancialMovements/GenerateFinancialReport";
 
 const ProtectedRoutes = () => {
   return (
     <Routes>
+      <Route path="/unauthorized" element={<Unauthorized />} />
       <Route path="/home" element={<Home />} />
-      <Route path="/fornecedores/criar" element={<Supplier />} />
-      <Route path="/fornecedores" element={<ListSupplier />} />
-      <Route path="/fornecedores/:id" element={<ViewSupplier />} />
-      <Route path="/usuarios/criar" element={<UserCreatePage />} />
+      <Route
+        path="/fornecedores/criar"
+        element={
+          <PermissionProtect
+            element={<Supplier />}
+            moduleName="finance"
+            actions={["create"]}
+          />
+        }
+      />
+      <Route
+        path="/fornecedores"
+        element={
+          <PermissionProtect
+            element={<ListSupplier />}
+            moduleName="finance"
+            actions={["read", "create", "update", "delete"]}
+          />
+        }
+      />
+      <Route
+        path="/fornecedores/:id"
+        element={
+          <PermissionProtect
+            element={<ViewSupplier />}
+            moduleName="finance"
+            actions={["read", "update", "delete"]}
+          />
+        }
+      />
+      <Route
+        path="/usuarios/criar"
+        element={
+          <PermissionProtect
+            element={<UserCreatePage />}
+            moduleName="users"
+            actions={["create"]}
+          />
+        }
+      />
       <Route path="/usuarios/editar/:nome" element={<UserUpdatePage />} />
-      <Route path="/usuarios" element={<UserListPage />} />
+      <Route
+        path="/usuarios"
+        element={
+          <PermissionProtect
+            element={<UserListPage />}
+            moduleName="users"
+            actions={["read", "create", "update", "delete"]}
+          />
+        }
+      />
       <Route path="/filiados/:id" element={<ViewMembershipPage />} />
-      <Route path="/usuarios/hub" element={<UserHubPage />} />
-      <Route path="/perfis" element={<RolesListPage />} />
-      <Route path="/perfis/criar" element={<RolesCreatePage />} />
-      <Route path="/perfis/editar/:name" element={<RolesUpdatePage />} />
+      <Route
+        path="/usuarios/hub"
+        element={
+          <PermissionProtect
+            element={<UserHubPage />}
+            moduleName="users"
+            actions={["read", "update", "delete"]}
+          />
+        }
+      />
+      <Route
+        path="/perfis"
+        element={
+          <PermissionProtect
+            element={<RolesListPage />}
+            moduleName="users"
+            actions={["read", "create", "update", "delete"]}
+          />
+        }
+      />
+
+      <Route
+        path="/perfis/criar"
+        element={
+          <PermissionProtect
+            element={<RolesCreatePage />}
+            moduleName="users"
+            actions={["create"]}
+          />
+        }
+      />
+      <Route
+        path="/perfis/editar/:name"
+        element={
+          <PermissionProtect
+            element={<RolesUpdatePage />}
+            moduleName="users"
+            actions={["read", "update", "delete"]}
+          />
+        }
+      />
       <Route path="/perfil" element={<ProfileUpdate />} />
       <Route
         path="usuarios/hub/filiacoes-pendentes"
-        element={<MembershipRequest />}
+        element={
+          <PermissionProtect
+            element={<MembershipRequest />}
+            moduleName="users"
+            actions={["create"]}
+          />
+        }
       />
-      <Route path="/beneficios" element={<Benefits />} />
-      <Route path="/beneficios/lista" element={<BenefitsList />} />
-      <Route path="/beneficios/criar" element={<BenefitsCreate />} />
-      <Route path="/beneficios/editar/:id" element={<BenefitsUpdate />} />
-      <Route path="/finance/hub" element={<FinanceHubPage />} />
-      <Route path="/finance/criar" element={<FinanceBankAccount />} />
-      <Route path="/finance/update/:id" element={<FinanceUpdate />} />
-      <Route path="/finance/list" element={<FinanceList />} />
-      <Route path="/organ/create" element={<OrganCreate />} />
-      <Route path="/organ/list" element={<OrganList />} />
-      <Route path="/organ/update/:id" element={<OrganUpdate />} />
-      <Route path="/movimentacoes/criar" element={<FinancialMovements />} />
-      <Route path="/movimentacoes/lista" element={<FinancialList />} />
+      <Route
+        path="/beneficios"
+        element={
+          <PermissionProtect
+            element={<Benefits />}
+            moduleName="benefits"
+            actions={["read", "update", "delete", "create"]}
+          />
+        }
+      />
+      <Route
+        path="/beneficios/lista"
+        element={
+          <PermissionProtect
+            element={<BenefitsList />}
+            moduleName="benefits"
+            actions={["read", "create", "update", "delete"]}
+          />
+        }
+      />
+      <Route
+        path="/beneficios/criar"
+        element={
+          <PermissionProtect
+            element={<BenefitsCreate />}
+            moduleName="benefits"
+            actions={["create"]}
+          />
+        }
+      />
+      <Route
+        path="/beneficios/editar/:id"
+        element={
+          <PermissionProtect
+            element={<BenefitsUpdate />}
+            moduleName="benefits"
+            actions={["read", "update", "delete"]}
+          />
+        }
+      />
+      <Route
+        path="/finance/hub"
+        element={
+          <PermissionProtect
+            element={<FinanceHubPage />}
+            moduleName="finance"
+            actions={["read", "create", "update", "delete"]}
+          />
+        }
+      />
+      <Route
+        path="/finance/criar"
+        element={
+          <PermissionProtect
+            element={<FinanceBankAccount />}
+            moduleName="finance"
+            actions={["create"]}
+          />
+        }
+      />
+      <Route
+        path="/finance/update/:id"
+        element={
+          <PermissionProtect
+            element={<FinanceUpdate />}
+            moduleName="finance"
+            actions={["update", "delete", "read"]}
+          />
+        }
+      />
+      <Route
+        path="/finance/list"
+        element={
+          <PermissionProtect
+            element={<FinanceList />}
+            moduleName="finance"
+            actions={["read", "create", "update", "delete"]}
+          />
+        }
+      />
+      <Route
+        path="/organ/create"
+        element={
+          <PermissionProtect
+            element={<OrganCreate />}
+            moduleName="users"
+            actions={["create"]}
+          />
+        }
+      />
+      <Route
+        path="/organ/list"
+        element={
+          <PermissionProtect
+            element={<OrganList />}
+            moduleName="users"
+            actions={["read", "create", "update", "delete"]}
+          />
+        }
+      />
+      <Route
+        path="/organ/update/:id"
+        element={
+          <PermissionProtect
+            element={<OrganUpdate />}
+            moduleName="users"
+            actions={["read", "update", "delete"]}
+          />
+        }
+      />
+      <Route
+        path="/movimentacoes/criar"
+        element={
+          <PermissionProtect
+            element={<FinancialMovements />}
+            moduleName="finance"
+            actions={["create"]}
+          />
+        }
+      />
+      <Route
+        path="/movimentacoes/lista"
+        element={
+          <PermissionProtect
+            element={<FinancialList />}
+            moduleName="finance"
+            actions={["read", "create", "update", "delete"]}
+          />
+        }
+      />
       <Route
         path="/movimentacoes/visualizar/:id"
-        element={<FinancialUpdate />}
+        element={
+          <PermissionProtect
+            element={<FinancialUpdate />}
+            moduleName="finance"
+            actions={["update", "read", "delete"]}
+          />
+        }
       />
       <Route
         path="/movimentacoes/contribuicoes/:name"
@@ -73,7 +287,13 @@ const ProtectedRoutes = () => {
       />
       <Route
         path="/movimentacoes/relatorio"
-        element={<GenerateFinancialReport />}
+        eelement={
+          <PermissionProtect
+            element={<GenerateFinancialReport />}
+            moduleName="finance"
+            actions={["read", "create", "update"]}
+          />
+        }
       />
     </Routes>
   );
