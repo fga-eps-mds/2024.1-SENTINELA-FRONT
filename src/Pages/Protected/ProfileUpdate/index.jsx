@@ -22,8 +22,8 @@ const ProfileUpdate = () => {
   const [celular, setCelular] = useState("");
   const [login, setLogin] = useState("");
   const [email, setEmail] = useState("");
-  const [isEmailValid, setIsEmailValid] = useState(true);
-  const [isValidNumber, setIsValidNumber] = useState(true);
+  const [emailError, setEmailError] = useState("");
+  const [celularError, setCelularError] = useState("");
   const [openDialog, setOpenDialog] = useState(false);
   const [perfilSelecionado, setPerfilSelecionado] = useState("");
 
@@ -38,15 +38,7 @@ const ProfileUpdate = () => {
     };
 
     getUser();
-  });
-
-  useEffect(() => {
-    setIsEmailValid(isValidEmail(email));
-  }, [email]);
-
-  useEffect(() => {
-    setIsValidNumber(validatePhoneNumber(removeMask(celular)));
-  }, [celular]);
+  }, []);
 
   const handleNavigateToContributions = () => {
     navigate(`/movimentacoes/contribuicoes/${nome}`, {
@@ -62,12 +54,7 @@ const ProfileUpdate = () => {
   };
 
   const isValidEmail = (email) => {
-    const allowedDomains = ["com", "net", "org", "com.br", "org.br"];
-    const domainPattern = allowedDomains.join("|");
-    const emailRegex = new RegExp(
-      `^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.${domainPattern}$`,
-      "i"
-    );
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
     return emailRegex.test(email);
   };
 
@@ -78,17 +65,35 @@ const ProfileUpdate = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!isValidNumber || !isEmailValid) {
+    let isValid = true;
+
+    // Validate email
+    if (!isValidEmail(email)) {
+      setEmailError("*Insira um email válido");
+      isValid = false;
+    } else {
+      setEmailError("");
+    }
+
+    // Validate phone number
+    const unmaskedCelular = removeMask(celular);
+    if (!validatePhoneNumber(unmaskedCelular)) {
+      setCelularError("*Insira um celular válido");
+      isValid = false;
+    } else {
+      setCelularError("");
+    }
+
+    if (!isValid) {
       return;
     }
+
     try {
       const updatedUser = {
         phone: celular,
         email: email,
       };
       await patchUserById(storagedUser._id, updatedUser);
-      setCelular(celular);
-      setEmail(email);
       setOpenDialog(true);
     } catch (error) {
       console.error(error);
@@ -118,15 +123,15 @@ const ProfileUpdate = () => {
               disabled={true}
             />
           </div>
-          <div className="double-box">
+          <div className="double-box-pu">
             <FieldNumber
               label="Celular"
               value={celular}
               onChange={(e) => setCelular(e.target.value)}
               format="(##) #####-####"
             />
-            {!isValidNumber && (
-              <label className="isValidNumber">*Insira um celular válido</label>
+            {celularError && (
+              <label className="isValidNumber">{celularError}</label>
             )}
             <FieldText
               label="Login*"
@@ -137,13 +142,11 @@ const ProfileUpdate = () => {
           </div>
           <div className="section-campo">
             <FieldText
-              label="E-mail"
+              label="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            {!isEmailValid && (
-              <label className="isEmailValid">*Insira um email válido</label>
-            )}
+            {emailError && <label className="isValid">{emailError}</label>}
           </div>
           <div>
             <Button
