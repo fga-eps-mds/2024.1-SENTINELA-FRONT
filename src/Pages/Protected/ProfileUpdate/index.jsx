@@ -36,7 +36,7 @@ export default function ProfileUpdate() {
     };
 
     getUser();
-  });
+  }, [storagedUser._id]);
 
   useEffect(() => {
     setIsEmailValid(isValidEmail(email));
@@ -115,7 +115,7 @@ export default function ProfileUpdate() {
             disabled={true}
           />
         </div>
-        <div className="double-box">
+        <div className="double-box-pu">
           <FieldNumber
             label="Celular"
             value={celular}
