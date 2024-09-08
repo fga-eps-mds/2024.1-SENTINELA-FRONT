@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button, FormControlLabel, Radio, RadioGroup } from "@mui/material";
-import FieldNumber from "../../../../Components/FieldNumber";
 import FieldSelect from "../../../../Components/FieldSelect";
 import FieldText from "../../../../Components/FieldText";
 import Modal from "../../../../Components/Modal";
@@ -15,6 +14,11 @@ import {
 } from "../../../../Services/userService";
 import { checkAction, usePermissions } from "../../../../Utils/permission";
 import "./index.css";
+import {
+  isValidCelular,
+  isValidEmail,
+  mascaraTelefone,
+} from "../../../../Utils/validators";
 
 export default function UserUpdatePage() {
   const permissions = usePermissions();
@@ -56,7 +60,7 @@ export default function UserUpdatePage() {
           const user = await getUserById(userId);
           if (user) {
             setNomeCompleto(user.name || "");
-            setCelular(user.phone || "");
+            setCelular(mascaraTelefone(user.phone || ""));
             setLogin(user.status ? "Ativo" : "Inativo");
             setEmail(user.email || "");
             setPerfilSelecionado(user.role._id || "");
@@ -69,13 +73,6 @@ export default function UserUpdatePage() {
 
     fetchUser();
   }, [userId]);
-
-  const isValidEmail = (email) => {
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
-    return emailRegex.test(email);
-  };
-
-  const removeMask = (celular) => celular.replace(/\D/g, "");
 
   const handleDelete = async () => {
     setShowDeleteModal(false);
@@ -90,19 +87,30 @@ export default function UserUpdatePage() {
   };
 
   const handleSave = async () => {
-    const trimmedCelular = removeMask(celular);
-    const isValidNumber =
-      /^\d+$/.test(trimmedCelular) && trimmedCelular.length > 10;
-    const isValidEmailAddress = isValidEmail(email);
+    const trimmedCelular = celular.replace(/\D/g, "");
+    const { isValid: isValidNumber, message: celularMessage } =
+      isValidCelular(trimmedCelular);
+    const { isValid: isValidEmailAddress, message: emailMessage } =
+      isValidEmail(email);
 
     setIsCelularValid(isValidNumber);
     setIsEmailValid(isValidEmailAddress);
 
-    if (userId && isValidEmailAddress && isValidNumber) {
+    if (!isValidNumber || !isValidEmailAddress) {
+      if (!isValidNumber) {
+        console.error(celularMessage);
+      }
+      if (!isValidEmailAddress) {
+        console.error(emailMessage);
+      }
+      return;
+    }
+
+    if (userId) {
       const updatedUser = {
         name: nomeCompleto,
         email: email,
-        phone: celular,
+        phone: trimmedCelular,
         status: login === "Ativo",
         role: perfilSelecionado,
       };
@@ -157,11 +165,10 @@ export default function UserUpdatePage() {
           }
         />
         <div className="double-box-user">
-          <FieldNumber
+          <FieldText
             label="Celular"
             value={celular}
-            onChange={(e) => setCelular(e.target.value)}
-            format=" (##) ##### ####"
+            onChange={(e) => setCelular(mascaraTelefone(e.target.value))}
           />
           <FieldSelect
             label="Status"
@@ -230,13 +237,16 @@ export default function UserUpdatePage() {
             onClick={handleDelete}
             width="338px"
           />
-          <PrimaryButton text="Cancelar" onClick={handleDeleteCloseDialog} />
+          <SecondaryButton
+            key={"modalButtons"}
+            text="CANCELAR E MANTER O CADASTRO"
+            onClick={handleDeleteCloseDialog}
+            width="338px"
+          />
         </Modal>
-        <Modal
-          alertTitle="Usuário deletado com sucesso!"
-          show={showDeletedModal}
-        >
-          <PrimaryButton
+        <Modal alertTitle="Usuário Deletado" show={showDeletedModal}>
+          <SecondaryButton
+            key={"okButtons"}
             text="OK"
             onClick={handleDeletedCloseDialog}
             width="338px"
