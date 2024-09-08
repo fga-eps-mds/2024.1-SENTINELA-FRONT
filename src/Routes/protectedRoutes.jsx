@@ -287,7 +287,7 @@ const ProtectedRoutes = () => {
       />
       <Route
         path="/movimentacoes/relatorio"
-        eelement={
+        element={
           <PermissionProtect
             element={<GenerateFinancialReport />}
             moduleName="finance"
