@@ -1,3 +1,5 @@
+// src/pages/UserListPage/UserListPage.js
+
 import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -10,10 +12,13 @@ import PrimaryButton from "../../../../Components/PrimaryButton";
 import "../userHubPage/index.css";
 import "./index.css";
 import { getUsers } from "../../../../Services/userService";
+import { usePermissions, checkAction } from "../../../../Utils/permission";
 
 export default function UserListPage() {
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(true);
+  const permissions = usePermissions();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,12 +38,23 @@ export default function UserListPage() {
     fetchUsers();
   }, []);
 
+  useEffect(() => {
+    setLoading(false);
+  }, [permissions]);
+
+  if (loading) {
+    // Renderizar um spinner ou algum placeholder enquanto as permissões estão sendo carregadas
+    return <div>Carregando...</div>;
+  }
+
+  const hasPermission = checkAction(permissions, "users", "create");
+
   const handleRegisterClick = () => {
     navigate("/usuarios/criar");
   };
 
   const handleItemClick = (user) => {
-    if (user?.role?.name == "sindicalizado") {
+    if (user?.role?.name === "sindicalizado") {
       navigate(`/filiados/${user.name}`, {
         state: { membershipId: user._id },
       });
@@ -58,10 +74,12 @@ export default function UserListPage() {
       <div className="forms-container-list">
         <div className="double-box-list">
           <h1>Lista de Usuários</h1>
-          <PrimaryButton
-            text="Cadastrar Usuário"
-            onClick={handleRegisterClick}
-          />
+          {hasPermission && (
+            <PrimaryButton
+              text="Cadastrar Usuário"
+              onClick={handleRegisterClick}
+            />
+          )}
         </div>
         <FieldText
           label="Pesquisar Usuário"

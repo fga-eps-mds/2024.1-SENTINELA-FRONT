@@ -13,8 +13,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Modal from "../../../../Components/Modal";
 import { Alert, Snackbar } from "@mui/material";
 import { isValidEmail } from "../../../../Utils/validators";
+import { checkAction, usePermissions } from "../../../../Utils/permission";
 
 export default function UpdateSupplier() {
+  const permissions = usePermissions();
+  const canUpdate = checkAction(permissions, "finance", "update");
+  const canDelete = checkAction(permissions, "finance", "delete");
   const [nome, setNome] = useState("");
   const [tipoPessoa, setTipoPessoa] = useState("");
   const [cpfCnpj, setCpfCnpj] = useState("");
@@ -446,10 +450,14 @@ export default function UpdateSupplier() {
           onChange={(e) => setChavePix(e.target.value)}
         />
 
-        <div>
-          <SecondaryButton text="Deletar" onClick={handleDeleteModal} />
+        <div className="double-buttons">
+          {canDelete && (
+            <SecondaryButton text="Deletar" onClick={handleDeleteModal} />
+          )}
 
-          <PrimaryButton text="Salvar" onClick={handleUpdateSupplierButton} />
+          {canUpdate && (
+            <PrimaryButton text="Salvar" onClick={handleUpdateSupplierButton} />
+          )}
         </div>
 
         <Snackbar

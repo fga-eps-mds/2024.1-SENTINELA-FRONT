@@ -9,12 +9,15 @@ import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import { listOrgans } from "../../../../Services/organService";
 import "./index.css";
+import { checkAction, usePermissions } from "../../../../Utils/permission";
 
 export default function OrganList() {
+  const permissions = usePermissions();
   const [search, setSearch] = useState("");
   const [organs, setOrgans] = useState([]);
   const navigate = useNavigate();
 
+  const canCreate = checkAction(permissions, "users", "create");
   useEffect(() => {
     const getOrgansInfo = async () => {
       const response = await listOrgans();
@@ -43,7 +46,9 @@ export default function OrganList() {
       <div className="forms-container-list-organs">
         <div className="double-box-list-organs">
           <h1 className="title-center"> Lista de órgãos</h1>
-          <PrimaryButton text="Cadastrar órgão" onClick={handleSubmit} />
+          {canCreate && (
+            <PrimaryButton text="Cadastrar órgão" onClick={handleSubmit} />
+          )}
         </div>
         <div className="search-box-organs">
           <FieldText

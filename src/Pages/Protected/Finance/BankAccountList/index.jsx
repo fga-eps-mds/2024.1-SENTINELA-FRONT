@@ -10,12 +10,15 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import FieldText from "../../../../Components/FieldText";
 import { getAll } from "../../../../../src/Services/bankAccountService";
+import { checkAction, usePermissions } from "../../../../Utils/permission";
 
 export default function ListBankAccount() {
   const [busca, setBusca] = useState("");
   const navigate = useNavigate();
   const { user } = useAuth();
   const [bankAccounts, setBankAccounts] = useState([]);
+  const permissions = usePermissions();
+  const canCreate = checkAction(permissions, "finance", "create");
 
   useEffect(() => {
     const fetchBankAccounts = async () => {
@@ -48,10 +51,12 @@ export default function ListBankAccount() {
         <div className="forms-container-list-bankAccount">
           <div className="double-box-list-bankAccount">
             <h1>Lista de Contas Bancárias</h1>
-            <PrimaryButtom
-              text="Cadastrar contas bancárias"
-              onClick={handleRegisterClick}
-            />
+            {canCreate && (
+              <PrimaryButtom
+                text="Cadastrar contas bancárias"
+                onClick={handleRegisterClick}
+              />
+            )}
           </div>
           <div className="search-box-bankAccount">
             <FieldText

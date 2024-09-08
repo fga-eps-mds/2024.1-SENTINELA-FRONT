@@ -1,11 +1,16 @@
+// src/pages/UserHubPage/UserHubPage.js
+
 import { useNavigate } from "react-router-dom";
 import SecondaryButton from "../../../../Components/SecondaryButton";
 import sindpol_logo from "../../../../assets/sindpol-logo.png";
 import sentinela_logo from "../../../../assets/sentinela-logo.png";
 import "./index.css";
+import { usePermissions, checkAction } from "../../../../Utils/permission";
 
 export default function UserHubPage() {
   const navigate = useNavigate();
+  const permissions = usePermissions();
+  const canAprove = checkAction(permissions, "users", "create");
 
   const handleListaClick = () => {
     navigate("/usuarios");
@@ -29,23 +34,26 @@ export default function UserHubPage() {
             src={sentinela_logo}
             alt="Sentinela Logo"
           />
-          {/* <SecondaryButton text="SOLICITAÇÕES DE FILIAÇÃO" onClick={""} /> */}
-          <SecondaryButton
-            text="Filiações pendentes"
-            onClick={() => navigate("filiacoes-pendentes/")}
-          />
-          <SecondaryButton
-            text="LISTA DE USUÁRIOS"
-            onClick={handleListaClick}
-          />
-          <SecondaryButton
-            text="LISTA DE PERFIL"
-            onClick={handleListaPerfilClick}
-          />
-          <SecondaryButton
-            text="LISTA DE ÓRGÃOS"
-            onClick={handleListaOrgaosClick}
-          />
+          {canAprove && (
+            <SecondaryButton
+              text="Filiações pendentes"
+              onClick={() => navigate("filiacoes-pendentes/")}
+            />
+          )}
+          <>
+            <SecondaryButton
+              text="LISTA DE USUÁRIOS"
+              onClick={handleListaClick}
+            />
+            <SecondaryButton
+              text="LISTA DE PERFIL"
+              onClick={handleListaPerfilClick}
+            />
+            <SecondaryButton
+              text="LISTA DE ÓRGÃOS"
+              onClick={handleListaOrgaosClick}
+            />
+          </>
         </div>
       </div>
     </section>

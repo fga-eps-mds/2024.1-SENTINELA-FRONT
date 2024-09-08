@@ -15,6 +15,13 @@ import {
   updateOrgan,
 } from "../../../../Services/organService";
 
+vi.mock("../../../../Utils/permission", () => ({
+  usePermissions: () => ({
+    somePermission: true,
+  }),
+  checkAction: () => true,
+}));
+
 describe("OrgansUpdate", () => {
   beforeEach(() => {
     vi.mock("../../../../Services/organService", () => {

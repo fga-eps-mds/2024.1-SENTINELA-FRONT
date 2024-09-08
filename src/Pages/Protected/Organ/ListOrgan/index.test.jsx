@@ -7,6 +7,12 @@ import { BrowserRouter as Router } from "react-router-dom";
 import "@testing-library/jest-dom";
 
 vi.mock("../../../../Services/organService");
+vi.mock("../../../../Utils/permission", () => ({
+  usePermissions: () => ({
+    somePermission: true,
+  }),
+  checkAction: () => true,
+}));
 
 describe("OrganList", () => {
   beforeEach(() => {

@@ -14,6 +14,7 @@ import {
   updateBankAccount,
 } from "../../../../Services/bankAccountService";
 import Modal from "../../../../Components/Modal";
+import { checkAction, usePermissions } from "../../../../Utils/permission";
 
 const BankAccountId = () => {
   const [name, setName] = useState("");
@@ -25,6 +26,9 @@ const BankAccountId = () => {
   const [status, setStatus] = useState("");
   const [agency, setAgency] = useState("");
   const [openError, setOpenError] = useState(false);
+  const permissions = usePermissions();
+  const canUpdate = checkAction(permissions, "finance", "update");
+  const canDelete = checkAction(permissions, "finance", "delete");
 
   const { user } = useAuth();
   const { id } = useParams(); // Pega o ID da URL
@@ -179,14 +183,22 @@ const BankAccountId = () => {
         </div>
 
         <div className="edit-buttons">
-          <SecondaryButton
-            text="Deletar"
-            onClick={() => {
-              setOpenVerificationDelete(true);
-            }}
-            marginTop="1rem"
-          />
-          <PrimaryButton text="Salvar" onClick={saveUpdate} marginTop="1rem" />
+          {canDelete && (
+            <SecondaryButton
+              text="Deletar"
+              onClick={() => {
+                setOpenVerificationDelete(true);
+              }}
+              marginTop="1rem"
+            />
+          )}
+          {canUpdate && (
+            <PrimaryButton
+              text="Salvar"
+              onClick={saveUpdate}
+              marginTop="1rem"
+            />
+          )}
         </div>
       </div>
 

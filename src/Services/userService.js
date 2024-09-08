@@ -1,15 +1,6 @@
+// import { checkModule, checkAction } from "../Utils/permission";
 import { APIUsers } from "./BaseService";
-
-const storagedToken = localStorage.getItem("@App:token");
-let token = null;
-
-if (storagedToken) {
-  try {
-    token = JSON.parse(storagedToken);
-  } catch (error) {
-    console.error("O token armazenado não é um JSON válido:", error);
-  }
-}
+import { getToken, getUser } from "./Functions/loader";
 
 export async function userLogin(email, password) {
   try {
@@ -26,6 +17,7 @@ export async function userLogin(email, password) {
 
 export const getUsers = async () => {
   try {
+    const token = getToken();
     if (!token) {
       throw new Error("No token found");
     }
@@ -42,6 +34,7 @@ export const getUsers = async () => {
 
 export const getUserById = async (id) => {
   try {
+    const token = getToken();
     const response = await APIUsers.get(`/users/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -55,12 +48,24 @@ export const getUserById = async (id) => {
 
 export const createUser = async (userData) => {
   try {
+    const token = getToken();
+    const storagedUser = getUser();
+
+    if (!storagedUser || !storagedUser._id) {
+      throw new Error("Usuário não encontrado ou sem ID.");
+    }
+
     await APIUsers.post("/signup", {
       name: userData.name,
       email: userData.email,
       phone: userData.phone,
       status: userData.status,
       role: userData.role,
+      params: {
+        userId: `${storagedUser._id}`,
+        moduleName: "users",
+        action: "create",
+      },
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -90,10 +95,22 @@ export const loginUser = async (credentials) => {
 
 export const patchUserById = async (id, updatedUser) => {
   try {
+    const token = getToken();
+    const user = getUser();
+
+    if (!user || !user._id) {
+      throw new Error("Usuário não encontrado ou sem ID.");
+    }
+
     const response = await APIUsers.patch(
       `/users/patch/${id}`,
       { updatedUser },
       {
+        params: {
+          userId: `${user._id}`,
+          moduleName: "users",
+          action: "update",
+        },
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -123,13 +140,25 @@ export const sendRecoveryPassword = async (email) => {
 
 export const deleteUserById = async (id) => {
   try {
+    const token = getToken();
+    const storagedUser = getUser();
+
+    if (!storagedUser || !storagedUser._id) {
+      throw new Error("Usuário não encontrado ou sem ID.");
+    }
     await APIUsers.delete(`/users/delete/${id}`, {
+      params: {
+        userId: `${storagedUser._id}`,
+        moduleName: "users",
+        action: "delete",
+      },
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
   } catch (error) {
     console.error(`Erro ao deletar usuário com ID ${id}:`, error);
+    throw error;
   }
 };
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import FieldText from "../../../Components/FieldText";
 import FieldNumber from "../../../Components/FieldNumber";
 import PrimaryButton from "../../../Components/PrimaryButton";
@@ -13,6 +13,8 @@ import { getUserById, patchUserById } from "../../../Services/userService";
 const ProfileUpdate = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { state } = useLocation();
+  const userId = state?.userId;
   const storagedUserString = localStorage.getItem("@App:user");
   const storagedUser = JSON.parse(storagedUserString);
 
@@ -23,6 +25,7 @@ const ProfileUpdate = () => {
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isValidNumber, setIsValidNumber] = useState(true);
   const [openDialog, setOpenDialog] = useState(false);
+  const [perfilSelecionado, setPerfilSelecionado] = useState("");
 
   useEffect(() => {
     const getUser = async () => {
@@ -31,6 +34,7 @@ const ProfileUpdate = () => {
       setCelular(response?.phone);
       setLogin(response?.status ? "Ativo" : "Inativo");
       setEmail(response?.email);
+      setPerfilSelecionado(response?.role._id);
     };
 
     getUser();
@@ -43,6 +47,19 @@ const ProfileUpdate = () => {
   useEffect(() => {
     setIsValidNumber(validatePhoneNumber(removeMask(celular)));
   }, [celular]);
+
+  const handleNavigateToContributions = () => {
+    navigate(`/movimentacoes/contribuicoes/${nome}`, {
+      state: {
+        userId,
+        nome,
+        celular,
+        email,
+        login,
+        perfilSelecionado,
+      },
+    });
+  };
 
   const isValidEmail = (email) => {
     const allowedDomains = ["com", "net", "org", "com.br", "org.br"];
@@ -127,6 +144,14 @@ const ProfileUpdate = () => {
             {!isEmailValid && (
               <label className="isEmailValid">*Insira um email válido</label>
             )}
+          </div>
+          <div>
+            <Button
+              className="btn-contribution"
+              onClick={handleNavigateToContributions}
+            >
+              Histórico de Contribuições
+            </Button>
           </div>
           <div className="section-doublebtn">
             <SecondaryButton text="Cancelar" onClick={handleCancel} />
