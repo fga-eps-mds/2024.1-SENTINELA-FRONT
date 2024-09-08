@@ -1,17 +1,50 @@
 @media screen and (max-width: 1080px) {
-  .bar-container {
-    display: none;
-  }
-
-  .container {
+  .container-roles {
     display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
   }
 
   label {
     color: #332117 !important;
   }
 
-  .forms-container {
+  .double-box-roles {
+    display: contents;
+    font-size: 20px;
+    color: #332117 !important;
+    margin-left: 1.2rem;
+    white-space: nowrap;
+  }
+
+  .double-box-roles .MuiButton-root {
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+    width: 90%;
+  }
+
+  .list-item-roles {
+    padding: 0.5rem;
+    margin-top: 1rem !important;
+  }
+
+  .search-box-roles {
+    display: grid;
+    width: 100%;
+    margin-top: 1rem;
+    position: relative;
+  }
+
+  .forms-container-roles h1 {
+    text-align: center;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    place-items: center;
+    margin-top: 2rem;
+  }
+
+  .forms-container-roles {
     margin: 1rem;
     width: 90%;
     display: inherit;
@@ -19,89 +52,80 @@
     flex-direction: column;
   }
 
-  .double-box {
-    display: contents;
-    grid-template-columns: 0.5fr 0.5fr;
-  }
-
-  h1 {
-    font-weight: 800;
-    margin-bottom: 3rem;
-    color: #332117 !important;
-    margin-left: 15%;
-  }
-
-  h3 {
-    font-weight: 400;
-    margin-left: 1rem;
-    margin-top: 3rem;
-    color: #332117 !important;
-  }
-
-  #addDependentBttn {
-    cursor: pointer;
-  }
-
-  .list-item {
-    color: #332117 !important;
-    margin-bottom: 1rem; /* Ajusta o espaçamento entre os itens */
+  .forms-container-roles button {
+    width: 100%;
+    align-self: center;
+    margin: 5px 5px;
   }
 }
 
 @media screen and (min-width: 1080px) {
+  .bar-container-roles {
+    display: flex;
+    height: 100%;
+    position: fixed;
+  }
+
   label {
     color: #332117 !important;
   }
 
-  .container {
+  .container-roles {
     display: flex;
-    align-items: flex-start;
+    flex-direction: row;
+    margin-bottom: 20px;
   }
 
-  .forms-container {
-    margin: 3.5rem;
-    width: 80%;
+  .forms-container-roles {
+    margin: 1rem;
+    width: 90%;
     display: inherit;
     justify-content: center;
     flex-direction: column;
   }
 
-  .section-form {
+  .section-form-roles {
     display: flex;
     grid-template-columns: 1fr;
   }
-  .search-box button {
-    margin-top: 0px;
-    margin-bottom: 40px;
+
+  .search-box-roles {
+    display: grid;
+    width: 100%;
+    margin-top: 1rem;
+    position: relative;
   }
 
-  .double-box {
+  .double-box-roles {
     display: grid;
     grid-template-columns: 2.3fr 2fr;
-    padding-right: 1%;
+    font-size: 24px;
   }
 
-  .double-box button {
-    margin-top: 0px;
-    margin-bottom: 40px;
-  }
-
-  h1 {
-    font-size: 150%;
-    font-weight: 800;
-    margin-bottom: 3rem;
-    color: #332117 !important;
-  }
-
-  h3 {
-    font-weight: 400;
+  .double-box-roles button {
     margin-left: 1rem;
-    margin-top: 3rem;
-    color: #332117 !important;
+    margin-right: 10px;
+    width: auto;
+    height: 44px;
   }
 
-  .list-item {
+  .forms-container-roles h1 {
+    font-size: 34px;
+    font-weight: 800;
+    margin-bottom: -0.5rem;
+    margin-top: 2rem;
+  }
+
+  .list-item-roles {
     color: #332117 !important;
-    margin-bottom: 4rem; /* Ajusta o espaçamento entre os itens */
+    margin-top: 2rem !important;
+  }
+
+  .double-box-roles .MuiButton-root {
+    margin-left: 1rem;
+    margin-right: 10px;
+    width: auto;
+    height: 44px;
+    margin-top: 2rem;
   }
 }
