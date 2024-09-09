@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import CheckField from "./index";
-import { expect } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 describe("CheckField component", () => {
   it("renders with the provided label", () => {
