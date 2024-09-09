@@ -254,7 +254,9 @@ const MemberShip = () => {
   const erro = (campo) => {
     return touchedFields[campo] && errors[campo] ? (
       <span className="error-message">{errors[campo]}</span>
-    ) : null;
+    ) : (
+      ""
+    );
   };
 
   const handleCloseSuccessDialog = () => {
@@ -282,9 +284,6 @@ const MemberShip = () => {
 
           setOrgaosList(uniqueOrgaos);
           setLotacaoList(uniqueLotacoes);
-
-          console.log("Lista de Órgãos:", uniqueOrgaos);
-          console.log("Lista de Lotações:", uniqueLotacoes);
         } else {
           console.error("Os dados recebidos não são um array.");
         }
@@ -412,7 +411,7 @@ const MemberShip = () => {
             label="Religião"
             value={religiao}
             onChange={(e) => setReligiao(e.target.value)}
-            onBlur={(e) => handleBlur(e, "religiao")}
+            //onBlur={(e) => handleBlur(e, "religiao")}
             erro={erro("religiao")}
           />
 
@@ -626,7 +625,7 @@ const MemberShip = () => {
             label="Cargo"
             value={cargo}
             onChange={(e) => setCargo(e.target.value)}
-            onBlur={(e) => handleBlur(e, "cargo")}
+            onBlur={"#"}
             erro={erro("cargo")}
           />
 
