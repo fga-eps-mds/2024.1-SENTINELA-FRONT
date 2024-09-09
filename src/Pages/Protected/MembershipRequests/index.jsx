@@ -12,7 +12,6 @@ import CheckList from "../../../Components/Checklist";
 import PrimaryButton from "../../../Components/PrimaryButton";
 import Modal from "../../../Components/Modal";
 import { useNavigate } from "react-router-dom";
-import { deleteUserById } from "../../../Services/userService";
 
 export default function MembershipRequest() {
   const { user } = useAuth();
@@ -63,18 +62,24 @@ export default function MembershipRequest() {
 
   const handleReject = async () => {
     try {
-      filteredMembers.filter((member) => checkedItems.includes(member.name));
+      // Filtra os membros que estão nos checkedItems
+      const membersToDelete = filteredMembers.filter((member) =>
+        checkedItems.includes(member._id)
+      );
 
-      for (const memberDelete of filteredMembers) {
-        await deleteMember(memberDelete._id);
-        console.log("memberDelete", memberDelete);
-        await deleteUserById(memberDelete._id);
+      // Itera sobre os membros filtrados e realiza as exclusões
+      for (const memberDelete of membersToDelete) {
+        console.log("Deletando membro:", memberDelete);
+
+        await deleteMember(memberDelete._id); // Exclui o membro
       }
 
+      // Atualiza o estado para indicar que a exclusão foi bem-sucedida
       setTryingDelete(false);
       setSuccessDelete(true);
     } catch (error) {
-      console.error("Error deleting member status:", error);
+      // Captura e exibe qualquer erro durante a exclusão
+      console.error("Erro ao deletar membros:", error);
     }
   };
 
