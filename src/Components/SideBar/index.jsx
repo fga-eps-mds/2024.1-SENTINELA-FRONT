@@ -145,6 +145,7 @@ export default function SideBar({ fullHeight = true }) {
             }}
             onClick={() => {
               handleItemClick(user);
+              setIsSideBarOpen(false);
             }}
           />
           <h2
