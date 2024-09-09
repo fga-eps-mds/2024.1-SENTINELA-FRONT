@@ -3,6 +3,44 @@
     display: none;
   }
 
+  .forms-container-supplier {
+    margin: 1rem;
+    width: 90%;
+    display: inherit;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .forms-container-supplier h1 {
+    font-size: 22px;
+    font-weight: 800;
+    margin-left: 8px;
+    margin-right: 50px;
+    margin-top: 1rem;
+    margin-bottom: -1rem;
+    color: #332117 !important;
+    white-space: nowrap;
+  }
+
+  .forms-container-supplier h3 {
+    font-size: 24px;
+    font-weight: 400;
+    margin-left: 1rem;
+    margin-top: 3rem;
+  }
+
+  .db-supplier {
+    display: grid;
+    justify-content: start;
+    grid-template-columns: 1fr;
+    margin: 0;
+  }
+
+  .double-box-supplier {
+    display: grid;
+    grid-template-columns: 2.5fr 1.5fr;
+  }
+
   .container {
     display: flex;
   }
@@ -19,37 +57,16 @@
     flex-direction: column;
   }
 
-  .forms-container button {
-    width: 100%;
-  }
-
-  .search-box {
-    display: contents;
-    grid-template-columns: 0.5fr 0.5fr;
-  }
-
   .double-box {
     display: inherit;
     justify-content: center;
     flex-direction: column;
   }
 
-  h1 {
-    font-weight: 800;
-    margin-bottom: 3rem;
-    color: #332117 !important;
-  }
-
-  h3 {
-    font-weight: 400;
-    margin-left: 1rem;
-    margin-top: 3rem;
-    color: #332117 !important;
-  }
-
-  .list-item {
-    color: #332117 !important;
-    margin-bottom: 1rem; /* Ajusta o espaçamento entre os itens */
+  .forms-container-supplier button {
+    margin-top: 1rem;
+    width: 95%;
+    margin-left: 0.5rem;
   }
 }
 
@@ -57,6 +74,7 @@
   .bar-container {
     display: flex;
     height: 100%;
+    position: fixed;
   }
 
   .container {
@@ -64,13 +82,29 @@
     flex-direction: row;
   }
 
-  .forms-container {
-    margin: 3.5rem;
-    width: 80%;
-
-    display: flex;
+  .forms-container-supplier {
+    margin: 1rem;
+    width: 90%;
+    display: inherit;
     justify-content: center;
     flex-direction: column;
+  }
+
+  .forms-container-supplier h1 {
+    font-size: 34px;
+    font-weight: 800;
+    margin-bottom: -0.5rem;
+  }
+
+  .forms-container-supplier h3 {
+    font-size: 24px;
+    font-weight: 400;
+    margin-left: 1rem;
+    margin-top: 3rem;
+  }
+
+  .forms-container button {
+    width: 100%;
   }
 
   .section-form {
@@ -78,38 +112,22 @@
     grid-template-columns: 1fr 1fr;
   }
 
-  .double-box {
+  .db-supplier {
     display: grid;
-    grid-template-columns: 2.3fr 0.7fr;
+    justify-content: start;
+    grid-template-columns: 1fr 1fr;
+    margin: 0;
   }
 
-  .double-buttons {
-    display: flex;
-    justify-content: space-between;
-    align-items: end;
-    gap: 20px;
+  /*cidade-uf*/
+  .double-box-supplier {
+    display: grid;
+    grid-template-columns: 2.5fr 1.5fr;
   }
 
-  .double-buttons button {
-    height: 40px;
-    flex: 1;
-  }
-
-  h1 {
-    font-weight: 800;
-    margin-bottom: 3rem;
-  }
-
-  h3 {
-    font-weight: 400;
-    margin-left: 1rem;
-    margin-top: 3rem;
-  }
-
-  #envio {
+  .forms-container-supplier button {
     margin-top: 1rem;
-    width: 100%;
-    display: flex;
-    justify-content: center;
+    width: 98.5%;
+    margin-left: 0.5rem;
   }
 }

@@ -61,27 +61,29 @@ export default function RolesListPage() {
   );
 
   return (
-    <section className="container">
-      <div className="forms-container">
-        <div className="double-box">
+    <section className="container-roles">
+      <div className="forms-container-roles">
+        <div className="double-box-roles">
           <h1>Lista de perfis</h1>
           {hasPermission && (
             <PrimaryButton text="Cadastrar perfil" onClick={handleSubmit} />
           )}
         </div>
 
-        <FieldText
-          label="Pesquisar perfil"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+        <div className="search-box-roles">
+          <FieldText
+            label="Pesquisar perfil"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
 
         <List>
           {filteredRoles.map((role, index) => (
             <div key={role._id}>
               <ListItem>
                 <ListItemButton
-                  className="list-item"
+                  className="list-item-roles"
                   style={{
                     transition: "background-color 0.3s ease",
                   }}

@@ -1,56 +1,147 @@
-@media screen and (min-width: 1080px) {
-  .forms-container-list {
-    margin: 5rem;
+@media screen and (max-width: 1080px) {
+  .bar-container-userlist {
+    display: grid;
+  }
+
+  .container-userlist {
+    display: grid;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+
+  label {
+    color: #332117 !important;
+  }
+
+  .double-box-userlist {
+    display: contents;
+    font-size: 20px;
+    color: #332117 !important;
+    margin-left: 1.2rem;
+    white-space: nowrap;
+  }
+
+  .double-box-userlist .MuiButton-root {
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+    width: 90%;
+  }
+
+  .list-item-userlist {
+    padding: 0.5rem;
+    margin-top: 1rem !important;
+  }
+
+  .search-box-userlist {
+    display: grid;
     width: 100%;
+    margin-top: 1rem;
+    position: relative;
+  }
+
+  .forms-container-userlist h1 {
+    text-align: center;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    place-items: center;
+    margin-top: 2rem;
+  }
+
+  .forms-container-userlist {
+    margin: 1rem;
+    width: 90%;
     display: inherit;
     justify-content: center;
     flex-direction: column;
   }
 
-  .container-list {
-    display: flex;
-  }
-  .double-box-list {
-    display: grid;
-    grid-template-columns: 2.3fr 2fr;
+  .forms-container-userlist button {
+    width: 100%;
+    align-self: center;
+    margin: 5px 5px;
   }
 
-  .double-box-list button {
-    margin-top: 0px;
-    margin-bottom: 40px;
+  .date-box-userlist {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 0;
   }
-  .btn-logout {
-    background-color: transparent;
-    height: 40px;
-    font-family: "Noto Sans";
-    font-size: 14px;
-    font-weight: 600;
-    padding: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    color: #341f14;
-    cursor: pointer;
+  .hidden-menu {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1000;
   }
 }
 
-@media (max-width: 1080px) {
-  .container-user {
-    display: inherit;
-    align-items: center;
-  }
-  .forms-container-list {
-    display: grid;
-    align-items: center;
-    justify-content: center;
-  }
-  .double-box-list {
+@media screen and (min-width: 1080px) {
+  .bar-container-userlist {
     display: flex;
-    align-items: center;
-    justify-content: start;
+    height: 100%;
+    position: fixed;
   }
-  h1 {
-    text-align: start;
+
+  label {
+    color: #332117 !important;
+  }
+
+  .container-userlist {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+  }
+
+  .forms-container-userlist {
+    margin: 1rem;
+    width: 90%;
+    display: inherit;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .section-form-userlist {
+    display: flex;
+    grid-template-columns: 1fr;
+  }
+
+  .search-box-userlist {
+    display: grid;
+    width: 100%;
+    margin-top: 1rem;
+    position: relative;
+  }
+
+  .double-box-userlist {
+    display: grid;
+    grid-template-columns: 2.3fr 2fr;
+    font-size: 24px;
+  }
+
+  .double-box-userlist button {
+    margin-left: 1rem;
+    margin-right: 10px;
+    width: auto;
+    height: 44px;
+  }
+
+  .forms-container-userlist h1 {
+    font-size: 34px;
+    font-weight: 800;
+    margin-bottom: -0.5rem;
+    margin-top: 2rem;
+  }
+
+  .list-item-userlist {
+    color: #332117 !important;
+    margin-top: 2rem !important;
+  }
+
+  .double-box-userlist .MuiButton-root {
+    margin-left: 1rem;
+    margin-right: 10px;
+    width: auto;
+    height: 44px;
+    margin-top: 2rem;
   }
 }

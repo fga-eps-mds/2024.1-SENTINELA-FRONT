@@ -4,15 +4,13 @@ import FieldText from "../../../Components/FieldText";
 import FieldNumber from "../../../Components/FieldNumber";
 import PrimaryButton from "../../../Components/PrimaryButton";
 import SecondaryButton from "../../../Components/SecondaryButton";
-import { useAuth } from "../../../Context/auth";
 import Modal from "../../../Components/Modal";
 import { Button } from "@mui/material";
 import "./index.css";
 import { getUserById, patchUserById } from "../../../Services/userService";
 
-const ProfileUpdate = () => {
+export default function ProfileUpdate() {
   const navigate = useNavigate();
-  const { user } = useAuth();
   const { state } = useLocation();
   const userId = state?.userId;
   const storagedUserString = localStorage.getItem("@App:user");
@@ -38,7 +36,7 @@ const ProfileUpdate = () => {
     };
 
     getUser();
-  });
+  }, [storagedUser._id]);
 
   useEffect(() => {
     setIsEmailValid(isValidEmail(email));
@@ -105,67 +103,63 @@ const ProfileUpdate = () => {
   };
 
   return (
-    user && (
-      <section className="container">
-        <div className="campos-container">
-          <h3 className="profile-view">Visualização de usuário</h3>
-          <h4 className="personal-data">Dados pessoais</h4>
-          <div className="section-campo">
-            <FieldText
-              label="Nome*"
-              value={nome}
-              onChange={(e) => setNome(e.target.value)}
-              disabled={true}
-            />
-          </div>
-          <div className="double-box">
-            <FieldNumber
-              label="Celular"
-              value={celular}
-              onChange={(e) => setCelular(e.target.value)}
-              format="(##) #####-####"
-            />
-            {!isValidNumber && (
-              <label className="isValidNumber">*Insira um celular válido</label>
-            )}
-            <FieldText
-              label="Login*"
-              value={login}
-              onChange={(e) => setLogin(e.target.value)}
-              disabled
-            />
-          </div>
-          <div className="section-campo">
-            <FieldText
-              label="E-mail"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            {!isEmailValid && (
-              <label className="isEmailValid">*Insira um email válido</label>
-            )}
-          </div>
-          <div>
-            <Button
-              className="btn-contribution"
-              onClick={handleNavigateToContributions}
-            >
-              Histórico de Contribuições
-            </Button>
-          </div>
-          <div className="section-doublebtn">
-            <SecondaryButton text="Cancelar" onClick={handleCancel} />
-            <PrimaryButton text="Salvar" onClick={handleSubmit} />
-          </div>
+    <section className="container">
+      <div className="campos-container">
+        <h3 className="profile-view">Visualização de usuário</h3>
+        <h4 className="personal-data">Dados pessoais</h4>
+        <div className="section-campo">
+          <FieldText
+            label="Nome*"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
+            disabled={true}
+          />
         </div>
-        <Modal show={openDialog} alertTitle="Alterações Salvas">
-          <Button onClick={handleCloseDialog} className="custom-dialog-button">
-            OK
+        <div className="double-box-pu">
+          <FieldNumber
+            label="Celular"
+            value={celular}
+            onChange={(e) => setCelular(e.target.value)}
+            format="(##) #####-####"
+          />
+          {!isValidNumber && (
+            <label className="isValidNumber">*Insira um celular válido</label>
+          )}
+          <FieldText
+            label="Login*"
+            value={login}
+            onChange={(e) => setLogin(e.target.value)}
+            disabled
+          />
+        </div>
+        <div className="section-campo">
+          <FieldText
+            label="E-mail"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          {!isEmailValid && (
+            <label className="isEmailValid">*Insira um email válido</label>
+          )}
+        </div>
+        <div>
+          <Button
+            className="btn-contribution"
+            onClick={handleNavigateToContributions}
+          >
+            Histórico de Contribuições
           </Button>
-        </Modal>
-      </section>
-    )
+        </div>
+        <div className="section-doublebtn">
+          <SecondaryButton text="Cancelar" onClick={handleCancel} />
+          <PrimaryButton text="Salvar" onClick={handleSubmit} />
+        </div>
+      </div>
+      <Modal show={openDialog} alertTitle="Alterações Salvas">
+        <Button onClick={handleCloseDialog} className="custom-dialog-button">
+          OK
+        </Button>
+      </Modal>
+    </section>
   );
-};
-
-export default ProfileUpdate;
+}

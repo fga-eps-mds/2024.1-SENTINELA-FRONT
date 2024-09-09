@@ -70,9 +70,9 @@ export default function UserListPage() {
   );
 
   return (
-    <section className="container-list">
-      <div className="forms-container-list">
-        <div className="double-box-list">
+    <section className="container-userlist">
+      <div className="forms-container-userlist">
+        <div className="double-box-userlist">
           <h1>Lista de Usuários</h1>
           {hasPermission && (
             <PrimaryButton
@@ -92,7 +92,7 @@ export default function UserListPage() {
             <div key={user._id}>
               <ListItem>
                 <ListItemButton
-                  className="list-item"
+                  className="list-item-userlist"
                   onClick={() => handleItemClick(user)}
                 >
                   <ListItemText primary={user.name} />

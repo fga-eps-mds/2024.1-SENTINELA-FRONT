@@ -36,11 +36,8 @@
   }
 
   .campos-container {
-    /* margin: 3.5rem; */
     line-height: 2;
-    /* height: 350px; */
     width: 100%;
-    /* margin-top: 4rem; */
     display: inherit;
     justify-content: center;
     flex-direction: column;
@@ -49,7 +46,6 @@
   .section-campo {
     display: grid;
     margin-left: 0.5rem;
-    /* margin-right: 9rem; */
     font-size: 16px;
     width: 100%;
   }
@@ -74,10 +70,9 @@
     font-weight: thin;
   }
 
-  .double-box {
+  .double-box-pu {
     display: grid;
     margin-left: 0.5rem;
-    /* margin-right: 9rem; */
     width: 100%;
 
     grid-template-columns: 1fr;
@@ -85,7 +80,7 @@
 
     font-size: 16px;
   }
-  .double-box input {
+  .double-box-pu input {
     background-color: #eae3d7;
     color: #000000;
     border: 1px solid #eae3d7;
@@ -95,16 +90,6 @@
     font-size: 16px;
     font-weight: thin;
   }
-
-  /* .section-doublebtn {
-    align-items: center;
-    flex-direction: column;
-    flex-direction: column;
-    align-items: stretch;
-    margin-left: -3.2rem;
-    margin-right: 50rem;
-    margin-top: 1rem;
-  } */
 
   .section-doublebtn {
     display: flex;
@@ -121,30 +106,6 @@
     font-size: medium;
     margin-left: 8rem;
     margin-top: 5rem;
-  }
-
-  .profile-icon {
-    margin-top: -10rem;
-    margin-left: -9rem;
-    font-size: 37px;
-  }
-
-  .btn-logout {
-    background-color: transparent;
-    height: 40px;
-    font-family: "Noto Sans";
-    font-size: 14px;
-    font-weight: 600;
-    padding: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    color: #341f14;
-  }
-  .logout-icon {
-    font-size: 21px;
-    margin-left: 10px;
   }
 
   .isEmailValid {
@@ -211,30 +172,6 @@
 
   .custom-dialog-button:hover {
     background-color: rgba(0, 0, 0, 0.1) !important;
-  }
-
-  .hidden-menu {
-    display: block;
-    padding-left: 10px;
-    z-index: 100;
-    cursor: pointer;
-
-    svg {
-      font-size: 40px;
-      color: #3d160d;
-    }
-  }
-
-  .side-menu {
-    width: 100%;
-    position: fixed;
-    z-index: 99;
-    left: -100%;
-    transition: left 0.3s;
-  }
-
-  .side-bar.open {
-    left: 0;
   }
 }
 
@@ -305,14 +242,14 @@
     font-weight: thin;
   }
 
-  .double-box {
+  .double-box-pu {
     display: grid;
     grid-template-columns: 2.3fr 2.3fr;
     color: #eae3d7;
     margin-left: 0.8rem;
     font-size: 16px;
   }
-  .double-box input {
+  .double-box-pu input {
     background-color: #eae3d7;
     color: #000000;
     border: 1px solid #eae3d7;

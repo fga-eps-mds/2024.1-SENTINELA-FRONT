@@ -252,7 +252,7 @@ export default function CreateSupplier() {
 
   return (
     <div className="container-benefits">
-      <div className="forms-container-benefits">
+      <div className="forms-container-supplier">
         <h1>Cadastro de fornecedor</h1>
 
         <h3>Dados pessoais</h3>
@@ -264,7 +264,7 @@ export default function CreateSupplier() {
           required
         />
 
-        <div className="section-form-benefits">
+        <div className="db-supplier">
           <FieldSelect
             label="Classificação de pessoa"
             value={tipoPessoa}
@@ -295,7 +295,7 @@ export default function CreateSupplier() {
 
         <h3>Dados de Contato</h3>
 
-        <div className="section-form-benefits">
+        <div className="db-supplier">
           <FieldText
             label="E-mail"
             value={email}
@@ -361,7 +361,7 @@ export default function CreateSupplier() {
 
         <h3>Dados Bancários</h3>
 
-        <div className="section-form-benefits">
+        <div className="db-supplier">
           <FieldText
             label="Banco"
             value={nomeBanco}
@@ -393,7 +393,7 @@ export default function CreateSupplier() {
           onChange={(e) => setChavePix(e.target.value)}
         />
 
-        <div id="envio">
+        <div>
           <PrimaryButton text="CADASTRAR" onClick={handleCheck} />
         </div>
 

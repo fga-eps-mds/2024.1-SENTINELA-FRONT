@@ -72,7 +72,7 @@ export default function UserHistoric() {
           <h1>Histórico de Contribuições</h1>
         </div>
 
-        <div className="search-box">
+        <div className="search-box-hc">
           <FieldText
             label="Pesquisar movimentação"
             value={search}
