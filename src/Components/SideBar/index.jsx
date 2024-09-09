@@ -50,6 +50,7 @@ export default function SideBar({ fullHeight = true }) {
       text="PÁGINA INICIAL"
       onClick={() => {
         navigate("/home");
+        setIsSideBarOpen(false);
       }}
     />,
     <SideButton
@@ -58,6 +59,7 @@ export default function SideBar({ fullHeight = true }) {
       text="CADASTROS"
       onClick={() => {
         navigate("/usuarios/hub");
+        setIsSideBarOpen(false);
       }}
     />,
     <SideButton
@@ -66,6 +68,7 @@ export default function SideBar({ fullHeight = true }) {
       text="FINANCEIRO"
       onClick={() => {
         navigate("/finance/hub");
+        setIsSideBarOpen(false);
       }}
     />,
     <SideButton
@@ -74,6 +77,7 @@ export default function SideBar({ fullHeight = true }) {
       text="BENEFÍCIOS"
       onClick={() => {
         navigate("/beneficios");
+        setIsSideBarOpen(false);
       }}
     />,
     <SideButton
@@ -82,6 +86,7 @@ export default function SideBar({ fullHeight = true }) {
       text="LOGIN"
       onClick={() => {
         navigate("/");
+        setIsSideBarOpen(false);
       }}
     />,
     <SideButton
@@ -89,6 +94,7 @@ export default function SideBar({ fullHeight = true }) {
       text="FILIAÇÃO"
       onClick={() => {
         navigate("/filiacao");
+        setIsSideBarOpen(false);
       }}
     />,
   ];

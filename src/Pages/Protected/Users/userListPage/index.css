@@ -1,6 +1,10 @@
 @media screen and (max-width: 1080px) {
+  .bar-container-userlist {
+    display: grid;
+  }
+
   .container-userlist {
-    display: flex;
+    display: grid;
     flex-direction: column;
     margin-bottom: 20px;
   }
@@ -62,6 +66,12 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     margin: 0;
+  }
+  .hidden-menu {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1000;
   }
 }
 
